@@ -8,7 +8,6 @@ import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
-import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
@@ -50,22 +49,5 @@ public class Game extends BaseGame {
 		CameraMovement cm = new CameraMovement();
 		cm.smoothFollow(player.transform);
 		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm), new Vector2());
-	}
-
-	@Override
-	public void update() {
-		GameObject.updateAll();
-	}
-
-	@Override
-	public void render() {
-		Renderer.renderAll();
-	}
-
-	@Override
-	public void onResize(int width, int height) {
-		Screen.scale = (float) width / 1920f;
-		Screen.width = width;
-		Screen.height = height;
 	}
 }
