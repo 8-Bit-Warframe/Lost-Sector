@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class MapManager {
+	private static int[][] solidityMap;
 
 	public static void loadMap(String name) {
 		TextureAtlas eta = new TextureAtlas("images/environment/atlas.png",
@@ -26,6 +27,7 @@ public class MapManager {
 			String temp;
 			BufferedReader reader = Utils.getReader("maps/" + name + ".lsmap");
 			while ((temp = reader.readLine()) != null) {
+				if (temp.equals("BEGIN METADATA")) readInMetaData(reader);
 				if (temp.equals("BEGIN BLOCKS")) readInBlocks(reader);
 				if (temp.equals("BEGIN LOCKERS")) readInLockers(reader, eta);
 				if (temp.equals("BEGIN DOORS")) readInDoors(reader, eta);
@@ -33,6 +35,23 @@ public class MapManager {
 			}
 		} catch (IOException ignored) {
 		}
+
+		NavMesh.init(solidityMap);
+	}
+
+	private static void readInMetaData(BufferedReader reader) throws IOException {
+		int width = 0;
+		int height = 0;
+		String temp;
+		while ((temp = reader.readLine()) != null && !temp.equals("END METADATA")) {
+			String[] split = temp.split("=");
+			if (split[0].equals("map_width")) {
+				width = Integer.parseInt(split[1]);
+			} else if (split[0].equals("map_height")) {
+				height = Integer.parseInt(split[1]);
+			}
+		}
+		solidityMap = new int[width][height];
 	}
 
 	private static void readInBlocks(BufferedReader reader) throws IOException {
@@ -45,14 +64,18 @@ public class MapManager {
 			float w = Float.valueOf(split[2]) * 3.125f;
 			float h = Float.valueOf(split[3]) * 3.125f;
 			if (Boolean.valueOf(split[5])) {
-				GameObject.instantiate(
-						new GameObject(null, true, new Renderer(ta, ta.getSprite(split[4]), w, h),
-								new Collider(w, h)), new Vector2(x, y));
+				GameObject.instantiate(new GameObject(null, true,
+								new Renderer(ta, ta.getSprite(split[4]), w, h)
+										.setFlipped(Boolean.valueOf(split[6]),
+												Boolean.valueOf(split[7])), new Collider(w, h)),
+						new Vector2(x, y));
 			} else {
-				GameObject.instantiate(
-						new GameObject(null, true, new Renderer(ta, ta.getSprite(split[4]), w, h)),
+				GameObject.instantiate(new GameObject(null, true,
+						new Renderer(ta, ta.getSprite(split[4]), w, h)
+								.setFlipped(Boolean.valueOf(split[6]), Boolean.valueOf(split[7]))),
 						new Vector2(x, y));
 			}
+			solidityMap[((int) (x / 100))][((int) (y / 100))] = Boolean.valueOf(split[5]) ? 1 : 0;
 		}
 	}
 
@@ -100,6 +123,10 @@ public class MapManager {
 			GameObject.instantiate(
 					new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)),
 					new Vector2(x, y + 128 * 3.125f));
+			solidityMap[((int) (x / 100))][((int) (y / 100))] = 1;
+			solidityMap[((int) (x / 100)) + 1][((int) (y / 100))] = 1;
+			solidityMap[((int) (x / 100))][((int) (y / 100)) + 4] = 1;
+			solidityMap[((int) (x / 100)) + 1][((int) (y / 100)) + 4] = 1;
 //			GameObject.instantiate(
 //					new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)),
 //					new Vector2(x, y));
