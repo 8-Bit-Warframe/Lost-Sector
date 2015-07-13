@@ -1,32 +1,39 @@
 package com.ezardlabs.lostsector.objects;
 
-import android.util.SparseArray;
-
+import com.ezardlabs.dethsquare.Animation;
+import com.ezardlabs.dethsquare.Animation.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Collider;
+import com.ezardlabs.dethsquare.Collider.Collision;
 import com.ezardlabs.dethsquare.Collider.CollisionLocation;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.OnTouchListener;
-import com.ezardlabs.dethsquare.PlayerBase;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Screen;
+import com.ezardlabs.dethsquare.Script;
+import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.Utils;
 import com.ezardlabs.dethsquare.util.Utils.Platform;
 
-public class Player extends PlayerBase {
+import java.util.HashMap;
+
+public class Player extends Script {
 	public static GameObject player;
 	private int jumpCount = 0;
 	private int x = 0;
-	private Animator animator;
+	private GameObject dust;
+	public boolean landing = false;
+	private float speed = 12.5f;
 
 	@Override
 	public void start() {
 		player = gameObject;
 		if (Utils.PLATFORM == Platform.ANDROID) {
 			Input.addOnTouchListener(new OnTouchListener() {
-				SparseArray<Vector2> map = new SparseArray<>();
+				HashMap<Integer, Vector2> map = new HashMap<>();
 
 				@Override
 				public void onTouchDown(int id, float x, float y) {
@@ -67,56 +74,64 @@ public class Player extends PlayerBase {
 				}
 			});
 		}
-		animator = getComponent(Animator.class);
+		TextureAtlas ta = new TextureAtlas("images/effects/dust.png", "images/effects/dust.txt");
+		dust = new GameObject(null, new Renderer(ta, ta.getSprite("dust0"), 700, 50),
+				new Animator(new Animation("dust", new Sprite[]{ta.getSprite("dust0"), ta.getSprite("dust1"), ta.getSprite("dust2")}, AnimationType.ONE_SHOT, 100)));
 	}
 
 	@Override
 	public void update() {
-		gravity += 1.25f;
-		if (gravity > 78.125f) gravity = 78.125f;
+		transform.translate(x * speed, 0);
 
-		transform.translate(x * 12.5f, gravity);
+		if (!landing) {
+			if (x < 0) {
+				gameObject.renderer.hFlipped = true;
+			} else if (x > 0) {
+				gameObject.renderer.hFlipped = false;
+			}
 
-		if (x < 0) {
-			getComponent(Renderer.class).hFlipped = true;
-		} else if (x > 0) {
-			getComponent(Renderer.class).hFlipped = false;
-		}
+			if (jumpCount > 0 && gameObject.rigidbody.gravity > 0) {
+				gameObject.animator.play("fall");
+			}
 
-		if (jumpCount > 0 && gravity > 0) {
-			animator.play("fall");
-		}
-
-		if (jumpCount == 0) {
-			if (gravity > 2) {
-				animator.play("fall");
-			} else if (x != 0) {
-				animator.play("run");
-			} else {
-				animator.play("idle");
+			if (jumpCount == 0) {
+				if (gameObject.rigidbody.gravity > 2) {
+					gameObject.animator.play("fall");
+				} else if (x != 0) {
+					gameObject.animator.play("run");
+				} else {
+					gameObject.animator.play("idle");
+				}
 			}
 		}
 	}
 
 	public void jump() {
-		if (jumpCount++ < 2) {
-			gravity = -25f;
-			animator.play(jumpCount == 1 ? "jump" : "doublejump");
+		if (!landing && jumpCount++ < 2) {
+			gameObject.rigidbody.gravity = -25f;
+			gameObject.animator.play(jumpCount == 1 ? "jump" : "doublejump");
 		}
 	}
 
 	@Override
-	public void onCollision(Collider other, CollisionLocation collisionLocation) {
-		switch (collisionLocation) {
-			case BOTTOM:
-				jumpCount = 0;
-			case TOP:
-				gravity = 0;
-				break;
-			case LEFT:
-				break;
-			case RIGHT:
-				break;
+	public void onCollision(Collider other, Collision collision) {
+		if (collision.location == CollisionLocation.BOTTOM) {
+			jumpCount = 0;
+			if (collision.speed > 37) {
+				landing = true;
+				gameObject.animator.play("land");
+				GameObject.destroy(GameObject.instantiate(dust, new Vector2(transform.position.x - 262, transform.position.y + 150)), 300);
+				new Thread() {
+					@Override
+					public void run() {
+						try {
+							Thread.sleep(300);
+						} catch (InterruptedException ignored) {
+						}
+						landing = false;
+					}
+				}.start();
+			}
 		}
 	}
 }

@@ -10,8 +10,8 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.Utils;
-import com.ezardlabs.lostsector.objects.Camera;
-import com.ezardlabs.lostsector.objects.Door;
+import com.ezardlabs.lostsector.objects.environment.Camera;
+import com.ezardlabs.lostsector.objects.environment.Door;
 import com.ezardlabs.lostsector.objects.Locker;
 
 import java.io.BufferedReader;

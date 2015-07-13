@@ -14,7 +14,7 @@ public class CameraMovement extends Script {
 	private float quakeStrength = 0;
 
 	public void start() {
-		camera = getComponent(Camera.class);
+		camera = gameObject.getComponent(Camera.class);
 	}
 
 	public void update() {
