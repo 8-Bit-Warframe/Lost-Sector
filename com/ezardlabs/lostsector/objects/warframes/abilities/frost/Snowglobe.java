@@ -1,4 +1,4 @@
-package com.ezardlabs.lostsector.objects.abilities.frost;
+package com.ezardlabs.lostsector.objects.warframes.abilities.frost;
 
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Component;

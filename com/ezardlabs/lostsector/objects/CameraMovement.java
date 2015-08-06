@@ -1,9 +1,9 @@
 package com.ezardlabs.lostsector.objects;
 
-import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
+import com.ezardlabs.dethsquare.Transform;
 
 public class CameraMovement extends Script {
 	Camera camera;
@@ -68,10 +68,8 @@ public class CameraMovement extends Script {
 	}
 
 	private void updateQuake() {
-		transform.position.x += (int) (35.0F * this.quakeStrength -
-				Math.random() * 70.0D * this.quakeStrength);
-		transform.position.y += (int) (35.0F * this.quakeStrength -
-				Math.random() * 70.0D * this.quakeStrength);
+		transform.position.x += (int) (35.0F * this.quakeStrength - Math.random() * 70.0D * this.quakeStrength);
+		transform.position.y += (int) (35.0F * this.quakeStrength - Math.random() * 70.0D * this.quakeStrength);
 		if (System.currentTimeMillis() >= this.quakeEndPoint) {
 			this.isQuaking = false;
 		}

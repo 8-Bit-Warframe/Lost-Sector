@@ -9,30 +9,33 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 
 public abstract class Warframe extends Script {
-	TextureAtlas ta;
+	protected final TextureAtlas ta;
 
 	public Warframe(String name) {
 		ta = new TextureAtlas("images/warframes/" + name + "/atlas.png", "images/warframes/" + name + "/atlas.txt");
-		if (gameObject.animator == null) {
-			gameObject.addComponent(new Animator());
-		}
+	}
+
+	@Override
+	public void start() {
+		gameObject.renderer.setTextureAtlas(ta, 200, 200);
 		gameObject.animator.setAnimations(getIdleAnimation(), getRunAnimation(), getJumpAnimation(), getDoubleJumpAnimation(), getFallAnimation(), getLandAnimation());
+		gameObject.animator.play("idle");
 	}
 
-	public Animation getIdleAnimation() {
-		return new Animation("idle", new Sprite[]{ta.getSprite("idle")}, AnimationType.ONE_SHOT, 0);
+	protected Animation getIdleAnimation() {
+		return new Animation("idle", new Sprite[]{ta.getSprite("idle0")}, AnimationType.ONE_SHOT, 0);
 	}
 
-	public Animation getRunAnimation() {
+	protected Animation getRunAnimation() {
 		return new Animation("run", new Sprite[]{ta.getSprite("run0"), ta.getSprite("run1"), ta.getSprite("run2"), ta.getSprite("run3"), ta.getSprite("run4"), ta.getSprite("run5")},
 				AnimationType.LOOP, 100);
 	}
 
-	public Animation getJumpAnimation() {
+	protected Animation getJumpAnimation() {
 		return new Animation("jump", new Sprite[]{ta.getSprite("jump0")}, AnimationType.ONE_SHOT, 0);
 	}
 
-	public Animation getDoubleJumpAnimation() {
+	protected Animation getDoubleJumpAnimation() {
 		return new Animation("doublejump",
 				new Sprite[]{ta.getSprite("jump1"), ta.getSprite("jump2"), ta.getSprite("jump3"), ta.getSprite("jump4"), ta.getSprite("jump5"), ta.getSprite("jump6"), ta.getSprite("jump7")},
 				AnimationType.ONE_SHOT, 50, new AnimationListener() {
@@ -51,11 +54,19 @@ public abstract class Warframe extends Script {
 		});
 	}
 
-	public Animation getFallAnimation() {
+	protected Animation getFallAnimation() {
 		return new Animation("fall", new Sprite[]{ta.getSprite("fall0"), ta.getSprite("fall1"), ta.getSprite("fall2")}, AnimationType.LOOP, 90);
 	}
 
-	public Animation getLandAnimation() {
+	protected Animation getLandAnimation() {
 		return new Animation("land", new Sprite[]{ta.getSprite("land0"), ta.getSprite("land1"), ta.getSprite("land2")}, AnimationType.ONE_SHOT, 100);
 	}
+
+	public abstract void ability1();
+
+	public abstract void ability2();
+
+	public abstract void ability3();
+
+	public abstract void ability4();
 }

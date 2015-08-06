@@ -40,7 +40,7 @@ public class Kubrow extends Avatar {
 		} else {
 			targetType = TargetType.ENEMY;
 		}
-		switch(targetType) {
+		switch (targetType) {
 			case PLAYER:
 				break;
 			case ENEMY:
@@ -68,11 +68,11 @@ public class Kubrow extends Avatar {
 					gameObject.animator.play("attack");
 					attacking = true;
 					//noinspection ConstantConditions
-					best.getComponent(Enemy.class).kubrowAttack();
+					((Enemy) best.getComponentOfType(Enemy.class)).kubrowAttack(transform.position);
 					return;
 				} else {
 					NavMesh.NavPoint[] path = NavMesh.getPath(transform, best.transform);
-					if (path != null && path.length > 1) {
+					if (path != null && path.length > 0) {
 						int pathIndex = 0;
 						if (path.length > 1 && path[0] != null && transform.position.x == path[0].position.x) pathIndex = 1;
 						if (path[pathIndex].position.x < transform.position.x) {

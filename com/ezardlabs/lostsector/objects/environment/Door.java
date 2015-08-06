@@ -15,8 +15,10 @@ public class Door extends Script {
 				Player.player.collider.bounds.top < gameObject.collider.bounds.bottom &&
 				Math.abs(transform.position.x + 100 - Player.player.transform.position.x) < 600) {
 			gameObject.animator.play("open");
+			gameObject.setTag(null);
 		} else {
 			gameObject.animator.play("close");
+			gameObject.setTag("solid");
 		}
 	}
 }

@@ -4,12 +4,13 @@ import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
 public class Crewman extends Enemy {
 
-	public Crewman() {
-		super(3);
+	public Crewman(String name) {
+		super("corpus/crewmen/" + name, 3);
 	}
 
 	@Override
 	public void update() {
+		super.update();
 //		int x = 0;
 //		if (gameObject.rigidbody.gravity == 0) {
 //			NavMesh.NavPoint[] path = NavMesh.getPath(transform, Game.players[0].transform);
