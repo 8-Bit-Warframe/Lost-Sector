@@ -14,6 +14,7 @@ import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.IceWave;
+import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Snowglobe;
 
 public class Frost extends Warframe {
 
@@ -58,19 +59,12 @@ public class Frost extends Warframe {
 
 	@Override
 	public void ability3() {
-		Log.i("", "[ability3] ");
+		GameObject.instantiate(new GameObject("Snowglobe", new Renderer(), new Animator(), new Snowglobe()), transform.position.offset(-300, -200));
 	}
 
 	@Override
 	public void ability4() {
-		Log.i("", "[ability4] ");
 		gameObject.animator.play("cast_avalanche");
 		GameObject.instantiate(new GameObject("Avalanche", new Avalanche()), transform.position.offset(-300, -100));
-//		TextureAtlas ta = new TextureAtlas("images/warframes/abilities/frost/avalanche/atlas.png", "images/warframes/abilities/frost/avalanche/atlas.txt");
-//		transform.position.x -= 300;
-//		GameObject
-//				.instantiate(new GameObject(null, new Renderer(ta, ta.getSprite("avalanche_background0"), 800, 300).setzIndex(2)), transform.position.offset(-300, -100));
-//		GameObject.instantiate(new GameObject(null, new Renderer(ta, ta.getSprite("avalanche_foreground0"), 800, 300).setzIndex(5)),
-//				transform.position.offset(-300, -100));
 	}
 }

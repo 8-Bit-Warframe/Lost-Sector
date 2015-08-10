@@ -26,7 +26,7 @@ public class Game extends BaseGame {
 	@Override
 	public void create() {
 		MapManager.loadMap("kubrow-map");
-		
+
 		//noinspection RedundantArrayCreation
 		GameObject.instantiate(new GameObject("Crewman", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new DeraCrewman()), new Vector2(1500, 20));
 
