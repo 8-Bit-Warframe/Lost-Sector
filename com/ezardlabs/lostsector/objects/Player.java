@@ -144,9 +144,6 @@ public class Player extends Script {
 //						}
 //						break;
 //				}
-		TextureAtlas ta = new TextureAtlas("images/effects/dust.png", "images/effects/dust.txt");
-		dust = new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50),
-				new Animator(new Animation("dust", new Sprite[]{ta.getSprite("dust0"), ta.getSprite("dust1"), ta.getSprite("dust2")}, AnimationType.ONE_SHOT, 100)));
 	}
 
 	@Override
