@@ -109,41 +109,6 @@ public class Player extends Script {
 				}
 			});
 		}
-//		SparseArray<Vector2> map = new SparseArray<>();
-//
-//			public boolean onTouch(View v, MotionEvent event) {
-//				switch (event.getActionMasked()) {
-//					case MotionEvent.ACTION_OUTSIDE:
-//					case MotionEvent.ACTION_CANCEL:
-//						map.remove(event.getActionIndex());
-//						break;
-//					case MotionEvent.ACTION_DOWN:
-//					case MotionEvent.ACTION_POINTER_DOWN:
-//						map.put(event.getActionIndex(),
-//								new Vector2(event.getX(event.getActionIndex()),
-//										event.getY(event.getActionIndex())));
-//						break;
-//					case MotionEvent.ACTION_UP:
-//					case MotionEvent.ACTION_POINTER_UP:
-//						Vector2 v2 = map.get(event.getActionIndex());
-//						map.remove(event.getActionIndex());
-//						if (v2 != null) {
-//							v2.x = event.getX(event.getActionIndex()) - v2.x;
-//							v2.y = event.getY(event.getActionIndex()) - v2.y;
-//							if (v2.x < -150 * (getWidth() / 1920f)) { // left
-//								player.getComponent(Player.class).snowglobe();
-//							} else if (v2.x > 150 * (getWidth() / 1920f)) { // right
-//								player.getComponent(Player.class).freeze();
-//							} else if (v2.y < -150 * (getHeight() / 1080f)) { // up
-//								player.getComponent(Player.class).stopShooting();
-//							} else if (v2.y > 150 * (getHeight() / 1080f)) { // down
-//								player.getComponent(Player.class).shoot();
-//							} else {
-//								player.getComponent(Player.class).jump();
-//							}
-//						}
-//						break;
-//				}
 	}
 
 	@Override
