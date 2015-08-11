@@ -7,9 +7,11 @@ import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 
 public abstract class Warframe extends Script {
 	protected final TextureAtlas ta;
+	public MeleeWeapon meleeWeapon;
 
 	public Warframe(String name) {
 		ta = new TextureAtlas("images/warframes/" + name + "/atlas.png", "images/warframes/" + name + "/atlas.txt");
@@ -69,4 +71,9 @@ public abstract class Warframe extends Script {
 	public abstract void ability3();
 
 	public abstract void ability4();
+
+	public final void setMeleeWeapon(MeleeWeapon meleeWeapon) {
+		this.meleeWeapon = meleeWeapon;
+		gameObject.animator.addAnimations(meleeWeapon.getAnimations(ta));
+	}
 }

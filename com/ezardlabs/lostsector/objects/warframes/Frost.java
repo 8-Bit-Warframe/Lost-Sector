@@ -1,7 +1,5 @@
 package com.ezardlabs.lostsector.objects.warframes;
 
-import android.util.Log;
-
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
@@ -15,6 +13,7 @@ import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.IceWave;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Snowglobe;
+import com.ezardlabs.lostsector.objects.weapons.Nikana;
 
 public class Frost extends Warframe {
 
@@ -26,7 +25,7 @@ public class Frost extends Warframe {
 	public void start() {
 		super.start();
 		gameObject.renderer.setzIndex(4);
-		gameObject.animator.addAnimation(new Animation("cast_avalanche", new Sprite[]{ta.getSprite("avalanche0"),
+		gameObject.animator.addAnimations(new Animation("cast_avalanche", new Sprite[]{ta.getSprite("avalanche0"),
 				ta.getSprite("avalanche1"),
 				ta.getSprite("avalanche2"),
 				ta.getSprite("avalanche3"),
@@ -40,6 +39,7 @@ public class Frost extends Warframe {
 				ta.getSprite("avalanche11"),
 				ta.getSprite("avalanche12"),
 				ta.getSprite("avalanche13")}, AnimationType.ONE_SHOT, 100));
+		setMeleeWeapon(new Nikana());
 	}
 
 	@Override

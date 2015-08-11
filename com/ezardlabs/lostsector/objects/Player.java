@@ -1,7 +1,5 @@
 package com.ezardlabs.lostsector.objects;
 
-import android.util.Log;
-
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
@@ -27,8 +25,8 @@ public class Player extends Script {
 	public static GameObject player;
 	public int jumpCount = 0;
 	private int x = 0;
-	private GameObject dust;
 	public boolean landing = false;
+	public boolean melee = false;
 	private float speed = 12.5f;
 
 	@Override
@@ -36,7 +34,7 @@ public class Player extends Script {
 		player = gameObject;
 		if (Utils.PLATFORM == Platform.ANDROID) {
 			Input.addOnTouchListener(new OnTouchListener() {
-				HashMap<Integer, Vector2> map = new HashMap<>();
+				final HashMap<Integer, Vector2> map = new HashMap<>();
 
 				@Override
 				public void onTouchDown(int id, float x, float y) {
@@ -68,13 +66,6 @@ public class Player extends Script {
 				@SuppressWarnings("ConstantConditions")
 				@Override
 				public void onTouchUp(int id, float x, float y) {
-//					if (map.get(id).x > Screen.width / 2f) {
-//						if (Vector2.distance(map.get(id), x, y) < 50 * Screen.scale) {
-//							jump();
-//						}
-//					} else {
-//						Player.this.x = 0;
-//					}
 					Vector2 v = map.get(id);
 					map.remove(id);
 					if (v != null) {
@@ -115,28 +106,27 @@ public class Player extends Script {
 	public void update() {
 		if (landing) return;
 
+		if (x < 0) {
+			gameObject.renderer.hFlipped = true;
+		} else if (x > 0) {
+			gameObject.renderer.hFlipped = false;
+		}
+
+		if (melee) return;
 
 		transform.translate(x * speed, 0);
 
-		if (!landing) {
-			if (x < 0) {
-				gameObject.renderer.hFlipped = true;
-			} else if (x > 0) {
-				gameObject.renderer.hFlipped = false;
-			}
+		if (jumpCount > 0 && gameObject.rigidbody.gravity > 0) {
+			gameObject.animator.play("fall");
+		}
 
-			if (jumpCount > 0 && gameObject.rigidbody.gravity > 0) {
+		if (jumpCount == 0) {
+			if (gameObject.rigidbody.gravity > 2) {
 				gameObject.animator.play("fall");
-			}
-
-			if (jumpCount == 0) {
-				if (gameObject.rigidbody.gravity > 2) {
-					gameObject.animator.play("fall");
-				} else if (x != 0) {
-					gameObject.animator.play("run");
-				} else {
-					gameObject.animator.play("idle");
-				}
+			} else if (x != 0) {
+				gameObject.animator.play("run");
+			} else {
+				gameObject.animator.play("idle");
 			}
 		}
 	}
@@ -148,6 +138,12 @@ public class Player extends Script {
 		}
 	}
 
+	public void melee() {
+		melee = true;
+		//noinspection ConstantConditions
+		gameObject.animator.play(((Warframe) gameObject.getComponentOfType(Warframe.class)).meleeWeapon.getNextAnimation(x));
+	}
+
 	@Override
 	public void onCollision(Collider other, Collision collision) {
 		if (collision.location == CollisionLocation.BOTTOM) {
@@ -156,7 +152,9 @@ public class Player extends Script {
 				landing = true;
 				gameObject.animator.play("land");
 				TextureAtlas ta = new TextureAtlas("images/effects/dust.png", "images/effects/dust.txt");
-				GameObject.destroy(GameObject.instantiate(new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50), new Animator(new Animation("dust", new Sprite[]{ta.getSprite("dust0"), ta.getSprite("dust1"), ta.getSprite("dust2")}, AnimationType.ONE_SHOT, 100))), new Vector2(transform.position.x - 262, transform.position.y + 150)), 300);
+				GameObject.destroy(GameObject.instantiate(new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50), new Animator(new Animation("dust", new Sprite[]{ta.getSprite("dust0"),
+						ta.getSprite("dust1"),
+						ta.getSprite("dust2")}, AnimationType.ONE_SHOT, 100))), new Vector2(transform.position.x - 262, transform.position.y + 150)), 300);
 				new Thread() {
 					@Override
 					public void run() {
