@@ -1,4 +1,4 @@
-package com.ezardlabs.lostsector.objects;
+package com.ezardlabs.lostsector.objects.environment;
 
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Collider;
@@ -16,6 +16,7 @@ public class Locker extends Component {
 	public void onTriggerEnter(Collider other) {
 		if (!locked && !unlocking && other.gameObject.name.equals("Player")) {
 			unlocking = true;
+			//noinspection ConstantConditions
 			gameObject.getComponent(Animator.class).play("unlock");
 		}
 	}
