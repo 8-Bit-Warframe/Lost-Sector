@@ -1,22 +1,27 @@
 package com.ezardlabs.lostsector;
 
+import android.util.Log;
+
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.NavMesh.NavPoint.NavPointType;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class NavMesh {
-	private static NavPoint[][] navPoints;
+	public static NavPoint[][] navPoints;
 	private static int maxIndex = 0;
 	private static NavPoint closest;
 	private static boolean found = false;
 
+	private static ArrayList<NavPoint> pointsWithAlteredIndices = new ArrayList<>();
+
 	public static class NavPoint {
-		private NavPointType type = NavPointType.NONE;
-		private final ArrayList<NavPoint> links = new ArrayList<>();
-		private final int id;
+		public NavPointType type = NavPointType.NONE;
+		public final ArrayList<NavPoint> links = new ArrayList<>();
+		public final int id;
 		public final Vector2 position;
 		private int index = 0;
 
@@ -33,32 +38,43 @@ public class NavMesh {
 			SOLO
 		}
 
-		void index(int index, int lastId) {
+		void index(int index) {
 			if (found) return;
 			if (this.index == -1) {
 				this.index = index;
 				maxIndex = index;
 				closest = this;
 				found = true;
+				pointsWithAlteredIndices.add(this);
+				toIndex.clear();
+				indices.clear();
 				return;
 			}
 			this.index = index;
+			pointsWithAlteredIndices.add(this);
 			if (index > maxIndex) {
 				maxIndex = index;
 				closest = this;
 			}
 			for (NavPoint np : links) {
-				if (np.id != lastId) np.index(index + 1, id);
+				if (np.index <= 0 || np.index > index + 1) {
+					toIndex.addFirst(np);
+					indices.addFirst(index + 1);
+				}
 			}
 		}
 
 		@Override
 		public String toString() {
-			return "NavPoint: id=" + id;
+			String l = "";
+			for (NavPoint np : links) {
+				l += np.id + ", ";
+			}
+			return "NavPoint: id = " + id + ", index = " + index + ", links = " + l;
 		}
 	}
 
-	static int count = 0;
+	private static int count = 0;
 
 	public static void init(int[][] solidityMap) {
 		solidityMap = fillInSolidityMap(solidityMap);
@@ -98,6 +114,43 @@ public class NavMesh {
 							navPoints[x - 1][y].links.add(navPoints[x][y]);
 						}
 						platformStarted = false;
+					}
+				}
+			}
+		}
+
+		for (int x = 0; x < navPoints.length; x++) {
+			for (int y = 0; y < navPoints[x].length; y++) {
+				if (navPoints[x][y].type == NavPointType.RIGHT_EDGE || navPoints[x][y].type == NavPointType.SOLO) {
+					if (x + 2 < navPoints.length && !isCollision(solidityMap, x + 1, y) && !isCollision(solidityMap, x + 2, y) && !isCollision(solidityMap, x + 1, y - 1) && !isCollision(solidityMap, x + 2, y - 1)) {
+						int yTemp = y + 1;
+						while (yTemp < navPoints[x].length - 1 && !isCollision(solidityMap, x + 1, yTemp) && !isCollision(solidityMap, x + 2, yTemp)) {
+							yTemp++;
+						}
+						yTemp--;
+						if (isCollision(solidityMap, x + 2, yTemp + 1)) {
+							navPoints[x][y].links.add(navPoints[x + 2][yTemp]);
+							navPoints[x + 2][yTemp].links.add(navPoints[x][y]);
+						} else {
+							navPoints[x][y].links.add(navPoints[x + 1][yTemp]);
+							navPoints[x + 1][yTemp].links.add(navPoints[x][y]);
+						}
+					}
+				}
+				if (navPoints[x][y].type == NavPointType.LEFT_EDGE || navPoints[x][y].type == NavPointType.SOLO) {
+					if (x - 2 > 0 && !isCollision(solidityMap, x - 1, y) && !isCollision(solidityMap, x - 2, y) && !isCollision(solidityMap, x - 1, y - 1) && !isCollision(solidityMap, x - 2, y - 1)) {
+						int yTemp = y + 1;
+						while (yTemp < navPoints[x].length - 1 && !isCollision(solidityMap, x - 1, yTemp) && !isCollision(solidityMap, x - 2, yTemp)) {
+							yTemp++;
+						}
+						yTemp--;
+						if (isCollision(solidityMap, x - 2, yTemp + 1)) {
+							navPoints[x][y].links.add(navPoints[x - 2][yTemp]);
+							navPoints[x - 2][yTemp].links.add(navPoints[x][y]);
+						} else {
+							navPoints[x][y].links.add(navPoints[x - 1][yTemp]);
+							navPoints[x - 1][yTemp].links.add(navPoints[x][y]);
+						}
 					}
 				}
 			}
@@ -168,11 +221,19 @@ public class NavMesh {
 				solidity[x][y] == 1;
 	}
 
+	private static ArrayDeque<NavPoint> toIndex = new ArrayDeque<>();
+	private static ArrayDeque<Integer> indices = new ArrayDeque<>();
+
 	public static NavPoint[] getPath(Transform self, Transform target) {
-		NavPoint start = navPoints[(int) (self.position.x / 100f) + (self.gameObject.renderer.hFlipped ? 0 : 1)][(int) (self.position.y / 100f) + 1];
-		NavPoint end = navPoints[(int) (target.position.x / 100f) + (target.gameObject.renderer.hFlipped ? 0 : 1)][(int) (target.position.y / 100f) + 1];
+		NavPoint start = navPoints[(int) (self.position.x / 100f)][(int) (self.position.y / 100f) + 1];
+		NavPoint end = navPoints[(int) (target.position.x / 100f)][(int) (target.position.y / 100f) + 1];
 
 		if (start == null || end == null) return null;
+
+		for (int i = 0; i < pointsWithAlteredIndices.size(); i++) {
+			pointsWithAlteredIndices.get(i).index = 0;
+		}
+		pointsWithAlteredIndices.clear();
 
 		end.index = -1;
 
@@ -180,7 +241,15 @@ public class NavMesh {
 
 		found = false;
 
-		start.index(0, 0);
+		toIndex.clear();
+		indices.clear();
+
+		toIndex.add(start);
+		indices.add(1);
+
+		while (!toIndex.isEmpty()) {
+			toIndex.pop().index(indices.pop());
+		}
 
 		if (closest.id != end.id) {
 			return new NavPoint[0];
