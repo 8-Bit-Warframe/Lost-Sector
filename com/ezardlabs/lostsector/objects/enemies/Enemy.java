@@ -14,6 +14,7 @@ public abstract class Enemy extends Avatar {
 	private final TextureAtlas ta;
 	public boolean frozen = false;
 	public final double uid;
+	protected boolean landing = false;
 
 	public Enemy(String name, int health) {
 		super(health);
@@ -25,8 +26,7 @@ public abstract class Enemy extends Avatar {
 	public void start() {
 		gameObject.setTag("enemy");
 		gameObject.renderer.setTextureAtlas(ta, 200, 200);
-		gameObject.animator.setAnimations(getIdleAnimation(), getRunAnimation(), getDieShootFrontAnimation(), getDieShootBackAnimation(), getDieSlashFrontAnimation(), getDieSlashBackAnimation(),
-				getDieKubrowFrontAnimation(), getDieKubrowBackAnimation(), getFrozenAnimation(), getFrozenMeltAnimation(), getFrozenShatterAnimation());
+		gameObject.animator.setAnimations(getIdleAnimation(), getRunAnimation(), getJumpAnimation(), getFallAnimation(), getLandAnimation(), getDieShootFrontAnimation(), getDieShootBackAnimation(), getDieSlashFrontAnimation(), getDieSlashBackAnimation(), getDieKubrowFrontAnimation(), getDieKubrowBackAnimation(), getFrozenAnimation(), getFrozenMeltAnimation(), getFrozenShatterAnimation());
 		gameObject.animator.play("idle");
 		gameObject.renderer.setFlipped(true, false);
 		gameObject.renderer.setzIndex(3);
@@ -80,6 +80,32 @@ public abstract class Enemy extends Avatar {
 				ta.getSprite("run5"),
 				ta.getSprite("run6"),
 				ta.getSprite("run7")}, AnimationType.LOOP, 100);
+	}
+
+	protected Animation getJumpAnimation() {
+		return new Animation("jump", new Sprite[]{ta.getSprite("jump0"), ta.getSprite("jump1")}, AnimationType.ONE_SHOT, 100);
+	}
+
+	protected Animation getFallAnimation() {
+		return new Animation("fall", new Sprite[]{ta.getSprite("fall0")}, AnimationType.ONE_SHOT, Long.MAX_VALUE);
+	}
+
+	protected Animation getLandAnimation() {
+		return new Animation("land", new Sprite[]{ta.getSprite("land0"),
+				ta.getSprite("land1")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
+			@Override
+			public void onAnimatedStarted(Animator animator) {
+			}
+
+			@Override
+			public void onFrame(int frameNum) {
+			}
+
+			@Override
+			public void onAnimationFinished(Animator animator) {
+				landing = false;
+			}
+		});
 	}
 
 	protected Animation getDieShootFrontAnimation() {

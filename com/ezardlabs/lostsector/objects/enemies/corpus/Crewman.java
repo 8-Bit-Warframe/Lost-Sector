@@ -1,5 +1,6 @@
 package com.ezardlabs.lostsector.objects.enemies.corpus;
 
+import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.NavMesh;
@@ -15,7 +16,7 @@ public class Crewman extends Enemy {
 	@Override
 	public void update() {
 		int x = 0;
-		if (gameObject.rigidbody.gravity == 0) {
+		if (!landing && gameObject.rigidbody.gravity == 0) {
 			if (target == null || transform.position.x == target.x) {
 				NavMesh.NavPoint[] path = NavMesh.getPath(transform, Game.players[0].transform);
 				if (path != null && path.length > 0) {
@@ -34,12 +35,24 @@ public class Crewman extends Enemy {
 					gameObject.renderer.hFlipped = false;
 				}
 			}
-			transform.translate(x, 0);
-			if (x == 0) {
-				gameObject.animator.play("idle");
-			} else {
-				gameObject.animator.play("run");
-			}
+		}
+		transform.translate(x, 0);
+		if (landing) {
+			gameObject.animator.play("land");
+		} else if (gameObject.rigidbody.gravity > 0) {
+			gameObject.animator.play("fall");
+		} else if (x != 0) {
+			gameObject.animator.play("run");
+		} else {
+			gameObject.animator.play("idle");
+		}
+	}
+
+	@Override
+	public void onCollision(Collider other, Collider.Collision collision) {
+		if (collision.speed > 37 && collision.location == Collider.CollisionLocation.BOTTOM) {
+			gameObject.animator.play("land");
+			landing = true;
 		}
 	}
 }
