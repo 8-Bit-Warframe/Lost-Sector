@@ -29,7 +29,7 @@ public class Game extends BaseGame {
 		MapManager.loadMap("kubrow-map");
 
 		//noinspection RedundantArrayCreation
-		GameObject.instantiate(new GameObject("Crewman", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new DeraCrewman()), new Vector2(1500, 20));
+		GameObject.instantiate(new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new DeraCrewman()), new Vector2(1500, 20));
 
 //		ta = new TextureAtlas("images/warframes/frost/atlas.png", "images/warframes/frost/atlas.txt");
 		players = new GameObject[]{new GameObject("Player", new Player(), new Renderer(), new Animator(), new Frost(), new Collider(200, 200), new Rigidbody())};
@@ -39,7 +39,7 @@ public class Game extends BaseGame {
 		cm.smoothFollow(players[0].transform);
 		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm), new Vector2());
 
-//		GameObject.instantiate(new GameObject("Kubrow", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new Kubrow()), new Vector2(220, 20));
+//		GameObject.instantiate(new GameObject("Kubrow", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new Kubrow()), new Vector2(1500, 20));
 
 //		GameObject.instantiate(new GameObject("Buttons"), new Vector2());
 	}
