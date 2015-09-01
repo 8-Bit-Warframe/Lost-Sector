@@ -4,16 +4,27 @@ import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.Animation.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
-import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.lostsector.objects.Avatar;
+import com.ezardlabs.lostsector.objects.hud.StatusIndicator;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 
-public abstract class Warframe extends Script {
+public abstract class Warframe extends Avatar {
 	protected final TextureAtlas ta;
+	protected final int maxShields;
+	protected int shields;
+	protected final int maxEnergy;
+	protected int energy;
 	public MeleeWeapon meleeWeapon;
+	private StatusIndicator statusIndicator;
 
-	public Warframe(String name) {
+	public Warframe(String name, int maxHealth, int maxShields, int maxEnergy) {
+		super(maxHealth);
+		this.maxShields = maxShields;
+		shields = maxShields;
+		this.maxEnergy = maxEnergy;
+		energy = maxEnergy;
 		ta = new TextureAtlas("images/warframes/" + name + "/atlas.png", "images/warframes/" + name + "/atlas.txt");
 	}
 
@@ -29,7 +40,12 @@ public abstract class Warframe extends Script {
 	}
 
 	protected Animation getRunAnimation() {
-		return new Animation("run", new Sprite[]{ta.getSprite("run0"), ta.getSprite("run1"), ta.getSprite("run2"), ta.getSprite("run3"), ta.getSprite("run4"), ta.getSprite("run5")},
+		return new Animation("run", new Sprite[]{ta.getSprite("run0"),
+				ta.getSprite("run1"),
+				ta.getSprite("run2"),
+				ta.getSprite("run3"),
+				ta.getSprite("run4"),
+				ta.getSprite("run5")},
 				AnimationType.LOOP, 100);
 	}
 
@@ -39,7 +55,13 @@ public abstract class Warframe extends Script {
 
 	protected Animation getDoubleJumpAnimation() {
 		return new Animation("doublejump",
-				new Sprite[]{ta.getSprite("jump1"), ta.getSprite("jump2"), ta.getSprite("jump3"), ta.getSprite("jump4"), ta.getSprite("jump5"), ta.getSprite("jump6"), ta.getSprite("jump7")},
+				new Sprite[]{ta.getSprite("jump1"),
+						ta.getSprite("jump2"),
+						ta.getSprite("jump3"),
+						ta.getSprite("jump4"),
+						ta.getSprite("jump5"),
+						ta.getSprite("jump6"),
+						ta.getSprite("jump7")},
 				AnimationType.ONE_SHOT, 50, new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
@@ -57,11 +79,15 @@ public abstract class Warframe extends Script {
 	}
 
 	protected Animation getFallAnimation() {
-		return new Animation("fall", new Sprite[]{ta.getSprite("fall0"), ta.getSprite("fall1"), ta.getSprite("fall2")}, AnimationType.LOOP, 90);
+		return new Animation("fall", new Sprite[]{ta.getSprite("fall0"),
+				ta.getSprite("fall1"),
+				ta.getSprite("fall2")}, AnimationType.LOOP, 90);
 	}
 
 	protected Animation getLandAnimation() {
-		return new Animation("land", new Sprite[]{ta.getSprite("land0"), ta.getSprite("land1"), ta.getSprite("land2")}, AnimationType.ONE_SHOT, 100);
+		return new Animation("land", new Sprite[]{ta.getSprite("land0"),
+				ta.getSprite("land1"),
+				ta.getSprite("land2")}, AnimationType.ONE_SHOT, 100);
 	}
 
 	public abstract void ability1();
@@ -75,5 +101,37 @@ public abstract class Warframe extends Script {
 	public final void setMeleeWeapon(MeleeWeapon meleeWeapon) {
 		this.meleeWeapon = meleeWeapon;
 		gameObject.animator.addAnimations(meleeWeapon.getAnimations(ta));
+	}
+
+	public void setStatusIndicator(StatusIndicator statusIndicator) {
+		this.statusIndicator = statusIndicator;
+		statusIndicator.init();
+	}
+
+	public void addHealth(int health) {
+		this.health += health;
+		if (this.health > maxHealth) this.health = maxHealth;
+		if (statusIndicator != null) statusIndicator.setHealth(this.health);
+	}
+
+	public void removeHealth(int health) {
+		this.health -= health;
+		if (statusIndicator != null) statusIndicator.setHealth(this.health);
+	}
+
+	public void addEnergy(int energy) {
+		this.energy += energy;
+		if (this.energy > maxEnergy) this.energy = maxEnergy;
+		if (statusIndicator != null) statusIndicator.setEnergy(this.energy);
+	}
+
+	public void removeEnergy(int energy) {
+		this.energy -= energy;
+		if (this.energy < 0)throw new Error("Energy cannot be reduced to below 0");
+		if (statusIndicator != null) statusIndicator.setEnergy(this.energy);
+	}
+
+	public boolean hasEnergy(int energy) {
+		return this.energy >= energy;
 	}
 }

@@ -3,9 +3,11 @@ package com.ezardlabs.lostsector.objects;
 import com.ezardlabs.dethsquare.Script;
 
 public abstract class Avatar extends Script {
-	public int health;
+	protected final int maxHealth;
+	protected int health;
 
-	public Avatar(int health) {
-		this.health = health;
+	public Avatar(int maxHealth) {
+		this.maxHealth = maxHealth;
+		health = maxHealth;
 	}
 }

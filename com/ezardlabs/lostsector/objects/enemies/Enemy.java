@@ -32,15 +32,18 @@ public abstract class Enemy extends Avatar {
 		gameObject.renderer.setzIndex(3);
 	}
 
+	public final void jump() {
+		gameObject.rigidbody.gravity = -25f;
+	}
+
 	public final void applyDamage(int damage, DamageType damageType) {
-		health -= damage;
 		switch (damageType) {
 			case COLD:
 				gameObject.animator.play("frozen");
 				frozen = true;
 				break;
 		}
-		if (health <= 0) {
+		if (maxHealth <= 0) {
 			die();
 		}
 	}
@@ -218,7 +221,7 @@ public abstract class Enemy extends Avatar {
 
 			@Override
 			public void onAnimationFinished(Animator animator) {
-				if (health <= 0) {
+				if (maxHealth <= 0) {
 					animator.play("frozen_shatter");
 				} else {
 					animator.play("frozen_melt");

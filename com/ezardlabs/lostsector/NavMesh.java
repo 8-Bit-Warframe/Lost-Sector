@@ -155,6 +155,23 @@ public class NavMesh {
 				}
 			}
 		}
+
+
+		for (int x = 0; x < navPoints.length; x++) {
+			for (int y = 0; y < navPoints[x].length; y++) {
+				if (navPoints[x][y].type == NavPointType.RIGHT_EDGE) {
+					if (isCollision(solidityMap, x + 1, y)) {
+						if (!isCollision(solidityMap, x + 1, y - 1)) {
+							navPoints[x][y].links.add(navPoints[x + 1][y - 1]);
+							navPoints[x + 1][y - 1].links.add(navPoints[x][y]);
+						} else if (!isCollision(solidityMap, x + 1, y - 2)) {
+							navPoints[x][y].links.add(navPoints[x + 1][y - 2]);
+							navPoints[x + 1][y - 2].links.add(navPoints[x][y]);
+						}
+					}
+				}
+			}
+		}
 //
 //		for (int y = 0; y < navPoints[0].length; y++) {
 //			for (int x = 0; x < navPoints.length; x++) {

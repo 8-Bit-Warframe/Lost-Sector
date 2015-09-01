@@ -74,14 +74,27 @@ public class Player extends Script {
 						} else {
 							v.x = x - v.x;
 							v.y = y - v.y;
+							Warframe w = (Warframe) player.getComponentOfType(Warframe.class);
 							if (v.x < -150 * Screen.scale) { // left
-								((Warframe) player.getComponentOfType(Warframe.class)).ability3();
+								if (w.hasEnergy(25)) {
+									w.removeEnergy(25);
+									w.ability3();
+								}
 							} else if (v.x > 150 * Screen.scale) { // right
-								((Warframe) player.getComponentOfType(Warframe.class)).ability1();
+								if (w.hasEnergy(5)) {
+									w.removeEnergy(5);
+									w.ability1();
+								}
 							} else if (v.y < -150 * Screen.scale) { // up
-								((Warframe) player.getComponentOfType(Warframe.class)).ability4();
+								if (w.hasEnergy(50)) {
+									w.removeEnergy(50);
+									w.ability4();
+								}
 							} else if (v.y > 150 * Screen.scale) { // down
-								((Warframe) player.getComponentOfType(Warframe.class)).ability2();
+								if (w.hasEnergy(10)) {
+									w.removeEnergy(10);
+									w.ability2();
+								}
 							} else {
 								jump();
 							}
