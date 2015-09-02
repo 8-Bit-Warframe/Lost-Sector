@@ -1,7 +1,5 @@
 package com.ezardlabs.lostsector.objects.weapons;
 
-import android.util.Log;
-
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Renderer;
