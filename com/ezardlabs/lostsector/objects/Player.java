@@ -8,6 +8,7 @@ import com.ezardlabs.dethsquare.Collider.Collision;
 import com.ezardlabs.dethsquare.Collider.CollisionLocation;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Input;
+import com.ezardlabs.dethsquare.Input.OnKeyListener;
 import com.ezardlabs.dethsquare.Input.OnTouchListener;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Screen;
@@ -16,9 +17,9 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.Utils;
-import com.ezardlabs.dethsquare.util.Utils.Platform;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Player extends Script {
@@ -32,86 +33,170 @@ public class Player extends Script {
 	@Override
 	public void start() {
 		player = gameObject;
-		if (Utils.PLATFORM == Platform.ANDROID) {
-			Input.addOnTouchListener(new OnTouchListener() {
-				final HashMap<Integer, Vector2> map = new HashMap<>();
+		switch (Utils.PLATFORM) {
+			case ANDROID:
+				Input.addOnTouchListener(new OnTouchListener() {
+					final HashMap<Integer, Vector2> map = new HashMap<>();
 
-				@Override
-				public void onTouchDown(int id, float x, float y) {
-					if (x < Screen.width / 6f) {
-						Player.this.x = -1;
-					} else if (x < Screen.width / 2f) {
-						Player.this.x = 1;
-					}
-					map.put(id, new Vector2(x, y));
-				}
-
-				@Override
-				public void onTouchMove(int id, float x, float y) {
-					if (map.containsKey(id) && map.get(id).x > Screen.width / 2f) {
-						if (x < Screen.width / 2f) {
-							onTouchUp(id, Screen.width / 2f, y);
-						}
-					} else {
-						if (x > Screen.width / 2f) {
-							onTouchUp(id, Screen.width / 2f, y);
-						} else if (x < Screen.width / 6f) {
+					@Override
+					public void onTouchDown(int id, float x, float y) {
+						if (x < Screen.width / 6f) {
 							Player.this.x = -1;
 						} else if (x < Screen.width / 2f) {
 							Player.this.x = 1;
 						}
+						map.put(id, new Vector2(x, y));
 					}
-				}
 
-				@SuppressWarnings("ConstantConditions")
-				@Override
-				public void onTouchUp(int id, float x, float y) {
-					Vector2 v = map.get(id);
-					map.remove(id);
-					if (v != null) {
-						if (v.x < Screen.width / 2f) {
-							Player.this.x = 0;
+					@Override
+					public void onTouchMove(int id, float x, float y) {
+						if (map.containsKey(id) && map.get(id).x > Screen.width / 2f) {
+							if (x < Screen.width / 2f) {
+								onTouchUp(id, Screen.width / 2f, y);
+							}
 						} else {
-							v.x = x - v.x;
-							v.y = y - v.y;
-							Warframe w = (Warframe) player.getComponentOfType(Warframe.class);
-							if (v.x < -150 * Screen.scale) { // left
-								if (w.hasEnergy(25)) {
-									w.removeEnergy(25);
-									w.ability3();
+							if (x > Screen.width / 2f) {
+								onTouchUp(id, Screen.width / 2f, y);
+							} else if (x < Screen.width / 6f) {
+								Player.this.x = -1;
+							} else if (x < Screen.width / 2f) {
+								Player.this.x = 1;
+							}
+						}
+					}
+
+					@SuppressWarnings("ConstantConditions")
+					@Override
+					public void onTouchUp(int id, float x, float y) {
+						Vector2 v = map.get(id);
+						map.remove(id);
+						if (v != null) {
+							if (v.x < Screen.width / 2f) {
+								Player.this.x = 0;
+							} else {
+								v.x = x - v.x;
+								v.y = y - v.y;
+								Warframe w = (Warframe) gameObject
+										.getComponentOfType(Warframe.class);
+								if (v.x < -150 * Screen.scale) { // left
+									if (w.hasEnergy(25)) {
+										w.removeEnergy(25);
+										w.ability3();
+									}
+								} else if (v.x > 150 * Screen.scale) { // right
+									if (w.hasEnergy(5)) {
+										w.removeEnergy(5);
+										w.ability1();
+									}
+								} else if (v.y < -150 * Screen.scale) { // up
+									if (w.hasEnergy(50)) {
+										w.removeEnergy(50);
+										w.ability4();
+									}
+								} else if (v.y > 150 * Screen.scale) { // down
+									if (w.hasEnergy(10)) {
+										w.removeEnergy(10);
+										w.ability2();
+									}
+								} else {
+									jump();
 								}
-							} else if (v.x > 150 * Screen.scale) { // right
+							}
+						}
+					}
+
+					@Override
+					public void onTouchCancel(int id) {
+						map.remove(id);
+					}
+
+					@Override
+					public void onTouchOutside(int id) {
+						map.remove(id);
+					}
+				});
+				break;
+			case DESKTOP:
+				Input.addOnKeyListener(new OnKeyListener() {
+					private boolean leftDown = false;
+					private boolean rightDown = false;
+					private ArrayList<Character> down = new ArrayList<>();
+
+					@Override
+					public void onKeyTyped(char keyChar) {
+					}
+
+					@SuppressWarnings("ConstantConditions")
+					@Override
+					public void onKeyDown(char keyChar) {
+						if (down.contains(keyChar)) return;
+						else down.add(keyChar);
+						Warframe w = (Warframe) gameObject.getComponentOfType(Warframe.class);
+						switch (keyChar) {
+							case 'a':
+								leftDown = true;
+								if (rightDown) x = 0;
+								else x = -1;
+								break;
+							case 'd':
+								rightDown = true;
+								if (leftDown) x = 0;
+								else x = 1;
+								break;
+							case 'w':
+							case ' ':
+							case 'j':
+								jump();
+								break;
+							case '1':
 								if (w.hasEnergy(5)) {
 									w.removeEnergy(5);
 									w.ability1();
 								}
-							} else if (v.y < -150 * Screen.scale) { // up
-								if (w.hasEnergy(50)) {
-									w.removeEnergy(50);
-									w.ability4();
-								}
-							} else if (v.y > 150 * Screen.scale) { // down
+								break;
+							case '2':
 								if (w.hasEnergy(10)) {
 									w.removeEnergy(10);
 									w.ability2();
 								}
-							} else {
-								jump();
-							}
+								break;
+							case '3':
+								if (w.hasEnergy(25)) {
+									w.removeEnergy(25);
+									w.ability3();
+								}
+								break;
+							case '4':
+								if (w.hasEnergy(50)) {
+									w.removeEnergy(50);
+									w.ability4();
+								}
+								break;
+							case '\n':
+							case 'k':
+								melee();
+								break;
 						}
 					}
-				}
 
-				@Override
-				public void onTouchCancel(int id) {
-					map.remove(id);
-				}
-
-				@Override
-				public void onTouchOutside(int id) {
-					map.remove(id);
-				}
-			});
+					@Override
+					public void onKeyUp(char keyChar) {
+						if (down.contains(keyChar)) down.remove((Character) keyChar);
+						switch (keyChar) {
+							case 'a':
+								leftDown = false;
+								if (rightDown) x = 1;
+								else x = 0;
+								break;
+							case 'd':
+								rightDown = false;
+								if (leftDown) x = -1;
+								else x = 0;
+								break;
+						}
+					}
+				});
+				break;
 		}
 	}
 
