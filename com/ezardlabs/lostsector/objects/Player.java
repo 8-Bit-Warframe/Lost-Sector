@@ -146,7 +146,7 @@ public class Player extends Script {
 							case 'w':
 							case ' ':
 							case 'j':
-								jump();
+								if (!landing && !melee) jump();
 								break;
 							case '1':
 								if (w.hasEnergy(5)) {
@@ -174,7 +174,7 @@ public class Player extends Script {
 								break;
 							case '\n':
 							case 'k':
-								melee();
+								if (!landing) melee();
 								break;
 						}
 					}
@@ -239,7 +239,9 @@ public class Player extends Script {
 	public void melee() {
 		melee = true;
 		//noinspection ConstantConditions
-		gameObject.animator.play(((Warframe) gameObject.getComponentOfType(Warframe.class)).meleeWeapon.getNextAnimation(x));
+		gameObject.animator
+				.play(((Warframe) gameObject.getComponentOfType(Warframe.class)).meleeWeapon
+								.getNextAnimation(x));
 	}
 
 	@Override
@@ -249,10 +251,16 @@ public class Player extends Script {
 			if (collision.speed > 37) {
 				landing = true;
 				gameObject.animator.play("land");
-				TextureAtlas ta = new TextureAtlas("images/effects/dust.png", "images/effects/dust.txt");
-				GameObject.destroy(GameObject.instantiate(new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50), new Animator(new Animation("dust", new Sprite[]{ta.getSprite("dust0"),
-						ta.getSprite("dust1"),
-						ta.getSprite("dust2")}, AnimationType.ONE_SHOT, 100))), new Vector2(transform.position.x - 262, transform.position.y + 150)), 300);
+				TextureAtlas ta = new TextureAtlas("images/effects/dust.png",
+						"images/effects/dust.txt");
+				GameObject.destroy(GameObject.instantiate(
+						new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50),
+								new Animator(new Animation("dust",
+										new Sprite[]{ta.getSprite("dust0"),
+												ta.getSprite("dust1"),
+												ta.getSprite("dust2")}, AnimationType.ONE_SHOT,
+										100))),
+						new Vector2(transform.position.x - 262, transform.position.y + 150)), 300);
 				new Thread() {
 					@Override
 					public void run() {
