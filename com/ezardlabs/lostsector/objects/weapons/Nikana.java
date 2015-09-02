@@ -105,6 +105,6 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 				animator.play("stow");
 				currentAnimation = null;
 			}
-		}, 2000);
+		}, 300);
 	}
 }
