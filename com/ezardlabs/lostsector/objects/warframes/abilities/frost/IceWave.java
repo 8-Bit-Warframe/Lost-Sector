@@ -1,12 +1,9 @@
 package com.ezardlabs.lostsector.objects.warframes.abilities.frost;
 
-import android.util.Log;
-
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationType;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
