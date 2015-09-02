@@ -250,6 +250,8 @@ public class Player extends Script {
 			jumpCount = 0;
 			if (collision.speed > 37) {
 				landing = true;
+				gameObject.renderer.setSize(200, 200);
+				gameObject.renderer.setOffsets(0, 0);
 				gameObject.animator.play("land");
 				TextureAtlas ta = new TextureAtlas("images/effects/dust.png",
 						"images/effects/dust.txt");
