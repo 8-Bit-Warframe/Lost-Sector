@@ -36,7 +36,7 @@ public class Avalanche extends Script {
 			}
 
 			@Override
-			public void onFrame(int frameNum) {
+			public void onFrame(Animator animator, int frameNum) {
 			}
 
 			@Override
@@ -65,7 +65,7 @@ public class Avalanche extends Script {
 			}
 
 			@Override
-			public void onFrame(int frameNum) {
+			public void onFrame(Animator animator, int frameNum) {
 			}
 
 			@Override

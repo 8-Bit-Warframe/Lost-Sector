@@ -39,7 +39,7 @@ public class Freeze extends Script {
 					}
 
 					@Override
-					public void onFrame(int frameNum) {
+					public void onFrame(Animator animator, int frameNum) {
 
 					}
 

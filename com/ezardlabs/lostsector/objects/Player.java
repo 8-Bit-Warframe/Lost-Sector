@@ -214,12 +214,12 @@ public class Player extends Script {
 
 		transform.translate(x * speed, 0);
 
-		if (jumpCount > 0 && gameObject.rigidbody.gravity > 0) {
+		if (jumpCount > 0 && gameObject.rigidbody.velocity.y > 0) {
 			gameObject.animator.play("fall");
 		}
 
 		if (jumpCount == 0) {
-			if (gameObject.rigidbody.gravity > 2) {
+			if (gameObject.rigidbody.velocity.y > 2) {
 				gameObject.animator.play("fall");
 			} else if (x != 0) {
 				gameObject.animator.play("run");
@@ -231,7 +231,7 @@ public class Player extends Script {
 
 	public void jump() {
 		if (!landing && jumpCount++ < 2) {
-			gameObject.rigidbody.gravity = -25f;
+			gameObject.rigidbody.velocity.y = -25f;
 			gameObject.animator.play(jumpCount == 1 ? "jump" : "doublejump");
 		}
 	}

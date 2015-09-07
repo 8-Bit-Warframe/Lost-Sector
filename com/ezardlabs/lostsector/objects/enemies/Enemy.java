@@ -33,7 +33,7 @@ public abstract class Enemy extends Avatar {
 	}
 
 	public final void jump() {
-		gameObject.rigidbody.gravity = -25f;
+		gameObject.rigidbody.velocity.y = -25f;
 	}
 
 	public final void applyDamage(int damage, DamageType damageType) {
@@ -101,7 +101,7 @@ public abstract class Enemy extends Avatar {
 			}
 
 			@Override
-			public void onFrame(int frameNum) {
+			public void onFrame(Animator animator, int frameNum) {
 			}
 
 			@Override
@@ -169,7 +169,7 @@ public abstract class Enemy extends Avatar {
 			}
 
 			@Override
-			public void onFrame(int frameNum) {
+			public void onFrame(Animator animator, int frameNum) {
 
 			}
 
@@ -198,7 +198,7 @@ public abstract class Enemy extends Avatar {
 			}
 
 			@Override
-			public void onFrame(int frameNum) {
+			public void onFrame(Animator animator, int frameNum) {
 
 			}
 
@@ -216,7 +216,7 @@ public abstract class Enemy extends Avatar {
 			}
 
 			@Override
-			public void onFrame(int frameNum) {
+			public void onFrame(Animator animator, int frameNum) {
 			}
 
 			@Override
@@ -239,7 +239,7 @@ public abstract class Enemy extends Avatar {
 					}
 
 					@Override
-					public void onFrame(int frameNum) {
+					public void onFrame(Animator animator, int frameNum) {
 
 					}
 
@@ -269,7 +269,7 @@ public abstract class Enemy extends Avatar {
 			}
 
 			@Override
-			public void onFrame(int frameNum) {
+			public void onFrame(Animator animator, int frameNum) {
 
 			}
 

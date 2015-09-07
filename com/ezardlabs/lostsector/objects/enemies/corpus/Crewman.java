@@ -16,7 +16,7 @@ public class Crewman extends Enemy {
 	@Override
 	public void update() {
 		int x = 0;
-		if (!landing && gameObject.rigidbody.gravity == 0) {
+		if (!landing && gameObject.rigidbody.velocity.y == 0) {
 			if (target == null || transform.position.x == target.x) {
 				NavMesh.NavPoint[] path = NavMesh.getPath(transform, Game.players[0].transform);
 				if (path != null && path.length > 0) {
@@ -39,7 +39,7 @@ public class Crewman extends Enemy {
 		transform.translate(x, 0);
 		if (landing) {
 			gameObject.animator.play("land");
-		} else if (gameObject.rigidbody.gravity > 0) {
+		} else if (gameObject.rigidbody.velocity.y > 0) {
 			gameObject.animator.play("fall");
 		} else if (x != 0) {
 			gameObject.animator.play("run");

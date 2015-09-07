@@ -68,7 +68,7 @@ public abstract class Warframe extends Avatar {
 			}
 
 			@Override
-			public void onFrame(int frameNum) {
+			public void onFrame(Animator animator, int frameNum) {
 			}
 
 			@Override

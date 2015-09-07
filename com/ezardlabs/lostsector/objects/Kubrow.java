@@ -54,7 +54,7 @@ public class Kubrow extends Avatar {
 			}
 
 			@Override
-			public void onFrame(int frameNum) {
+			public void onFrame(Animator animator, int frameNum) {
 
 			}
 
@@ -205,7 +205,7 @@ public class Kubrow extends Avatar {
 	@Override
 	public void update() {
 		int x = 0;
-		if (gameObject.rigidbody.gravity == 0) {
+		if (gameObject.rigidbody.velocity.y == 0) {
 			if (target == null || transform.position.x == target.x) {
 				NavMesh.NavPoint[] path = NavMesh.getPath(transform, Game.players[0].transform);
 				if (path != null && path.length > 0) {
