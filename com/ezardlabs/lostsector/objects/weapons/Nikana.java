@@ -1,9 +1,6 @@
 package com.ezardlabs.lostsector.objects.weapons;
 
-import com.ezardlabs.dethsquare.Animation;
-import com.ezardlabs.dethsquare.Animator;
-import com.ezardlabs.dethsquare.Renderer;
-import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.*;
 import com.ezardlabs.lostsector.objects.Player;
 
 import java.util.Timer;
@@ -42,7 +39,7 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 					}
 
 					@Override
-					public void onFrame(int frameNum) {
+					public void onFrame(Animator animator, int frameNum) {
 					}
 
 					@Override
@@ -90,12 +87,17 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 		animator.gameObject.getComponent(Renderer.class).setSize(400, 300);
 		//noinspection ConstantConditions
 		animator.gameObject.getComponent(Renderer.class).setOffsets(-100, -100);
+        if (currentAnimation.contains("dash")) {
+            animator.gameObject.getComponent(Rigidbody.class).velocity.x = 25 * (animator.gameObject.getComponent(Renderer.class).hFlipped ? -1 : 1);
+        }
 	}
 
-	@Override
-	public void onFrame(int frameNum) {
-
-	}
+    @Override
+    public void onFrame(Animator animator, int frameNum) {
+        if (currentAnimation.contains("dash") && frameNum == 2) {
+            animator.gameObject.getComponent(Rigidbody.class).velocity.x = 0;
+        }
+    }
 
 	@Override
 	public void onAnimationFinished(final Animator animator) {
