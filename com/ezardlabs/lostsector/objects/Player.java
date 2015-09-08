@@ -3,6 +3,7 @@ package com.ezardlabs.lostsector.objects;
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Collider.Collision;
 import com.ezardlabs.dethsquare.Collider.CollisionLocation;
@@ -253,6 +254,8 @@ public class Player extends Script {
 				gameObject.renderer.setSize(200, 200);
 				gameObject.renderer.setOffsets(0, 0);
 				gameObject.animator.play("land");
+				//noinspection ConstantConditions
+				Camera.main.gameObject.getComponent(CameraMovement.class).startQuake(100, 0.3f);
 				TextureAtlas ta = new TextureAtlas("images/effects/dust.png",
 						"images/effects/dust.txt");
 				GameObject.destroy(GameObject.instantiate(
