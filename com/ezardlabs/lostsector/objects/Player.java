@@ -135,18 +135,22 @@ public class Player extends Script {
 						Warframe w = (Warframe) gameObject.getComponentOfType(Warframe.class);
 						switch (keyChar) {
 							case 'a':
+							case 'A':
 								leftDown = true;
 								if (rightDown) x = 0;
 								else x = -1;
 								break;
 							case 'd':
+							case 'D':
 								rightDown = true;
 								if (leftDown) x = 0;
 								else x = 1;
 								break;
 							case 'w':
+							case 'W':
 							case ' ':
 							case 'j':
+							case 'J':
 								if (!landing && !melee) jump();
 								break;
 							case '1':
@@ -175,6 +179,7 @@ public class Player extends Script {
 								break;
 							case '\n':
 							case 'k':
+							case 'K':
 								if (!landing) melee();
 								break;
 						}
