@@ -1,7 +1,6 @@
 package com.ezardlabs.lostsector;
 
 import com.ezardlabs.dethsquare.Animation;
-import com.ezardlabs.dethsquare.Animation.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
@@ -9,10 +8,12 @@ import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
+import com.ezardlabs.dethsquare.animationtypes.OscillateAnimation;
 import com.ezardlabs.dethsquare.util.Utils;
-import com.ezardlabs.lostsector.objects.environment.Locker;
 import com.ezardlabs.lostsector.objects.environment.Camera;
 import com.ezardlabs.lostsector.objects.environment.Door;
+import com.ezardlabs.lostsector.objects.environment.Locker;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -90,16 +91,16 @@ public class MapManager {
 								ta.getSprite("door3"),
 								ta.getSprite("door4"),
 								ta.getSprite("door5"),
-								ta.getSprite("door6")}, AnimationType.ONE_SHOT, 80), new Animation("close", new Sprite[]{ta.getSprite("door6"),
+								ta.getSprite("door6")}, new OneShotAnimation(), 80), new Animation("close", new Sprite[]{ta.getSprite("door6"),
 								ta.getSprite("door5"),
 								ta.getSprite("door4"),
 								ta.getSprite("door3"),
 								ta.getSprite("door2"),
 								ta.getSprite("door1"),
-								ta.getSprite("door0")}, AnimationType.ONE_SHOT, 80))), new Vector2(x, y));
+								ta.getSprite("door0")}, new OneShotAnimation(), 80))), new Vector2(x, y));
 			} else if (split[4].equals("ldoor")) {
 				GameObject.instantiate(new GameObject("Door", new Door(), new Collider(100, 500, true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
-						new Animator(new Animation("open", new Sprite[]{ta.getSprite("ldoor")}, AnimationType.ONE_SHOT, 80), new Animation("close", new Sprite[]{ta.getSprite("ldoor0"),
+						new Animator(new Animation("open", new Sprite[]{ta.getSprite("ldoor")}, new OneShotAnimation(), 80), new Animation("close", new Sprite[]{ta.getSprite("ldoor0"),
 								ta.getSprite("ldoor1"),
 								ta.getSprite("ldoor2"),
 								ta.getSprite("ldoor3"),
@@ -109,7 +110,7 @@ public class MapManager {
 								ta.getSprite("ldoor7"),
 								ta.getSprite("ldoor8"),
 								ta.getSprite("ldoor9"),
-								ta.getSprite("ldoor10")}, AnimationType.OSCILLATE, 80))), new Vector2(x, y));
+								ta.getSprite("ldoor10")}, new OscillateAnimation(), 80))), new Vector2(x, y));
 			}
 			GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y));
 			GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y + 128 * 3.125f));
@@ -130,7 +131,7 @@ public class MapManager {
 				GameObject.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200)), new Vector2(x, y));
 			} else {
 				GameObject.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200), new Animator(
-						new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
+						new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, new OneShotAnimation(),
 								125)), new Collider(100, 200, true)), new Vector2(x, y));
 			}
 		}
@@ -150,7 +151,7 @@ public class MapManager {
 					ta.getSprite("camera5"),
 					ta.getSprite("camera6"),
 					ta.getSprite("camera7"),
-					ta.getSprite("camera8")}, AnimationType.OSCILLATE, 500)), new Camera()), new Vector2(x, y));
+					ta.getSprite("camera8")}, new OscillateAnimation(), 500)), new Camera()), new Vector2(x, y));
 		}
 	}
 }

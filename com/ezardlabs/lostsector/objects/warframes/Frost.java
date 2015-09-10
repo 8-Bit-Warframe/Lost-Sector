@@ -1,13 +1,13 @@
 package com.ezardlabs.lostsector.objects.warframes;
 
 import com.ezardlabs.dethsquare.Animation;
-import com.ezardlabs.dethsquare.Animation.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.hud.StatusIndicator;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
@@ -40,7 +40,7 @@ public class Frost extends Warframe {
 				ta.getSprite("avalanche10"),
 				ta.getSprite("avalanche11"),
 				ta.getSprite("avalanche12"),
-				ta.getSprite("avalanche13")}, AnimationType.ONE_SHOT, 100));
+				ta.getSprite("avalanche13")}, new OneShotAnimation(), 100));
 		setMeleeWeapon(new Nikana());
 	}
 

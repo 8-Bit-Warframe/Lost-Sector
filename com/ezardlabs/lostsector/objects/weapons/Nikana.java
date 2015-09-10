@@ -1,6 +1,11 @@
 package com.ezardlabs.lostsector.objects.weapons;
 
-import com.ezardlabs.dethsquare.*;
+import com.ezardlabs.dethsquare.Animation;
+import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.Renderer;
+import com.ezardlabs.dethsquare.Rigidbody;
+import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.lostsector.objects.Player;
 
 import java.util.Timer;
@@ -17,23 +22,23 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 	public Animation[] getAnimations(TextureAtlas ta) {
 		return new Animation[]{new Animation("slice1", new TextureAtlas.Sprite[]{ta.getSprite("nikana_slice0"),
 				ta.getSprite("nikana_slice1"),
-				ta.getSprite("nikana_slice2")}, Animation.AnimationType.ONE_SHOT, 100, this),
+				ta.getSprite("nikana_slice2")}, new OneShotAnimation(), 100, this),
 				new Animation("slice2", new TextureAtlas.Sprite[]{ta.getSprite("nikana_slice3"),
 						ta.getSprite("nikana_slice4"),
-						ta.getSprite("nikana_slice5")}, Animation.AnimationType.ONE_SHOT, 100, this),
+						ta.getSprite("nikana_slice5")}, new OneShotAnimation(), 100, this),
 				new Animation("slice3", new TextureAtlas.Sprite[]{ta.getSprite("nikana_slice6"),
 						ta.getSprite("nikana_slice7"),
-						ta.getSprite("nikana_slice8")}, Animation.AnimationType.ONE_SHOT, 100, this),
+						ta.getSprite("nikana_slice8")}, new OneShotAnimation(), 100, this),
 				new Animation("dash1", new TextureAtlas.Sprite[]{ta.getSprite("nikana_dash0"),
 						ta.getSprite("nikana_dash1"),
-						ta.getSprite("nikana_dash2")}, Animation.AnimationType.ONE_SHOT, 100, this),
+						ta.getSprite("nikana_dash2")}, new OneShotAnimation(), 100, this),
 				new Animation("dash2", new TextureAtlas.Sprite[]{ta.getSprite("nikana_dash3"),
 						ta.getSprite("nikana_dash4"),
-						ta.getSprite("nikana_dash5")}, Animation.AnimationType.ONE_SHOT, 100, this),
+						ta.getSprite("nikana_dash5")}, new OneShotAnimation(), 100, this),
 				new Animation("dash3", new TextureAtlas.Sprite[]{ta.getSprite("nikana_dash6"),
 						ta.getSprite("nikana_dash7"),
-						ta.getSprite("nikana_dash8")}, Animation.AnimationType.ONE_SHOT, 100, this),
-				new Animation("stow", new TextureAtlas.Sprite[]{ta.getSprite("nikana_stow0")}, Animation.AnimationType.ONE_SHOT, 200, new Animation.AnimationListener() {
+						ta.getSprite("nikana_dash8")}, new OneShotAnimation(), 100, this),
+				new Animation("stow", new TextureAtlas.Sprite[]{ta.getSprite("nikana_stow0")}, new OneShotAnimation(), 200, new Animation.AnimationListener() {
 					@Override
 					public void onAnimatedStarted(Animator animator) {
 					}

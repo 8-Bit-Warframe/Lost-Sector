@@ -2,13 +2,14 @@ package com.ezardlabs.lostsector.objects.warframes.abilities.frost;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
-import com.ezardlabs.dethsquare.Animation.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.dethsquare.animationtypes.LoopAnimation;
+import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
@@ -29,10 +30,10 @@ public class Freeze extends Script {
 						ta.getSprite("cube2"),
 						ta.getSprite("cube3"),
 						ta.getSprite("cube4"),
-						ta.getSprite("cube5")}, AnimationType.LOOP, 100), new Animation("shatter", new Sprite[]{ta.getSprite("cube_shatter0"),
+						ta.getSprite("cube5")}, new LoopAnimation(), 100), new Animation("shatter", new Sprite[]{ta.getSprite("cube_shatter0"),
 						ta.getSprite("cube_shatter1"),
 						ta.getSprite("cube_shatter2"),
-						ta.getSprite("cube_shatter3")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
+						ta.getSprite("cube_shatter3")}, new OneShotAnimation(), 100, new AnimationListener() {
 					@Override
 					public void onAnimatedStarted(Animator animator) {
 						gameObject.removeComponent(Freeze.class);

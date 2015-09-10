@@ -5,6 +5,7 @@ import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Component;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.animationtypes.LoopAnimation;
 
 public class Snowglobe extends Component {
 
@@ -29,7 +30,7 @@ public class Snowglobe extends Component {
 				ta.getSprite("sg14"),
 				ta.getSprite("sg15"),
 				ta.getSprite("sg16"),
-				ta.getSprite("sg17")}, Animation.AnimationType.LOOP, 100));
+				ta.getSprite("sg17")}, new LoopAnimation(), 100));
 		gameObject.animator.play("snowglobe");
 		gameObject.renderer.setzIndex(5);
 		GameObject.destroy(gameObject, 5000);

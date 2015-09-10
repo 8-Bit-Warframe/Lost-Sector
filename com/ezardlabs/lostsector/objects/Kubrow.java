@@ -4,6 +4,8 @@ import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.animationtypes.LoopAnimation;
+import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.NavMesh;
 
@@ -26,7 +28,7 @@ public class Kubrow extends Avatar {
 	public void start() {
 		TextureAtlas ta = new TextureAtlas("images/kubrows/white/atlas.png", "images/kubrows/white/atlas.txt");
 		gameObject.renderer.setTextureAtlas(ta, 200, 200);
-		gameObject.animator.setAnimations(new Animation("idle", new TextureAtlas.Sprite[]{ta.getSprite("idle0")}, Animation.AnimationType.ONE_SHOT, Long.MAX_VALUE), new Animation("run",
+		gameObject.animator.setAnimations(new Animation("idle", new TextureAtlas.Sprite[]{ta.getSprite("idle0")}, new OneShotAnimation(), Long.MAX_VALUE), new Animation("run",
 				new TextureAtlas.Sprite[]{ta.getSprite("run0"),
 						ta.getSprite("run1"),
 						ta.getSprite("run2"),
@@ -34,7 +36,7 @@ public class Kubrow extends Avatar {
 						ta.getSprite("run4"),
 						ta.getSprite("run5"),
 						ta.getSprite("run6")},
-				Animation.AnimationType.LOOP, 100), new Animation("attack",
+				new LoopAnimation(), 100), new Animation("attack",
 				new TextureAtlas.Sprite[]{ta.getSprite("attack0"),
 						ta.getSprite("attack1"),
 						ta.getSprite("attack2"),
@@ -47,7 +49,7 @@ public class Kubrow extends Avatar {
 						ta.getSprite("attack9"),
 						ta.getSprite("attack10"),
 						ta.getSprite("attack11")},
-				Animation.AnimationType.ONE_SHOT, 100, new Animation.AnimationListener() {
+				new OneShotAnimation(), 100, new Animation.AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
 
