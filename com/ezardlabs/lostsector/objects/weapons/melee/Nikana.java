@@ -2,11 +2,10 @@ package com.ezardlabs.lostsector.objects.weapons.melee;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animator;
-import com.ezardlabs.dethsquare.Renderer;
-import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.lostsector.objects.Player;
+import com.ezardlabs.lostsector.objects.Player.State;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 
 import java.util.Timer;
@@ -51,11 +50,9 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 					@Override
 					public void onAnimationFinished(Animator animator) {
 						//noinspection ConstantConditions
-						animator.gameObject.getComponent(Player.class).melee = false;
-						//noinspection ConstantConditions
-						animator.gameObject.getComponent(Renderer.class).setSize(200, 200);
-						//noinspection ConstantConditions
-						animator.gameObject.getComponent(Renderer.class).setOffsets(0, 0);
+						animator.gameObject.getComponent(Player.class).state = State.IDLE;
+						animator.gameObject.renderer.setSize(200, 200);
+						animator.gameObject.renderer.setOffsets(0, 0);
 					}
 				})};
 	}
@@ -89,19 +86,18 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 		if (t != null) {
 			t.cancel();
 		}
-		//noinspection ConstantConditions
-		animator.gameObject.getComponent(Renderer.class).setSize(400, 300);
-		//noinspection ConstantConditions
-		animator.gameObject.getComponent(Renderer.class).setOffsets(-100, -100);
+		animator.gameObject.renderer.setSize(400, 300);
+		animator.gameObject.renderer.setOffsets(-100, -100);
         if (currentAnimation.contains("dash")) {
-            animator.gameObject.getComponent(Rigidbody.class).velocity.x = 25 * (animator.gameObject.getComponent(Renderer.class).hFlipped ? -1 : 1);
+            animator.gameObject.rigidbody.velocity.x = 25 * (animator.gameObject.renderer.hFlipped ? -1
+					: 1);
         }
 	}
 
     @Override
     public void onFrame(Animator animator, int frameNum) {
         if (currentAnimation.contains("dash") && frameNum == 2) {
-            animator.gameObject.getComponent(Rigidbody.class).velocity.x = 0;
+            animator.gameObject.rigidbody.velocity.x = 0;
         }
     }
 
