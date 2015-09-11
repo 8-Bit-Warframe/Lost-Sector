@@ -14,7 +14,7 @@ import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.IceWave;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Snowglobe;
-import com.ezardlabs.lostsector.objects.weapons.Nikana;
+import com.ezardlabs.lostsector.objects.weapons.melee.Nikana;
 
 public class Frost extends Warframe {
 

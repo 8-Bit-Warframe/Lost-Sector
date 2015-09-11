@@ -1,4 +1,4 @@
-package com.ezardlabs.lostsector.objects.weapons;
+package com.ezardlabs.lostsector.objects.weapons.melee;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animator;
@@ -7,6 +7,7 @@ import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.lostsector.objects.Player;
+import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 
 import java.util.Timer;
 import java.util.TimerTask;
