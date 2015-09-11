@@ -10,6 +10,7 @@ import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.lostsector.objects.Avatar;
 import com.ezardlabs.lostsector.objects.hud.StatusIndicator;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
+import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
 
 public abstract class Warframe extends Avatar {
 	protected final TextureAtlas ta;
@@ -17,6 +18,7 @@ public abstract class Warframe extends Avatar {
 	protected int shields;
 	protected final int maxEnergy;
 	protected int energy;
+	public RangedWeapon rangedWeapon;
 	public MeleeWeapon meleeWeapon;
 	private StatusIndicator statusIndicator;
 
@@ -98,6 +100,11 @@ public abstract class Warframe extends Avatar {
 	public abstract void ability3();
 
 	public abstract void ability4();
+
+	public final void setPrimaryWeapon(RangedWeapon rangedWeapon) {
+		this.rangedWeapon = rangedWeapon;
+		gameObject.animator.addAnimations(rangedWeapon.getAnimation(ta));
+	}
 
 	public final void setMeleeWeapon(MeleeWeapon meleeWeapon) {
 		this.meleeWeapon = meleeWeapon;

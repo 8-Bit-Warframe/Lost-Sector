@@ -15,6 +15,7 @@ import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.IceWave;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Snowglobe;
 import com.ezardlabs.lostsector.objects.weapons.melee.Nikana;
+import com.ezardlabs.lostsector.objects.weapons.primary.Lanka;
 
 public class Frost extends Warframe {
 
@@ -41,6 +42,7 @@ public class Frost extends Warframe {
 				ta.getSprite("avalanche11"),
 				ta.getSprite("avalanche12"),
 				ta.getSprite("avalanche13")}, new OneShotAnimation(), 100));
+		setPrimaryWeapon(new Lanka());
 		setMeleeWeapon(new Nikana());
 	}
 
