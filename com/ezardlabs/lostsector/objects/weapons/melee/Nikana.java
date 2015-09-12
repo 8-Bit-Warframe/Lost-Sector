@@ -12,7 +12,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
-	Timer t;
+	private Timer t;
+	private boolean readyForNextAnimation = false;
 
 	public Nikana() {
 		super("Nikana");
@@ -59,6 +60,7 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 
 	@Override
 	public String getNextAnimation(int direction) {
+		if (!readyForNextAnimation && currentAnimation != null) return currentAnimation;
 		if (currentAnimation == null) return currentAnimation = "slice1";
 		switch (currentAnimation) {
 			case "slice1":
@@ -86,6 +88,7 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 		if (t != null) {
 			t.cancel();
 		}
+		readyForNextAnimation = false;
 		animator.gameObject.renderer.setSize(400, 300);
 		animator.gameObject.renderer.setOffsets(-100, -100);
         if (currentAnimation.contains("dash")) {
@@ -103,6 +106,7 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 
 	@Override
 	public void onAnimationFinished(final Animator animator) {
+		readyForNextAnimation = true;
 		(t = new Timer()).schedule(new TimerTask() {
 			@Override
 			public void run() {
