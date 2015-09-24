@@ -107,6 +107,8 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 	@Override
 	public void onAnimationFinished(final Animator animator) {
 		readyForNextAnimation = true;
+		//noinspection ConstantConditions
+		animator.gameObject.getComponent(Player.class).state = State.MELEE_WAITING;
 		(t = new Timer()).schedule(new TimerTask() {
 			@Override
 			public void run() {

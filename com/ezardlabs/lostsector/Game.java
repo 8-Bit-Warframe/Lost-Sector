@@ -29,7 +29,6 @@ public class Game extends BaseGame {
 		//noinspection RedundantArrayCreation
 //		GameObject.instantiate(new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new DeraCrewman()), new Vector2(1500, 20));
 
-//		ta = new TextureAtlas("images/warframes/frost/atlas.png", "images/warframes/frost/atlas.txt");
 		players = new GameObject[]{new GameObject("Player", new Player(), new Renderer(), new Animator(), new Frost(), new Collider(200, 200), new Rigidbody())};
 		GameObject.instantiate(players[0], new Vector2(20, 20));
 
