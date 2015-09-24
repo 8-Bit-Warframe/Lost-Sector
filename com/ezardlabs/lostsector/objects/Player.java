@@ -24,9 +24,9 @@ public class Player extends Script {
 	private float speed = 12.5f;
 	private Warframe warframe;
 
-	private State state = State.IDLE;
+	public State state = State.IDLE;
 
-	private enum State {
+	public enum State {
 		IDLE,
 		RUNNING,
 		JUMPING,
