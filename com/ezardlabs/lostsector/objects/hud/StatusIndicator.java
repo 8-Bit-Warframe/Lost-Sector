@@ -13,8 +13,8 @@ public class StatusIndicator {
 	private GuiRenderer shields;
 
 	public void init() {
-		GameObject.instantiate(new GameObject("HUD", new GuiRenderer("assets/images/hud/ui.png", 556.25f, 225)), new Vector2((Screen.width - 556.25f * Screen.scale) / Screen.scale, 12));
-		ta = new TextureAtlas("assets/images/hud/atlas.png", "assets/images/hud/atlas.txt");
+		GameObject.instantiate(new GameObject("HUD", new GuiRenderer("images/hud/ui.png", 556.25f, 225)), new Vector2((Screen.width - 556.25f * Screen.scale) / Screen.scale, 12));
+		ta = new TextureAtlas("images/hud/atlas.png", "images/hud/atlas.txt");
 		GameObject.instantiate(new GameObject("Energy Indicator", energy = new GuiRenderer(ta, ta.getSprite("energy_100"), 200, 200)), new Vector2((Screen.width - 513f * Screen.scale) / Screen.scale, 25));
 		GameObject.instantiate(new GameObject("Health Indicator", health = new GuiRenderer(ta, ta.getSprite("health_100"), 200, 200)), new Vector2((Screen.width - 513f * Screen.scale) / Screen.scale, 25));
 		GameObject.instantiate(new GameObject("Shield Indicator", shields = new GuiRenderer(ta, ta.getSprite("shield_2"), 200, 200)), new Vector2((Screen.width - 513f * Screen.scale) / Screen.scale, 25));
