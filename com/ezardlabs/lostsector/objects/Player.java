@@ -160,7 +160,7 @@ public class Player extends Script {
 					}
 				}
 				return movement;
-			case DEKSTOP:
+			case DESKTOP:
 				return (Input.getKey(KeyCode.A) ? -1 : 0) + (Input.getKey(KeyCode.D) ? 1 : 0);
 			default:
 				return 0;
