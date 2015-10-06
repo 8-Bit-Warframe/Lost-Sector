@@ -198,7 +198,11 @@ public class NavMesh {
 						if (isCollision(solidityMap, x + 2, yTemp + 1)) {
 							addLink(x, y, x + 2, yTemp, LinkType.FALL);
 							if (yTemp - (y + 1) < 4) {
-								addLink(x, y, x + 1, yTemp, LinkType.JUMP);
+								if (isCollision(solidityMap, x + 1, yTemp + 1)) {
+									addLink(x, y, x + 1, yTemp, LinkType.JUMP);
+								} else {
+									addLink(x, y, x + 2, yTemp, LinkType.JUMP);
+								}
 							}
 						} else {
 							addLink(x, y, x + 1, yTemp, LinkType.FALL);
@@ -218,7 +222,11 @@ public class NavMesh {
 						if (isCollision(solidityMap, x - 2, yTemp + 1)) {
 							addLink(x, y, x - 2, yTemp, LinkType.FALL);
 							if (yTemp - (y + 1) < 4) {
-								addLink(x, y, x - 1, yTemp, LinkType.JUMP);
+								if (isCollision(solidityMap, x + 1, yTemp + 1)) {
+									addLink(x, y, x - 1, yTemp, LinkType.JUMP);
+								} else {
+									addLink(x, y, x - 2, yTemp, LinkType.JUMP);
+								}
 							}
 						} else {
 							addLink(x, y, x - 1, yTemp, LinkType.FALL);
