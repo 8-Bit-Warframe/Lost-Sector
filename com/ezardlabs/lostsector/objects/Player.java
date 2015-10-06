@@ -9,18 +9,17 @@ import com.ezardlabs.dethsquare.Collider.CollisionLocation;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
-import com.ezardlabs.dethsquare.Input.OnTouchListener;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.dethsquare.Touch;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.dethsquare.util.Utils;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -49,96 +48,12 @@ public class Player extends Script {
 	@Override
 	public void start() {
 		player = gameObject;
-		switch (Utils.PLATFORM) {
-			case ANDROID:
-				Input.addOnTouchListener(new OnTouchListener() {
-					final HashMap<Integer, Vector2> map = new HashMap<>();
-
-					@Override
-					public void onTouchDown(int id, float x, float y) {
-						if (x < Screen.width / 6f) {
-							Player.this.x = -1;
-						} else if (x < Screen.width / 2f) {
-							Player.this.x = 1;
-						}
-						map.put(id, new Vector2(x, y));
-					}
-
-					@Override
-					public void onTouchMove(int id, float x, float y) {
-						if (map.containsKey(id) && map.get(id).x > Screen.width / 2f) {
-							if (x < Screen.width / 2f) {
-								onTouchUp(id, Screen.width / 2f, y);
-							}
-						} else {
-							if (x > Screen.width / 2f) {
-								onTouchUp(id, Screen.width / 2f, y);
-							} else if (x < Screen.width / 6f) {
-								Player.this.x = -1;
-							} else if (x < Screen.width / 2f) {
-								Player.this.x = 1;
-							}
-						}
-					}
-
-					@SuppressWarnings("ConstantConditions")
-					@Override
-					public void onTouchUp(int id, float x, float y) {
-						Vector2 v = map.get(id);
-						map.remove(id);
-						if (v != null) {
-							if (v.x < Screen.width / 2f) {
-								Player.this.x = 0;
-							} else {
-								v.x = x - v.x;
-								v.y = y - v.y;
-								Warframe w = (Warframe) gameObject.getComponentOfType(
-										Warframe.class);
-								if (v.x < -150 * Screen.scale) { // left
-									if (w.hasEnergy(25)) {
-										w.removeEnergy(25);
-										w.ability3();
-									}
-								} else if (v.x > 150 * Screen.scale) { // right
-									if (w.hasEnergy(5)) {
-										w.removeEnergy(5);
-										w.ability1();
-									}
-								} else if (v.y < -150 * Screen.scale) { // up
-									if (w.hasEnergy(50)) {
-										w.removeEnergy(50);
-										w.ability4();
-									}
-								} else if (v.y > 150 * Screen.scale) { // down
-									if (w.hasEnergy(10)) {
-										w.removeEnergy(10);
-										w.ability2();
-									}
-								} else {
-//									jump();
-								}
-							}
-						}
-					}
-
-					@Override
-					public void onTouchCancel(int id) {
-						map.remove(id);
-					}
-
-					@Override
-					public void onTouchOutside(int id) {
-						map.remove(id);
-					}
-				});
-				break;
-		}
 		warframe = (Warframe) gameObject.getComponentOfType(Warframe.class);
 	}
 
 	@Override
 	public void update() {
-		x = (Input.getKey(KeyCode.A) ? -1 : 0) + (Input.getKey(KeyCode.D) ? 1 : 0);
+		x = getMovement();
 
 		if (x < 0) {
 			gameObject.renderer.hFlipped = true;
@@ -227,8 +142,40 @@ public class Player extends Script {
 		}
 	}
 
+	private int getMovement() {
+		switch (Utils.PLATFORM) {
+			case ANDROID:
+				int movement = 0;
+				if (Input.touches.length == 0) return movement;
+				for (Touch t : Input.touches) {
+					if (t.position.x < Screen.width / 6f) {
+						movement--;
+						break;
+					}
+				}
+				for (Touch t : Input.touches) {
+					if (t.position.x > Screen.width / 6f && t.position.x < Screen.width / 2f) {
+						movement++;
+						break;
+					}
+				}
+				return movement;
+			case DEKSTOP:
+				return (Input.getKey(KeyCode.A) ? -1 : 0) + (Input.getKey(KeyCode.D) ? 1 : 0);
+			default:
+				return 0;
+		}
+	}
+
 	private boolean jumpCheck() {
-		if ((Input.getKeyDown(KeyCode.SPACE) || Input.getKeyDown(KeyCode.J)) && jumpCount++ < 2) {
+		boolean touchJump = false;
+		for (Touch t : Input.touches) {
+			if (t.phase != Touch.TouchPhase.STATIONARY)
+			if (t.phase == Touch.TouchPhase.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f && Vector2.distance(t.position, t.startPosition) < 150) {
+				touchJump = true;
+			}
+		}
+		if ((Input.getKeyDown(KeyCode.SPACE) || Input.getKeyDown(KeyCode.J) || touchJump) && jumpCount++ < 2) {
 			state = jumpCount == 1 ? State.JUMPING : State.DOUBLE_JUMPING;
 			gameObject.rigidbody.velocity.y = -25f;
 			return true;
@@ -254,6 +201,33 @@ public class Player extends Script {
 	}
 
 	private boolean castCheck() {
+		for (Touch t : Input.touches) {
+			if (t.phase == Touch.TouchPhase.ENDED) {
+				float x = t.position.x - t.startPosition.x;
+				float y = t.position.y - t.startPosition.y;
+				if (x < -150 * Screen.scale) { // left
+					if (warframe.hasEnergy(25)) {
+						warframe.removeEnergy(25);
+						warframe.ability3();
+					}
+				} else if (x > 150 * Screen.scale) { // right
+					if (warframe.hasEnergy(5)) {
+						warframe.removeEnergy(5);
+						warframe.ability1();
+					}
+				} else if (y < -150 * Screen.scale) { // up
+					if (warframe.hasEnergy(50)) {
+						warframe.removeEnergy(50);
+						warframe.ability4();
+					}
+				} else if (y > 150 * Screen.scale) { // down
+					if (warframe.hasEnergy(10)) {
+						warframe.removeEnergy(10);
+						warframe.ability2();
+					}
+				}
+			}
+		}
 		if (Input.getKeyDown(KeyCode.ALPHA_1)) {
 			warframe.ability1();
 			return false;
@@ -287,7 +261,9 @@ public class Player extends Script {
 				Camera.main.gameObject.getComponent(CameraMovement.class).startQuake(100, 0.3f);
 				TextureAtlas ta = new TextureAtlas("images/effects/dust.png", "images/effects/dust.txt");
 				GameObject.destroy(GameObject.instantiate(new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50),
-								new Animator(new Animation("dust", new Sprite[]{ta.getSprite("dust0"), ta.getSprite("dust1"), ta.getSprite("dust2")}, new OneShotAnimation(), 100))),
+								new Animator(new Animation("dust", new Sprite[]{ta.getSprite("dust0"),
+										ta.getSprite("dust1"),
+										ta.getSprite("dust2")}, new OneShotAnimation(), 100))),
 						new Vector2(transform.position.x - 262, transform.position.y + 150)), 300);
 				new Timer().schedule(new TimerTask() {
 					@Override
