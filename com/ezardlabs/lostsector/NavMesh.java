@@ -1,5 +1,6 @@
 package com.ezardlabs.lostsector;
 
+import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.NavMesh.NavPoint.NavPointType;
 
@@ -91,7 +92,10 @@ public class NavMesh {
 	private static ArrayDeque<NavPoint> toIndex = new ArrayDeque<>();
 	private static ArrayDeque<Integer> indices = new ArrayDeque<>();
 
-	public static NavPoint[] getPath(NavPoint start, NavPoint end) {
+	public static NavPoint[] getPath(Transform self, Transform target) {
+		NavPoint start = navPoints[(int) (self.position.x / 100f)][(int) (self.position.y / 100f) + 1];
+		NavPoint end = navPoints[(int) (target.position.x / 100f)][(int) (target.position.y / 100f) + 1];
+
 		if (start == null || end == null) return null;
 
 		for (int i = 0; i < pointsWithAlteredIndices.size(); i++) {
@@ -275,7 +279,8 @@ public class NavMesh {
 		if (solidityMap == null) return null;
 
 		Stack<int[]> stack = new Stack<>();
-		stack.push(new int[]{0, 0});
+		stack.push(new int[]{0,
+				0});
 
 		while (!stack.empty()) {
 			int[] pop = stack.pop();
@@ -283,10 +288,14 @@ public class NavMesh {
 			int y = pop[1];
 			if (solidityMap[x][y] >= 1) continue;
 			if (solidityMap[x][y] == 0) solidityMap[x][y] = 2;
-			if (x > 0) stack.push(new int[]{x - 1, y});
-			if (x < solidityMap.length - 2) stack.push(new int[]{x + 1, y});
-			if (y > 0) stack.push(new int[]{x, y - 1});
-			if (y < solidityMap[0].length - 2) stack.push(new int[]{x, y + 1});
+			if (x > 0) stack.push(new int[]{x - 1,
+					y});
+			if (x < solidityMap.length - 2) stack.push(new int[]{x + 1,
+					y});
+			if (y > 0) stack.push(new int[]{x,
+					y - 1});
+			if (y < solidityMap[0].length - 2) stack.push(new int[]{x,
+					y + 1});
 		}
 		return solidityMap;
 	}
