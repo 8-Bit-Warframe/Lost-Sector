@@ -1,5 +1,7 @@
 package com.ezardlabs.lostsector;
 
+import android.util.Log;
+
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.NavMesh.NavPoint.NavPointType;
@@ -98,6 +100,9 @@ public class NavMesh {
 	public static NavPoint[] getPath(Transform self, Transform target) {
 		NavPoint start = navPoints[(int) (self.position.x / 100f)][(int) (self.position.y / 100f) + 1];
 		NavPoint end = navPoints[(int) (target.position.x / 100f)][(int) (target.position.y / 100f) + 1];
+		if (end != null && end.type == NavPointType.NONE) {
+			end = navPoints[(int) ((target.position.x / 100f) + 1)][(int) (target.position.y / 100f) + 1];
+		}
 
 		if (start == null || end == null) return null;
 
