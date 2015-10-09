@@ -9,7 +9,9 @@ import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.BaseGame;
 import com.ezardlabs.lostsector.objects.CameraMovement;
+import com.ezardlabs.lostsector.objects.Kubrow;
 import com.ezardlabs.lostsector.objects.Player;
+import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
 public class Game extends BaseGame {
@@ -26,7 +28,6 @@ public class Game extends BaseGame {
 	public void create() {
 		MapManager.loadMap("map");
 
-		//noinspection RedundantArrayCreation
 //		GameObject.instantiate(new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new DeraCrewman()), new Vector2(1500, 20));
 
 		players = new GameObject[]{new GameObject("Player", new Player(), new Renderer(), new Animator(), new Frost(), new Collider(200, 200), new Rigidbody())};
@@ -36,7 +37,7 @@ public class Game extends BaseGame {
 		cm.smoothFollow(players[0].transform);
 		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm), new Vector2());
 
-//		GameObject.instantiate(new GameObject("Kubrow", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new Kubrow()), new Vector2(1500, 20));
+		GameObject.instantiate(new GameObject("Kubrow", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new Kubrow()), new Vector2(1500, 20));
 
 //		GameObject.instantiate(new GameObject("Buttons"), new Vector2());
 	}
