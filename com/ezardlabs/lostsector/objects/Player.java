@@ -201,49 +201,50 @@ public class Player extends Script {
 	}
 
 	private boolean castCheck() {
+		boolean ability1 = false;
+		boolean ability2 = false;
+		boolean ability3 = false;
+		boolean ability4 = false;
 		for (Touch t : Input.touches) {
 			if (t.phase == Touch.TouchPhase.ENDED) {
 				float x = t.position.x - t.startPosition.x;
 				float y = t.position.y - t.startPosition.y;
 				if (x < -150 * Screen.scale) { // left
-					if (warframe.hasEnergy(25)) {
-						warframe.removeEnergy(25);
-						warframe.ability3();
-					}
+					ability3 = true;
 				} else if (x > 150 * Screen.scale) { // right
-					if (warframe.hasEnergy(5)) {
-						warframe.removeEnergy(5);
-						warframe.ability1();
-					}
+					ability1 = true;
 				} else if (y < -150 * Screen.scale) { // up
-					if (warframe.hasEnergy(50)) {
-						warframe.removeEnergy(50);
-						warframe.ability4();
-					}
+					ability4 = true;
 				} else if (y > 150 * Screen.scale) { // down
-					if (warframe.hasEnergy(10)) {
-						warframe.removeEnergy(10);
-						warframe.ability2();
-					}
+					ability2 = true;
 				}
 			}
 		}
-		if (Input.getKeyDown(KeyCode.ALPHA_1)) {
-			warframe.ability1();
-			return false;
+		if (ability1 || Input.getKeyDown(KeyCode.ALPHA_1)) {
+			if (warframe.hasEnergy(5)) {
+				warframe.removeEnergy(5);
+				warframe.ability1();
+			}
 		}
-		if (Input.getKeyDown(KeyCode.ALPHA_2)) {
-			warframe.ability2();
-			return false;
+		if (ability2 || Input.getKeyDown(KeyCode.ALPHA_2)) {
+			if (warframe.hasEnergy(10)) {
+				warframe.removeEnergy(10);
+				warframe.ability2();
+			}
 		}
-		if (Input.getKeyDown(KeyCode.ALPHA_3)) {
-			warframe.ability3();
-			return false;
+		if (ability3 || Input.getKeyDown(KeyCode.ALPHA_3)) {
+			if (warframe.hasEnergy(25)) {
+				warframe.removeEnergy(25);
+				warframe.ability3();
+			}
 		}
-		if ((state == State.IDLE || state == State.RUNNING) && Input.getKeyDown(KeyCode.ALPHA_4)) {
-			state = State.CASTING;
-			warframe.ability4();
-			return true;
+		if ((state == State.IDLE || state == State.RUNNING) && (ability4 || Input.getKeyDown(KeyCode.ALPHA_4))) {
+			if (warframe.hasEnergy(50)) {
+				warframe.removeEnergy(50);
+				warframe.ability4();
+				state = State.CASTING;
+				return true;
+			}
 		}
 		return false;
 	}
