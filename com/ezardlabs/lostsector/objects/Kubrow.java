@@ -1,5 +1,7 @@
 package com.ezardlabs.lostsector.objects;
 
+import android.util.Log;
+
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.TextureAtlas;
@@ -219,19 +221,41 @@ public class Kubrow extends Avatar {
 			}
 			if (target != null) {
 				if (target.x < transform.position.x) {
-					x = -10;
 					gameObject.renderer.hFlipped = true;
 				} else if (target.x > transform.position.x) {
-					x = 10;
 					gameObject.renderer.hFlipped = false;
 				}
+				if (target.y < transform.position.y) {
+					if (gameObject.rigidbody.velocity.y >= 0) {
+						switch((int) (transform.position.y - target.y)) {
+							case 50:
+								gameObject.rigidbody.velocity.y = -15f;
+								break;
+							case 100:
+								gameObject.rigidbody.velocity.y = -25f;
+								break;
+							case 150:
+								gameObject.rigidbody.velocity.y = -27f;
+								break;
+							case 200:
+								gameObject.rigidbody.velocity.y = -30f;
+								break;
+						}
+					}
+				} else {
+					if (target.x < transform.position.x) {
+						x = -10;
+					} else if (target.x > transform.position.x) {
+						x = 10;
+					}
+				}
 			}
-			transform.translate(x, 0);
-			if (x == 0) {
-				gameObject.animator.play("idle");
-			} else {
-				gameObject.animator.play("run");
-			}
+		}
+		transform.translate(x, 0);
+		if (x == 0) {
+			gameObject.animator.play("idle");
+		} else {
+			gameObject.animator.play("run");
 		}
 	}
 }

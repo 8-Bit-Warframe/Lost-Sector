@@ -28,11 +28,20 @@ public class Crewman extends Enemy {
 			}
 			if (target != null) {
 				if (target.x < transform.position.x) {
-					x = -10;
 					gameObject.renderer.hFlipped = true;
 				} else if (target.x > transform.position.x) {
-					x = 10;
 					gameObject.renderer.hFlipped = false;
+				}
+				if (target.y < transform.position.y) {
+					if (gameObject.rigidbody.velocity.y >= 0) {
+						gameObject.rigidbody.velocity.y = -30f;
+					}
+				} else {
+					if (target.x < transform.position.x) {
+						x = -10;
+					} else if (target.x > transform.position.x) {
+						x = 10;
+					}
 				}
 			}
 		}
