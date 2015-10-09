@@ -2,11 +2,10 @@ package com.ezardlabs.lostsector.objects.warframes;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
+import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
-import com.ezardlabs.dethsquare.animationtypes.LoopAnimation;
-import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.lostsector.objects.Avatar;
 import com.ezardlabs.lostsector.objects.hud.StatusIndicator;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
@@ -39,7 +38,7 @@ public abstract class Warframe extends Avatar {
 	}
 
 	protected Animation getIdleAnimation() {
-		return new Animation("idle", new Sprite[]{ta.getSprite("idle0")}, new OneShotAnimation(), 0);
+		return new Animation("idle", new Sprite[]{ta.getSprite("idle0")}, AnimationType.ONE_SHOT, 0);
 	}
 
 	protected Animation getRunAnimation() {
@@ -49,11 +48,11 @@ public abstract class Warframe extends Avatar {
 				ta.getSprite("run3"),
 				ta.getSprite("run4"),
 				ta.getSprite("run5")},
-				new LoopAnimation(), 100);
+				AnimationType.LOOP, 100);
 	}
 
 	protected Animation getJumpAnimation() {
-		return new Animation("jump", new Sprite[]{ta.getSprite("jump0")}, new OneShotAnimation(), 0);
+		return new Animation("jump", new Sprite[]{ta.getSprite("jump0")}, AnimationType.ONE_SHOT, 0);
 	}
 
 	protected Animation getDoubleJumpAnimation() {
@@ -65,7 +64,7 @@ public abstract class Warframe extends Avatar {
 						ta.getSprite("jump5"),
 						ta.getSprite("jump6"),
 						ta.getSprite("jump7")},
-				new OneShotAnimation(), 50, new AnimationListener() {
+				AnimationType.ONE_SHOT, 50, new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
 			}
@@ -84,13 +83,13 @@ public abstract class Warframe extends Avatar {
 	protected Animation getFallAnimation() {
 		return new Animation("fall", new Sprite[]{ta.getSprite("fall0"),
 				ta.getSprite("fall1"),
-				ta.getSprite("fall2")}, new LoopAnimation(), 90);
+				ta.getSprite("fall2")}, AnimationType.LOOP, 90);
 	}
 
 	protected Animation getLandAnimation() {
 		return new Animation("land", new Sprite[]{ta.getSprite("land0"),
 				ta.getSprite("land1"),
-				ta.getSprite("land2")}, new OneShotAnimation(), 100);
+				ta.getSprite("land2")}, AnimationType.ONE_SHOT, 100);
 	}
 
 	public abstract void ability1();

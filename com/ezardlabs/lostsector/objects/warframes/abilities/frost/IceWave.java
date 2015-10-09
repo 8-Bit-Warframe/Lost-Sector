@@ -1,13 +1,13 @@
 package com.ezardlabs.lostsector.objects.warframes.abilities.frost;
 
 import com.ezardlabs.dethsquare.Animation;
+import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
@@ -57,7 +57,7 @@ public class IceWave extends Script {
 				ta.getSprite("iw28"),
 				ta.getSprite("iw29"),
 				ta.getSprite("iw30"),
-				ta.getSprite("iw31")}, new OneShotAnimation(), 50));
+				ta.getSprite("iw31")}, AnimationType.ONE_SHOT, 50));
 		gameObject.animator.play("move");
 		GameObject.destroy(gameObject, 1600);
 		GameObject.destroy(GameObject.instantiate(new GameObject("Ice Wave Collider", new Collider(10, 200, true), new IceWaveCollision()),

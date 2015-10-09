@@ -2,12 +2,11 @@ package com.ezardlabs.lostsector.objects.enemies;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
+import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.animationtypes.LoopAnimation;
-import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.Avatar;
 
@@ -72,7 +71,7 @@ public abstract class Enemy extends Avatar {
 	}
 
 	protected Animation getIdleAnimation() {
-		return new Animation("idle", new Sprite[]{ta.getSprite("idle0")}, new OneShotAnimation(), Long.MAX_VALUE);
+		return new Animation("idle", new Sprite[]{ta.getSprite("idle0")}, AnimationType.ONE_SHOT, Long.MAX_VALUE);
 	}
 
 	protected Animation getRunAnimation() {
@@ -83,20 +82,21 @@ public abstract class Enemy extends Avatar {
 				ta.getSprite("run4"),
 				ta.getSprite("run5"),
 				ta.getSprite("run6"),
-				ta.getSprite("run7")}, new LoopAnimation(), 100);
+				ta.getSprite("run7")}, AnimationType.LOOP, 100);
 	}
 
 	protected Animation getJumpAnimation() {
-		return new Animation("jump", new Sprite[]{ta.getSprite("jump0"), ta.getSprite("jump1")}, new OneShotAnimation(), 100);
+		return new Animation("jump", new Sprite[]{ta.getSprite("jump0"),
+				ta.getSprite("jump1")}, AnimationType.ONE_SHOT, 100);
 	}
 
 	protected Animation getFallAnimation() {
-		return new Animation("fall", new Sprite[]{ta.getSprite("fall0")}, new OneShotAnimation(), Long.MAX_VALUE);
+		return new Animation("fall", new Sprite[]{ta.getSprite("fall0")}, AnimationType.ONE_SHOT, Long.MAX_VALUE);
 	}
 
 	protected Animation getLandAnimation() {
 		return new Animation("land", new Sprite[]{ta.getSprite("land0"),
-				ta.getSprite("land1")}, new OneShotAnimation(), 100, new AnimationListener() {
+				ta.getSprite("land1")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
 			}
@@ -119,7 +119,7 @@ public abstract class Enemy extends Avatar {
 				ta.getSprite("die_shoot_front3"),
 				ta.getSprite("die_shoot_front4"),
 				ta.getSprite("die_shoot_front5"),
-				ta.getSprite("die_shoot_front6")}, new OneShotAnimation(), 100);
+				ta.getSprite("die_shoot_front6")}, AnimationType.ONE_SHOT, 100);
 	}
 
 	protected Animation getDieShootBackAnimation() {
@@ -129,7 +129,7 @@ public abstract class Enemy extends Avatar {
 				ta.getSprite("die_shoot_back3"),
 				ta.getSprite("die_shoot_back4"),
 				ta.getSprite("die_shoot_back5"),
-				ta.getSprite("die_shoot_back6")}, new OneShotAnimation(), 100);
+				ta.getSprite("die_shoot_back6")}, AnimationType.ONE_SHOT, 100);
 	}
 
 	protected Animation getDieSlashFrontAnimation() {
@@ -139,7 +139,7 @@ public abstract class Enemy extends Avatar {
 				ta.getSprite("die_slash_front3"),
 				ta.getSprite("die_slash_front4"),
 				ta.getSprite("die_slash_front5"),
-				ta.getSprite("die_slash_front6")}, new OneShotAnimation(), 100);
+				ta.getSprite("die_slash_front6")}, AnimationType.ONE_SHOT, 100);
 	}
 
 	protected Animation getDieSlashBackAnimation() {
@@ -149,7 +149,7 @@ public abstract class Enemy extends Avatar {
 				ta.getSprite("die_slash_back3"),
 				ta.getSprite("die_slash_back4"),
 				ta.getSprite("die_slash_back5"),
-				ta.getSprite("die_slash_back6")}, new OneShotAnimation(), 100);
+				ta.getSprite("die_slash_back6")}, AnimationType.ONE_SHOT, 100);
 	}
 
 	protected Animation getDieKubrowFrontAnimation() {
@@ -163,7 +163,7 @@ public abstract class Enemy extends Avatar {
 				ta.getSprite("die_kubrow_front7"),
 				ta.getSprite("die_kubrow_front8"),
 				ta.getSprite("die_kubrow_front9"),
-				ta.getSprite("die_kubrow_front10")}, new OneShotAnimation(), 100, new AnimationListener() {
+				ta.getSprite("die_kubrow_front10")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
 				gameObject.renderer.setSize(300, 300);
@@ -192,7 +192,7 @@ public abstract class Enemy extends Avatar {
 				ta.getSprite("die_kubrow_back7"),
 				ta.getSprite("die_kubrow_back8"),
 				ta.getSprite("die_kubrow_back9"),
-				ta.getSprite("die_kubrow_back10")}, new OneShotAnimation(), 100, new AnimationListener() {
+				ta.getSprite("die_kubrow_back10")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
 				gameObject.renderer.setSize(300, 300);
@@ -211,7 +211,7 @@ public abstract class Enemy extends Avatar {
 	}
 
 	protected Animation getFrozenAnimation() {
-		return new Animation("frozen", new Sprite[]{ta.getSprite("frozen0")}, new OneShotAnimation(), 5000, new AnimationListener() {
+		return new Animation("frozen", new Sprite[]{ta.getSprite("frozen0")}, AnimationType.ONE_SHOT, 5000, new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
 			}
@@ -232,7 +232,9 @@ public abstract class Enemy extends Avatar {
 	}
 
 	protected Animation getFrozenMeltAnimation() {
-		return new Animation("frozen_melt", new Sprite[]{ta.getSprite("frozen_melt0"), ta.getSprite("frozen_melt1"), ta.getSprite("frozen_melt2")}, new OneShotAnimation(), 100,
+		return new Animation("frozen_melt", new Sprite[]{ta.getSprite("frozen_melt0"),
+				ta.getSprite("frozen_melt1"),
+				ta.getSprite("frozen_melt2")}, AnimationType.ONE_SHOT, 100,
 				new AnimationListener() {
 					@Override
 					public void onAnimatedStarted(Animator animator) {
@@ -260,7 +262,7 @@ public abstract class Enemy extends Avatar {
 				ta.getSprite("frozen_shatter5"),
 				ta.getSprite("frozen_shatter6"),
 				ta.getSprite("frozen_shatter7"),
-				ta.getSprite("frozen_shatter8")}, new OneShotAnimation(), 100, new AnimationListener() {
+				ta.getSprite("frozen_shatter8")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
 				if (!gameObject.renderer.hFlipped) {

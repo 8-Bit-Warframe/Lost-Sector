@@ -1,6 +1,7 @@
 package com.ezardlabs.lostsector.objects;
 
 import com.ezardlabs.dethsquare.Animation;
+import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Collider;
@@ -16,7 +17,6 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Touch;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.dethsquare.util.Utils;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
@@ -264,7 +264,7 @@ public class Player extends Script {
 				GameObject.destroy(GameObject.instantiate(new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50),
 								new Animator(new Animation("dust", new Sprite[]{ta.getSprite("dust0"),
 										ta.getSprite("dust1"),
-										ta.getSprite("dust2")}, new OneShotAnimation(), 100))),
+										ta.getSprite("dust2")}, AnimationType.ONE_SHOT, 100))),
 						new Vector2(transform.position.x - 262, transform.position.y + 150)), 300);
 				new Timer().schedule(new TimerTask() {
 					@Override

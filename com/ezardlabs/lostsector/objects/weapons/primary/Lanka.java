@@ -2,10 +2,10 @@ package com.ezardlabs.lostsector.objects.weapons.primary;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
+import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
-import com.ezardlabs.dethsquare.animationtypes.AnimationType;
 import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
 
 public class Lanka extends RangedWeapon {

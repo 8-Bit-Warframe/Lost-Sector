@@ -1,13 +1,10 @@
 package com.ezardlabs.lostsector.objects;
 
-import android.util.Log;
-
 import com.ezardlabs.dethsquare.Animation;
+import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.animationtypes.LoopAnimation;
-import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.NavMesh;
 
@@ -30,7 +27,7 @@ public class Kubrow extends Avatar {
 	public void start() {
 		TextureAtlas ta = new TextureAtlas("images/kubrows/white/atlas.png", "images/kubrows/white/atlas.txt");
 		gameObject.renderer.setTextureAtlas(ta, 200, 200);
-		gameObject.animator.setAnimations(new Animation("idle", new TextureAtlas.Sprite[]{ta.getSprite("idle0")}, new OneShotAnimation(), Long.MAX_VALUE), new Animation("run",
+		gameObject.animator.setAnimations(new Animation("idle", new TextureAtlas.Sprite[]{ta.getSprite("idle0")}, AnimationType.ONE_SHOT, Long.MAX_VALUE), new Animation("run",
 				new TextureAtlas.Sprite[]{ta.getSprite("run0"),
 						ta.getSprite("run1"),
 						ta.getSprite("run2"),
@@ -38,7 +35,7 @@ public class Kubrow extends Avatar {
 						ta.getSprite("run4"),
 						ta.getSprite("run5"),
 						ta.getSprite("run6")},
-				new LoopAnimation(), 100), new Animation("attack",
+				AnimationType.LOOP, 100), new Animation("attack",
 				new TextureAtlas.Sprite[]{ta.getSprite("attack0"),
 						ta.getSprite("attack1"),
 						ta.getSprite("attack2"),
@@ -51,7 +48,7 @@ public class Kubrow extends Avatar {
 						ta.getSprite("attack9"),
 						ta.getSprite("attack10"),
 						ta.getSprite("attack11")},
-				new OneShotAnimation(), 100, new Animation.AnimationListener() {
+				AnimationType.ONE_SHOT, 100, new Animation.AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
 
@@ -67,7 +64,9 @@ public class Kubrow extends Avatar {
 				//noinspection ConstantConditions
 				attacking = false;
 			}
-		}));
+		}), new Animation("jump", new TextureAtlas.Sprite[]{ta.getSprite("jump0"),
+				ta.getSprite("jump1"),
+				ta.getSprite("jump2")}, AnimationType.ONE_SHOT, 100), new Animation("fall", new TextureAtlas.Sprite[]{ta.getSprite("fall0")}, AnimationType.ONE_SHOT, 100));
 		gameObject.animator.play("idle");
 
 	}
@@ -227,7 +226,7 @@ public class Kubrow extends Avatar {
 				}
 				if (target.y < transform.position.y) {
 					if (gameObject.rigidbody.velocity.y >= 0) {
-						switch((int) (transform.position.y - target.y)) {
+						switch ((int) (transform.position.y - target.y)) {
 							case 50:
 								gameObject.rigidbody.velocity.y = -15f;
 								break;

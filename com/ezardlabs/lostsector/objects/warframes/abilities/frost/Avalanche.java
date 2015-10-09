@@ -2,13 +2,13 @@ package com.ezardlabs.lostsector.objects.warframes.abilities.frost;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
+import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
-import com.ezardlabs.dethsquare.animationtypes.OneShotAnimation;
 
 public class Avalanche extends Script {
 
@@ -30,7 +30,7 @@ public class Avalanche extends Script {
 						ta.getSprite("avalanche_background11"),
 						ta.getSprite("avalanche_background12"),
 						ta.getSprite("avalanche_background13"),
-						ta.getSprite("avalanche_background14")}, new OneShotAnimation(), 100, new AnimationListener() {
+						ta.getSprite("avalanche_background14")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
 			}
@@ -59,7 +59,7 @@ public class Avalanche extends Script {
 						ta.getSprite("avalanche_foreground11"),
 						ta.getSprite("avalanche_foreground12"),
 						ta.getSprite("avalanche_foreground13"),
-						ta.getSprite("avalanche_foreground14")}, new OneShotAnimation(), 100, new AnimationListener() {
+						ta.getSprite("avalanche_foreground14")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
 			}
