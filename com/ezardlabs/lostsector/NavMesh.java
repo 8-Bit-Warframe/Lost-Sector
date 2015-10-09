@@ -202,18 +202,14 @@ public class NavMesh {
 							yTemp++;
 						}
 						yTemp--;
-						if (isCollision(solidityMap, x + 2, yTemp + 1)) {
-							addLink(x, y, x + 2, yTemp, LinkType.FALL);
-							if (yTemp - (y + 1) < 4) {
-								if (isCollision(solidityMap, x + 1, yTemp + 1)) {
-									addLink(x, y, x + 1, yTemp, LinkType.JUMP);
-								} else {
-									addLink(x, y, x + 2, yTemp, LinkType.JUMP);
-								}
+						if (isCollision(solidityMap, x + 1, yTemp + 1)) {
+							addLink(x, y, x + 1, yTemp, LinkType.FALL);
+							if (yTemp - (y + 1) < 3) {
+								addLink(x, y, x + 1, yTemp, LinkType.JUMP);
 							}
 						} else {
 							addLink(x, y, x + 1, yTemp, LinkType.FALL);
-							if (yTemp - (y + 1) < 4) {
+							if (yTemp - (y + 1) < 3) {
 								addLink(x, y, x + 1, yTemp, LinkType.JUMP);
 							}
 						}
@@ -228,16 +224,12 @@ public class NavMesh {
 						yTemp--;
 						if (isCollision(solidityMap, x - 2, yTemp + 1)) {
 							addLink(x, y, x - 2, yTemp, LinkType.FALL);
-							if (yTemp - (y + 1) < 4) {
-								if (isCollision(solidityMap, x + 1, yTemp + 1)) {
-									addLink(x, y, x - 1, yTemp, LinkType.JUMP);
-								} else {
-									addLink(x, y, x - 2, yTemp, LinkType.JUMP);
-								}
+							if (yTemp - (y + 1) < 3) {
+								addLink(x, y, x - 2, yTemp, LinkType.JUMP);
 							}
 						} else {
 							addLink(x, y, x - 1, yTemp, LinkType.FALL);
-							if (yTemp - (y + 1) < 4) {
+							if (yTemp - (y + 1) < 3) {
 								addLink(x, y, x - 1, yTemp, LinkType.JUMP);
 							}
 						}
@@ -253,7 +245,7 @@ public class NavMesh {
 					if (isCollision(solidityMap, x + 1, y)) {
 						for (int i = 1; i < 4; i++) {
 							if (!isCollision(solidityMap, x + 1, y - i) && !isCollision(solidityMap, x + 1, y - i - 1)) {
-								addLink(x, y, x + 1, y - i, LinkType.JUMP);
+//								addLink(x - 1, y, x + 1, y - i, LinkType.JUMP);
 								break;
 							}
 						}
@@ -263,7 +255,7 @@ public class NavMesh {
 					if (isCollision(solidityMap, x - 1, y)) {
 						for (int i = 1; i < 4; i++) {
 							if (!isCollision(solidityMap, x - 1, y - i) && !isCollision(solidityMap, x - 1, y - i - 1)) {
-								addLink(x, y, x - 1, y - i, LinkType.JUMP);
+//								addLink(x, y, x - 1, y - i, LinkType.JUMP);
 								break;
 							}
 						}
