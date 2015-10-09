@@ -54,7 +54,7 @@ public class NavMesh {
 		}
 
 		void index(int index) {
-			if (found) return;
+			if (found || (this.index > 0 && index >= this.index)) return;
 			if (this.index == -1) {
 				this.index = index;
 				maxIndex = index;
@@ -72,9 +72,12 @@ public class NavMesh {
 				closest = this;
 			}
 			for (Link l : links) {
-				if ((l.target.index <= 0 || l.target.index > index + 1) && !(l.linkType == LinkType.FALL && l.target.position.y < position.y) && !(l.linkType == LinkType.JUMP && l.target.position.y > position.y)) {
-					toIndex.addFirst(l.target);
-					indices.addFirst(index + 1);
+				if (!(l.linkType == LinkType.FALL && l.target.position.y < position.y) && !(l.linkType == LinkType.JUMP && l.target.position.y > position.y)) {
+					if ((l.target.index <= 0 || index + 1 < l.target.index)) {
+						toIndex.addLast(l.target);
+						indices.addLast(index + 1);
+//						indices.addLast(index + (int) (Math.abs(position.x - l.target.position.x) + Math.abs(position.y - l.target.position.y)));
+					}
 				}
 			}
 		}
