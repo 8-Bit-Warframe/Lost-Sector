@@ -1,7 +1,5 @@
 package com.ezardlabs.lostsector;
 
-import android.util.Log;
-
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.NavMesh.NavPoint.NavPointType;
