@@ -4,13 +4,18 @@ import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.objects.Avatar;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.hud.StatusIndicator;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class Warframe extends Avatar {
 	protected final TextureAtlas ta;
@@ -95,6 +100,13 @@ public abstract class Warframe extends Avatar {
 			@Override
 			public void onAnimationFinished(Animator animator) {
 				statusIndicator.spawnGravestone(transform.position);
+				GameObject.destroy(gameObject, 2000);
+				new Timer().schedule(new TimerTask() {
+					@Override
+					public void run() {
+						Game.createPlayer();
+					}
+				}, 2000);
 			}
 		});
 	}
