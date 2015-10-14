@@ -2,6 +2,7 @@ package com.ezardlabs.lostsector.objects.hud;
 
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.GuiRenderer;
+import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
@@ -31,5 +32,9 @@ public class StatusIndicator {
 			this.energy.setSize(200, 200);
 			this.energy.setSprite(ta.getSprite("energy_" + energy));
 		}
+	}
+
+	public void spawnGravestone(Vector2 position) {
+		GameObject.instantiate(new GameObject("Tombstone", new Renderer(ta, ta.getSprite("gravestone"), 200, 200).setzIndex(5)), position.offset(0, 25));
 	}
 }
