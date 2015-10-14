@@ -21,6 +21,11 @@ public class Crewman extends Enemy {
 			if (transform.position.y == Game.players[0].transform.position.y && Math.abs(transform.position.x - Game.players[0].transform.position.x) < 1500) {
 				shooting = true;
 				gameObject.animator.play("shoot");
+				if (Game.players[0].transform.position.x < transform.position.x) {
+					gameObject.renderer.hFlipped = true;
+				} else if (Game.players[0].transform.position.x > transform.position.x) {
+					gameObject.renderer.hFlipped = false;
+				}
 				return;
 			} else {
 				if (target == null || transform.position.x == target.x) {
