@@ -10,6 +10,7 @@ public class Laser extends Script {
 	@Override
 	public void update() {
 		transform.translate(gameObject.renderer.hFlipped ? -15 : 15, 0);
+		if (transform.position.x <= 0) GameObject.destroy(gameObject);
 	}
 	@Override
 	public void onTriggerEnter(Collider other) {
