@@ -11,7 +11,7 @@ import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.Avatar;
 
 public abstract class Enemy extends Avatar {
-	private final TextureAtlas ta;
+	protected final TextureAtlas ta;
 	public boolean frozen = false;
 	public final double uid;
 	protected boolean landing = false;
@@ -26,7 +26,8 @@ public abstract class Enemy extends Avatar {
 	public void start() {
 		gameObject.setTag("enemy");
 		gameObject.renderer.setTextureAtlas(ta, 200, 200);
-		gameObject.animator.setAnimations(getIdleAnimation(), getRunAnimation(), getJumpAnimation(), getFallAnimation(), getLandAnimation(), getDieShootFrontAnimation(), getDieShootBackAnimation(), getDieSlashFrontAnimation(), getDieSlashBackAnimation(), getDieKubrowFrontAnimation(), getDieKubrowBackAnimation(), getFrozenAnimation(), getFrozenMeltAnimation(), getFrozenShatterAnimation());
+		gameObject.animator.setAnimations(getIdleAnimation(), getRunAnimation(), getJumpAnimation(), getFallAnimation(), getLandAnimation(), getShootAnimation(), getDieShootFrontAnimation(),
+				getDieShootBackAnimation(), getDieSlashFrontAnimation(), getDieSlashBackAnimation(), getDieKubrowFrontAnimation(), getDieKubrowBackAnimation(), getFrozenAnimation(), getFrozenMeltAnimation(), getFrozenShatterAnimation());
 		gameObject.animator.play("idle");
 		gameObject.renderer.setFlipped(true, false);
 		gameObject.renderer.setzIndex(3);
@@ -110,6 +111,10 @@ public abstract class Enemy extends Avatar {
 				landing = false;
 			}
 		});
+	}
+
+	protected Animation getShootAnimation() {
+		return new Animation("shoot", new Sprite[]{ta.getSprite("shoot0"), ta.getSprite("shoot1"), ta.getSprite("shoot2"), ta.getSprite("shoot3")}, AnimationType.LOOP, 100);
 	}
 
 	protected Animation getDieShootFrontAnimation() {
