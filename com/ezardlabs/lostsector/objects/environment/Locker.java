@@ -21,7 +21,7 @@ public class Locker extends Component {
 			gameObject.getComponent(Animator.class).play("unlock");
 			Warframe w = (Warframe) other.gameObject.getComponentOfType(Warframe.class);
 			//noinspection ConstantConditions
-			w.addHealth(25);
+			w.addHealth(20);
 			w.addEnergy(25);
 		}
 	}
