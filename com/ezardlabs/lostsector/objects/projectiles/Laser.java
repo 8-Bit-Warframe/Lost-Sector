@@ -1,11 +1,18 @@
 package com.ezardlabs.lostsector.objects.projectiles;
 
+import android.util.Log;
+
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
 public class Laser extends Script {
+
+	@Override
+	public void start() {
+		gameObject.setTag("projectile");
+	}
 
 	@Override
 	public void update() {

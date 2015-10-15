@@ -64,7 +64,7 @@ public class Freeze extends Script {
 				((Enemy) other.gameObject.getComponentOfType(Enemy.class)).applyDamage(1, DamageType.COLD);
 				gameObject.removeComponent(Collider.class);
 				GameObject.destroy(gameObject);
-			} else if (other.gameObject.getTag().equals("solid")) {
+			} else if (other.gameObject.getTag().equals("solid") && other.gameObject.name != null && !other.gameObject.name.equals("Snowglobe")) {
 				gameObject.animator.play("shatter");
 			}
 		}

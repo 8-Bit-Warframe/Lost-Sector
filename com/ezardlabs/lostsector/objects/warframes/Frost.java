@@ -63,7 +63,7 @@ public class Frost extends Warframe {
 
 	@Override
 	public void ability3() {
-		GameObject.instantiate(new GameObject("Snowglobe", new Renderer(), new Animator(), new Snowglobe()), transform.position.offset(-300, -200));
+		GameObject.instantiate(new GameObject("Snowglobe", new Renderer(), new Animator(), new Collider(800, 600), new Snowglobe()), transform.position.offset(-300, -200));
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package com.ezardlabs.lostsector.objects.warframes.abilities.frost;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.AnimationType;
-import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Component;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.TextureAtlas;
@@ -33,13 +32,7 @@ public class Snowglobe extends Component {
 				ta.getSprite("sg17")}, AnimationType.LOOP, 100));
 		gameObject.animator.play("snowglobe");
 		gameObject.renderer.setzIndex(5);
+		gameObject.setTag("solid");
 		GameObject.destroy(gameObject, 5000);
-	}
-
-	@Override
-	public void onTriggerEnter(Collider other) {
-		if (other.gameObject.getTag().equals("projectile")) {
-			GameObject.destroy(other.gameObject);
-		}
 	}
 }
