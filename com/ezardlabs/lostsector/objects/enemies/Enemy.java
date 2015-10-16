@@ -186,7 +186,25 @@ public abstract class Enemy extends Avatar {
 				ta.getSprite("die_slash_front3"),
 				ta.getSprite("die_slash_front4"),
 				ta.getSprite("die_slash_front5"),
-				ta.getSprite("die_slash_front6")}, AnimationType.ONE_SHOT, 100);
+				ta.getSprite("die_slash_front6")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
+			@Override
+			public void onAnimatedStarted(Animator animator) {
+				gameObject.renderer.setSize(400, 200);
+				if (gameObject.renderer.hFlipped)
+					gameObject.renderer.setOffsets(0, 0);
+				else
+					gameObject.renderer.setOffsets(-400, 0);
+			}
+
+			@Override
+			public void onFrame(Animator animator, int frameNum) {
+
+			}
+
+			@Override
+			public void onAnimationFinished(Animator animator) {
+			}
+		});
 	}
 
 	protected Animation getDieSlashBackAnimation() {
