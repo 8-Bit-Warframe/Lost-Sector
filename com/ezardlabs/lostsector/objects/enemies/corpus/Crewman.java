@@ -16,6 +16,7 @@ public class Crewman extends Enemy {
 
 	@Override
 	public void update() {
+		if (frozen) return;
 		int x = 0;
 		if (!landing && gameObject.rigidbody.velocity.y == 0) {
 			if (Game.players.length > 0 && transform.position.y == Game.players[0].transform.position.y && Math.abs(transform.position.x - Game.players[0].transform.position.x) < 1500) {
