@@ -145,7 +145,9 @@ public abstract class Warframe extends Avatar {
 		if (this.health < 0) {
 			this.health = 0;
 			gameObject.animator.play("die");
-			gameObject.removeComponent(Player.class);
+			if (gameObject.getComponent(Player.class) != null) {
+				gameObject.getComponent(Player.class).dead = true;
+			}
 			gameObject.setTag(null);
 			Game.players = new GameObject[0];
 		}
