@@ -8,6 +8,7 @@ import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Collider.Collision;
 import com.ezardlabs.dethsquare.Collider.CollisionLocation;
 import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.GuiRenderer;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
 import com.ezardlabs.dethsquare.Renderer;
@@ -29,8 +30,10 @@ public class Player extends Script {
 	private int x = 0;
 	private float speed = 12.5f;
 	private Warframe warframe;
+	private GuiRenderer androidMeleeButton;
 
 	public State state = State.IDLE;
+	public boolean dead = false;
 
 	public enum State {
 		IDLE,
@@ -50,10 +53,15 @@ public class Player extends Script {
 		player = gameObject;
 		warframe = (Warframe) gameObject.getComponentOfType(Warframe.class);
 		gameObject.setTag("player");
+		if (Utils.PLATFORM == Utils.Platform.ANDROID) {
+			GameObject.instantiate(new GameObject("Melee Button", androidMeleeButton = new GuiRenderer("images/hud/melee.png", 187.5f, 187.5f)), new Vector2((Screen.width - 187.5f * Screen.scale) / Screen.scale, (Screen.height - 187.5f * Screen.scale) / Screen.scale));
+		}
 	}
 
 	@Override
 	public void update() {
+		if (dead) return;
+
 		x = getMovement();
 
 		if (x < 0) {
@@ -172,7 +180,7 @@ public class Player extends Script {
 		boolean touchJump = false;
 		for (Touch t : Input.touches) {
 			if (t.phase != Touch.TouchPhase.STATIONARY)
-			if (t.phase == Touch.TouchPhase.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f && Vector2.distance(t.position, t.startPosition) < 150) {
+			if (t.phase == Touch.TouchPhase.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f && Vector2.distance(t.position, t.startPosition) < 150 && (androidMeleeButton != null && !androidMeleeButton.hitTest(t.position))) {
 				touchJump = true;
 			}
 		}
@@ -193,7 +201,16 @@ public class Player extends Script {
 	}
 
 	private boolean meleeCheck() {
-		if (Input.getKeyDown(KeyCode.RETURN) || Input.getKeyDown(KeyCode.K)) {
+		boolean touchMelee = false;
+		if (androidMeleeButton != null) {
+			for (Touch t : Input.touches) {
+				if (t.phase == Touch.TouchPhase.BEGAN && androidMeleeButton.hitTest(t.position)) {
+					touchMelee = true;
+					break;
+				}
+			}
+		}
+		if (Input.getKeyDown(KeyCode.RETURN) || Input.getKeyDown(KeyCode.K) || touchMelee) {
 			state = State.MELEE;
 			warframe.meleeWeapon.getNextAnimation(x);
 			return true;
