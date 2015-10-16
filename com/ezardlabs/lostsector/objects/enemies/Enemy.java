@@ -44,7 +44,8 @@ public abstract class Enemy extends Avatar {
 				frozen = true;
 				break;
 		}
-		if (maxHealth <= 0) {
+		health -= damage;
+		if (health <= 0) {
 			die();
 		}
 	}
@@ -227,7 +228,7 @@ public abstract class Enemy extends Avatar {
 
 			@Override
 			public void onAnimationFinished(Animator animator) {
-				if (maxHealth <= 0) {
+				if (health <= 0) {
 					animator.play("frozen_shatter");
 				} else {
 					animator.play("frozen_melt");
