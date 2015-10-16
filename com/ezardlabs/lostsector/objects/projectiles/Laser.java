@@ -1,7 +1,5 @@
 package com.ezardlabs.lostsector.objects.projectiles;
 
-import android.util.Log;
-
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Script;
