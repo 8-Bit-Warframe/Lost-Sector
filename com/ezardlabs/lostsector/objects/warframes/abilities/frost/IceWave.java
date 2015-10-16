@@ -75,7 +75,7 @@ public class IceWave extends Script {
 		public void onTriggerEnter(Collider other) {
 			if (other.gameObject.getTag() != null && other.gameObject.getTag().equals("enemy") && !damagedEnemies.contains(other.gameObject)) {
 				//noinspection ConstantConditions
-				((Enemy) other.gameObject.getComponentOfType(Enemy.class)).applyDamage(1, DamageType.COLD);
+				((Enemy) other.gameObject.getComponentOfType(Enemy.class)).applyDamage(1, DamageType.COLD, transform.position);
 				damagedEnemies.add(other.gameObject);
 			}
 		}

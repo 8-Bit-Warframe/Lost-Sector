@@ -61,7 +61,7 @@ public class Freeze extends Script {
 		if (other.gameObject.getTag() != null) {
 			if (other.gameObject.getTag().equals("enemy")) {
 				//noinspection ConstantConditions
-				((Enemy) other.gameObject.getComponentOfType(Enemy.class)).applyDamage(1, DamageType.COLD);
+				((Enemy) other.gameObject.getComponentOfType(Enemy.class)).applyDamage(1, DamageType.COLD, transform.position);
 				gameObject.removeComponent(Collider.class);
 				GameObject.destroy(gameObject);
 			} else if (other.gameObject.getTag().equals("solid") && other.gameObject.name != null && !other.gameObject.name.equals("Snowglobe")) {

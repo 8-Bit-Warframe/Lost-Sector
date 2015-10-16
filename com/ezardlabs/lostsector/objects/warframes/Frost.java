@@ -43,7 +43,7 @@ public class Frost extends Warframe {
 				ta.getSprite("avalanche12"),
 				ta.getSprite("avalanche13")}, AnimationType.ONE_SHOT, 100));
 		setPrimaryWeapon(new Lanka());
-		setMeleeWeapon(new Nikana());
+		setMeleeWeapon(new Nikana(gameObject));
 	}
 
 	@Override

@@ -3,7 +3,9 @@ package com.ezardlabs.lostsector.objects.weapons.melee;
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.Player.State;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
@@ -15,8 +17,8 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 	private Timer t;
 	private boolean readyForNextAnimation = false;
 
-	public Nikana() {
-		super("Nikana");
+	public Nikana(GameObject wielder) {
+		super("Nikana", Game.DamageType.SLASH, wielder);
 	}
 
 	@Override
@@ -88,6 +90,30 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 		if (t != null) {
 			t.cancel();
 		}
+		int offSet = animator.gameObject.renderer.hFlipped ? -200 : 0;
+		int damage = 0;
+		switch(currentAnimation) {
+			case "slice1":
+				damage = 1;
+				break;
+			case "slice2":
+				damage = 1;
+				break;
+			case "slice3":
+				damage = 1;
+				break;
+			case "dash1":
+				damage = 1;
+				break;
+			case "dash2":
+				damage = 2;
+				break;
+			case "dash3":
+				damage = 3;
+				break;
+		}
+		damageEnemies(damage, animator.transform.position.x + offSet, animator.transform.position.y, animator.transform.position.x + animator.gameObject.renderer.width + offSet, animator.transform.position.y + animator.gameObject.renderer.height);
+
 		readyForNextAnimation = false;
 		animator.gameObject.renderer.setSize(400, 300);
 		animator.gameObject.renderer.setOffsets(-100, -100);

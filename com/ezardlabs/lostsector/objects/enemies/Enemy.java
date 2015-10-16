@@ -15,6 +15,7 @@ public abstract class Enemy extends Avatar {
 	public boolean frozen = false;
 	public final double uid;
 	protected boolean landing = false;
+	protected boolean dead = false;
 
 	public Enemy(String name, int health) {
 		super(health);
@@ -37,7 +38,7 @@ public abstract class Enemy extends Avatar {
 		gameObject.rigidbody.velocity.y = -25f;
 	}
 
-	public final void applyDamage(int damage, DamageType damageType) {
+	public final void applyDamage(int damage, DamageType damageType, Vector2 attackerPosition) {
 		switch (damageType) {
 			case COLD:
 				gameObject.animator.play("frozen");
@@ -46,30 +47,67 @@ public abstract class Enemy extends Avatar {
 		}
 		health -= damage;
 		if (health <= 0) {
-			die();
+			die(damageType, attackerPosition);
 		}
 	}
 
-	public void kubrowAttack(Vector2 kubrowPosition) {
-		if (kubrowPosition.x < transform.position.x) {
-			if (gameObject.renderer.hFlipped) {
-				gameObject.animator.play("die_kubrow_front");
-			} else {
-				gameObject.animator.play("die_kubrow_back");
-			}
-		} else {
-			if (gameObject.renderer.hFlipped) {
-				gameObject.animator.play("die_kubrow_back");
-			} else {
-				gameObject.animator.play("die_kubrow_front");
-			}
-		}
-		die();
-	}
+//	public void kubrowAttack(Vector2 kubrowPosition) {
+//		if (kubrowPosition.x < transform.position.x) {
+//			if (gameObject.renderer.hFlipped) {
+//				gameObject.animator.play("die_kubrow_front");
+//			} else {
+//				gameObject.animator.play("die_kubrow_back");
+//			}
+//		} else {
+//			if (gameObject.renderer.hFlipped) {
+//				gameObject.animator.play("die_kubrow_back");
+//			} else {
+//				gameObject.animator.play("die_kubrow_front");
+//			}
+//		}
+//		die(DamageType.KUBROW);
+//	}
 
-	public void die() {
+	public void die(DamageType damageType, Vector2 attackerPosition) {
 		gameObject.setTag(null);
-		gameObject.removeComponent(Enemy.class);
+		dead = true;
+		if (frozen) {
+			gameObject.animator.play("frozen_shatter");
+		} else {
+			String direction;
+			if (attackerPosition.x < transform.position.x) {
+				if (gameObject.renderer.hFlipped) {
+					direction = "front";
+				} else {
+					direction = "back";
+				}
+			} else {
+				if (gameObject.renderer.hFlipped) {
+					direction = "back";
+				} else {
+					direction = "front";
+				}
+			}
+			String type;
+			switch (damageType) {
+				case NORMAL:
+					type = "shoot";
+					break;
+				case SLASH:
+					type = "slash";
+					break;
+				case COLD:
+					type = "";
+					break;
+				case KUBROW:
+					type = "kubrow";
+					break;
+				default:
+					type = "";
+					break;
+			}
+			gameObject.animator.play("die_" + type + "_" + direction);
+		}
 	}
 
 	protected Animation getIdleAnimation() {
@@ -115,11 +153,14 @@ public abstract class Enemy extends Avatar {
 	}
 
 	protected Animation getShootAnimation() {
-		return new Animation("shoot", new Sprite[]{ta.getSprite("shoot0"), ta.getSprite("shoot1"), ta.getSprite("shoot2"), ta.getSprite("shoot3")}, AnimationType.LOOP, 100);
+		return new Animation("shoot", new Sprite[]{ta.getSprite("shoot0"),
+				ta.getSprite("shoot1"),
+				ta.getSprite("shoot2"),
+				ta.getSprite("shoot3")}, AnimationType.LOOP, 100);
 	}
 
 	protected Animation getDieShootFrontAnimation() {
-		return new Animation("die_front_shoot", new Sprite[]{ta.getSprite("die_shoot_front0"),
+		return new Animation("die_shoot_front", new Sprite[]{ta.getSprite("die_shoot_front0"),
 				ta.getSprite("die_shoot_front1"),
 				ta.getSprite("die_shoot_front2"),
 				ta.getSprite("die_shoot_front3"),
@@ -129,7 +170,7 @@ public abstract class Enemy extends Avatar {
 	}
 
 	protected Animation getDieShootBackAnimation() {
-		return new Animation("die_back_shoot", new Sprite[]{ta.getSprite("die_shoot_back0"),
+		return new Animation("die_shoot_back", new Sprite[]{ta.getSprite("die_shoot_back0"),
 				ta.getSprite("die_shoot_back1"),
 				ta.getSprite("die_shoot_back2"),
 				ta.getSprite("die_shoot_back3"),
@@ -139,7 +180,7 @@ public abstract class Enemy extends Avatar {
 	}
 
 	protected Animation getDieSlashFrontAnimation() {
-		return new Animation("die_front_slash", new Sprite[]{ta.getSprite("die_slash_front0"),
+		return new Animation("die_slash_front", new Sprite[]{ta.getSprite("die_slash_front0"),
 				ta.getSprite("die_slash_front1"),
 				ta.getSprite("die_slash_front2"),
 				ta.getSprite("die_slash_front3"),
@@ -149,7 +190,7 @@ public abstract class Enemy extends Avatar {
 	}
 
 	protected Animation getDieSlashBackAnimation() {
-		return new Animation("die_back_slash", new Sprite[]{ta.getSprite("die_slash_back0"),
+		return new Animation("die_slash_back", new Sprite[]{ta.getSprite("die_slash_back0"),
 				ta.getSprite("die_slash_back1"),
 				ta.getSprite("die_slash_back2"),
 				ta.getSprite("die_slash_back3"),
@@ -159,7 +200,7 @@ public abstract class Enemy extends Avatar {
 	}
 
 	protected Animation getDieKubrowFrontAnimation() {
-		return new Animation("die_front_kubrow", new Sprite[]{ta.getSprite("die_kubrow_front0"),
+		return new Animation("die_kubrow_front", new Sprite[]{ta.getSprite("die_kubrow_front0"),
 				ta.getSprite("die_kubrow_front1"),
 				ta.getSprite("die_kubrow_front2"),
 				ta.getSprite("die_kubrow_front3"),
@@ -188,7 +229,7 @@ public abstract class Enemy extends Avatar {
 	}
 
 	protected Animation getDieKubrowBackAnimation() {
-		return new Animation("die_back_kubrow", new Sprite[]{ta.getSprite("die_kubrow_back0"),
+		return new Animation("die_kubrow_back", new Sprite[]{ta.getSprite("die_kubrow_back0"),
 				ta.getSprite("die_kubrow_back1"),
 				ta.getSprite("die_kubrow_back2"),
 				ta.getSprite("die_kubrow_back3"),
