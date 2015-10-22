@@ -34,7 +34,9 @@ public class Game extends BaseGame {
 
 		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm), new Vector2());
 
-		GameObject.instantiate(new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new DeraCrewman()), new Vector2(1500, 20));
+		for (Vector2 pos : new Vector2[]{new Vector2(2900, 600), new Vector2(2000, 2300), new Vector2(4300, 2000), new Vector2(8000, 700), new Vector2(7900, 1300), new Vector2(8800, 5800), new Vector2(8600, 4800), new Vector2(7100, 2100), new Vector2(3600, 3500), new Vector2(2000, 3800), new Vector2(2800, 5300), new Vector2(700, 4300), new Vector2(3500, 4500), new Vector2(5900, 5800)}) {
+			GameObject.instantiate(new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new DeraCrewman()), pos);
+		}
 
 //		GameObject.instantiate(new GameObject("Kubrow", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new Kubrow()), new Vector2(1500, 20));
 
