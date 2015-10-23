@@ -8,7 +8,6 @@ import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Collider.Collision;
 import com.ezardlabs.dethsquare.Collider.CollisionLocation;
 import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.GuiRenderer;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
 import com.ezardlabs.dethsquare.Renderer;
@@ -19,6 +18,7 @@ import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Touch;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.Utils;
+import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
 import java.util.Timer;
@@ -30,7 +30,6 @@ public class Player extends Script {
 	private int x = 0;
 	private float speed = 12.5f;
 	private Warframe warframe;
-	private GuiRenderer androidMeleeButton;
 
 	public State state = State.IDLE;
 	public boolean dead = false;
@@ -51,15 +50,14 @@ public class Player extends Script {
 	@Override
 	public void start() {
 		player = gameObject;
-		warframe = (Warframe) gameObject.getComponentOfType(Warframe.class);
+		warframe = gameObject.getComponentOfType(Warframe.class);
 		gameObject.setTag("player");
-		if (Utils.PLATFORM == Utils.Platform.ANDROID) {
-			GameObject.instantiate(new GameObject("Melee Button", androidMeleeButton = new GuiRenderer("images/hud/melee.png", 187.5f, 187.5f)), new Vector2((Screen.width - 187.5f * Screen.scale) / Screen.scale, (Screen.height - 187.5f * Screen.scale) / Screen.scale));
-		}
 	}
 
 	@Override
 	public void update() {
+		HUD.update();
+
 		if (dead) return;
 
 		x = getMovement();
@@ -180,7 +178,7 @@ public class Player extends Script {
 		boolean touchJump = false;
 		for (Touch t : Input.touches) {
 			if (t.phase != Touch.TouchPhase.STATIONARY)
-			if (t.phase == Touch.TouchPhase.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f && Vector2.distance(t.position, t.startPosition) < 150 && (androidMeleeButton != null && !androidMeleeButton.hitTest(t.position))) {
+			if (t.phase == Touch.TouchPhase.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f && Vector2.distance(t.position, t.startPosition) < 150 && !HUD.isAttackButtonPressed(t.position)) {
 				touchJump = true;
 			}
 		}
@@ -202,9 +200,9 @@ public class Player extends Script {
 
 	private boolean meleeCheck() {
 		boolean touchMelee = false;
-		if (androidMeleeButton != null) {
+		if (Utils.PLATFORM == Utils.Platform.ANDROID) {
 			for (Touch t : Input.touches) {
-				if (t.phase == Touch.TouchPhase.BEGAN && androidMeleeButton.hitTest(t.position)) {
+				if (t.phase == Touch.TouchPhase.BEGAN && HUD.isAttackButtonPressed(t.position)) {
 					touchMelee = true;
 					break;
 				}

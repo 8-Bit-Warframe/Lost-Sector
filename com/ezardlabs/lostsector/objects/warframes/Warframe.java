@@ -131,7 +131,6 @@ public abstract class Warframe extends Avatar {
 
 	public void setStatusIndicator(StatusIndicator statusIndicator) {
 		this.statusIndicator = statusIndicator;
-		statusIndicator.init();
 	}
 
 	public void addHealth(int health) {
