@@ -10,6 +10,7 @@ import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.objects.Player;
+import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.IceWave;
@@ -21,7 +22,7 @@ public class Frost extends Warframe {
 
 	public Frost() {
 		super("frost", 100, 2, 100);
-		setStatusIndicator(Game.statusIndicator);
+		setStatusIndicator(HUD.statusIndicator);
 	}
 
 	@Override

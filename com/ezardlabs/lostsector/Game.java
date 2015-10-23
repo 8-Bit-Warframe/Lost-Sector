@@ -17,7 +17,6 @@ import com.ezardlabs.lostsector.objects.warframes.Frost;
 public class Game extends BaseGame {
 	public static GameObject[] players;
 	private static CameraMovement cm = new CameraMovement();
-	public static StatusIndicator statusIndicator = new StatusIndicator();
 
 	public enum DamageType {
 		NORMAL,
