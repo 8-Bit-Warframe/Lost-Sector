@@ -70,7 +70,10 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 	@Override
 	public String getNextAnimation(int direction) {
 		if (!readyForNextAnimation && currentAnimation != null) return currentAnimation;
-		if (currentAnimation == null) return currentAnimation = "slice1";
+		if (currentAnimation == null) {
+			readyForNextAnimation = false;
+			return currentAnimation = "slice1";
+		}
 		switch (currentAnimation) {
 			case "slice1":
 				return currentAnimation = "slice2";
