@@ -96,6 +96,12 @@ public class Player extends Script {
 			case LANDING:
 				break;
 			case MELEE:
+				if (fallCheck()) {
+					gameObject.rigidbody.velocity.x = 0;
+					gameObject.renderer.setSize(200, 200);
+					gameObject.renderer.setOffsets(0, 0);
+					break;
+				}
 				break;
 			case MELEE_WAITING:
 				break;
