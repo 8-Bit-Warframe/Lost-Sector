@@ -210,7 +210,6 @@ public class Player extends Script {
 		}
 		if (Input.getKeyDown(KeyCode.RETURN) || Input.getKeyDown(KeyCode.K) || touchMelee) {
 			state = State.MELEE;
-			warframe.meleeWeapon.getNextAnimation(x);
 			return true;
 		}
 		return false;
