@@ -16,6 +16,7 @@ import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Touch;
+import com.ezardlabs.dethsquare.Touch.TouchPhase;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.Utils;
 import com.ezardlabs.lostsector.objects.hud.HUD;
@@ -190,8 +191,7 @@ public class Player extends Script {
 	private boolean jumpCheck() {
 		boolean touchJump = false;
 		for (Touch t : Input.touches) {
-			if (t.phase != Touch.TouchPhase.STATIONARY)
-			if (t.phase == Touch.TouchPhase.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f && Vector2.distance(t.position, t.startPosition) < 150 && !HUD.isAttackButtonPressed(t.position)) {
+			if (!HUD.switchButtonHitTest(t) && t.phase == TouchPhase.BEGAN && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f && Vector2.distance(t.position, t.startPosition) < 150 && !HUD.isAttackButtonPressed(t.position)) {
 				touchJump = true;
 			}
 		}
@@ -249,13 +249,8 @@ public class Player extends Script {
 
 	private void switchWeaponCheck() {
 		boolean touchSwitch = false;
-		if (Utils.PLATFORM == Utils.Platform.ANDROID && HUD.getCurrentWeaponType() == WeaponType.RANGED) {
-			for (Touch t : Input.touches) {
-				if (t.phase == Touch.TouchPhase.BEGAN && HUD.isAttackButtonPressed(t.position)) {
-					touchSwitch = true;
-					break;
-				}
-			}
+		if (Utils.PLATFORM == Utils.Platform.ANDROID) {
+			touchSwitch = HUD.isSwitchButtonPressed();
 		}
 		if (Input.getKeyDown(KeyCode.L) || touchSwitch) {
 			HUD.switchWeapons();

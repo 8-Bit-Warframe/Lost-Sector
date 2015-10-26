@@ -6,6 +6,7 @@ import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Touch;
+import com.ezardlabs.dethsquare.Touch.TouchPhase;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import com.ezardlabs.lostsector.objects.weapons.Weapon;
@@ -16,7 +17,9 @@ public class WeaponControl {
 	private Weapon secondary;
 	private boolean isCurrentPrimary = true;
 	private GuiRenderer attackButton;
+	private GuiRenderer switchButton;
 	private boolean attackButtonPressed;
+	private boolean switchButtonPressed;
 
 	public enum WeaponType {
 		MELEE,
@@ -27,6 +30,8 @@ public class WeaponControl {
 		this.ta = ta;
 		GameObject.instantiate(new GameObject("Weapon Control", new GuiRenderer(ta, ta.getSprite("weapons"), 600, 300)), new Vector2((Screen.width - 600 * Screen.scale) / Screen.scale, Screen.height - 300 - 12));
 		GameObject.instantiate(new GameObject("Attack Button", attackButton = new GuiRenderer(ta, ta.getSprite("melee"), 187.5f, 187.5f)), new Vector2((Screen.width - 212.5f * Screen.scale) / Screen.scale, Screen.height - 206.25f - 12));
+		GameObject.instantiate(new GameObject("Switch Button", switchButton = new GuiRenderer("images/transparent.png", 375, 225)), new Vector2((Screen.width - 600 * Screen.scale) / Screen.scale, Screen
+				.height - 225 - 12));
 	}
 
 	void update() {
@@ -41,6 +46,14 @@ public class WeaponControl {
 			attackButton.setSprite(ta.getSprite("melee" + (attackButtonPressed ? "_focus" : "")));
 		} else {
 			attackButton.setSprite(ta.getSprite("ranged" + (attackButtonPressed ? "_focus" : "")));
+		}
+
+		switchButtonPressed = false;
+		for (Touch t : Input.touches) {
+			if (t.phase == TouchPhase.BEGAN && switchButton.hitTest(t.startPosition) && switchButton.hitTest(t.position)) {
+				switchButtonPressed = true;
+				break;
+			}
 		}
 	}
 
@@ -69,5 +82,13 @@ public class WeaponControl {
 
 	public boolean isAttackButtonPressed() {
 		return attackButtonPressed;
+	}
+
+	public boolean isSwitchButtonPressed() {
+		return switchButtonPressed;
+	}
+
+	public boolean switchButtonHitTest(Touch t) {
+		return t.phase == TouchPhase.BEGAN && switchButton.hitTest(t.startPosition) && switchButton.hitTest(t.position);
 	}
 }

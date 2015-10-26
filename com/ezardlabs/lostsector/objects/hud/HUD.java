@@ -1,6 +1,7 @@
 package com.ezardlabs.lostsector.objects.hud;
 
 import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.Touch;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.objects.hud.WeaponControl.WeaponType;
 
@@ -28,5 +29,13 @@ public class HUD {
 
 	public static void switchWeapons() {
 		weaponControl.switchWeapons();
+	}
+
+	public static boolean isSwitchButtonPressed() {
+		return weaponControl.isSwitchButtonPressed();
+	}
+
+	public static boolean switchButtonHitTest(Touch t) {
+		return weaponControl.switchButtonHitTest(t);
 	}
 }
