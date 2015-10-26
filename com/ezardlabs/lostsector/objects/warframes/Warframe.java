@@ -136,7 +136,6 @@ public abstract class Warframe extends Avatar {
 	public void addHealth(int health) {
 		this.health += health;
 		if (this.health > maxHealth) this.health = maxHealth;
-		if (statusIndicator != null) statusIndicator.setHealth(this.health);
 	}
 
 	public void removeHealth(int health) {
@@ -150,22 +149,23 @@ public abstract class Warframe extends Avatar {
 			gameObject.setTag(null);
 			Game.players = new GameObject[0];
 		}
-		if (statusIndicator != null) statusIndicator.setHealth(this.health);
 	}
 
 	public void addEnergy(int energy) {
 		this.energy += energy;
 		if (this.energy > maxEnergy) this.energy = maxEnergy;
-		if (statusIndicator != null) statusIndicator.setEnergy(this.energy);
 	}
 
 	public void removeEnergy(int energy) {
 		this.energy -= energy;
 		if (this.energy < 0) throw new Error("Energy cannot be reduced to below 0");
-		if (statusIndicator != null) statusIndicator.setEnergy(this.energy);
 	}
 
 	public boolean hasEnergy(int energy) {
 		return this.energy >= energy;
+	}
+
+	public int getEnergy() {
+		return energy;
 	}
 }

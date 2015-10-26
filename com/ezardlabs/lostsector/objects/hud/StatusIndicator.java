@@ -21,11 +21,16 @@ public class StatusIndicator {
 		GameObject.instantiate(new GameObject("Shield Indicator", shields = new GuiRenderer(ta, ta.getSprite("shield_2"), 200, 200)), new Vector2((Screen.width - 513f * Screen.scale) / Screen.scale, 25));
 	}
 
-	public void setHealth(int health) {
+	public void update(int health, int energy) {
+		setHealth(health);
+		setEnergy(energy);
+	}
+
+	private void setHealth(int health) {
 		this.health.setSprite(ta.getSprite("health_" + health));
 	}
 
-	public void setEnergy(int energy) {
+	private void setEnergy(int energy) {
 		if (energy == 0) {
 			this.energy.setSize(0, 0);
 		} else {

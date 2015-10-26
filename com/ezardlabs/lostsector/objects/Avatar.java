@@ -10,4 +10,8 @@ public abstract class Avatar extends Script {
 		this.maxHealth = maxHealth;
 		health = maxHealth;
 	}
+
+	public int getHealth() {
+		return health;
+	}
 }

@@ -15,7 +15,8 @@ public class HUD {
 		weaponControl.init(ta);
 	}
 
-	public static void update() {
+	public static void update(int health, int energy) {
+		statusIndicator.update(health, energy);
 		weaponControl.update();
 	}
 
