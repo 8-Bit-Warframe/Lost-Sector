@@ -19,6 +19,7 @@ import com.ezardlabs.dethsquare.Touch;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.Utils;
 import com.ezardlabs.lostsector.objects.hud.HUD;
+import com.ezardlabs.lostsector.objects.hud.WeaponControl.WeaponType;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
 import java.util.Timer;
@@ -68,11 +69,14 @@ public class Player extends Script {
 			gameObject.renderer.hFlipped = false;
 		}
 
+		switchWeaponCheck();
+
 		switch (state) {
 			case IDLE:
 				if (jumpCheck()) break;
 				if (fallCheck()) break;
 				if (meleeCheck()) break;
+				if (shootCheck()) break;
 				if (castCheck()) break;
 				if (x != 0) state = State.RUNNING;
 				break;
@@ -80,6 +84,7 @@ public class Player extends Script {
 				if (jumpCheck()) break;
 				if (fallCheck()) break;
 				if (meleeCheck()) break;
+				if (shootCheck()) break;
 				if (castCheck()) break;
 				if (x == 0) state = State.IDLE;
 				break;
@@ -97,6 +102,7 @@ public class Player extends Script {
 				break;
 			case MELEE:
 				if (fallCheck()) {
+					warframe.meleeWeapon.reset();
 					gameObject.rigidbody.velocity.x = 0;
 					gameObject.renderer.setSize(200, 200);
 					gameObject.renderer.setOffsets(0, 0);
@@ -148,6 +154,7 @@ public class Player extends Script {
 				meleeCheck();
 				break;
 			case SHOOTING:
+				gameObject.animator.play("shoot");
 				break;
 			case CASTING:
 				gameObject.animator.play("cast");
@@ -205,8 +212,9 @@ public class Player extends Script {
 	}
 
 	private boolean meleeCheck() {
+		if (HUD.getCurrentWeaponType() != WeaponType.MELEE) return false;
 		boolean touchMelee = false;
-		if (Utils.PLATFORM == Utils.Platform.ANDROID) {
+		if (Utils.PLATFORM == Utils.Platform.ANDROID && HUD.getCurrentWeaponType() == WeaponType.MELEE) {
 			for (Touch t : Input.touches) {
 				if (t.phase == Touch.TouchPhase.BEGAN && HUD.isAttackButtonPressed(t.position)) {
 					touchMelee = true;
@@ -219,6 +227,39 @@ public class Player extends Script {
 			return true;
 		}
 		return false;
+	}
+
+	private boolean shootCheck() {
+		if (HUD.getCurrentWeaponType() != WeaponType.RANGED) return false;
+		boolean touchRanged = false;
+		if (Utils.PLATFORM == Utils.Platform.ANDROID && HUD.getCurrentWeaponType() == WeaponType.RANGED) {
+			for (Touch t : Input.touches) {
+				if (t.phase == Touch.TouchPhase.BEGAN && HUD.isAttackButtonPressed(t.position)) {
+					touchRanged = true;
+					break;
+				}
+			}
+		}
+		if (Input.getKeyDown(KeyCode.RETURN) || Input.getKeyDown(KeyCode.K) || touchRanged) {
+			state = State.SHOOTING;
+			return true;
+		}
+		return false;
+	}
+
+	private void switchWeaponCheck() {
+		boolean touchSwitch = false;
+		if (Utils.PLATFORM == Utils.Platform.ANDROID && HUD.getCurrentWeaponType() == WeaponType.RANGED) {
+			for (Touch t : Input.touches) {
+				if (t.phase == Touch.TouchPhase.BEGAN && HUD.isAttackButtonPressed(t.position)) {
+					touchSwitch = true;
+					break;
+				}
+			}
+		}
+		if (Input.getKeyDown(KeyCode.L) || touchSwitch) {
+			HUD.switchWeapons();
+		}
 	}
 
 	private boolean castCheck() {

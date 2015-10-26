@@ -8,7 +8,6 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
@@ -43,9 +42,9 @@ public class Frost extends Warframe {
 				ta.getSprite("avalanche11"),
 				ta.getSprite("avalanche12"),
 				ta.getSprite("avalanche13")}, AnimationType.ONE_SHOT, 100));
-		setPrimaryWeapon(new Lanka());
+		setPrimaryWeapon(new Lanka(gameObject));
 		setMeleeWeapon(new Nikana(gameObject));
-		HUD.weaponControl.setWeapons(new Lanka(), new Nikana(gameObject));
+		HUD.weaponControl.setWeapons(new Lanka(gameObject), new Nikana(gameObject));
 		HUD.weaponControl.switchWeapons();
 	}
 

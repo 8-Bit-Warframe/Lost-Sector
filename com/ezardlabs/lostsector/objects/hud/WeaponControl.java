@@ -18,9 +18,13 @@ public class WeaponControl {
 	private GuiRenderer attackButton;
 	private boolean attackButtonPressed;
 
+	public enum WeaponType {
+		MELEE,
+		RANGED
+	}
+
 	void init(TextureAtlas ta) {
 		this.ta = ta;
-		//187.5
 		GameObject.instantiate(new GameObject("Weapon Control", new GuiRenderer(ta, ta.getSprite("weapons"), 600, 300)), new Vector2((Screen.width - 600 * Screen.scale) / Screen.scale, Screen.height - 300 - 12));
 		GameObject.instantiate(new GameObject("Attack Button", attackButton = new GuiRenderer(ta, ta.getSprite("melee"), 187.5f, 187.5f)), new Vector2((Screen.width - 212.5f * Screen.scale) / Screen.scale, Screen.height - 206.25f - 12));
 	}
@@ -57,6 +61,10 @@ public class WeaponControl {
 
 	public Weapon getCurrentWeapon() {
 		return isCurrentPrimary ? primary : secondary;
+	}
+
+	public WeaponType getCurrentWeaponType() {
+		return isCurrentPrimary ? WeaponType.RANGED : WeaponType.MELEE;
 	}
 
 	public boolean isAttackButtonPressed() {
