@@ -310,7 +310,7 @@ public class Player extends Script {
 
 	@Override
 	public void onCollision(Collider other, Collision collision) {
-		if (collision.location == CollisionLocation.BOTTOM) {
+		if (collision.location == CollisionLocation.BOTTOM && (state == State.FALLING || state == State.JUMPING || state == State.DOUBLE_JUMPING)) {
 			jumpCount = 0;
 			if (collision.speed > 37) {
 				state = State.LANDING;
