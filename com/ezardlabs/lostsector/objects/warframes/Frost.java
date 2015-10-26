@@ -41,7 +41,25 @@ public class Frost extends Warframe {
 				ta.getSprite("avalanche10"),
 				ta.getSprite("avalanche11"),
 				ta.getSprite("avalanche12"),
-				ta.getSprite("avalanche13")}, AnimationType.ONE_SHOT, 100));
+				ta.getSprite("avalanche13")}, AnimationType.ONE_SHOT, 100, new Animation.AnimationListener() {
+			@Override
+			public void onAnimatedStarted(Animator animator) {
+
+			}
+
+			@Override
+			public void onFrame(Animator animator, int frameNum) {
+
+			}
+
+			@Override
+			public void onAnimationFinished(Animator animator) {
+				Player p;
+				if ((p = animator.gameObject.getComponent(Player.class)) != null) {
+					p.state = Player.State.IDLE;
+				}
+			}
+		}));
 		setPrimaryWeapon(new Lanka(gameObject));
 		setMeleeWeapon(new Nikana(gameObject));
 		HUD.weaponControl.setWeapons(new Lanka(gameObject), new Nikana(gameObject));

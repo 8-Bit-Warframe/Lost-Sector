@@ -89,6 +89,6 @@ public class WeaponControl {
 	}
 
 	public boolean switchButtonHitTest(Touch t) {
-		return t.phase == TouchPhase.BEGAN && switchButton.hitTest(t.startPosition) && switchButton.hitTest(t.position);
+		return switchButton.hitTest(t.startPosition) && switchButton.hitTest(t.position);
 	}
 }
