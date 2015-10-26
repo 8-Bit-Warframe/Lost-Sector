@@ -64,10 +64,12 @@ public class Player extends Script {
 
 		x = getMovement();
 
-		if (x < 0) {
-			gameObject.renderer.hFlipped = true;
-		} else if (x > 0) {
-			gameObject.renderer.hFlipped = false;
+		if (state != State.SHOOTING) {
+			if (x < 0) {
+				gameObject.renderer.hFlipped = true;
+			} else if (x > 0) {
+				gameObject.renderer.hFlipped = false;
+			}
 		}
 
 		switchWeaponCheck();
