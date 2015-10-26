@@ -23,6 +23,7 @@ public class LankaBeam extends Script {
 		startTime = System.currentTimeMillis();
 		float closestX = direction == 1 ? Float.MAX_VALUE : Float.MIN_VALUE;
 		for (Collider c : Collider.staticColliders) {
+			if (c.gameObject.name.equals("Door") && c.gameObject.getTag() == null) continue;
 			if (!c.gameObject.name.equals("Locker") && c.bounds.top < transform.position.y && c.bounds.bottom > transform.position.y) {
 				if (direction == 1 && c.bounds.left > transform.position.x && c.bounds.left < closestX) {
 					closestX = c.bounds.left;
