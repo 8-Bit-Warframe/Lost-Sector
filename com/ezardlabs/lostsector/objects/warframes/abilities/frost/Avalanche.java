@@ -4,11 +4,15 @@ import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.RectF;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.lostsector.Game;
+import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
 public class Avalanche extends Script {
 
@@ -74,6 +78,14 @@ public class Avalanche extends Script {
 			}
 		})), new Foreground()), transform.position);
 		GameObject.destroy(gameObject);
+		RectF r = new RectF(transform.position.x, transform.position.y, transform.position.x + 800, transform.position.y + 300);
+		Enemy e;
+		Collider c;
+		for (GameObject go : GameObject.findAllWithTag("enemy")) {
+			if ((e = go.getComponentOfType(Enemy.class)) != null && (c = go.getComponent(Collider.class)) != null && (r.contains(c.bounds) || RectF.intersects(r, c.bounds))) {
+				e.applyDamage(5, Game.DamageType.COLD, transform.position);
+			}
+		}
 	}
 
 	class Background extends Script {
