@@ -10,9 +10,8 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.BaseGame;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
+import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.PumpkinDeraCrewman;
 import com.ezardlabs.lostsector.objects.hud.HUD;
-import com.ezardlabs.lostsector.objects.hud.StatusIndicator;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
 public class Game extends BaseGame {
@@ -37,7 +36,8 @@ public class Game extends BaseGame {
 		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm), new Vector2());
 
 		for (Vector2 pos : new Vector2[]{new Vector2(2900, 600), new Vector2(2000, 2300), new Vector2(4300, 2000), new Vector2(8000, 700), new Vector2(7900, 1300), new Vector2(8800, 5800), new Vector2(8600, 4800), new Vector2(7100, 2100), new Vector2(3600, 3500), new Vector2(2000, 3800), new Vector2(2800, 5300), new Vector2(700, 4300), new Vector2(3500, 4500), new Vector2(5900, 5800)}) {
-			GameObject.instantiate(new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new DeraCrewman()), pos);
+//			GameObject.instantiate(new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new DeraCrewman()), pos);
+			GameObject.instantiate(new GameObject("Pumpkin Dera Crewman", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new PumpkinDeraCrewman()), pos);
 		}
 
 //		GameObject.instantiate(new GameObject("Kubrow", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new Kubrow()), new Vector2(1500, 20));
