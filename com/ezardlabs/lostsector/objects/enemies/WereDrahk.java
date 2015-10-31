@@ -181,23 +181,7 @@ public class WereDrahk extends Enemy {
 				ta.getSprite("die11"),
 				ta.getSprite("die12"),
 				ta.getSprite("die13"),
-				ta.getSprite("die14")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
-			@Override
-			public void onAnimatedStarted(Animator animator) {
-				gameObject.renderer.setSize(300, 200);
-				gameObject.renderer.setOffsets(gameObject.renderer.hFlipped ? -100 : 0, 0);
-			}
-
-			@Override
-			public void onFrame(Animator animator, int frameNum) {
-
-			}
-
-			@Override
-			public void onAnimationFinished(Animator animator) {
-
-			}
-		});
+				ta.getSprite("die14")}, AnimationType.ONE_SHOT, 100);
 	}
 
 	@Override
