@@ -35,6 +35,7 @@ public class LankaBeam extends Script {
 		width = (int) Math.abs(transform.position.x - closestX);
 		if (direction == -1) transform.position.x -= width;
 		gameObject.renderer.setSize(width, 0);
+		gameObject.renderer.setzIndex(10);
 	}
 
 	@Override
@@ -51,7 +52,6 @@ public class LankaBeam extends Script {
 			Collider c;
 			for (GameObject go : GameObject.findAllWithTag("enemy")) {
 				if ((c = go.getComponent(Collider.class)) != null && c.bounds.intersect(beam)) {
-					System.out.println(go.name);
 					//noinspection ConstantConditions
 					go.getComponentOfType(Enemy.class).applyDamage(10, DamageType.SLASH, direction == 1 ? transform.position : transform.position.offset(width, 0));
 				}
