@@ -96,10 +96,14 @@ public class NavMesh {
 	private static ArrayDeque<Integer> indices = new ArrayDeque<>();
 
 	public static NavPoint[] getPath(Transform self, Transform target) {
-		NavPoint start = navPoints[(int) (self.position.x / 100f)][(int) (self.position.y / 100f) + 1];
-		NavPoint end = navPoints[(int) (target.position.x / 100f)][(int) (target.position.y / 100f) + 1];
+		return getPath(self, target, false);
+	}
+
+	public static NavPoint[] getPath(Transform self, Transform target, boolean me) {
+		NavPoint start = navPoints[Math.round(self.position.x / 100f)][Math.round(self.position.y / 100f) + 1];
+		NavPoint end = navPoints[Math.round(target.position.x / 100f)][Math.round(target.position.y / 100f) + 1];
 		if (end != null && end.type == NavPointType.NONE) {
-			end = navPoints[(int) ((target.position.x / 100f) + 1)][(int) (target.position.y / 100f) + 1];
+			end = navPoints[Math.round((target.position.x / 100f) + 1)][Math.round(target.position.y / 100f) + 1];
 		}
 
 		if (start == null || end == null) return null;
@@ -110,6 +114,7 @@ public class NavMesh {
 		pointsWithAlteredIndices.clear();
 
 		end.index = -1;
+		pointsWithAlteredIndices.add(end);
 
 		maxIndex = 0;
 
