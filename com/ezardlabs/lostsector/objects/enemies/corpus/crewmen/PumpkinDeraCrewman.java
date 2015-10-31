@@ -7,7 +7,9 @@ import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
+import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.lostsector.objects.enemies.Pumpkin;
 import com.ezardlabs.lostsector.objects.enemies.corpus.Crewman;
 import com.ezardlabs.lostsector.objects.projectiles.Laser;
 
@@ -18,9 +20,33 @@ public class PumpkinDeraCrewman extends Crewman {
 	}
 
 	private Animation getDieAnimation(String name) {
-		return new Animation(name,
-				new Sprite[]{ta.getSprite("die0"), ta.getSprite("die1"), ta.getSprite("die2"), ta.getSprite("die3"), ta.getSprite("die4"), ta.getSprite("die5"), ta.getSprite("die6"), ta
-						.getSprite("die7"), ta.getSprite("die8"), ta.getSprite("die9")}, AnimationType.ONE_SHOT, 100);
+		return new Animation(name, new Sprite[]{ta.getSprite("die0"),
+				ta.getSprite("die1"),
+				ta.getSprite("die2"),
+				ta.getSprite("die3"),
+				ta.getSprite("die4"),
+				ta.getSprite("die5"),
+				ta.getSprite("die6"),
+				ta.getSprite("die7"),
+				ta.getSprite("die8"),
+				ta.getSprite("die9")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
+			@Override
+			public void onAnimatedStarted(Animator animator) {
+
+			}
+
+			@Override
+			public void onFrame(Animator animator, int frameNum) {
+
+			}
+
+			@Override
+			public void onAnimationFinished(Animator animator) {
+				GameObject.instantiate(new GameObject("Pumpkin", new Renderer(), new Animator(),
+						new Collider(200, 200), new Rigidbody(), new Pumpkin()), transform.position);
+				GameObject.destroy(gameObject);
+			}
+		});
 	}
 
 	@Override
@@ -86,9 +112,13 @@ public class PumpkinDeraCrewman extends Crewman {
 			public void onFrame(Animator animator, int frameNum) {
 				if (frameNum % 2 == 1) {
 					GameObject
-							.instantiate(new GameObject("Laser", new Renderer("images/laser_yellow.png", 100, 100).setFlipped(gameObject.renderer.hFlipped, false), new Collider(100, 100, true), new
-											Laser()),
-									transform.position.offset(gameObject.renderer.hFlipped ? -12.5f : 87.5f, frameNum == 1 ? 75 : 50));
+							.instantiate(new GameObject("Laser",
+											new Renderer("images/laser_yellow.png", 100, 100)
+													.setFlipped(gameObject.renderer.hFlipped,
+															false), new Collider(100, 100, true),
+											new Laser()), transform.position
+											.offset(gameObject.renderer.hFlipped ? -12.5f : 87.5f,
+													frameNum == 1 ? 75 : 50));
 				}
 			}
 
