@@ -140,7 +140,7 @@ public abstract class Warframe extends Avatar {
 
 	public void removeHealth(int health) {
 		this.health -= health;
-		if (this.health < 0) {
+		if (this.health <= 0) {
 			this.health = 0;
 			gameObject.animator.play("die");
 			if (gameObject.getComponent(Player.class) != null) {
