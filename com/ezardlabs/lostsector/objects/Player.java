@@ -159,6 +159,8 @@ public class Player extends Script {
 				gameObject.animator.play("cast");
 				break;
 		}
+		if (transform.position.x < 0) transform.translate(-transform.position.x, 0);
+		if (transform.position.y < 0) transform.translate(0, -transform.position.y);
 	}
 
 	private int getMovement() {
