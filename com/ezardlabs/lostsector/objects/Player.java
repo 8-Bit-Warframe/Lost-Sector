@@ -94,12 +94,15 @@ public class Player extends Script {
 			case JUMPING:
 				if (jumpCheck()) break;
 				if (fallCheck()) break;
+				ability1Check();
 				break;
 			case DOUBLE_JUMPING:
 				if (fallCheck()) break;
+				ability1Check();
 				break;
 			case FALLING:
 				if (jumpCheck()) break;
+				ability1Check();
 				break;
 			case LANDING:
 				break;
@@ -127,25 +130,18 @@ public class Player extends Script {
 			case RUNNING:
 				gameObject.animator.play("run");
 				transform.translate(x * speed, 0);
-				if (Input.getKeyDown(KeyCode.ALPHA_1)) warframe.ability1();
-				if (Input.getKeyDown(KeyCode.ALPHA_2)) warframe.ability2();
-				if (Input.getKeyDown(KeyCode.ALPHA_3)) warframe.ability3();
-				if (Input.getKeyDown(KeyCode.ALPHA_4)) warframe.ability4();
 				break;
 			case JUMPING:
 				gameObject.animator.play("jump");
 				transform.translate(x * speed, 0);
-				if (Input.getKeyDown(KeyCode.ALPHA_1)) warframe.ability1();
 				break;
 			case DOUBLE_JUMPING:
 				gameObject.animator.play("doublejump");
 				transform.translate(x * speed, 0);
-				if (Input.getKeyDown(KeyCode.ALPHA_1)) warframe.ability1();
 				break;
 			case FALLING:
 				gameObject.animator.play("fall");
 				transform.translate(x * speed, 0);
-				if (Input.getKeyDown(KeyCode.ALPHA_1)) warframe.ability1();
 				break;
 			case LANDING:
 				gameObject.animator.play("land");
@@ -259,24 +255,11 @@ public class Player extends Script {
 		}
 	}
 
-	private boolean castCheck() {
+	private void ability1Check() {
 		boolean ability1 = false;
-		boolean ability2 = false;
-		boolean ability3 = false;
-		boolean ability4 = false;
 		for (Touch t : Input.touches) {
-			if (t.phase == Touch.TouchPhase.ENDED) {
-				float x = t.position.x - t.startPosition.x;
-				float y = t.position.y - t.startPosition.y;
-				if (x < -150 * Screen.scale) { // left
-					ability3 = true;
-				} else if (x > 150 * Screen.scale) { // right
-					ability1 = true;
-				} else if (y < -150 * Screen.scale) { // up
-					ability4 = true;
-				} else if (y > 150 * Screen.scale) { // down
-					ability2 = true;
-				}
+			if (t.phase == TouchPhase.ENDED && t.position.x - t.startPosition.x > 150 * Screen.scale) {
+				ability1 = true;
 			}
 		}
 		if (ability1 || Input.getKeyDown(KeyCode.ALPHA_1)) {
@@ -285,10 +268,28 @@ public class Player extends Script {
 				warframe.ability1();
 			}
 		}
+	}
+
+	private void ability2Check() {
+		boolean ability2 = false;
+		for (Touch t : Input.touches) {
+			if (t.phase == TouchPhase.ENDED && t.position.y - t.startPosition.y > 150 * Screen.scale) {
+				ability2 = true;
+			}
+		}
 		if (ability2 || Input.getKeyDown(KeyCode.ALPHA_2)) {
 			if (warframe.hasEnergy(10)) {
 				warframe.removeEnergy(10);
 				warframe.ability2();
+			}
+		}
+	}
+
+	private void ability3Check() {
+		boolean ability3 = false;
+		for (Touch t : Input.touches) {
+			if (t.phase == TouchPhase.ENDED && t.position.x - t.startPosition.x < -150 * Screen.scale) {
+				ability3 = true;
 			}
 		}
 		if (ability3 || Input.getKeyDown(KeyCode.ALPHA_3)) {
@@ -297,14 +298,29 @@ public class Player extends Script {
 				warframe.ability3();
 			}
 		}
+	}
+
+	private void ability4Check() {
+		boolean ability4 = false;
+		for (Touch t : Input.touches) {
+			if (t.phase == TouchPhase.ENDED && t.position.y - t.startPosition.y < -150 * Screen.scale) { // up
+				ability4 = true;
+			}
+		}
 		if ((state == State.IDLE || state == State.RUNNING) && (ability4 || Input.getKeyDown(KeyCode.ALPHA_4))) {
 			if (warframe.hasEnergy(50)) {
 				warframe.removeEnergy(50);
 				warframe.ability4();
 				state = State.CASTING;
-				return true;
 			}
 		}
+	}
+
+	private boolean castCheck() {
+		ability1Check();
+		ability2Check();
+		ability3Check();
+		ability4Check();
 		return false;
 	}
 
