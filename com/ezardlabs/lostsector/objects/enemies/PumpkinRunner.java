@@ -100,7 +100,7 @@ public class PumpkinRunner extends Enemy {
 				if ((target == null || transform.position.x == target.x) &&
 						Game.players.length > 0) {
 					NavMesh.NavPoint[] path = NavMesh
-							.getPath(transform, Game.players[0].transform, true);
+							.getPath(transform, Game.players[0].transform);
 					if (path != null && path.length > 0) {
 						int pathIndex = 0;
 						if (path.length > 1 && path[0] != null &&
