@@ -189,7 +189,8 @@ public class Player extends Script {
 	private boolean jumpCheck() {
 		boolean touchJump = false;
 		for (Touch t : Input.touches) {
-			if (!HUD.switchButtonHitTest(t) && t.phase == TouchPhase.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f && Vector2.distance(t.position, t.startPosition) < 150 && !HUD.isAttackButtonPressed(t.position)) {
+			if (!HUD.switchButtonHitTest(t) && !HUD.attackButtonHitTest(t) && t.phase == TouchPhase.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f &&
+					Vector2.distance(t.position, t.startPosition) < 150 * Screen.scale) {
 				touchJump = true;
 			}
 		}

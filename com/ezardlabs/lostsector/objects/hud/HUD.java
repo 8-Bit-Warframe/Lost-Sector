@@ -36,6 +36,10 @@ public class HUD {
 		return weaponControl.isSwitchButtonPressed();
 	}
 
+	public static boolean attackButtonHitTest(Touch t) {
+		return weaponControl.attackButtonHitTest(t);
+	}
+
 	public static boolean switchButtonHitTest(Touch t) {
 		return weaponControl.switchButtonHitTest(t);
 	}

@@ -28,9 +28,12 @@ public class WeaponControl {
 
 	void init(TextureAtlas ta) {
 		this.ta = ta;
-		GameObject.instantiate(new GameObject("Weapon Control", new GuiRenderer(ta, ta.getSprite("weapons"), 600, 300)), new Vector2((Screen.width - 600 * Screen.scale) / Screen.scale, (Screen.height - 312 * Screen.scale) / Screen.scale));
-		GameObject.instantiate(new GameObject("Attack Button", attackButton = new GuiRenderer(ta, ta.getSprite("melee"), 187.5f, 187.5f)), new Vector2((Screen.width - 212.5f * Screen.scale) / Screen.scale, (Screen.height - 218.25f * Screen.scale) / Screen.scale));
-		GameObject.instantiate(new GameObject("Switch Button", switchButton = new GuiRenderer("images/transparent.png", 375, 225)), new Vector2((Screen.width - 600 * Screen.scale) / Screen.scale, (Screen.height - 237 * Screen.scale) / Screen.scale));
+		GameObject.instantiate(new GameObject("Weapon Control", new GuiRenderer(ta, ta.getSprite("weapons"), 600, 300)),
+				new Vector2((Screen.width - 600 * Screen.scale) / Screen.scale, (Screen.height - 312 * Screen.scale) / Screen.scale));
+		GameObject.instantiate(new GameObject("Attack Button", attackButton = new GuiRenderer(ta, ta.getSprite("melee"), 187.5f, 187.5f)),
+				new Vector2((Screen.width - 212.5f * Screen.scale) / Screen.scale, (Screen.height - 218.25f * Screen.scale) / Screen.scale));
+		GameObject.instantiate(new GameObject("Switch Button", switchButton = new GuiRenderer("images/transparent.png", 375, 225)),
+				new Vector2((Screen.width - 600 * Screen.scale) / Screen.scale, (Screen.height - 237 * Screen.scale) / Screen.scale));
 	}
 
 	void update() {
@@ -89,5 +92,9 @@ public class WeaponControl {
 
 	public boolean switchButtonHitTest(Touch t) {
 		return switchButton.hitTest(t.startPosition) && switchButton.hitTest(t.position);
+	}
+
+	public boolean attackButtonHitTest(Touch t) {
+		return attackButton.hitTest(t.startPosition) && switchButton.hitTest(t.position);
 	}
 }
