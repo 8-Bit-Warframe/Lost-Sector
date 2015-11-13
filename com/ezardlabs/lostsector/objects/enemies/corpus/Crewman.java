@@ -43,7 +43,7 @@ public class Crewman extends Enemy {
 					} else if (target.x > transform.position.x) {
 						gameObject.renderer.hFlipped = false;
 					}
-					if (target.y < transform.position.y) {
+					if (target.y - 100 < transform.position.y) {
 						if (gameObject.rigidbody.velocity.y >= 0) {
 							gameObject.rigidbody.velocity.y = -30f;
 						}
