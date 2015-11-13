@@ -70,6 +70,7 @@ public class Avalanche extends Script {
 
 			@Override
 			public void onFrame(Animator animator, int frameNum) {
+				if (frameNum == 9) damageEnemies(5);
 			}
 
 			@Override
@@ -78,12 +79,16 @@ public class Avalanche extends Script {
 			}
 		})), new Foreground()), transform.position);
 		GameObject.destroy(gameObject);
+		damageEnemies(0);
+	}
+
+	private void damageEnemies(int damage) {
 		RectF r = new RectF(transform.position.x, transform.position.y, transform.position.x + 800, transform.position.y + 300);
 		Enemy e;
 		Collider c;
 		for (GameObject go : GameObject.findAllWithTag("enemy")) {
 			if ((e = go.getComponentOfType(Enemy.class)) != null && (c = go.getComponent(Collider.class)) != null && (r.contains(c.bounds) || RectF.intersects(r, c.bounds))) {
-				e.applyDamage(5, Game.DamageType.COLD, transform.position);
+				e.applyDamage(damage, Game.DamageType.COLD, transform.position);
 			}
 		}
 	}
