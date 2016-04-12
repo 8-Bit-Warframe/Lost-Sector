@@ -9,6 +9,7 @@ import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.util.Utils;
 import com.ezardlabs.lostsector.objects.environment.Camera;
 import com.ezardlabs.lostsector.objects.environment.Door;
 import com.ezardlabs.lostsector.objects.environment.Locker;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MapManager {
@@ -40,7 +42,7 @@ public class MapManager {
 //		} catch (IOException ignored) {
 //			ignored.printStackTrace();
 //		}
-
+//
 //		NavMesh.init(solidityMap);
 	}
 
@@ -182,9 +184,9 @@ public class MapManager {
 			int mapTileWidth = Integer.parseInt(rootAttrs.getNamedItem("tilewidth").getNodeValue());
 			int mapTileHeight = Integer.parseInt(rootAttrs.getNamedItem("tileheight").getNodeValue());
 			Map map = new Map(mapWidth, mapHeight, mapTileWidth, mapTileHeight);
-			NodeList tileSets = root.getElementsByTagName("tileset");
-			for(int i = 0; i < tileSets.getLength(); i++) {
-				Node node = tileSets.item(i);
+			NodeList tileSetNodes = root.getElementsByTagName("tileset");
+			for(int i = 0; i < tileSetNodes.getLength(); i++) {
+				Node node = tileSetNodes.item(i);
 				NamedNodeMap nodeAttrs = node.getAttributes();
 				int firstGid = Integer.parseInt(nodeAttrs.getNamedItem("firstgid").getNodeValue());
 				Node source = nodeAttrs.getNamedItem("source");
@@ -203,6 +205,11 @@ public class MapManager {
 			for(int i = 0; i < tileLayers.getLength(); i++) {
 				Node node = tileLayers.item(i);
 				NamedNodeMap nodeAttrs = node.getAttributes();
+				Node nodeIsVisible = nodeAttrs.getNamedItem("visible");
+				boolean isVisible = nodeIsVisible == null ? true : Boolean.getBoolean(nodeIsVisible.getNodeValue());
+				if(!isVisible) {
+					continue;
+				}
 				String layerName = nodeAttrs.getNamedItem("name").getNodeValue();
 				int layerWidth = Integer.parseInt(nodeAttrs.getNamedItem("width").getNodeValue());
 				int layerHeight = Integer.parseInt(nodeAttrs.getNamedItem("height").getNodeValue());
@@ -229,61 +236,69 @@ public class MapManager {
 			}
 			NodeList objectGroups = doc.getElementsByTagName("objectgroup");
 
-			TileSet tileSet = map.getTileSets().get(0);
-			MapTile[] tiles = map.getMainLayer().getTiles();
-			for(int i = 0; i < tiles.length; i++) {
-				if(tiles[i].getGid() > 0) {
-					int w = map.getTileWidth();
-					int h = map.getTileHeight();
-					int row = i / map.getHeight();
-					int col = i % map.getWidth();
-					int x = row * w;
-					int y = col * h;
-
-					int u = 16;
-					int v = 16;
-					Renderer renderer = new Renderer("maps/" + tileSet.getImageSource(), u, v, w, h);
-					GameObject.instantiate(
-							new GameObject("Collider Tile", true, renderer, new Collider(w, h)),
-							new Vector2(x, y)
-					);
-				}
+			ArrayList<TileSet> tileSets = map.getTileSets();
+			ArrayList<TextureAtlas> textureAtlases = new ArrayList<>();
+			for(TileSet tileSet : tileSets) {
+				textureAtlases.add(new TextureAtlas("maps/" + tileSet.getImageSource(), null));
 			}
-/*			TextureAtlas eta = new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt");
-			try {
-				String temp;
-				BufferedReader reader = Utils.getReader("maps/" + name + ".lsmap");
-				while ((temp = reader.readLine()) != null) {
-					if (temp.equals("BEGIN METADATA")) readInMetaData(reader);
-					if (temp.equals("BEGIN BLOCKS")) readInBlocks(reader);
-					if (temp.equals("BEGIN LOCKERS")) readInLockers(reader, eta);
-					if (temp.equals("BEGIN DOORS")) readInDoors(reader, eta);
-					if (temp.equals("BEGIN CAMERAS")) readInCameras(reader, eta);
-				}
-			} catch (IOException ignored) {
-				ignored.printStackTrace();
+			MapTile[] tiles = null;
+			float w = map.getTileWidth() * 6.25f;
+			float h = map.getTileHeight() * 6.25f;
+			// Background layer with no collision
+			for(MapLayer layer : map.getBackgroundLayers()) {
+				tiles = layer.getTiles();
+				instantiateTiles(tiles, false, w, h, map, tileSets, textureAtlases);
 			}
-			TextureAtlas ta = new TextureAtlas("images/tiles/atlas.png", "images/tiles/atlas.txt");
-			String temp;
-			while ((temp = reader.readLine()) != null && !temp.equals("END BLOCKS")) {
-				String[] split = temp.split(",");
-				float x = Float.valueOf(split[0]) * 3.125f;
-				float y = Float.valueOf(split[1]) * 3.125f;
-				float w = Float.valueOf(split[2]) * 3.125f;
-				float h = Float.valueOf(split[3]) * 3.125f;
-				if (Boolean.valueOf(split[5])) {
-					GameObject.instantiate(
-							new GameObject("Collider Tile", true, new Renderer(ta, ta.getSprite(split[4]), w, h).setFlipped(Boolean.valueOf(split[6]), Boolean.valueOf(split[7])), new Collider(w, h)),
-							new Vector2(x, y));
-				} else {
-					GameObject
-							.instantiate(new GameObject("Tile", true, new Renderer(ta, ta.getSprite(split[4]), w, h).setFlipped(Boolean.valueOf(split[6]), Boolean.valueOf(split[7]))), new Vector2(x, y));
-				}
-				solidityMap[((int) (x / 100))][((int) (y / 100))] = Boolean.valueOf(split[5]) ? 1 : 0;
-			}*/
+			// Main Layer with collision
+			instantiateTiles(map.getMainLayer().getTiles(), true, w, h, map, tileSets, textureAtlases);
+			// TODO: Foreground layers not working as intended. (Still drawing behind player)
+			for(MapLayer layer : map.getForegroundLayers()) {
+				tiles = layer.getTiles();
+				instantiateTiles(tiles, false, w, h, map, tileSets, textureAtlases);
+			}
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		}
+	}
+
+	public static void instantiateTiles(MapTile[] tiles, boolean collision, float tileWidth, float tileHeight, Map map, ArrayList<TileSet> tileSets, ArrayList<TextureAtlas> textureAtlases) {
+		for (int i = 0; i < tiles.length; i++) {
+			int gid = tiles[i].getGid();
+			if(gid <= 0) {
+				continue;
+			}
+			int col = i % map.getWidth();
+			int row = i / map.getHeight();
+			float x = col * tileWidth;
+			float y = row * tileHeight;
+
+			int tileSetIdx = -1;
+			TileSet ts = null;
+			for(int j = tileSets.size() - 1; j >= 0; j--) {
+				if(gid >= tileSets.get(j).getFirstGid()) {
+					tileSetIdx = j;
+					ts = tileSets.get(tileSetIdx);
+					break;
+				}
+			}
+			if(ts == null) {
+				continue;
+			}
+			TextureAtlas ta = textureAtlases.get(tileSetIdx);
+			Sprite sprite = ta.getSprite(String.valueOf(gid - ts.getFirstGid()));
+			Renderer renderer = new Renderer(ta, sprite, tileWidth, tileHeight);
+			if(collision) {
+				GameObject.instantiate(
+						new GameObject("Tile", true, renderer, new Collider(tileWidth, tileHeight)),
+						new Vector2(x, y)
+				);
+			} else {
+				GameObject.instantiate(
+						new GameObject("Tile", true, renderer),
+						new Vector2(x, y)
+				);
+			}
 		}
 	}
 
@@ -322,8 +337,8 @@ public class MapManager {
 				imageHeight = Integer.parseInt(childAttrs.getNamedItem("height").getNodeValue());
 			} else if(rootChildren.item(i).getNodeName().equals("tile")) {
 				NamedNodeMap childAttrs = rootChildren.item(i).getAttributes();
-				int gid = Integer.parseInt(childAttrs.getNamedItem("gid").getNodeValue());
-				mapTiles[gid] = new MapTile(gid);
+//				int gid = Integer.parseInt(childAttrs.getNamedItem("gid").getNodeValue());
+//				mapTiles[gid] = new MapTile(gid);
 			}
 		}
 		TileSet tileSet = new TileSet(name, firstGid, tileWidth, tileHeight, tileCount);

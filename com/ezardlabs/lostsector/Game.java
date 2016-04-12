@@ -80,7 +80,8 @@ public class Game extends BaseGame {
 	public static void createPlayer() {
 		players = new GameObject[]{new GameObject("Player", new Player(), new Renderer(),
 				new Animator(), new Frost(), new Collider(200, 200), new Rigidbody())};
-		GameObject.instantiate(players[0], new Vector2(20, 20));
+//		GameObject.instantiate(players[0], new Vector2(20, 20));
+		GameObject.instantiate(players[0], new Vector2(300, 300));
 
 		cm.smoothFollow(players[0].transform);
 	}
