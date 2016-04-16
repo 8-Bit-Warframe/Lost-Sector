@@ -8,7 +8,6 @@ import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.BaseGame;
-import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.hud.HUD;

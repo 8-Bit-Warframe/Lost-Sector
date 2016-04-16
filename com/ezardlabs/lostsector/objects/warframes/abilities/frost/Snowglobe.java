@@ -31,7 +31,7 @@ public class Snowglobe extends Component {
 				ta.getSprite("sg16"),
 				ta.getSprite("sg17")}, AnimationType.LOOP, 100));
 		gameObject.animator.play("snowglobe");
-		gameObject.renderer.setzIndex(5);
+		gameObject.renderer.setzIndex(4);
 		gameObject.setTag("solid");
 		GameObject.destroy(gameObject, 5000);
 	}

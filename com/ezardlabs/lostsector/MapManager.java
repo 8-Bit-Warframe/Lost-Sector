@@ -1,4 +1,4 @@
-package com.ezardlabs.lostsector.map;
+package com.ezardlabs.lostsector;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.AnimationType;
@@ -9,7 +9,7 @@ import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.util.Utils;
+import com.ezardlabs.dethsquare.tmx.*;
 import com.ezardlabs.lostsector.objects.environment.Camera;
 import com.ezardlabs.lostsector.objects.environment.Door;
 import com.ezardlabs.lostsector.objects.environment.Locker;
@@ -20,7 +20,6 @@ import java.io.IOException;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MapManager {
@@ -164,105 +163,32 @@ public class MapManager {
 
 	// START Tiled TMX Pasring stuff
 
-	private static void loadTMX(String name) {
-		try {
-			File mapFile = new File("assets/maps/" + name + ".tmx");
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(mapFile);
-			doc.getDocumentElement().normalize();
-			Element root = doc.getDocumentElement();
-			if(!root.getNodeName().equals("map")) {
-				throw new Exception("Invalid map file.");
-			}
-			NamedNodeMap rootAttrs = root.getAttributes();
-//			String version = rootAttrs.getNamedItem("version").getNodeValue();
-//			String orientation = rootAttrs.getNamedItem("orientation").getNodeValue();
-//			String renderOrder = rootAttrs.getNamedItem("renderorder").getNodeValue();
-			int mapWidth = Integer.parseInt(rootAttrs.getNamedItem("width").getNodeValue());
-			int mapHeight = Integer.parseInt(rootAttrs.getNamedItem("height").getNodeValue());
-			int mapTileWidth = Integer.parseInt(rootAttrs.getNamedItem("tilewidth").getNodeValue());
-			int mapTileHeight = Integer.parseInt(rootAttrs.getNamedItem("tileheight").getNodeValue());
-			Map map = new Map(mapWidth, mapHeight, mapTileWidth, mapTileHeight);
-			NodeList tileSetNodes = root.getElementsByTagName("tileset");
-			for(int i = 0; i < tileSetNodes.getLength(); i++) {
-				Node node = tileSetNodes.item(i);
-				NamedNodeMap nodeAttrs = node.getAttributes();
-				int firstGid = Integer.parseInt(nodeAttrs.getNamedItem("firstgid").getNodeValue());
-				Node source = nodeAttrs.getNamedItem("source");
-				TileSet tileSet = null;
-				if(source == null) {
-					tileSet = loadTMXTileSet(node, firstGid);
-				} else {
-					tileSet = loadTMXTileSet("assets/maps/" + source.getNodeValue(), firstGid);
-				}
-				if(tileSet != null) {
-					map.addTileSet(tileSet);
-				}
-			}
-			NodeList tileLayers = root.getElementsByTagName("layer");
-			boolean isBackgroundLayer = true;
-			for(int i = 0; i < tileLayers.getLength(); i++) {
-				Node node = tileLayers.item(i);
-				NamedNodeMap nodeAttrs = node.getAttributes();
-				Node nodeIsVisible = nodeAttrs.getNamedItem("visible");
-				boolean isVisible = nodeIsVisible == null ? true : Boolean.getBoolean(nodeIsVisible.getNodeValue());
-				if(!isVisible) {
-					continue;
-				}
-				String layerName = nodeAttrs.getNamedItem("name").getNodeValue();
-				int layerWidth = Integer.parseInt(nodeAttrs.getNamedItem("width").getNodeValue());
-				int layerHeight = Integer.parseInt(nodeAttrs.getNamedItem("height").getNodeValue());
-				NodeList childNodes = node.getChildNodes();
-				MapTile[] mapTiles = null;
-				for(int j = 0; j < childNodes.getLength(); j++) {
-					if(childNodes.item(j).getNodeName().equals("data")) {
-						mapTiles = loadTMXTiles(childNodes.item(j), layerWidth, layerHeight);
-						break;
-					}
-				}
-				if(mapTiles == null) {
-					throw new Exception("Cannot load tiles for layer: " + layerName);
-				}
-				MapLayer mapLayer = new MapLayer(layerName, layerWidth, layerHeight, mapTiles);
-				if(layerName.equals("main")) {
-					map.setMainLayer(mapLayer);
-					isBackgroundLayer = false;
-				} else if(isBackgroundLayer) {
-					map.addBackgroundLayer(mapLayer);
-				} else if(!isBackgroundLayer) {
-					map.addForegroundLayer(mapLayer);
-				}
-			}
-			NodeList objectGroups = doc.getElementsByTagName("objectgroup");
-
-			ArrayList<TileSet> tileSets = map.getTileSets();
-			ArrayList<TextureAtlas> textureAtlases = new ArrayList<>();
-			for(TileSet tileSet : tileSets) {
-				textureAtlases.add(new TextureAtlas("maps/" + tileSet.getImageSource(), null));
-			}
-			MapTile[] tiles = null;
-			float w = map.getTileWidth() * 6.25f;
-			float h = map.getTileHeight() * 6.25f;
-			// Background layer with no collision
-			for(MapLayer layer : map.getBackgroundLayers()) {
-				tiles = layer.getTiles();
-				instantiateTiles(tiles, false, w, h, map, tileSets, textureAtlases);
-			}
-			// Main Layer with collision
-			instantiateTiles(map.getMainLayer().getTiles(), true, w, h, map, tileSets, textureAtlases);
-			// TODO: Foreground layers not working as intended. (Still drawing behind player)
-			for(MapLayer layer : map.getForegroundLayers()) {
-				tiles = layer.getTiles();
-				instantiateTiles(tiles, false, w, h, map, tileSets, textureAtlases);
-			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
+	private static void loadTMX(String filePath) {
+		TMXLoader tmxLoader = new TMXLoader(filePath);
+		Map map = tmxLoader.getMap();
+		ArrayList<TileSet> tileSets = map.getTileSets();
+		ArrayList<TextureAtlas> textureAtlases = new ArrayList<>();
+		for(TileSet tileSet : tileSets) {
+			textureAtlases.add(new TextureAtlas("maps/" + tileSet.getImageSource(), tileSet.getTileWidth(), tileSet.getTileHeight()));
+		}
+		Tile[] tiles = null;
+		float w = map.getTileWidth() * 6.25f;
+		float h = map.getTileHeight() * 6.25f;
+		// Background layer with no collision
+		for(Layer layer : map.getBackgroundLayers()) {
+			tiles = layer.getTiles();
+			instantiateTiles(tiles, false, w, h, -10, map, tileSets, textureAtlases);
+		}
+		// Main Layer with collision
+		instantiateTiles(map.getMainLayer().getTiles(), true, w, h, 5, map, tileSets, textureAtlases);
+		// TODO: Foreground layers not working as intended. (Still drawing behind player)
+		for(Layer layer : map.getForegroundLayers()) {
+			tiles = layer.getTiles();
+			instantiateTiles(tiles, false, w, h, 10, map, tileSets, textureAtlases);
 		}
 	}
 
-	public static void instantiateTiles(MapTile[] tiles, boolean collision, float tileWidth, float tileHeight, Map map, ArrayList<TileSet> tileSets, ArrayList<TextureAtlas> textureAtlases) {
+	public static void instantiateTiles(Tile[] tiles, boolean collision, float tileWidth, float tileHeight, int zindex, Map map, ArrayList<TileSet> tileSets, ArrayList<TextureAtlas> textureAtlases) {
 		for (int i = 0; i < tiles.length; i++) {
 			int gid = tiles[i].getGid();
 			if(gid <= 0) {
@@ -287,7 +213,7 @@ public class MapManager {
 			}
 			TextureAtlas ta = textureAtlases.get(tileSetIdx);
 			Sprite sprite = ta.getSprite(String.valueOf(gid - ts.getFirstGid()));
-			Renderer renderer = new Renderer(ta, sprite, tileWidth, tileHeight);
+			Renderer renderer = new Renderer(ta, sprite, tileWidth, tileHeight).setzIndex(zindex);
 			if(collision) {
 				GameObject.instantiate(
 						new GameObject("Tile", true, renderer, new Collider(tileWidth, tileHeight)),
@@ -300,66 +226,5 @@ public class MapManager {
 				);
 			}
 		}
-	}
-
-	public static TileSet loadTMXTileSet(String name, int firstGid) {
-		TileSet tileSet = null;
-		try {
-			File tileSetFile = new File(name);
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(tileSetFile);
-			doc.getDocumentElement().normalize();
-			Element root = doc.getDocumentElement();
-			tileSet = loadTMXTileSet(root, firstGid);
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
-		return tileSet;
-	}
-
-	public static TileSet loadTMXTileSet(Node root, int firstGid) {
-		NamedNodeMap rootAttrs = root.getAttributes();
-		String name = rootAttrs.getNamedItem("name").getNodeValue();
-		int tileWidth = Integer.parseInt(rootAttrs.getNamedItem("tilewidth").getNodeValue());
-		int tileHeight = Integer.parseInt(rootAttrs.getNamedItem("tileheight").getNodeValue());
-		int tileCount = Integer.parseInt(rootAttrs.getNamedItem("tilecount").getNodeValue());
-		String imageSource = "";
-		int imageWidth = 0;
-		int imageHeight = 0;
-		MapTile[] mapTiles = new MapTile[tileCount];
-		NodeList rootChildren = root.getChildNodes();
-		for(int i = 0; i < rootChildren.getLength(); i++) {
-			if(rootChildren.item(i).getNodeName().equals("image")) {
-				NamedNodeMap childAttrs = rootChildren.item(i).getAttributes();
-				imageSource = childAttrs.getNamedItem("source").getNodeValue();
-				imageWidth = Integer.parseInt(childAttrs.getNamedItem("width").getNodeValue());
-				imageHeight = Integer.parseInt(childAttrs.getNamedItem("height").getNodeValue());
-			} else if(rootChildren.item(i).getNodeName().equals("tile")) {
-				NamedNodeMap childAttrs = rootChildren.item(i).getAttributes();
-//				int gid = Integer.parseInt(childAttrs.getNamedItem("gid").getNodeValue());
-//				mapTiles[gid] = new MapTile(gid);
-			}
-		}
-		TileSet tileSet = new TileSet(name, firstGid, tileWidth, tileHeight, tileCount);
-		tileSet.setImage(imageSource, imageWidth, imageHeight);
-		return tileSet;
-	}
-
-	public static MapTile[] loadTMXTiles(Node data, int layerWidth, int layerHeight) {
-		NodeList childNodes = data.getChildNodes();
-//		MapTile[] mapTiles = new MapTile[layerWidth * layerHeight];
-		ArrayList<MapTile> arrMapTiles = new ArrayList<>();
-		for(int i = 0; i < childNodes.getLength(); i++) {
-			String nodeName = childNodes.item(i).getNodeName();
-			if(childNodes.item(i).getNodeName().equals("tile")) {
-				Node node = childNodes.item(i);
-				NamedNodeMap attrs = node.getAttributes();
-				Node gid = childNodes.item(i).getAttributes().getNamedItem("gid");
-//				mapTiles[i / 2] = new MapTile(Integer.parseInt(gid.getNodeValue()));
-				arrMapTiles.add(new MapTile(Integer.parseInt(gid.getNodeValue())));
-			}
-		}
-		return arrMapTiles.toArray(new MapTile[layerWidth * layerHeight]);
 	}
 }
