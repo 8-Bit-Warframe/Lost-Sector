@@ -15,8 +15,12 @@ import java.util.ArrayList;
 
 public class MapManager {
 	private static int[][] solidityMap;
+	public static String overrideMapName = null;
 
 	public static void loadMap(String name) {
+		if(overrideMapName != null) {
+			name = overrideMapName;
+		}
 		loadTMX(name);
 		NavMesh.init(solidityMap);
 //		TextureAtlas eta = new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt");
@@ -228,13 +232,13 @@ public class MapManager {
 						new GameObject("Tile", true, renderer, new Collider(tileWidth, tileHeight)),
 						new Vector2(x, y)
 				);
+				solidityMap[((int) (x / 100))][((int) (y / 100))] = 1;
 			} else {
 				GameObject.instantiate(
 						new GameObject("Tile", true, renderer),
 						new Vector2(x, y)
 				);
 			}
-			solidityMap[((int) (x / 100))][((int) (y / 100))] = (collision ? 1 : 0);
 		}
 	}
 
