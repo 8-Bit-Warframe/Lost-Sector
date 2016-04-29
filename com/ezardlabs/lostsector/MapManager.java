@@ -18,6 +18,7 @@ public class MapManager {
 
 	public static void loadMap(String name) {
 		loadTMX(name);
+		NavMesh.init(solidityMap);
 //		TextureAtlas eta = new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt");
 //		try {
 //			String temp;
@@ -157,6 +158,7 @@ public class MapManager {
 	private static void loadTMX(String filePath) {
 		TMXLoader tmxLoader = new TMXLoader(filePath);
 		Map map = tmxLoader.getMap();
+		solidityMap = new int[map.getWidth()][map.getHeight()];
 		ArrayList<TileSet> tileSets = map.getTileSets();
 		ArrayList<TextureAtlas> textureAtlases = new ArrayList<>();
 		for(TileSet tileSet : tileSets) {
@@ -181,8 +183,16 @@ public class MapManager {
 		}
 
 		TextureAtlas ta = new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt");
+		ObjectGroup enemyObjectGroup = null;
 		for(ObjectGroup objectGroup : map.getObjectGroups()) {
-			instantiateObjects(objectGroup.getObjects(), ta);
+			if(objectGroup.getName().equals("enemies")) {
+				enemyObjectGroup = objectGroup;
+			} else {
+				instantiateObjects(objectGroup.getObjects(), ta);
+			}
+		}
+		if(enemyObjectGroup != null) {
+			instantiateEnemies(enemyObjectGroup.getObjects());
 		}
 	}
 
@@ -224,6 +234,7 @@ public class MapManager {
 						new Vector2(x, y)
 				);
 			}
+			solidityMap[((int) (x / 100))][((int) (y / 100))] = (collision ? 1 : 0);
 		}
 	}
 
@@ -232,13 +243,7 @@ public class MapManager {
 			Vector2 pos = new Vector2(object.getX() * 6.25f, object.getY() * 6.25f);
 			float w = object.getWidth() * 6.25f;
 			float h = object.getHeight() * 6.25f;
-			Collider collider = new Collider(object.getWidth() * 6.25f, object.getHeight() * 6.25f);
 			switch(object.getType()) {
-				case "crewman":
-//					GameObject.instantiate(
-//							new GameObject("Crewman", new Renderer(), new Animator(), new Collider(object.getWidth() * 6.25f, object.getHeight() * 6.25f), new Rigidbody(), new Crewman("dera")),
-//							pos);
-					break;
 				case "locker":
 					if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 0)
 						GameObject.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200)), pos);
@@ -270,10 +275,6 @@ public class MapManager {
 									ta.getSprite("door2"),
 									ta.getSprite("door1"),
 									ta.getSprite("door0")}, AnimationType.ONE_SHOT, 80))), pos);
-//					GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y));
-//					GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y + 128 * 3.125f));
-					GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(w, h * 0.2f)), pos);
-					GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(w, h * 0.2f)), new Vector2(pos.x, pos.y + h * 0.8f));
 					break;
 				case "ldoor":
 					GameObject.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("ldoor0"), w, h),
@@ -288,10 +289,33 @@ public class MapManager {
 									ta.getSprite("ldoor8"),
 									ta.getSprite("ldoor9"),
 									ta.getSprite("ldoor10")}, AnimationType.OSCILLATE, 80))), pos);
-//					GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y));
-//					GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y + 128 * 3.125f));
-					GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(w, h * 0.2f)), pos);
-					GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(w, h * 0.2f)), new Vector2(pos.x, pos.y + h * 0.8f));
+					break;
+			}
+
+			// For doors
+			if(object.getType().contains("door")) {
+//				GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y));
+//				GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y + 128 * 3.125f));
+				GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(w, h * 0.2f)), pos);
+				GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(w, h * 0.2f)), new Vector2(pos.x, pos.y + h * 0.8f));
+				solidityMap[((int) (pos.x / 100))][((int) (pos.y / 100))] = 1;
+				solidityMap[((int) (pos.x / 100)) + 1][((int) (pos.y / 100))] = 1;
+				solidityMap[((int) (pos.x / 100))][((int) (pos.y / 100)) + 4] = 1;
+				solidityMap[((int) (pos.x / 100)) + 1][((int) (pos.y / 100)) + 4] = 1;
+			}
+		}
+	}
+
+	public static void instantiateEnemies(TMXObject[] objects) {
+		for(TMXObject object : objects) {
+			Vector2 pos = new Vector2(object.getX() * 6.25f, object.getY() * 6.25f);
+			float w = object.getWidth() * 6.25f;
+			float h = object.getHeight() * 6.25f;
+			switch(object.getType()) {
+				case "crewman":
+					GameObject.instantiate(
+							new GameObject("Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new Crewman("dera")),
+							pos);
 					break;
 			}
 		}
