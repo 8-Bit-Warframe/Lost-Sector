@@ -208,7 +208,7 @@ public class MapManager {
 				continue;
 			}
 			int col = i % map.getWidth();
-			int row = i / map.getHeight();
+			int row = i / map.getWidth();
 			float x = col * tileWidth;
 			float y = row * tileHeight;
 
@@ -232,7 +232,11 @@ public class MapManager {
 						new GameObject("Tile", true, renderer, new Collider(tileWidth, tileHeight)),
 						new Vector2(x, y)
 				);
-				solidityMap[((int) (x / 100))][((int) (y / 100))] = 1;
+				try {
+					solidityMap[col][row] = 1;
+				} catch(ArrayIndexOutOfBoundsException ex) {
+					System.out.println("Error setting solidityMap at index [" + col + "][" + row + "]");
+				}
 			} else {
 				GameObject.instantiate(
 						new GameObject("Tile", true, renderer),
