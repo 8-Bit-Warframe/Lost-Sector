@@ -11,6 +11,7 @@ import com.ezardlabs.dethsquare.util.BaseGame;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.hud.HUD;
+import com.ezardlabs.lostsector.objects.menus.MainMenu;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
 public class Game extends BaseGame {
@@ -26,13 +27,27 @@ public class Game extends BaseGame {
 
 	@Override
 	public void create() {
+		load();
+	}
+
+	public static void createPlayer() {
+		players = new GameObject[]{new GameObject("Player", new Player(), new Renderer(),
+				new Animator(), new Frost(), new Collider(200, 200), new Rigidbody())};
+
+		GameObject.instantiate(players[0], new Vector2(MapManager.playerSpawn.x, MapManager.playerSpawn.y));
+
+		cm.smoothFollow(players[0].transform);
+	}
+
+	public static void load() {
+		MapManager.playerSpawn = new Vector2(20.0f, 20.0f);
 		MapManager.loadMap("map");
 
 		HUD.init();
 
 		createPlayer();
 
-		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm), new Vector2());
+		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm), new Vector2(MapManager.playerSpawn.x, MapManager.playerSpawn.y));
 
 //		for (Vector2 pos : new Vector2[]{new Vector2(2528, 1856),
 //				new Vector2(1024, 992),
@@ -74,14 +89,5 @@ public class Game extends BaseGame {
 //		GameObject.instantiate(new GameObject("Kubrow", new Renderer(), new Animator(), new Collider(200, 200), new Rigidbody(), new Kubrow()), new Vector2(1500, 20));
 
 //		GameObject.instantiate(new GameObject("Buttons"), new Vector2());
-	}
-
-	public static void createPlayer() {
-		players = new GameObject[]{new GameObject("Player", new Player(), new Renderer(),
-				new Animator(), new Frost(), new Collider(200, 200), new Rigidbody())};
-//		GameObject.instantiate(players[0], new Vector2(20, 20));
-		GameObject.instantiate(players[0], new Vector2(300, 300));
-
-		cm.smoothFollow(players[0].transform);
 	}
 }

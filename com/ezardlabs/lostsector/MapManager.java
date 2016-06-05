@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class MapManager {
 	private static int[][] solidityMap;
+	public static Vector2 playerSpawn = new Vector2();
 	public static String overrideMapName = null;
 
 	public static void loadMap(String name) {
@@ -251,25 +252,32 @@ public class MapManager {
 			Vector2 pos = new Vector2(object.getX() * 6.25f, object.getY() * 6.25f);
 			float w = object.getWidth() * 6.25f;
 			float h = object.getHeight() * 6.25f;
+			boolean flipH = Boolean.parseBoolean(object.getProperty("flipH", "false"));
+			boolean flipV = Boolean.parseBoolean(object.getProperty("flipV", "false"));
 			switch(object.getType()) {
+				case "player_spawn":
+					playerSpawn = new Vector2(pos.x, pos.y);
+					break;
 				case "locker":
 					if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 0)
-						GameObject.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200)), pos);
+						GameObject.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200).setFlipped(flipH, flipV)), pos);
 					else
-						GameObject.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200), new Animator(
+						GameObject.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200).setFlipped(flipH, flipV), new Animator(
 							new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
 									125)), new Collider(100, 200, true)), pos);
 					break;
 				case "locker_locked":
-					GameObject.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200)), pos);
+					GameObject.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200).setFlipped(flipH, flipV)), pos);
 					break;
 				case "locker_unlocked":
-					GameObject.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200), new Animator(
+					GameObject.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200).setFlipped(flipH, flipV), new Animator(
 							new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
 									125)), new Collider(100, 200, true)), pos);
 					break;
 				case "door":
-					GameObject.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("door0"), w, h),
+					if(flipH) {
+					}
+					GameObject.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("door0"), w, h).setFlipped(flipH, flipV),
 							new Animator(new Animation("open", new Sprite[]{ta.getSprite("door0"),
 									ta.getSprite("door1"),
 									ta.getSprite("door2"),
@@ -285,7 +293,9 @@ public class MapManager {
 									ta.getSprite("door0")}, AnimationType.ONE_SHOT, 80))), pos);
 					break;
 				case "ldoor":
-					GameObject.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("ldoor0"), w, h),
+					if(flipH) {
+					}
+					GameObject.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(flipH, flipV),
 							new Animator(new Animation("open", new Sprite[]{ta.getSprite("ldoor")}, AnimationType.ONE_SHOT, 80), new Animation("close", new Sprite[]{ta.getSprite("ldoor0"),
 									ta.getSprite("ldoor1"),
 									ta.getSprite("ldoor2"),
