@@ -1,4 +1,4 @@
-package com.ezardlabs.lostsector.objects.enemies;
+package com.ezardlabs.lostsector.objects.enemies.halloween.generic;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
@@ -8,78 +8,87 @@ import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.NavMesh;
+import com.ezardlabs.lostsector.objects.enemies.Enemy;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
-public class WereDrahk extends Enemy {
+public class PumpkinRunner extends Enemy {
 	Vector2 target;
 	private boolean attacking = false;
+	private boolean rising = false;
 
-	public WereDrahk() {
-		super("weredrahk", 5);
+	public PumpkinRunner() {
+		super("pumpkin_runner", 2);
 	}
 
 	@Override
 	public void start() {
 		super.start();
-		gameObject.animator.addAnimations(new Animation("attack",
-				new Sprite[]{ta.getSprite("attack0"),
-						ta.getSprite("attack1"),
-						ta.getSprite("attack2"),
-						ta.getSprite("attack3"),
-						ta.getSprite("attack4"),
-						ta.getSprite("attack5"),
-						ta.getSprite("attack6"),
-						ta.getSprite("attack7")}, AnimationType.ONE_SHOT, 100,
-				new AnimationListener() {
-					@Override
-					public void onAnimatedStarted(Animator animator) {
-					}
+		gameObject.animator.addAnimations(new Animation("rise", new Sprite[]{ta.getSprite("rise0"),
+				ta.getSprite("rise1"),
+				ta.getSprite("rise2"),
+				ta.getSprite("rise3"),
+				ta.getSprite("rise4"),
+				ta.getSprite("rise5"),
+				ta.getSprite("rise6"),
+				ta.getSprite("rise7")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
+			@Override
+			public void onAnimatedStarted(Animator animator) {
+				rising = true;
+			}
 
-					@Override
-					public void onFrame(Animator animator, int frameNum) {
-						if (frameNum == 1 || frameNum == 4) {
-							for (int i = 0; i < Game.players.length; i++) {
-								if (Math.abs(transform.position.x -
-										Game.players[i].transform.position.x) <= 200) {
-									Warframe w = Game.players[i].getComponentOfType(Warframe.class);
-									if (w != null) {
-										w.removeHealth(10);
-										if (w.getHealth() <= 0) {
-											gameObject.animator.play("howl");
-										}
-									}
-								}
+			@Override
+			public void onFrame(Animator animator, int frameNum) {
+
+			}
+
+			@Override
+			public void onAnimationFinished(Animator animator) {
+				rising = false;
+			}
+		}), new Animation("attack", new Sprite[]{ta.getSprite("attack0"),
+				ta.getSprite("attack1"),
+				ta.getSprite("attack2"),
+				ta.getSprite("attack3"),
+				ta.getSprite("attack4"),
+				ta.getSprite("attack5")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
+			@Override
+			public void onAnimatedStarted(Animator animator) {
+
+			}
+
+			@Override
+			public void onFrame(Animator animator, int frameNum) {
+				if (frameNum == 2) {
+					for (int i = 0; i < Game.players.length; i++) {
+						if (Math.abs(transform.position.x -
+								Game.players[i].transform.position.x) <= 100) {
+							Warframe w = Game.players[i].getComponentOfType(Warframe.class);
+							if (w != null) {
+								w.removeHealth(10);
 							}
 						}
 					}
+				}
+			}
 
-					@Override
-					public void onAnimationFinished(Animator animator) {
-						attacking = false;
-						gameObject.animator.play("idle");
-					}
-				}), new Animation("howl", new Sprite[]{ta.getSprite("howl0"),
-				ta.getSprite("howl1"),
-				ta.getSprite("howl2"),
-				ta.getSprite("howl3"),
-				ta.getSprite("howl4"),
-				ta.getSprite("howl5"),
-				ta.getSprite("howl6"),
-				ta.getSprite("howl7"),
-				ta.getSprite("howl8")}, AnimationType.ONE_SHOT, 100));
-		gameObject.renderer.setSize(300, 300);
-		gameObject.renderer.setOffsets(0, -100);
+			@Override
+			public void onAnimationFinished(Animator animator) {
+				attacking = false;
+				gameObject.animator.play("idle");
+			}
+		}));
+		gameObject.animator.play("rise");
 	}
 
 	@Override
 	public void update() {
-		if (dead || frozen || attacking) return;
+		if (dead || frozen || attacking || rising) return;
 		int x = 0;
 		if (!landing && gameObject.rigidbody.velocity.y == 0) {
 			if (Game.players.length > 0 &&
 					transform.position.y == Game.players[0].transform.position.y &&
 					Math.abs(transform.position.x - Game.players[0].transform.position.x) <=
-							(gameObject.renderer.hFlipped ? 100 : 200)) {
+							(gameObject.renderer.hFlipped ? 100 : 100)) {
 				attacking = true;
 				gameObject.animator.play("attack");
 				if (Game.players[0].transform.position.x < transform.position.x) {
@@ -135,22 +144,6 @@ public class WereDrahk extends Enemy {
 	}
 
 	@Override
-	protected Animation getIdleAnimation() {
-		return new Animation("idle", new Sprite[]{ta.getSprite("idle0")}, AnimationType.ONE_SHOT,
-				Long.MAX_VALUE);
-	}
-
-	@Override
-	protected Animation getRunAnimation() {
-		return new Animation("run", new Sprite[]{ta.getSprite("run0"),
-				ta.getSprite("run1"),
-				ta.getSprite("run2"),
-				ta.getSprite("run3"),
-				ta.getSprite("run4"),
-				ta.getSprite("run5")}, AnimationType.LOOP, 100);
-	}
-
-	@Override
 	protected Animation getLandAnimation() {
 		return new Animation("land", new Sprite[]{ta.getSprite("land0")}, AnimationType.ONE_SHOT,
 				100);
@@ -159,11 +152,6 @@ public class WereDrahk extends Enemy {
 	@Override
 	protected Animation getShootAnimation() {
 		return new Animation("shoot", new Sprite[0], AnimationType.ONE_SHOT, 0);
-	}
-
-	@Override
-	protected Animation getFrozenShatterAnimation() {
-		return getDieAnimation("frozen_shatter");
 	}
 
 	private Animation getDieAnimation(String name) {
@@ -175,13 +163,7 @@ public class WereDrahk extends Enemy {
 				ta.getSprite("die5"),
 				ta.getSprite("die6"),
 				ta.getSprite("die7"),
-				ta.getSprite("die8"),
-				ta.getSprite("die9"),
-				ta.getSprite("die10"),
-				ta.getSprite("die11"),
-				ta.getSprite("die12"),
-				ta.getSprite("die13"),
-				ta.getSprite("die14")}, AnimationType.ONE_SHOT, 100);
+				ta.getSprite("die8")}, AnimationType.ONE_SHOT, 100);
 	}
 
 	@Override
@@ -212,5 +194,25 @@ public class WereDrahk extends Enemy {
 	@Override
 	protected Animation getDieKubrowFrontAnimation() {
 		return getDieAnimation("die_kubrow_front");
+	}
+
+	@Override
+	protected Animation getFrozenAnimation() {
+		return getDieAnimation("frozen");
+	}
+
+	@Override
+	protected Animation getFrozenMeltAnimation() {
+		return new Animation("frozen_melt", new Sprite[0], AnimationType.ONE_SHOT, 0);
+	}
+
+	@Override
+	protected Animation getFrozenShatterAnimation() {
+		return new Animation("frozen_shatter", new Sprite[0], AnimationType.ONE_SHOT, 0);
+	}
+
+	@Override
+	protected Animation getRunAnimation() {
+		return super.getRunAnimation();
 	}
 }

@@ -1,4 +1,4 @@
-package com.ezardlabs.lostsector.objects.enemies;
+package com.ezardlabs.lostsector.objects.enemies.halloween.generic;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.AnimationType;
@@ -8,6 +8,7 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
 public class Pumpkin extends Enemy {
 	private long createdAt = 0;

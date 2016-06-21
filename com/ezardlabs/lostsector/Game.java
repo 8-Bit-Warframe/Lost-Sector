@@ -10,8 +10,8 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.BaseGame;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.enemies.WereDrahk;
-import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.PumpkinDeraCrewman;
+import com.ezardlabs.lostsector.objects.enemies.halloween.grineer.WereDrahk;
+import com.ezardlabs.lostsector.objects.enemies.halloween.corpus.crewmen.PumpkinDeraCrewman;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
