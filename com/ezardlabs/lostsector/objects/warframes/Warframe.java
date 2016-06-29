@@ -11,6 +11,7 @@ import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.objects.Avatar;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.hud.StatusIndicator;
+import com.ezardlabs.lostsector.objects.levels.GameLevel;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
 
@@ -104,7 +105,7 @@ public abstract class Warframe extends Avatar {
 				new Timer().schedule(new TimerTask() {
 					@Override
 					public void run() {
-						Game.createPlayer();
+						GameLevel.createPlayer();
 					}
 				}, 2000);
 			}
