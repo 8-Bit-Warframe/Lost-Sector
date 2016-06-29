@@ -21,7 +21,6 @@ public class DeraCrewman extends Crewman {
 	protected Animation getShootAnimation() {
 		return new Animation("shoot", new Sprite[]{ta.getSprite("shoot0"), ta.getSprite("shoot1"), ta.getSprite("shoot2"), ta.getSprite("shoot3")}, new AnimationType() {
 			private long lastEnd = 0;
-			private boolean secondSet = false;
 
 			@Override
 			public int update(int currentFrame, int numFrames) {
@@ -33,8 +32,7 @@ public class DeraCrewman extends Crewman {
 					case 2:
 						return currentFrame + 1;
 					case 3:
-						if (secondSet) lastEnd = System.currentTimeMillis();
-						secondSet = !secondSet;
+						lastEnd = System.currentTimeMillis();
 						return 0;
 					default:
 						return 0;
