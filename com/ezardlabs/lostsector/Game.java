@@ -10,8 +10,8 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.BaseGame;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.Player;
+import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
 import com.ezardlabs.lostsector.objects.enemies.halloween.grineer.WereDrahk;
-import com.ezardlabs.lostsector.objects.enemies.halloween.corpus.crewmen.PumpkinDeraCrewman;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
@@ -60,8 +60,8 @@ public class Game extends BaseGame {
 				new Vector2(224, 1568),
 				new Vector2(2112, 1056)}) {
 			GameObject.instantiate(
-					new GameObject("Pumpkin Dera Crewman", new Renderer(), new Animator(),
-							new Collider(200, 200), new Rigidbody(), new PumpkinDeraCrewman()),
+					new GameObject("Dera Crewman", new Renderer(), new Animator(),
+							new Collider(200, 200), new Rigidbody(), new DeraCrewman()),
 					new Vector2(pos.x * 3.125f, pos.y * 3.125f));
 		}
 
