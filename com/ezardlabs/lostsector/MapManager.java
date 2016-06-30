@@ -3,7 +3,9 @@ package com.ezardlabs.lostsector;
 import com.ezardlabs.dethsquare.*;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.tmx.*;
+import com.ezardlabs.dethsquare.util.Utils;
 import com.ezardlabs.lostsector.objects.enemies.corpus.Crewman;
+import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
 import com.ezardlabs.lostsector.objects.environment.Camera;
 import com.ezardlabs.lostsector.objects.environment.Door;
 import com.ezardlabs.lostsector.objects.environment.Locker;
@@ -24,6 +26,7 @@ public class MapManager {
 		}
 		loadTMX(name);
 		NavMesh.init(solidityMap);
+
 //		TextureAtlas eta = new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt");
 //		try {
 //			String temp;
@@ -332,7 +335,7 @@ public class MapManager {
 			switch(object.getType()) {
 				case "crewman":
 					GameObject.instantiate(
-							new GameObject("Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new Crewman("dera")),
+							new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new DeraCrewman()),
 							pos);
 					break;
 			}
