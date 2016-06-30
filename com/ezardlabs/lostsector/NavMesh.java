@@ -106,7 +106,7 @@ public class NavMesh {
 			end = navPoints[Math.round((b.x / 100f) + 1)][Math.round(b.y / 100f) + 1];
 		}
 
-		if (start == null || end == null) return null;
+		if (start == null || end == null) return new NavPoint[0];
 
 		for (int i = 0; i < pointsWithAlteredIndices.size(); i++) {
 			pointsWithAlteredIndices.get(i).index = 0;
