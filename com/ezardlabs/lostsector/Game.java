@@ -27,7 +27,8 @@ public class Game extends BaseGame {
 
 	@Override
 	public void create() {
-		load();
+//		loadMainMenu();
+		loadLevel();
 	}
 
 	public static void createPlayer() {
@@ -39,7 +40,12 @@ public class Game extends BaseGame {
 		cm.smoothFollow(players[0].transform);
 	}
 
-	public static void load() {
+	public static void loadMainMenu() {
+		MainMenu.load();
+
+	}
+
+	public static void loadLevel() {
 		MapManager.playerSpawn = new Vector2(20.0f, 20.0f);
 		MapManager.loadMap("map");
 
