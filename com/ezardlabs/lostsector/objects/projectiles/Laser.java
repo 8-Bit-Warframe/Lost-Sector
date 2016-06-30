@@ -17,12 +17,13 @@ public class Laser extends Script {
 		transform.translate(gameObject.renderer.hFlipped ? -15 : 15, 0);
 		if (transform.position.x <= 0) GameObject.destroy(gameObject);
 	}
+	
 	@Override
 	public void onTriggerEnter(Collider other) {
 		if (other.gameObject.getTag() != null) {
 			if (other.gameObject.getTag().equals("player")) {
 				//noinspection ConstantConditions
-				((Warframe) other.gameObject.getComponentOfType(Warframe.class)).removeHealth(10);
+				other.gameObject.getComponentOfType(Warframe.class).removeHealth(10);
 				gameObject.removeComponent(Collider.class);
 				GameObject.destroy(gameObject);
 			} else if (other.gameObject.getTag().equals("solid")) {
