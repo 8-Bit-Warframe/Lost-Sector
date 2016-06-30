@@ -1,4 +1,4 @@
-package com.ezardlabs.lostsector.objects.enemies.corpus.crewmen;
+package com.ezardlabs.lostsector.objects.enemies.halloween.corpus.crewmen;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
@@ -9,7 +9,7 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
-import com.ezardlabs.lostsector.objects.enemies.Pumpkin;
+import com.ezardlabs.lostsector.objects.enemies.halloween.generic.Pumpkin;
 import com.ezardlabs.lostsector.objects.enemies.corpus.Crewman;
 import com.ezardlabs.lostsector.objects.projectiles.Laser;
 
