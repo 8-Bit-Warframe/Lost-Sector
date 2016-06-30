@@ -155,6 +155,10 @@ public class NavMesh {
 		}
 	}
 
+	public static NavPoint getNavPoint(Vector2 position) {
+		return navPoints[Math.round(position.x / 100f)][Math.round(position.y / 100f) + 1];
+	}
+
 	private static int count = 0;
 
 	public static void init(int[][] solidityMap) {
