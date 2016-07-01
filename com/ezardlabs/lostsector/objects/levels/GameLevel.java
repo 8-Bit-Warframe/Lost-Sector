@@ -1,6 +1,8 @@
 package com.ezardlabs.lostsector.objects.levels;
 
 import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.AudioSource;
+import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
@@ -29,7 +31,10 @@ public class GameLevel extends Level {
 
 		createPlayer();
 
-		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm), new Vector2());
+		AudioSource as = new AudioSource();
+		as.play(new AudioClip("audio/theme.ogg"));
+
+		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm, as), new Vector2());
 
 		for (Vector2 pos : new Vector2[]{new Vector2(2528, 1856),
 				new Vector2(1024, 992),
