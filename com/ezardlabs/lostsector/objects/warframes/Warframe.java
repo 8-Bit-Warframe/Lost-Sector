@@ -11,7 +11,7 @@ import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.objects.Avatar;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.hud.StatusIndicator;
-import com.ezardlabs.lostsector.objects.levels.GameLevel;
+import com.ezardlabs.lostsector.levels.GameLevel;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
 

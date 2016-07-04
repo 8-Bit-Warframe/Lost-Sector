@@ -3,7 +3,7 @@ package com.ezardlabs.lostsector;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.util.BaseGame;
-import com.ezardlabs.lostsector.objects.levels.GameLevel;
+import com.ezardlabs.lostsector.levels.GameLevel;
 
 public class Game extends BaseGame {
 	public static GameObject[] players;

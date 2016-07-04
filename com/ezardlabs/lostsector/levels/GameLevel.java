@@ -1,4 +1,4 @@
-package com.ezardlabs.lostsector.objects.levels;
+package com.ezardlabs.lostsector.levels;
 
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.AudioSource;
