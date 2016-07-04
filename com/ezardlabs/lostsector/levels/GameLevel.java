@@ -64,8 +64,6 @@ public class GameLevel extends Level {
 							new Collider(200, 200), new Rigidbody(), new DeraCrewman()),
 					new Vector2(pos.x * 3.125f, pos.y * 3.125f));
 		}
-
-		GameObject.instantiate(new GameObject(null, new GuiText("Test message", new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt"), 50)), new Vector2());
 	}
 
 	public static void createPlayer() {
