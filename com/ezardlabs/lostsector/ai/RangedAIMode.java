@@ -1,9 +1,9 @@
 package com.ezardlabs.lostsector.ai;
 
-public class RangedAI extends BaseAI {
+public class RangedAIMode extends AIMode {
 	private final int range;
 
-	public RangedAI(float moveSpeed, int range) {
+	public RangedAIMode(float moveSpeed, int range) {
 		super(moveSpeed);
 		this.range = range;
 	}

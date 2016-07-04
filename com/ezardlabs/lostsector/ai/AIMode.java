@@ -11,14 +11,14 @@ import com.ezardlabs.lostsector.NavMesh.NavPoint;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class BaseAI extends Script {
+public abstract class AIMode extends Script {
 	private final float moveSpeed;
 	private NavPoint lastTargetNavPoint;
 	private ArrayList<NavPoint> path;
 	protected Transform target;
 	private GameObject demo;
 
-	public BaseAI(float moveSpeed) {
+	public AIMode(float moveSpeed) {
 		this.moveSpeed = moveSpeed;
 		demo = new GameObject("Demo", new Renderer("images/pink.png", 10, 10));
 	}
