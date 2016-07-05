@@ -5,11 +5,9 @@ import com.ezardlabs.dethsquare.AudioSource;
 import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.GuiText;
 import com.ezardlabs.dethsquare.Level;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Rigidbody;
-import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.MapManager;
@@ -23,7 +21,7 @@ public class TennoConLevel extends Level {
 
 	@Override
 	public void onLoad() {
-		MapManager.loadMap("Tiny_Sur");
+		MapManager.loadMap("TennoCon_map");
 
 		HUD.init();
 
@@ -33,8 +31,6 @@ public class TennoConLevel extends Level {
 		as.play(new AudioSource.AudioClip("audio/theme.ogg"));
 
 		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm, as), new Vector2());
-
-		GameObject.instantiate(new GameObject(null, new GuiText("Test message", new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt"), 50)), new Vector2());
 	}
 
 	public static void createPlayer() {
