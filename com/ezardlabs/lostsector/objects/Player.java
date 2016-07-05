@@ -213,7 +213,6 @@ public class Player extends Script {
 	}
 
 	private boolean meleeCheck() {
-		if (HUD.getCurrentWeaponType() != WeaponType.MELEE) return false;
 		boolean touchMelee = false;
 		if (Utils.PLATFORM == Utils.Platform.ANDROID && HUD.getCurrentWeaponType() == WeaponType.MELEE) {
 			for (Touch t : Input.touches) {
@@ -223,7 +222,7 @@ public class Player extends Script {
 				}
 			}
 		}
-		if (Input.getKeyDown(KeyCode.RETURN) || Input.getKeyDown(KeyCode.K) || touchMelee) {
+		if (Input.getKeyDown(KeyCode.MOUSE_LEFT) || touchMelee) {
 			state = State.MELEE;
 			return true;
 		}
@@ -231,7 +230,6 @@ public class Player extends Script {
 	}
 
 	private boolean shootCheck() {
-		if (HUD.getCurrentWeaponType() != WeaponType.RANGED) return false;
 		boolean touchRanged = false;
 		if (Utils.PLATFORM == Utils.Platform.ANDROID && HUD.getCurrentWeaponType() == WeaponType.RANGED) {
 			for (Touch t : Input.touches) {
@@ -241,7 +239,7 @@ public class Player extends Script {
 				}
 			}
 		}
-		if (Input.getKeyDown(KeyCode.RETURN) || Input.getKeyDown(KeyCode.K) || touchRanged) {
+		if (Input.getKeyDown(KeyCode.MOUSE_RIGHT) || touchRanged) {
 			state = State.SHOOTING;
 			return true;
 		}
