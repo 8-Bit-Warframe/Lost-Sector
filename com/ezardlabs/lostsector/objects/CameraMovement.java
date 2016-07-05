@@ -15,6 +15,11 @@ public class CameraMovement extends Script {
 
 	public void start() {
 		camera = gameObject.getComponent(Camera.class);
+		if (target != null) {
+			follow(target);
+			update();
+			smoothFollow(target);
+		}
 	}
 
 	public void update() {
