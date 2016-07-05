@@ -5,9 +5,11 @@ import com.ezardlabs.dethsquare.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.lostsector.Game;
+import com.ezardlabs.lostsector.levels.TennoConLevel;
 import com.ezardlabs.lostsector.objects.Avatar;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.hud.StatusIndicator;
@@ -105,7 +107,8 @@ public abstract class Warframe extends Avatar {
 				new Timer().schedule(new TimerTask() {
 					@Override
 					public void run() {
-						GameLevel.createPlayer();
+						if (LevelManager.getCurrentLevelName().equals("game")) GameLevel.createPlayer();
+						if (LevelManager.getCurrentLevelName().equals("tennocon")) TennoConLevel.createPlayer();
 					}
 				}, 2000);
 			}

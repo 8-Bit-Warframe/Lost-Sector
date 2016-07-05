@@ -20,6 +20,7 @@ import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
 public class TennoConLevel extends Level {
+	private static CameraMovement cm = new CameraMovement();
 
 	@Override
 	public void onLoad() {
@@ -27,13 +28,7 @@ public class TennoConLevel extends Level {
 
 		HUD.init();
 
-		CameraMovement cm = new CameraMovement();
-
-		Game.players = new GameObject[]{new GameObject("Player", new Player(), new Renderer(),
-				new Animator(), new Frost(), new Collider(200, 200), new Rigidbody())};
-		GameObject.instantiate(Game.players[0], new Vector2(20, 20));
-
-		cm.smoothFollow(Game.players[0].transform);
+		createPlayer();
 
 		AudioSource as = new AudioSource();
 		as.play(new AudioSource.AudioClip("audio/theme.ogg"));
@@ -70,5 +65,13 @@ public class TennoConLevel extends Level {
 		}
 
 		GameObject.instantiate(new GameObject(null, new GuiText("Test message", new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt"), 50)), new Vector2());
+	}
+
+	public static void createPlayer() {
+		Game.players = new GameObject[]{new GameObject("Player", new Player(), new Renderer(),
+				new Animator(), new Frost(), new Collider(200, 200), new Rigidbody())};
+		GameObject.instantiate(Game.players[0], new Vector2(20, 20));
+
+		cm.smoothFollow(Game.players[0].transform);
 	}
 }
