@@ -223,7 +223,7 @@ public class Player extends Script {
 				}
 			}
 		}
-		if (Input.getKeyDown(KeyCode.RETURN) || Input.getKeyDown(KeyCode.K) || touchMelee) {
+		if (Input.getKeyDown(KeyCode.MOUSE_LEFT) || touchMelee) {
 			state = State.MELEE;
 			return true;
 		}
@@ -241,7 +241,7 @@ public class Player extends Script {
 				}
 			}
 		}
-		if (Input.getKeyDown(KeyCode.RETURN) || Input.getKeyDown(KeyCode.K) || touchRanged) {
+		if (Input.getKeyDown(KeyCode.MOUSE_RIGHT) || touchRanged) {
 			state = State.SHOOTING;
 			return true;
 		}
