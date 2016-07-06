@@ -286,8 +286,8 @@ public class NavMesh {
 		if (solidityMap == null) return null;
 
 		Stack<int[]> stack = new Stack<>();
-		stack.push(new int[]{0,
-				0});
+		stack.push(new int[]{(int) MapManager.playerSpawn.x / 100,
+				(int) MapManager.playerSpawn.y / 100});
 
 		while (!stack.empty()) {
 			int[] pop = stack.pop();
