@@ -4,6 +4,7 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.util.BaseGame;
 import com.ezardlabs.lostsector.levels.GameLevel;
+import com.ezardlabs.lostsector.levels.MainMenuLevel;
 import com.ezardlabs.lostsector.levels.TennoConLevel;
 
 public class Game extends BaseGame {
@@ -20,7 +21,8 @@ public class Game extends BaseGame {
 	public void create() {
 		LevelManager.registerLevel("game", new GameLevel());
 		LevelManager.registerLevel("tennocon", new TennoConLevel());
+		LevelManager.registerLevel("mainmenu", new MainMenuLevel());
 
-		LevelManager.loadLevel("tennocon");
+		LevelManager.loadLevel("mainmenu");
 	}
 }
