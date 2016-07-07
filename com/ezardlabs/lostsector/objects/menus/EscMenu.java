@@ -29,24 +29,16 @@ public class EscMenu {
         );
 
         TextureAtlas fontTA = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
-        if(gTxtMainMenu == null) {
-            gTxtMainMenu = new GuiText("Main Menu", fontTA, 50);
-            gTxtExit = new GuiText("Exit", fontTA, 50);
-            GameObject.instantiate(goTxtMainMenu = new GameObject("TxtMainMenu", gTxtMainMenu), new Vector2(Screen.width / 2.0f - 128.0f, Screen.height / 2.0f - 45.0f));
-            GameObject.instantiate(goTxtExit = new GameObject("TxtExit", gTxtExit), new Vector2(Screen.width / 2.0f - 48.0f, Screen.height / 2.0f + 45.0f));
-        } else {
-            gTxtMainMenu.setText("Main Menu");
-            gTxtExit.setText("Exit");
-        }
+        gTxtMainMenu = new GuiText("Main Menu", fontTA, 50);
+        goTxtMainMenu = GameObject.instantiate(new GameObject("TxtMainMenu", gTxtMainMenu), new Vector2(Screen.width / 2.0f - 128.0f, Screen.height / 2.0f - 45.0f));
+        gTxtExit = new GuiText("Exit", fontTA, 50);
+        goTxtExit = GameObject.instantiate(new GameObject("TxtExit", gTxtExit), new Vector2(Screen.width / 2.0f - 48.0f, Screen.height / 2.0f + 45.0f));
     }
 
     public static void hide() {
         if(!visible) {
             return;
         }
-
-//        gTxtMainMenu.setText("");
-//        gTxtExit.setText("");
         GameObject.destroy(goTxtExit);
         GameObject.destroy(goTxtMainMenu);
         GameObject.destroy(goEscMenuFrame);
