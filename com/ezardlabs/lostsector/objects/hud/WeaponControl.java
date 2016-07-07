@@ -67,9 +67,9 @@ public class WeaponControl {
 	public Weapon switchWeapons() {
 		isCurrentPrimary = !isCurrentPrimary;
 		if ((isCurrentPrimary ? primary : secondary) instanceof MeleeWeapon) {
-			attackButton.setSprite(ta.getSprite("melee"));
+//			attackButton.setSprite(ta.getSprite("melee"));
 		} else {
-			attackButton.setSprite(ta.getSprite("ranged"));
+//			attackButton.setSprite(ta.getSprite("ranged"));
 		}
 		return isCurrentPrimary ? primary : secondary;
 	}

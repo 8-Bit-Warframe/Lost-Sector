@@ -23,7 +23,7 @@ public class GameLevel extends Level {
 	@Override
 	public void onLoad() {
 		MapManager.playerSpawn = new Vector2(20.0f, 20.0f);
-		MapManager.loadMap("map");
+		MapManager.loadMap("Explore");
 
 		HUD.init();
 
