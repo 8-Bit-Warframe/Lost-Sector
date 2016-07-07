@@ -21,7 +21,7 @@ public class TennoConLevel extends Level {
 
 	@Override
 	public void onLoad() {
-		MapManager.loadMap("TennoCon_map");
+		MapManager.loadMap("Tiny_Sur");
 
 		HUD.init();
 
