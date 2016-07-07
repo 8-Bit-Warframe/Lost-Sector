@@ -12,12 +12,12 @@ public class HUD {
 	public static void init() {
 		TextureAtlas ta = new TextureAtlas("images/hud/atlas.png", "images/hud/atlas.txt");
 		statusIndicator.init(ta);
-		weaponControl.init(ta);
+//		weaponControl.init(ta);
 	}
 
 	public static void update(int health, int energy) {
 		statusIndicator.update(health, energy);
-		weaponControl.update();
+//		weaponControl.update();
 	}
 
 	public static boolean isAttackButtonPressed(Vector2 position) {
