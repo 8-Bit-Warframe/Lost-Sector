@@ -21,6 +21,7 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.Utils;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.hud.WeaponControl.WeaponType;
+import com.ezardlabs.lostsector.objects.menus.EscMenu;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
 import java.util.Timer;
@@ -58,6 +59,18 @@ public class Player extends Script {
 
 	@Override
 	public void update() {
+		if(Input.getKeyUp(KeyCode.ESCAPE)) {
+			if(EscMenu.visible) {
+				EscMenu.hide();
+			} else {
+				EscMenu.show();
+			}
+		}
+		if(EscMenu.visible) {
+			EscMenu.update();
+			return;
+		}
+
 		HUD.update(warframe.getHealth(), warframe.getEnergy());
 
 		if (dead) return;
