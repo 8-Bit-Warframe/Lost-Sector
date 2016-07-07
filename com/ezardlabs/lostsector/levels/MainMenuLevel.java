@@ -11,11 +11,6 @@ public class MainMenuLevel extends Level {
 
     @Override
     public void onLoad() {
-        MainMenu.init();
-
-        AudioSource as = new AudioSource();
-        as.play(new AudioSource.AudioClip("audio/theme.ogg"));
-
-        GameObject.instantiate(new GameObject("Camera", new Camera(true), as), new Vector2());
+        GameObject.instantiate(new GameObject("MainMenu", new MainMenu()), new Vector2());
     }
 }
