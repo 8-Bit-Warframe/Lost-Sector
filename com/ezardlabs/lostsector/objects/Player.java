@@ -107,7 +107,7 @@ public class Player extends Script {
 			case LANDING:
 				break;
 			case MELEE:
-				if (fallCheck()) {
+				if (fallCheck() || jumpCheck()) {
 					warframe.meleeWeapon.reset();
 					gameObject.rigidbody.velocity.x = 0;
 					gameObject.renderer.setSize(200, 200);
@@ -116,6 +116,13 @@ public class Player extends Script {
 				}
 				break;
 			case MELEE_WAITING:
+				if (fallCheck() || jumpCheck()) {
+					warframe.meleeWeapon.reset();
+					gameObject.rigidbody.velocity.x = 0;
+					gameObject.renderer.setSize(200, 200);
+					gameObject.renderer.setOffsets(0, 0);
+					break;
+				}
 				break;
 			case SHOOTING:
 				break;
@@ -222,7 +229,7 @@ public class Player extends Script {
 				}
 			}
 		}
-		if (Input.getKeyDown(KeyCode.MOUSE_LEFT) || touchMelee) {
+		if (Input.getKeyDown(KeyCode.MOUSE_LEFT) || Input.getKeyDown(KeyCode.K) || touchMelee) {
 			state = State.MELEE;
 			return true;
 		}
@@ -239,7 +246,7 @@ public class Player extends Script {
 				}
 			}
 		}
-		if (Input.getKeyDown(KeyCode.MOUSE_RIGHT) || touchRanged) {
+		if (Input.getKeyDown(KeyCode.MOUSE_RIGHT) || Input.getKeyDown(KeyCode.L) || touchRanged) {
 			state = State.SHOOTING;
 			return true;
 		}

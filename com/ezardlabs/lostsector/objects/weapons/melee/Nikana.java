@@ -48,7 +48,7 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 						ta.getSprite("nikana_dash10"),
 						ta.getSprite("nikana_dash11"),
 						ta.getSprite("nikana_dash12")}, AnimationType.ONE_SHOT, 120, this),
-				new Animation("stow", new TextureAtlas.Sprite[]{ta.getSprite("nikana_stow0")}, AnimationType.ONE_SHOT, 200, new Animation.AnimationListener() {
+				new Animation("stow", new TextureAtlas.Sprite[]{ta.getSprite("nikana_stow0")}, AnimationType.ONE_SHOT, 50, new Animation.AnimationListener() {
 					@Override
 					public void onAnimatedStarted(Animator animator) {
 					}
@@ -127,7 +127,13 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 		readyForNextAnimation = false;
 		animator.gameObject.renderer.setSize(400, 300);
 		animator.gameObject.renderer.setOffsets(-100, -100);
-		if (currentAnimation.contains("dash")) {
+		if (currentAnimation.contains("slice1")) {
+			animator.gameObject.rigidbody.velocity.x = 15 * (animator.gameObject.renderer.hFlipped ? -1
+					: 1);
+		} else if (currentAnimation.contains("slice")) {
+			animator.gameObject.rigidbody.velocity.x = 20 * (animator.gameObject.renderer.hFlipped ? -1
+					: 1);
+		} else if (currentAnimation.contains("dash")) {
 			animator.gameObject.rigidbody.velocity.x = 25 * (animator.gameObject.renderer.hFlipped ? -1
 					: 1);
 		}
@@ -135,6 +141,9 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 
 	@Override
 	public void onFrame(Animator animator, int frameNum) {
+		if (currentAnimation.contains("slice") && frameNum == 1) {
+			animator.gameObject.rigidbody.velocity.x = 0;
+		}
 		if (currentAnimation.contains("dash") && frameNum == 2) {
 			animator.gameObject.rigidbody.velocity.x = 0;
 		}
@@ -151,6 +160,6 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 				animator.play("stow");
 				currentAnimation = null;
 			}
-		}, 300);
+		}, 200);
 	}
 }
