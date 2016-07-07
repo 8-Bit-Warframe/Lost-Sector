@@ -23,6 +23,6 @@ public class Game extends BaseGame {
 		LevelManager.registerLevel("tennocon", new TennoConLevel());
 		LevelManager.registerLevel("mainmenu", new MainMenuLevel());
 
-		LevelManager.loadLevel("mainmenu");
+		LevelManager.loadLevel("tennocon");
 	}
 }

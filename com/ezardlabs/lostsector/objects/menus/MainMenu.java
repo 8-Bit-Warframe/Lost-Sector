@@ -56,10 +56,11 @@ public class MainMenu extends Script {
                 new Vector2(10, Screen.height - 25)
         );
 
-        AudioSource as = new AudioSource();
-        as.play(new AudioSource.AudioClip("audio/theme.ogg"));
+//        AudioSource as = new AudioSource();
+//        as.play(new AudioSource.AudioClip("audio/theme.ogg"));
+//        GameObject.instantiate(new GameObject("AudioSource", as), new Vector2());
 
-        GameObject.instantiate(new GameObject("CameraMainMenu", new Camera(true), as), new Vector2());
+        GameObject.instantiate(new GameObject("CameraMainMenu", new Camera(true)), new Vector2());
     }
 
     @Override
@@ -67,10 +68,12 @@ public class MainMenu extends Script {
         if(!optionSelected && Input.getKeyUp(Input.KeyCode.MOUSE_LEFT)) {
             if(gTxtExplore.hitTest(Input.mousePosition)) {
                 optionSelected = true;
+                this.destroy();
                 LevelManager.loadLevel("game");
             }
             else if(gTxtSurvival.hitTest(Input.mousePosition)) {
                 optionSelected = true;
+                this.destroy();
                 LevelManager.loadLevel("tennocon");
             }
             else if(gTxtExit.hitTest(Input.mousePosition)) {
