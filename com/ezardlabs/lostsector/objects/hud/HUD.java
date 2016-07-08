@@ -14,10 +14,13 @@ public class HUD {
 		statusIndicator.init(ta);
 //		weaponControl.init(ta);
 	}
-
-	public static void update(int health, int energy) {
-		statusIndicator.update(health, energy);
+	public static void update(int health, int shield, int energy) {
+		statusIndicator.update(health, shield, energy);
 //		weaponControl.update();
+	}
+
+	public static void setWarframeName(String warframeName) {
+		statusIndicator.setWarframeName(warframeName);
 	}
 
 	public static boolean isAttackButtonPressed(Vector2 position) {

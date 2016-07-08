@@ -22,18 +22,18 @@ import java.util.TimerTask;
 
 public abstract class Warframe extends Avatar {
 	protected final TextureAtlas ta;
-	protected final int maxShields;
-	protected int shields;
+	protected final int maxShield;
+	protected int shield;
 	protected final int maxEnergy;
 	protected int energy;
 	public RangedWeapon rangedWeapon;
 	public MeleeWeapon meleeWeapon;
 	private StatusIndicator statusIndicator;
 
-	public Warframe(String name, int maxHealth, int maxShields, int maxEnergy) {
+	public Warframe(String name, int maxHealth, int maxShield, int maxEnergy) {
 		super(maxHealth);
-		this.maxShields = maxShields;
-		shields = maxShields;
+		this.maxShield = maxShield;
+		shield = maxShield;
 		this.maxEnergy = maxEnergy;
 		energy = maxEnergy;
 		ta = new TextureAtlas("images/warframes/" + name + "/atlas.png", "images/warframes/" + name + "/atlas.txt");
@@ -115,6 +115,8 @@ public abstract class Warframe extends Avatar {
 		});
 	}
 
+	public abstract String getName();
+
 	public abstract void ability1();
 
 	public abstract void ability2();
@@ -171,5 +173,9 @@ public abstract class Warframe extends Avatar {
 
 	public int getEnergy() {
 		return energy;
+	}
+
+	public int getShield() {
+		return shield;
 	}
 }
