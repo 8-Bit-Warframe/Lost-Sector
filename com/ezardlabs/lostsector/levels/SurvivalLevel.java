@@ -33,7 +33,7 @@ public class SurvivalLevel extends Level {
 						"MainMenuWIP",
 						new GuiText("DEV BUILD : WORK IN PROGRESS!", fontTA, 30)
 				),
-				new Vector2(10, 10)
+				new Vector2(10, Screen.height - 30 - 10)
 		);
 
 		GameObject.instantiate(new GameObject("Survival Score", new GuiText("", fontTA, 40), new

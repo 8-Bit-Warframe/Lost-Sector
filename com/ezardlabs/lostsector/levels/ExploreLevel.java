@@ -33,7 +33,7 @@ public class ExploreLevel extends Level {
 						"MainMenuWIP",
 						new GuiText("DEV BUILD : WORK IN PROGRESS!", fontTA, 30)
 				),
-				new Vector2(10, 10)
+				new Vector2(10, Screen.height - 30 - 10)
 		);
 	}
 
