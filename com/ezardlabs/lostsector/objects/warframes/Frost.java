@@ -20,7 +20,7 @@ import com.ezardlabs.lostsector.objects.weapons.primary.Lanka;
 public class Frost extends Warframe {
 
 	public Frost() {
-		super("frost", 100, 3, 100);
+		super("frost", 15, 3, 100);
 		setStatusIndicator(HUD.statusIndicator);
 	}
 
