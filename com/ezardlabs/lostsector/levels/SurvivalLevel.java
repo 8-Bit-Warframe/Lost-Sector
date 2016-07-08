@@ -1,14 +1,6 @@
 package com.ezardlabs.lostsector.levels;
 
-import com.ezardlabs.dethsquare.Animator;
-import com.ezardlabs.dethsquare.AudioSource;
-import com.ezardlabs.dethsquare.Camera;
-import com.ezardlabs.dethsquare.Collider;
-import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.Level;
-import com.ezardlabs.dethsquare.Renderer;
-import com.ezardlabs.dethsquare.Rigidbody;
-import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.*;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.MapManager;
 import com.ezardlabs.lostsector.SurvivalManager;
@@ -34,6 +26,15 @@ public class SurvivalLevel extends Level {
 		survivalManager = new SurvivalManager(MapManager.enemySpawns);
 		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm, as), new Vector2());
 		GameObject.instantiate(new GameObject("SurvivalManager", survivalManager), new Vector2());
+
+		TextureAtlas fontTA = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
+		GameObject.instantiate(
+				new GameObject(
+						"MainMenuWIP",
+						new GuiText("DEV BUILD : WORK IN PROGRESS!", fontTA, 30)
+				),
+				new Vector2(10, 10)
+		);
 	}
 
 	public static void createPlayer() {
