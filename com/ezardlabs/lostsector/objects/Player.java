@@ -59,7 +59,7 @@ public class Player extends Script {
 
 	@Override
 	public void update() {
-		HUD.update(warframe.getHealth(), warframe.getEnergy());
+		HUD.update(warframe.getHealth(), warframe.getShield(), warframe.getEnergy());
 
 		if (dead) return;
 
