@@ -96,7 +96,7 @@ public class StatusIndicator {
 
 	public void spawnGravestone(Vector2 position) {
 		GameObject.instantiate(new GameObject("Tombstone",
-						new Renderer(ta, ta.getSprite("gravestone"), 200, 200).setzIndex(5)),
+						new Renderer(ta, ta.getSprite("gravestone"), 200, 200)),
 				position.offset(0, 25));
 	}
 }
