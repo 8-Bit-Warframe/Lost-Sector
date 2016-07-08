@@ -42,7 +42,7 @@ public class ProvaCrewman extends Crewman {
 										Game.players[i].transform.position.x) <= 200) {
 									Warframe w = Game.players[i].getComponentOfType(Warframe.class);
 									if (w != null) {
-										w.removeHealth(10);
+										w.removeHealth(3);
 									}
 								}
 							}

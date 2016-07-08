@@ -48,7 +48,8 @@ public class DeraCrewman extends Crewman {
 			public void onFrame(Animator animator, int frameNum) {
 				if (frameNum % 2 == 1) {
 					GameObject
-							.instantiate(new GameObject("Laser", new Renderer("images/laser.png", 100, 100).setFlipped(gameObject.renderer.hFlipped, false), new Collider(100, 100, true), new Laser()),
+							.instantiate(new GameObject("Laser", new Renderer("images/laser.png",
+									100, 100).setFlipped(gameObject.renderer.hFlipped, false), new Collider(100, 100, true), new Laser(2)),
 									transform.position.offset(gameObject.renderer.hFlipped ? -12.5f : 87.5f, frameNum == 1 ? 75 : 50));
 				}
 			}
