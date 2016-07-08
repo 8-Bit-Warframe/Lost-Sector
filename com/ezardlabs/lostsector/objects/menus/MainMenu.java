@@ -51,9 +51,17 @@ public class MainMenu extends Script {
         GameObject.instantiate(
                 new GameObject(
                         "MainMenuDisclaimer",
-                        new GuiText("Lost Sector is not affiliated with Digital Extremes.", fontTA, 25)
+                        new GuiText("8Bit Warframe is not affiliated with Digital Extremes.", fontTA, 25)
                 ),
                 new Vector2(10, Screen.height - 25)
+        );
+
+        GameObject.instantiate(
+                new GameObject(
+                        "MainMenuWIP",
+                        new GuiText("DEV BUILD : WORK IN PROGRESS!", fontTA, 30)
+                ),
+                new Vector2(10, 10)
         );
 
 //        AudioSource as = new AudioSource();
@@ -69,12 +77,12 @@ public class MainMenu extends Script {
             if(gTxtExplore.hitTest(Input.mousePosition)) {
                 optionSelected = true;
                 this.destroy();
-                LevelManager.loadLevel("game");
+                LevelManager.loadLevel("explore");
             }
             else if(gTxtSurvival.hitTest(Input.mousePosition)) {
                 optionSelected = true;
                 this.destroy();
-                LevelManager.loadLevel("tennocon");
+                LevelManager.loadLevel("survival");
             }
             else if(gTxtExit.hitTest(Input.mousePosition)) {
                 optionSelected = true;

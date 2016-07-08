@@ -17,7 +17,7 @@ import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
-public class GameLevel extends Level {
+public class ExploreLevel extends Level {
 	private static CameraMovement cm = new CameraMovement();
 
 	@Override

@@ -9,11 +9,11 @@ import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.lostsector.Game;
-import com.ezardlabs.lostsector.levels.TennoConLevel;
+import com.ezardlabs.lostsector.levels.SurvivalLevel;
 import com.ezardlabs.lostsector.objects.Avatar;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.hud.StatusIndicator;
-import com.ezardlabs.lostsector.levels.GameLevel;
+import com.ezardlabs.lostsector.levels.ExploreLevel;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
 
@@ -107,8 +107,8 @@ public abstract class Warframe extends Avatar {
 				new Timer().schedule(new TimerTask() {
 					@Override
 					public void run() {
-						if (LevelManager.getCurrentLevelName().equals("game")) GameLevel.createPlayer();
-						if (LevelManager.getCurrentLevelName().equals("tennocon")) TennoConLevel.createPlayer();
+						if (LevelManager.getCurrentLevelName().equals("explore")) ExploreLevel.createPlayer();
+						if (LevelManager.getCurrentLevelName().equals("survival")) SurvivalLevel.createPlayer();
 					}
 				}, 2000);
 			}
