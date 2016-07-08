@@ -35,7 +35,7 @@ public class LankaBeam extends Script {
 		width = (int) Math.abs(transform.position.x - closestX);
 		if (direction == -1) transform.position.x -= width;
 		gameObject.renderer.setSize(width, 0);
-		gameObject.renderer.setzIndex(10);
+		gameObject.renderer.setzIndex(3);
 	}
 
 	@Override

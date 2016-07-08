@@ -3,8 +3,6 @@ package com.ezardlabs.lostsector;
 import com.ezardlabs.dethsquare.*;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.tmx.*;
-import com.ezardlabs.dethsquare.util.Utils;
-import com.ezardlabs.lostsector.objects.enemies.corpus.Crewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.SupraCrewman;
@@ -20,12 +18,14 @@ import java.util.ArrayList;
 public class MapManager {
 	private static int[][] solidityMap;
 	public static Vector2 playerSpawn = new Vector2();
+	public static ArrayList<Vector2> enemySpawns = null;
 	public static String overrideMapName = null;
 
 	public static void loadMap(String name) {
 		if(overrideMapName != null) {
 			name = overrideMapName;
 		}
+		enemySpawns = new ArrayList<>();
 		loadTMX(name);
 		NavMesh.init(solidityMap);
 
@@ -335,6 +335,9 @@ public class MapManager {
 			float w = object.getWidth() * 6.25f;
 			float h = object.getHeight() * 6.25f;
 			switch(object.getType()) {
+				case "spawn":
+					enemySpawns.add(pos);
+					break;
 				case "prova_crewman":
 					GameObject.instantiate(
 							new GameObject("Prova Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new ProvaCrewman()),
