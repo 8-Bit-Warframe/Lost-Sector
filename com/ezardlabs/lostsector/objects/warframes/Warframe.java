@@ -115,6 +115,8 @@ public abstract class Warframe extends Avatar {
 		});
 	}
 
+	public abstract String getName();
+
 	public abstract void ability1();
 
 	public abstract void ability2();

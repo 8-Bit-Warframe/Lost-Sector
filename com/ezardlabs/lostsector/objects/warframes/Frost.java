@@ -67,6 +67,11 @@ public class Frost extends Warframe {
 	}
 
 	@Override
+	public String getName() {
+		return "Frost";
+	}
+
+	@Override
 	public void ability1() {
 		GameObject.instantiate(new GameObject("Freeze", new Renderer(), new Animator(), new Freeze(gameObject.renderer.hFlipped), new Collider(100, 100, true)),
 				new Vector2(gameObject.renderer.hFlipped ? transform.position.x : transform.position.x + 100, transform.position.y + 50));
