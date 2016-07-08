@@ -6,6 +6,8 @@ import com.ezardlabs.dethsquare.tmx.*;
 import com.ezardlabs.dethsquare.util.Utils;
 import com.ezardlabs.lostsector.objects.enemies.corpus.Crewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
+import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
+import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.SupraCrewman;
 import com.ezardlabs.lostsector.objects.environment.Camera;
 import com.ezardlabs.lostsector.objects.environment.Door;
 import com.ezardlabs.lostsector.objects.environment.Locker;
@@ -333,9 +335,19 @@ public class MapManager {
 			float w = object.getWidth() * 6.25f;
 			float h = object.getHeight() * 6.25f;
 			switch(object.getType()) {
-				case "crewman":
+				case "prova_crewman":
+					GameObject.instantiate(
+							new GameObject("Prova Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new ProvaCrewman()),
+							pos);
+					break;
+				case "dera_crewman":
 					GameObject.instantiate(
 							new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new DeraCrewman()),
+							pos);
+					break;
+				case "supra_crewman":
+					GameObject.instantiate(
+							new GameObject("Supra Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new SupraCrewman()),
 							pos);
 					break;
 			}
