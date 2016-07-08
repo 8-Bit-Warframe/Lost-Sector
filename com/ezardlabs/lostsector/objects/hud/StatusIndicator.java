@@ -59,7 +59,7 @@ public class StatusIndicator {
 
 	private void setHealth(int health) {
 		for (int i = 0; i < this.health.length; i++) {
-			if (health > 0 && health >= i) {
+			if (health > 0 && health >= i + 1) {
 				this.health[i].setSize(20, 13);
 			} else {
 				this.health[i].setSize(0, 0);
@@ -69,7 +69,7 @@ public class StatusIndicator {
 
 	private void setShield(int shield) {
 		for (int i = 0; i < this.shield.length; i++) {
-			if (shield > 0 && shield >= i) {
+			if (shield > 0 && shield >= i + 1) {
 				this.shield[i].setSize(72, 13);
 			} else {
 				this.shield[i].setSize(0, 0);
@@ -79,7 +79,7 @@ public class StatusIndicator {
 
 	private void setEnergy(int energy) {
 		for (int i = 0; i < this.energy.length; i++) {
-			if (energy > 0 && energy / 10 >= i) {
+			if (energy > 0 && energy / 10 >= i + 1) {
 				this.energy[i].setSize(13, 7);
 			} else {
 				this.energy[i].setSize(0, 0);
