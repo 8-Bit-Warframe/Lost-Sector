@@ -35,6 +35,25 @@ public class SurvivalLevel extends Level {
 				),
 				new Vector2(10, 10)
 		);
+
+		GameObject.instantiate(new GameObject("Survival Score", new GuiText("", fontTA, 40), new
+				Script() {
+					private GuiText guiText;
+					private int lastScore = -1;
+
+					@Override
+					public void start() {
+						guiText = gameObject.getComponent(GuiText.class);
+					}
+
+					@Override
+					public void update() {
+						if (survivalManager.score != lastScore) {
+							lastScore = survivalManager.score;
+							guiText.setText("Enemies killed: " + lastScore);
+						}
+					}
+				}),	new Vector2(10, 10));
 	}
 
 	public static void createPlayer() {
