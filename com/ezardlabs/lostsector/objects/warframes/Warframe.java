@@ -22,18 +22,19 @@ import java.util.TimerTask;
 
 public abstract class Warframe extends Avatar {
 	protected final TextureAtlas ta;
-	protected final int maxShields;
-	protected int shields;
+	protected final int maxShield;
+	protected int shield;
 	protected final int maxEnergy;
 	protected int energy;
 	public RangedWeapon rangedWeapon;
 	public MeleeWeapon meleeWeapon;
 	private StatusIndicator statusIndicator;
+	private long nextShieldRegen = 0;
 
-	public Warframe(String name, int maxHealth, int maxShields, int maxEnergy) {
+	public Warframe(String name, int maxHealth, int maxShield, int maxEnergy) {
 		super(maxHealth);
-		this.maxShields = maxShields;
-		shields = maxShields;
+		this.maxShield = maxShield;
+		shield = maxShield;
 		this.maxEnergy = maxEnergy;
 		energy = maxEnergy;
 		ta = new TextureAtlas("images/warframes/" + name + "/atlas.png", "images/warframes/" + name + "/atlas.txt");
@@ -44,6 +45,14 @@ public abstract class Warframe extends Avatar {
 		gameObject.renderer.setTextureAtlas(ta, 200, 200);
 		gameObject.animator.setAnimations(getIdleAnimation(), getRunAnimation(), getJumpAnimation(), getDoubleJumpAnimation(), getFallAnimation(), getLandAnimation(), getDieAnimation());
 		gameObject.animator.play("idle");
+	}
+
+	@Override
+	public void update() {
+		if (shield < maxShield && System.currentTimeMillis() > nextShieldRegen) {
+			shield++;
+			nextShieldRegen += 2000;
+		}
 	}
 
 	protected Animation getIdleAnimation() {
@@ -89,31 +98,33 @@ public abstract class Warframe extends Avatar {
 	protected Animation getDieAnimation() {
 		return new Animation("die", new Sprite[]{ta.getSprite("die0"), ta.getSprite("die1"), ta.getSprite("die2"), ta.getSprite("die3"), ta.getSprite("die4")}, AnimationType.ONE_SHOT, 100, new
 				AnimationListener() {
-			@Override
-			public void onAnimatedStarted(Animator animator) {
-				gameObject.renderer.setOffsets(-200, -100);
-				gameObject.renderer.setSize(400, 300);
-			}
-
-			@Override
-			public void onFrame(Animator animator, int frameNum) {
-
-			}
-
-			@Override
-			public void onAnimationFinished(Animator animator) {
-				statusIndicator.spawnGravestone(transform.position);
-				GameObject.destroy(gameObject, 2000);
-				new Timer().schedule(new TimerTask() {
 					@Override
-					public void run() {
+					public void onAnimatedStarted(Animator animator) {
+						gameObject.renderer.setOffsets(-200, -100);
+						gameObject.renderer.setSize(400, 300);
+					}
+
+					@Override
+					public void onFrame(Animator animator, int frameNum) {
+
+					}
+
+					@Override
+					public void onAnimationFinished(Animator animator) {
+						statusIndicator.spawnGravestone(transform.position);
+						GameObject.destroy(gameObject, 2000);
+						new Timer().schedule(new TimerTask() {
+							@Override
+							public void run() {
 						if (LevelManager.getCurrentLevelName().equals("explore")) ExploreLevel.createPlayer();
 						if (LevelManager.getCurrentLevelName().equals("survival")) SurvivalLevel.createPlayer();
+							}
+						}, 2000);
 					}
-				}, 2000);
-			}
-		});
+				});
 	}
+
+	public abstract String getName();
 
 	public abstract void ability1();
 
@@ -143,16 +154,21 @@ public abstract class Warframe extends Avatar {
 	}
 
 	public void removeHealth(int health) {
-		this.health -= health;
-		if (this.health <= 0) {
-			this.health = 0;
-			gameObject.animator.play("die");
-			if (gameObject.getComponent(Player.class) != null) {
-				gameObject.getComponent(Player.class).dead = true;
+		if (shield > 0) {
+			shield--;
+		} else {
+			this.health -= health;
+			if (this.health <= 0) {
+				this.health = 0;
+				gameObject.animator.play("die");
+				if (gameObject.getComponent(Player.class) != null) {
+					gameObject.getComponent(Player.class).dead = true;
+				}
+				gameObject.setTag(null);
+				Game.players = new GameObject[0];
 			}
-			gameObject.setTag(null);
-			Game.players = new GameObject[0];
 		}
+		nextShieldRegen = System.currentTimeMillis() + 2000;
 	}
 
 	public void addEnergy(int energy) {
@@ -171,5 +187,9 @@ public abstract class Warframe extends Avatar {
 
 	public int getEnergy() {
 		return energy;
+	}
+
+	public int getShield() {
+		return shield;
 	}
 }

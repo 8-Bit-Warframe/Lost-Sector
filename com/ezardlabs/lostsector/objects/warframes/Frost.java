@@ -20,7 +20,7 @@ import com.ezardlabs.lostsector.objects.weapons.primary.Lanka;
 public class Frost extends Warframe {
 
 	public Frost() {
-		super("frost", 100, 2, 100);
+		super("frost", 15, 3, 150);
 		setStatusIndicator(HUD.statusIndicator);
 	}
 
@@ -64,6 +64,11 @@ public class Frost extends Warframe {
 		setMeleeWeapon(new Nikana(gameObject));
 		HUD.weaponControl.setWeapons(new Lanka(gameObject), new Nikana(gameObject));
 		HUD.weaponControl.switchWeapons();
+	}
+
+	@Override
+	public String getName() {
+		return "Frost";
 	}
 
 	@Override

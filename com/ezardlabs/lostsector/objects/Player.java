@@ -55,6 +55,7 @@ public class Player extends Script {
 		player = gameObject;
 		warframe = gameObject.getComponentOfType(Warframe.class);
 		gameObject.setTag("player");
+		HUD.setWarframeName(warframe.getName());
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class Player extends Script {
 			return;
 		}
 
-		HUD.update(warframe.getHealth(), warframe.getEnergy());
+		HUD.update(warframe.getHealth(), warframe.getShield(), warframe.getEnergy());
 
 		if (dead) return;
 

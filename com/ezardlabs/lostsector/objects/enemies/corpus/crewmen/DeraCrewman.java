@@ -4,6 +4,8 @@ import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.AudioSource;
+import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
@@ -12,14 +14,26 @@ import com.ezardlabs.lostsector.objects.enemies.corpus.Crewman;
 import com.ezardlabs.lostsector.objects.projectiles.Laser;
 
 public class DeraCrewman extends Crewman {
+	private AudioSource audio = new AudioSource();
+	private AudioClip shoot;
 
 	public DeraCrewman() {
 		super("dera");
 	}
 
 	@Override
+	public void start() {
+		super.start();
+		shoot = new AudioClip("audio/dera_shoot.ogg");
+		gameObject.addComponent(audio);
+	}
+
+	@Override
 	protected Animation getShootAnimation() {
-		return new Animation("shoot", new Sprite[]{ta.getSprite("shoot0"), ta.getSprite("shoot1"), ta.getSprite("shoot2"), ta.getSprite("shoot3")}, new AnimationType() {
+		return new Animation("shoot", new Sprite[]{ta.getSprite("shoot0"),
+				ta.getSprite("shoot1"),
+				ta.getSprite("shoot2"),
+				ta.getSprite("shoot3")}, new AnimationType() {
 			private long lastEnd = 0;
 
 			@Override
@@ -47,9 +61,14 @@ public class DeraCrewman extends Crewman {
 			@Override
 			public void onFrame(Animator animator, int frameNum) {
 				if (frameNum % 2 == 1) {
-					GameObject
-							.instantiate(new GameObject("Laser", new Renderer("images/laser.png", 100, 100).setFlipped(gameObject.renderer.hFlipped, false), new Collider(100, 100, true), new Laser()),
-									transform.position.offset(gameObject.renderer.hFlipped ? -12.5f : 87.5f, frameNum == 1 ? 75 : 50));
+					GameObject.instantiate(new GameObject("Laser",
+							new Renderer("images/laser.png", 100, 100)
+									.setFlipped(gameObject.renderer.hFlipped, false),
+							new Collider(100, 100, true), new Laser(2)), transform.position
+							.offset(gameObject.renderer.hFlipped ? -12.5f : 87.5f,
+									frameNum == 1 ? 75 : 50));
+					audio.play(shoot);
+
 				}
 			}
 
