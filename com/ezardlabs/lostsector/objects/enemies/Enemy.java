@@ -4,10 +4,13 @@ import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.Level;
+import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game.DamageType;
+import com.ezardlabs.lostsector.levels.SurvivalLevel;
 import com.ezardlabs.lostsector.objects.Avatar;
 
 public abstract class Enemy extends Avatar {
@@ -107,6 +110,10 @@ public abstract class Enemy extends Avatar {
 					break;
 			}
 			gameObject.animator.play("die_" + type + "_" + direction);
+		}
+		Level level = LevelManager.getCurrentLevel();
+		if (level instanceof SurvivalLevel) {
+			((SurvivalLevel) level).survivalManager.score++;
 		}
 	}
 

@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class SurvivalManager extends Script {
 
-    public static int score = 0;
-    public static int lives = 3;
+    public int score = 0;
+    public int lives = 3;
     public ArrayList<Vector2> spawns;
     public ArrayList<Enemy> enemies;
     public int maxEnemies;
