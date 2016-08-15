@@ -1,8 +1,8 @@
 package com.ezardlabs.lostsector.ai;
 
-public class MeleeAIMode extends AIMode {
+public class MeleeBehaviour extends Behaviour {
 
-	public MeleeAIMode(float moveSpeed) {
+	public MeleeBehaviour(float moveSpeed) {
 		super(moveSpeed);
 	}
 
