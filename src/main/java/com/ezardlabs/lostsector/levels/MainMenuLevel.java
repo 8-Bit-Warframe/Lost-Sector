@@ -1,7 +1,8 @@
 package com.ezardlabs.lostsector.levels;
 
-import com.ezardlabs.dethsquare.*;
-import com.ezardlabs.lostsector.MapManager;
+import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.Level;
+import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.objects.menus.MainMenu;
 
 /**

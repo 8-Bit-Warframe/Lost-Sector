@@ -60,7 +60,8 @@ public class IceWave extends Script {
 				ta.getSprite("iw31")}, AnimationType.ONE_SHOT, 50));
 		gameObject.animator.play("move");
 		GameObject.destroy(gameObject, 1600);
-		GameObject.destroy(GameObject.instantiate(new GameObject("Ice Wave Collider", new Collider(10, 200, true), new IceWaveCollision()),
+		GameObject.destroy(GameObject
+				.instantiate(new GameObject("Ice Wave Collider", new Collider(10, 200, true), new IceWaveCollision()),
 				hFlipped ? new Vector2(transform.position.x + 800, transform.position.y + 200) : new Vector2(transform.position.x, transform.position.y + 200)), 1000);
 	}
 

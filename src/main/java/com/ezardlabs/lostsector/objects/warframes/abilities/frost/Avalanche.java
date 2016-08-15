@@ -87,7 +87,8 @@ public class Avalanche extends Script {
 		Enemy e;
 		Collider c;
 		for (GameObject go : GameObject.findAllWithTag("enemy")) {
-			if ((e = go.getComponentOfType(Enemy.class)) != null && (c = go.getComponent(Collider.class)) != null && (r.contains(c.bounds) || RectF.intersects(r, c.bounds))) {
+			if ((e = go.getComponentOfType(Enemy.class)) != null && (c = go.getComponent(Collider.class)) != null && (r.contains(c.bounds) || RectF
+					.intersects(r, c.bounds))) {
 				e.applyDamage(damage, Game.DamageType.COLD, transform.position);
 			}
 		}

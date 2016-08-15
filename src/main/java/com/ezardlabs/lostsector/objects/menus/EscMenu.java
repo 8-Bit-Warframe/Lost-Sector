@@ -1,6 +1,13 @@
 package com.ezardlabs.lostsector.objects.menus;
 
-import com.ezardlabs.dethsquare.*;
+import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.GuiRenderer;
+import com.ezardlabs.dethsquare.GuiText;
+import com.ezardlabs.dethsquare.Input;
+import com.ezardlabs.dethsquare.LevelManager;
+import com.ezardlabs.dethsquare.Screen;
+import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.Vector2;
 
 /**
  * Created by Benjamin on 2016-07-06.
@@ -29,7 +36,8 @@ public class EscMenu {
                     new Vector2(Screen.width / 2 - 350 / 2, Screen.height / 2 - 250 / 2)
             );
         } else {
-            goEscMenuFrame.transform.position.set(Screen.width / 2 - 350 / 2, Screen.height / 2 - 250 / 2);
+            goEscMenuFrame.transform.position.set(
+                    Screen.width / 2 - 350 / 2, Screen.height / 2 - 250 / 2);
         }
 
         TextureAtlas fontTA = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
@@ -38,13 +46,16 @@ public class EscMenu {
         } else {
             gTxtMainMenu.setText("Main Menu");
         }
-        goTxtMainMenu = GameObject.instantiate(new GameObject("TxtMainMenu", gTxtMainMenu), new Vector2(Screen.width / 2.0f - 128.0f, Screen.height / 2.0f - 45.0f));
+        goTxtMainMenu = GameObject
+                .instantiate(new GameObject("TxtMainMenu", gTxtMainMenu), new Vector2(
+                        Screen.width / 2.0f - 128.0f, Screen.height / 2.0f - 45.0f));
         if(gTxtExit == null) {
             gTxtExit = new GuiText("Exit", fontTA, 50);
         } else {
             gTxtExit.setText("Exit");
         }
-        goTxtExit = GameObject.instantiate(new GameObject("TxtExit", gTxtExit), new Vector2(Screen.width / 2.0f - 48.0f, Screen.height / 2.0f + 45.0f));
+        goTxtExit = GameObject.instantiate(new GameObject("TxtExit", gTxtExit), new Vector2(
+                Screen.width / 2.0f - 48.0f, Screen.height / 2.0f + 45.0f));
     }
 
     public static void hide() {

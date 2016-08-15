@@ -329,7 +329,8 @@ public class Player extends Script {
 				ability4 = true;
 			}
 		}
-		if ((state == State.IDLE || state == State.RUNNING) && (ability4 || Input.getKeyDown(KeyCode.ALPHA_4))) {
+		if ((state == State.IDLE || state == State.RUNNING) && (ability4 || Input
+				.getKeyDown(KeyCode.ALPHA_4))) {
 			if (warframe.hasEnergy(50)) {
 				warframe.removeEnergy(50);
 				warframe.ability4();
@@ -358,7 +359,8 @@ public class Player extends Script {
 				//noinspection ConstantConditions
 				Camera.main.gameObject.getComponent(CameraMovement.class).startQuake(100, 0.3f);
 				TextureAtlas ta = new TextureAtlas("images/effects/dust.png", "images/effects/dust.txt");
-				GameObject.destroy(GameObject.instantiate(new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50),
+				GameObject.destroy(GameObject
+						.instantiate(new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50),
 								new Animator(new Animation("dust", new Sprite[]{ta.getSprite("dust0"),
 										ta.getSprite("dust1"),
 										ta.getSprite("dust2")}, AnimationType.ONE_SHOT, 100))),

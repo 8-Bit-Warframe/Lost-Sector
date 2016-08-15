@@ -1,7 +1,19 @@
 package com.ezardlabs.lostsector.objects.menus;
 
-import com.ezardlabs.dethsquare.*;
-import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.dethsquare.Animation;
+import com.ezardlabs.dethsquare.AnimationType;
+import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.Camera;
+import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.GuiRenderer;
+import com.ezardlabs.dethsquare.GuiText;
+import com.ezardlabs.dethsquare.Input;
+import com.ezardlabs.dethsquare.LevelManager;
+import com.ezardlabs.dethsquare.Renderer;
+import com.ezardlabs.dethsquare.Screen;
+import com.ezardlabs.dethsquare.Script;
+import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.Vector2;
 
 /**
  * Created by Benjamin on 2016-05-15.
@@ -16,7 +28,9 @@ public class MainMenu extends Script {
 
     @Override
     public void start() {
-        GameObject.instantiate(new GameObject("MainMenuLisetOpen", new Renderer(), new Animator(), new MainMenuLisetFrost(false)), new Vector2(Screen.width / 2 - 96 * 8 / 2, 75));
+        GameObject
+                .instantiate(new GameObject("MainMenuLisetOpen", new Renderer(), new Animator(), new MainMenuLisetFrost(false)), new Vector2(
+                        Screen.width / 2 - 96 * 8 / 2, 75));
 //        GameObject.instantiate(new GameObject("MainMenuLisetClose", new Renderer(), new Animator(), new MainMenuLisetFrost(true)), new Vector2(Screen.width / 2 - 96 * 8 / 2, 75));
 
         TextureAtlas ta = new TextureAtlas("images/menus/atlas.png", "images/menus/atlas.txt");
@@ -37,9 +51,12 @@ public class MainMenu extends Script {
         gTxtSurvival = new GuiText("Survival", fontTA, 50);
         gTxtExit = new GuiText("Exit", fontTA, 50);
 
-        GameObject.instantiate(new GameObject("TxtExplore", gTxtExplore), new Vector2(Screen.width / 2.0f - 84.0f, Screen.height / 2.0f + 90.0f));
-        GameObject.instantiate(new GameObject("TxtSurvival", gTxtSurvival), new Vector2(Screen.width / 2.0f - 96.0f, Screen.height / 2.0f + 180.0f));
-        GameObject.instantiate(new GameObject("TxtExit", gTxtExit), new Vector2(Screen.width / 2.0f - 48.0f, Screen.height / 2.0f + 270.0f));
+        GameObject.instantiate(new GameObject("TxtExplore", gTxtExplore), new Vector2(
+                Screen.width / 2.0f - 84.0f, Screen.height / 2.0f + 90.0f));
+        GameObject.instantiate(new GameObject("TxtSurvival", gTxtSurvival), new Vector2(
+                Screen.width / 2.0f - 96.0f, Screen.height / 2.0f + 180.0f));
+        GameObject.instantiate(new GameObject("TxtExit", gTxtExit), new Vector2(
+                Screen.width / 2.0f - 48.0f, Screen.height / 2.0f + 270.0f));
 
         GameObject.instantiate(
                 new GameObject(
@@ -91,7 +108,7 @@ public class MainMenu extends Script {
         }
     }
 
-    private class MainMenuLisetFrost extends Script{
+    private class MainMenuLisetFrost extends Script {
         Animation[] animations = null;
         TextureAtlas ta = null;
         boolean close = false;

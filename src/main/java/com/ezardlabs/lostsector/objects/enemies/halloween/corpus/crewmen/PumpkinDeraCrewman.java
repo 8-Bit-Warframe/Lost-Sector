@@ -9,8 +9,8 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
-import com.ezardlabs.lostsector.objects.enemies.halloween.generic.Pumpkin;
 import com.ezardlabs.lostsector.objects.enemies.corpus.Crewman;
+import com.ezardlabs.lostsector.objects.enemies.halloween.generic.Pumpkin;
 import com.ezardlabs.lostsector.objects.projectiles.Laser;
 
 public class PumpkinDeraCrewman extends Crewman {

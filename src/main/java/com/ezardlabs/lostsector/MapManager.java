@@ -1,7 +1,15 @@
 package com.ezardlabs.lostsector;
 
-import com.ezardlabs.dethsquare.*;
+import com.ezardlabs.dethsquare.Animation;
+import com.ezardlabs.dethsquare.AnimationType;
+import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.Collider;
+import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.Renderer;
+import com.ezardlabs.dethsquare.Rigidbody;
+import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.tmx.*;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
@@ -12,7 +20,6 @@ import com.ezardlabs.lostsector.objects.environment.Locker;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-
 import java.util.ArrayList;
 
 public class MapManager {
@@ -107,7 +114,8 @@ public class MapManager {
 								ta.getSprite("door1"),
 								ta.getSprite("door0")}, AnimationType.ONE_SHOT, 80))), new Vector2(x, y));
 			} else if (split[4].equals("ldoor")) {
-				GameObject.instantiate(new GameObject("Door", new Door(), new Collider(100, 500, true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
+				GameObject
+						.instantiate(new GameObject("Door", new Door(), new Collider(100, 500, true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
 						new Animator(new Animation("open", new Sprite[]{ta.getSprite("ldoor")}, AnimationType.ONE_SHOT, 80), new Animation("close", new Sprite[]{ta.getSprite("ldoor0"),
 								ta.getSprite("ldoor1"),
 								ta.getSprite("ldoor2"),
@@ -136,9 +144,11 @@ public class MapManager {
 			float x = Float.valueOf(split[0]) * 3.125f;
 			float y = Float.valueOf(split[1]) * 3.125f;
 			if (Boolean.valueOf(split[2])) {
-				GameObject.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200)), new Vector2(x, y));
+				GameObject
+						.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200)), new Vector2(x, y));
 			} else {
-				GameObject.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200), new Animator(
+				GameObject
+						.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200), new Animator(
 						new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
 								125)), new Collider(100, 200, true)), new Vector2(x, y));
 			}
@@ -265,24 +275,29 @@ public class MapManager {
 					break;
 				case "locker":
 					if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 0)
-						GameObject.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200).setFlipped(flipH, flipV)), pos);
+						GameObject
+								.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200).setFlipped(flipH, flipV)), pos);
 					else
-						GameObject.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200).setFlipped(flipH, flipV), new Animator(
+						GameObject
+								.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200).setFlipped(flipH, flipV), new Animator(
 							new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
 									125)), new Collider(100, 200, true)), pos);
 					break;
 				case "locker_locked":
-					GameObject.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200).setFlipped(flipH, flipV)), pos);
+					GameObject
+							.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200).setFlipped(flipH, flipV)), pos);
 					break;
 				case "locker_unlocked":
-					GameObject.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200).setFlipped(flipH, flipV), new Animator(
+					GameObject
+							.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200).setFlipped(flipH, flipV), new Animator(
 							new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
 									125)), new Collider(100, 200, true)), pos);
 					break;
 				case "door":
 					if(flipH) {
 					}
-					GameObject.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("door0"), w, h).setFlipped(flipH, flipV),
+					GameObject
+							.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("door0"), w, h).setFlipped(flipH, flipV),
 							new Animator(new Animation("open", new Sprite[]{ta.getSprite("door0"),
 									ta.getSprite("door1"),
 									ta.getSprite("door2"),
@@ -300,7 +315,8 @@ public class MapManager {
 				case "ldoor":
 					if(flipH) {
 					}
-					GameObject.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(flipH, flipV),
+					GameObject
+							.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(flipH, flipV),
 							new Animator(new Animation("open", new Sprite[]{ta.getSprite("ldoor")}, AnimationType.ONE_SHOT, 80), new Animation("close", new Sprite[]{ta.getSprite("ldoor0"),
 									ta.getSprite("ldoor1"),
 									ta.getSprite("ldoor2"),
