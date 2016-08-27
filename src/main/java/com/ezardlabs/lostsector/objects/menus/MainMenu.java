@@ -22,6 +22,7 @@ public class MainMenu extends Script {
 
     GuiText gTxtExplore;
     GuiText gTxtSurvival;
+    GuiText gTxtProcedural;
     GuiText gTxtExit;
 
     boolean optionSelected = false;
@@ -41,7 +42,7 @@ public class MainMenu extends Script {
         );
 
         GameObject.instantiate(
-                new GameObject("MainMenuFrame", new GuiRenderer(ta, ta.getSprite("frame6"), 350, 400)),
+                new GameObject("MainMenuFrame", new GuiRenderer(ta, ta.getSprite("frame6"), 350, 490)),
                 new Vector2(Screen.width / 2 - 175, Screen.height / 2)
         );
 
@@ -49,14 +50,17 @@ public class MainMenu extends Script {
 
         gTxtExplore = new GuiText("Explore", fontTA, 50);
         gTxtSurvival = new GuiText("Survival", fontTA, 50);
+        gTxtProcedural = new GuiText("Procedural", fontTA, 50);
         gTxtExit = new GuiText("Exit", fontTA, 50);
 
         GameObject.instantiate(new GameObject("TxtExplore", gTxtExplore), new Vector2(
                 Screen.width / 2.0f - 84.0f, Screen.height / 2.0f + 90.0f));
         GameObject.instantiate(new GameObject("TxtSurvival", gTxtSurvival), new Vector2(
                 Screen.width / 2.0f - 96.0f, Screen.height / 2.0f + 180.0f));
+        GameObject.instantiate(new GameObject("TxtSurvival", gTxtProcedural), new Vector2(
+                Screen.width / 2.0f - 128.0f, Screen.height / 2.0f + 270.0f));
         GameObject.instantiate(new GameObject("TxtExit", gTxtExit), new Vector2(
-                Screen.width / 2.0f - 48.0f, Screen.height / 2.0f + 270.0f));
+                Screen.width / 2.0f - 48.0f, Screen.height / 2.0f + 360.0f));
 
         GameObject.instantiate(
                 new GameObject(
@@ -100,6 +104,11 @@ public class MainMenu extends Script {
                 optionSelected = true;
                 this.destroy();
                 LevelManager.loadLevel("survival");
+            }
+            else if(gTxtProcedural.hitTest(Input.mousePosition)) {
+                optionSelected = true;
+                this.destroy();
+                LevelManager.loadLevel("procedural");
             }
             else if(gTxtExit.hitTest(Input.mousePosition)) {
                 optionSelected = true;

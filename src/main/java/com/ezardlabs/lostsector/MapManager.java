@@ -21,8 +21,141 @@ import com.ezardlabs.lostsector.objects.environment.Locker;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MapManager {
+
+	public static enum LSTileSetType {
+		NONE,
+		CORPUS
+	}
+
+	public static enum LSSectionConnectorSide {
+		CENTRE,
+		TOP,
+		RIGHT,
+		BOTTOM,
+		LEFT
+	}
+
+	public static class LSSectionConnector {
+		public LSSectionConnectorSide side;
+		public int type;
+		public Vector2 pos;
+
+		public LSSectionConnector(LSSectionConnectorSide side, int type, Vector2 pos) {
+			this.side = side;
+			this.type = type;
+			this.pos = pos;
+		}
+
+		public boolean equals(LSSectionConnector connector) {
+			return this.side == connector.side && this.type == connector.type;
+		}
+	}
+
+	public static class LSProceduralSection {
+		public Map map;
+		public HashMap<
+				LSSectionConnectorSide,
+				HashMap<Integer,
+						ArrayList<LSSectionConnector>
+						>
+				> connectors;
+		public ArrayList<LSSectionConnector> arrConnectors = new ArrayList<>();
+
+		public LSProceduralSection(Map map) {
+			this.map = map;
+			connectors = new HashMap<>();
+			try {
+				ObjectGroup connectorGroup = null;
+				for(ObjectGroup objGrp : map.getObjectGroups()) {
+					if(objGrp.getName().equals("connectors")) {
+						connectorGroup = objGrp;
+						break;
+					}
+				}
+				if (connectorGroup == null) {
+					throw new Exception("No connectors found in map, " + this.map.getFilePath());
+				}
+				for(TMXObject tmxObj : connectorGroup.getObjects()) {
+					String[] typeSplit = tmxObj.getType().split("_");
+					LSSectionConnectorSide side = LSSectionConnectorSide.CENTRE;
+					int type = Integer.parseInt(typeSplit[1]);
+					switch(typeSplit[0]) {
+						case "c":
+							side = LSSectionConnectorSide.CENTRE;
+							break;
+						case "t":
+							side = LSSectionConnectorSide.TOP;
+							break;
+						case "r":
+							side = LSSectionConnectorSide.RIGHT;
+							break;
+						case "b":
+							side = LSSectionConnectorSide.BOTTOM;
+							break;
+						case "l":
+							side = LSSectionConnectorSide.LEFT;
+							break;
+					}
+					if(!connectors.containsKey(side))
+						connectors.put(side, new HashMap<>());
+					if(!connectors.get(side).containsKey(type))
+						connectors.get(side).put(type, new ArrayList<>());
+					LSSectionConnector conn = new LSSectionConnector(side, type, new Vector2(tmxObj.getX(), tmxObj.getY()));
+					connectors.get(side).get(type).add(conn);
+					arrConnectors.add(conn);
+				}
+			} catch(Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		public boolean hasConnector(LSSectionConnectorSide side, int type) {
+			return connectors.containsKey(side) && connectors.get(side).containsKey(type);
+		}
+	}
+
+	public static class LSProceduralMapConfig {
+
+		public LSProceduralSection[] startRooms = new LSProceduralSection[2];
+		public LSProceduralSection[] rooms = new LSProceduralSection[6];
+		public LSProceduralSection[] endRooms = new LSProceduralSection[1];
+
+		public LSTileSetType type = LSTileSetType.NONE;
+		public int numRooms = 0;
+
+		public LSProceduralMapConfig(LSTileSetType type, int numRooms) {
+			this.type = type;
+			this.numRooms = numRooms;
+			String strType = getTypeString();
+			TMXLoader tmxLoader;
+			for(int i = 0; i < startRooms.length; i++) {
+				tmxLoader = new TMXLoader("maps/procedural/" + strType + "/start_16x16_" + (i + 1) + ".tmx");
+				startRooms[i] = new LSProceduralSection(tmxLoader.getMap());
+			}
+			for(int i = 0; i < rooms.length; i++) {
+				tmxLoader = new TMXLoader("maps/procedural/" + strType + "/16x16_" + (i + 1) + ".tmx");
+				rooms[i] = new LSProceduralSection(tmxLoader.getMap());
+			}
+			for(int i = 0; i < endRooms.length; i++) {
+				tmxLoader = new TMXLoader("maps/procedural/" + strType + "/end_16x16_" + (i + 1) + ".tmx");
+				endRooms[i] = new LSProceduralSection(tmxLoader.getMap());
+			}
+		}
+
+		public String getTypeString() {
+			switch(this.type) {
+				case CORPUS:
+					return "corpus";
+				default:
+					return "";
+			}
+		}
+	}
+
 	private static int[][] solidityMap;
 	public static Vector2 playerSpawn = new Vector2();
 	public static ArrayList<Vector2> enemySpawns = null;
@@ -33,7 +166,8 @@ public class MapManager {
 			name = overrideMapName;
 		}
 		enemySpawns = new ArrayList<>();
-		loadTMX(name);
+		TMXLoader tmxLoader = new TMXLoader("maps/" + name + ".tmx");
+		loadTMX(tmxLoader.getMap());
 		NavMesh.init(solidityMap);
 
 //		TextureAtlas eta = new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt");
@@ -173,16 +307,42 @@ public class MapManager {
 		}
 	}
 
-	// START Tiled TMX Pasring stuff
+	// START Tiled TMX Parsing stuff
 
-	private static void loadTMX(String filePath) {
-		TMXLoader tmxLoader = new TMXLoader(filePath);
-		Map map = tmxLoader.getMap();
+	public static void loadProceduralMap(LSProceduralMapConfig mapCfg) {
+		int startIdx = ThreadLocalRandom.current().nextInt(0, mapCfg.startRooms.length);
+
+		LSProceduralSection startSection = mapCfg.startRooms[startIdx];
+		loadTMX(startSection.map);
+
+		for(LSSectionConnector conn : startSection.arrConnectors) {
+
+		}
+
+		for(int i = 0; i < mapCfg.numRooms; i++) {
+
+		}
+
+		System.out.println(mapCfg.toString());
+	}
+
+	private static void loadTMX(Map map) {
+		loadTMX(map, new Vector2());
+	}
+
+	private static void loadTMX(Map map, Vector2 offset) {
 		solidityMap = new int[map.getWidth()][map.getHeight()];
 		ArrayList<TileSet> tileSets = map.getTileSets();
 		ArrayList<TextureAtlas> textureAtlases = new ArrayList<>();
 		for(TileSet tileSet : tileSets) {
-			textureAtlases.add(new TextureAtlas("maps/" + tileSet.getImageSource(), tileSet.getTileWidth(), tileSet.getTileHeight()));
+			String filePath = tileSet.getFilePath();
+			int lastSlash = filePath.lastIndexOf("/");
+			String folder = "";
+			if(lastSlash >= 0) {
+				folder = filePath.substring(0, lastSlash);
+			}
+
+			textureAtlases.add(new TextureAtlas(folder + "/" + tileSet.getImageSource(), tileSet.getTileWidth(), tileSet.getTileHeight()));
 		}
 		float w = map.getTileWidth() * 6.25f;
 		float h = map.getTileHeight() * 6.25f;
