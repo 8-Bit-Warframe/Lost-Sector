@@ -7,7 +7,8 @@
  <tileset firstgid="12097" source="../connectors.tsx"/>
  <layer name="main" width="16" height="16">
   <data>
-   <tile gid="4131"/>
+   <tile gid="4036"/>
+   <tile gid="4227"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -20,9 +21,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="4129"/>
+   <tile gid="4225"/>
+   <tile gid="4037"/>
    <tile gid="4131"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -182,7 +182,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="4129"/>
+   <tile gid="4225"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -247,6 +247,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="4034"/>
    <tile gid="4035"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -260,13 +261,12 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
    <tile gid="4033"/>
+   <tile gid="4034"/>
   </data>
  </layer>
  <objectgroup name="connectors">
-  <object id="2" type="t_0" gid="12098" x="0" y="16" width="16" height="16">
+  <object id="2" type="t_0" gid="12098" x="16" y="16" width="16" height="16">
    <properties>
     <property name="type" type="int" value="0"/>
    </properties>
@@ -281,7 +281,7 @@
     <property name="type" type="int" value="0"/>
    </properties>
   </object>
-  <object id="8" name="B" type="b_0" gid="12100" x="0" y="256" width="16" height="16">
+  <object id="8" name="B" type="b_0" gid="12100" x="16" y="256" width="16" height="16">
    <properties>
     <property name="type" type="int" value="0"/>
    </properties>

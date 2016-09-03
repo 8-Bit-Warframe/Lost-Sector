@@ -188,57 +188,64 @@ public class MapManager {
 
 		solidityMap = new int[16 * mapCfg.numRooms + 2][16];
 
-		Object[] objStartSeg = mapCfg.startSegments.values().toArray();
-		ArrayList<MapSegment> startSegs = (ArrayList<MapSegment>) getRandObj(objStartSeg);
-
-		Vector2 currOffset = new Vector2(0.0f, 512.0f);
-
-		// First room
-		MapSegment currSeg = getRandObj(startSegs);
-		loadTMX(currSeg.map, currOffset);
-		renderedSegments.add(currSeg);
-
+		MapSegment currSeg = null;
+		MapSegment nextSeg = mapCfg.defaultStartSeg;
+		Vector2 nextOffset = new Vector2(0.0f, 512.0f);
 		// Load rooms in between
 		for(int i = 0; i < mapCfg.numRooms; i++) {
-			MapSegmentConnector currConn = getRandomValidConnector(currSeg.connectors);
-			if(currConn == null) {
-				System.err.println("Null connector found on segment #" + i);
-				continue;
-			}
-			MapSegment nextSeg = getRandomValidSegment(mapCfg.mainSegments, currConn);
-
-			ArrayList<MapSegmentConnector> nextValidConns = new ArrayList<>();
-			for(MapSegmentConnector c : nextSeg.connectors) {
-				if(currConn.isValidConnection(c)) {
-					nextValidConns.add(c);
+			if(i == 0) {
+				// First segment
+				Object[] objStartSeg = mapCfg.startSegments.values().toArray();
+				ArrayList<MapSegment> startSegs = (ArrayList<MapSegment>) getRandObj(objStartSeg);
+				nextSeg = getRandObj(startSegs);
+			} else if(i == mapCfg.numRooms - 1) {
+				// Last segment
+				Object[] objStartSeg = mapCfg.endSegments.values().toArray();
+				ArrayList<MapSegment> startSegs = (ArrayList<MapSegment>) getRandObj(objStartSeg);
+				nextSeg = getRandObj(startSegs);
+				continue;	// Do nothing for now.
+			} else {
+				// Segments in between first and last.
+				MapSegmentConnector currConn = getRandomValidConnector(currSeg.connectors);
+				if (currConn == null) {
+					System.err.println("Null connector found on segment #" + i);
+					continue;
 				}
+				nextSeg = getRandomValidSegment(mapCfg.mainSegments, currConn);
+
+				ArrayList<MapSegmentConnector> nextValidConns = new ArrayList<>();
+				for (MapSegmentConnector c : nextSeg.connectors) {
+					if (currConn.isValidConnection(c)) {
+						nextValidConns.add(c);
+					}
+				}
+				MapSegmentConnector nextConn = getRandObj(nextValidConns);
+
+				currConn.connect(nextConn);
+
+				switch (currConn.side) {
+					case CENTRE:
+						break;
+					case TOP:
+						nextOffset.y -= nextSeg.getHeight();
+						break;
+					case RIGHT:
+						nextOffset.x += currSeg.getWidth();
+						break;
+					case BOTTOM:
+						nextOffset.y += currSeg.getHeight();
+						break;
+					case LEFT:
+						nextOffset.x -= nextSeg.getWidth();
+						break;
+				}
+				System.out.println("Next Segment " + i
+						+ "\n conn: " + nextConn.toString()
+						+ "\n offset: " + nextOffset.toString()
+				);
 			}
-			MapSegmentConnector nextConn = getRandObj(nextValidConns);
-
-			currConn.connect(nextConn);
-
-			switch(currConn.side) {
-				case CENTRE:
-					break;
-				case TOP:
-					currOffset.y -= nextSeg.getHeight();
-					break;
-				case RIGHT:
-					currOffset.x += currSeg.getWidth();
-					break;
-				case BOTTOM:
-					currOffset.y += currSeg.getHeight();
-					break;
-				case LEFT:
-					currOffset.x -= nextSeg.getWidth();
-					break;
-			}
-			System.out.println("Segment " + i
-					+ "\n conn: " + currConn.toString()
-					+ "\n offset: " + currOffset.toString()
-			);
-			loadTMX(nextSeg.map, new Vector2(currOffset.x, currOffset.y));
-
+			nextSeg.pos = new Vector2(nextOffset.x, nextOffset.y);
+			loadMapSegment(nextSeg);
 			renderedSegments.add(nextSeg);
 			currSeg = nextSeg;
 		}
@@ -292,6 +299,10 @@ public class MapManager {
 			return null;
 		}
 		return arr.get(ThreadLocalRandom.current().nextInt(0, bound));
+	}
+
+	private static void loadMapSegment(MapSegment seg) {
+		loadTMX(seg.map, seg.pos);
 	}
 
 	private static void loadTMX(Map map) {

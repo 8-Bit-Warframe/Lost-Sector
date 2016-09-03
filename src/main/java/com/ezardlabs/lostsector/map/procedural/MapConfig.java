@@ -24,6 +24,8 @@ public class MapConfig {
     public HashMap<String, ArrayList<MapSegment>> mainSegments;
     public HashMap<String, ArrayList<MapSegment>> endSegments;
 
+    public MapSegment defaultStartSeg;
+
     public ProceduralType type;
     public int numRooms;
 
@@ -39,6 +41,9 @@ public class MapConfig {
         for(int i = 0; i < MAX_START; i++) {
             tmxLoader = new TMXLoader("maps/procedural/" + strType + "/start_16x16_" + (i + 1) + ".tmx");
             addSegment(startSegments, new MapSegment(tmxLoader.getMap()));
+            if(i == 0) {
+                this.defaultStartSeg = new MapSegment(tmxLoader.getMap());
+            }
         }
         for(int i = 0; i < MAX_MAIN; i++) {
             tmxLoader = new TMXLoader("maps/procedural/" + strType + "/16x16_" + (i + 1) + ".tmx");
