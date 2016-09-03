@@ -191,7 +191,7 @@ public class MapManager {
 		Object[] objStartSeg = mapCfg.startSegments.values().toArray();
 		ArrayList<MapSegment> startSegs = (ArrayList<MapSegment>) getRandObj(objStartSeg);
 
-		Vector2 currOffset = new Vector2(0.0f, 32.0f);
+		Vector2 currOffset = new Vector2(0.0f, 512.0f);
 
 		// First room
 		MapSegment currSeg = getRandObj(startSegs);
@@ -256,8 +256,7 @@ public class MapManager {
 			}
 			validConns.add(c);
 		}
-		MapSegmentConnector randConn = getRandObj(validConns);
-		return  randConn;
+		return  getRandObj(validConns);
 	}
 
 	private static MapSegment getRandomValidSegment(HashMap<String, ArrayList<MapSegment>> mapSegments, MapSegmentConnector conn) {
@@ -274,10 +273,9 @@ public class MapManager {
 			if(conn.side != MapSegmentConnector.MapSegmentConnectorSide.RIGHT && seg.connectors.size() <= 2 && hasLeftConn) {
 				continue;
 			}
-			validSegments.add(seg);
+			validSegments.add(new MapSegment(seg.map));
 		}
-		MapSegment randSeg = getRandObj(validSegments);
-		return randSeg;
+		return getRandObj(validSegments);
 	}
 
 	private static <T> T getRandObj(T[] arr) {
@@ -302,6 +300,10 @@ public class MapManager {
 	}
 
 	private static void loadTMX(Map map, Vector2 offset) {
+		if(map == null) {
+			System.err.println("MapManager.loadTMX: Map provided is null");
+			return;
+		}
 		ArrayList<TileSet> tileSets = map.getTileSets();
 		ArrayList<TextureAtlas> textureAtlases = new ArrayList<>();
 		for(TileSet tileSet : tileSets) {
@@ -395,7 +397,7 @@ public class MapManager {
 
 	public static void instantiateObjects(TMXObject[] objects, TextureAtlas ta, Vector2 offset) {
 		for(TMXObject object : objects) {
-			Vector2 pos = new Vector2((object.getX() + offset.x) * 6.25f, (object.getY() + offset.y) * 6.25f);
+			Vector2 pos = new Vector2((object.getX() + offset.x * 16.0f) * 6.25f, (object.getY() + offset.y * 16.0f) * 6.25f);
 			float w = object.getWidth() * 6.25f;
 			float h = object.getHeight() * 6.25f;
 			boolean flipH = Boolean.parseBoolean(object.getProperty("flipH", "false"));

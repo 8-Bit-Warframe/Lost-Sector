@@ -220,7 +220,6 @@ public class Player extends Script {
 		if ((Input.getKeyDown(KeyCode.SPACE) || Input.getKeyDown(KeyCode.J) || touchJump) && jumpCount++ < 2) {
 			state = jumpCount == 1 ? State.JUMPING : State.DOUBLE_JUMPING;
 			gameObject.rigidbody.velocity.y = -25f;
-			System.out.println("Jump: " + this.transform.position);
 			return true;
 		}
 		return false;
