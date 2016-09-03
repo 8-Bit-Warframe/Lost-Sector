@@ -14,7 +14,8 @@ import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game;
-import com.ezardlabs.lostsector.MapManager;
+import com.ezardlabs.lostsector.map.MapManager;
+import com.ezardlabs.lostsector.map.procedural.MapConfig;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.hud.HUD;
@@ -26,7 +27,7 @@ public class ProceduralLevel extends Level {
     @Override
     public void onLoad() {
         MapManager.playerSpawn = new Vector2(20.0f, 20.0f);
-        MapManager.LSProceduralMapConfig mapCfg = new MapManager.LSProceduralMapConfig(MapManager.LSTileSetType.CORPUS, 10);
+        MapConfig mapCfg = new MapConfig(MapConfig.ProceduralType.CORPUS, 50);
         MapManager.loadProceduralMap(mapCfg);
 
         HUD.init();
@@ -37,7 +38,7 @@ public class ProceduralLevel extends Level {
 
         GameObject.instantiate(new GameObject("Camera", new Camera(true), cm, as), new Vector2
                 (MapManager.playerSpawn.x, MapManager.playerSpawn.y));
-        as.play(new AudioClip("audio/theme.ogg"));
+//        as.play(new AudioClip("audio/theme.ogg"));
 
         TextureAtlas fontTA = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
         GameObject.instantiate(

@@ -1,4 +1,4 @@
-package com.ezardlabs.lostsector;
+package com.ezardlabs.lostsector.map;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.AnimationType;
@@ -11,6 +11,10 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.tmx.*;
+import com.ezardlabs.lostsector.NavMesh;
+import com.ezardlabs.lostsector.map.procedural.MapConfig;
+import com.ezardlabs.lostsector.map.procedural.MapSegment;
+import com.ezardlabs.lostsector.map.procedural.MapSegmentConnector;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.SupraCrewman;
@@ -25,137 +29,6 @@ import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MapManager {
-
-	public static enum LSTileSetType {
-		NONE,
-		CORPUS
-	}
-
-	public static enum LSSectionConnectorSide {
-		CENTRE,
-		TOP,
-		RIGHT,
-		BOTTOM,
-		LEFT
-	}
-
-	public static class LSSectionConnector {
-		public LSSectionConnectorSide side;
-		public int type;
-		public Vector2 pos;
-
-		public LSSectionConnector(LSSectionConnectorSide side, int type, Vector2 pos) {
-			this.side = side;
-			this.type = type;
-			this.pos = pos;
-		}
-
-		public boolean equals(LSSectionConnector connector) {
-			return this.side == connector.side && this.type == connector.type;
-		}
-	}
-
-	public static class LSProceduralSection {
-		public Map map;
-		public HashMap<
-				LSSectionConnectorSide,
-				HashMap<Integer,
-						ArrayList<LSSectionConnector>
-						>
-				> connectors;
-		public ArrayList<LSSectionConnector> arrConnectors = new ArrayList<>();
-
-		public LSProceduralSection(Map map) {
-			this.map = map;
-			connectors = new HashMap<>();
-			try {
-				ObjectGroup connectorGroup = null;
-				for(ObjectGroup objGrp : map.getObjectGroups()) {
-					if(objGrp.getName().equals("connectors")) {
-						connectorGroup = objGrp;
-						break;
-					}
-				}
-				if (connectorGroup == null) {
-					throw new Exception("No connectors found in map, " + this.map.getFilePath());
-				}
-				for(TMXObject tmxObj : connectorGroup.getObjects()) {
-					String[] typeSplit = tmxObj.getType().split("_");
-					LSSectionConnectorSide side = LSSectionConnectorSide.CENTRE;
-					int type = Integer.parseInt(typeSplit[1]);
-					switch(typeSplit[0]) {
-						case "c":
-							side = LSSectionConnectorSide.CENTRE;
-							break;
-						case "t":
-							side = LSSectionConnectorSide.TOP;
-							break;
-						case "r":
-							side = LSSectionConnectorSide.RIGHT;
-							break;
-						case "b":
-							side = LSSectionConnectorSide.BOTTOM;
-							break;
-						case "l":
-							side = LSSectionConnectorSide.LEFT;
-							break;
-					}
-					if(!connectors.containsKey(side))
-						connectors.put(side, new HashMap<>());
-					if(!connectors.get(side).containsKey(type))
-						connectors.get(side).put(type, new ArrayList<>());
-					LSSectionConnector conn = new LSSectionConnector(side, type, new Vector2(tmxObj.getX(), tmxObj.getY()));
-					connectors.get(side).get(type).add(conn);
-					arrConnectors.add(conn);
-				}
-			} catch(Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-
-		public boolean hasConnector(LSSectionConnectorSide side, int type) {
-			return connectors.containsKey(side) && connectors.get(side).containsKey(type);
-		}
-	}
-
-	public static class LSProceduralMapConfig {
-
-		public LSProceduralSection[] startRooms = new LSProceduralSection[2];
-		public LSProceduralSection[] rooms = new LSProceduralSection[6];
-		public LSProceduralSection[] endRooms = new LSProceduralSection[1];
-
-		public LSTileSetType type = LSTileSetType.NONE;
-		public int numRooms = 0;
-
-		public LSProceduralMapConfig(LSTileSetType type, int numRooms) {
-			this.type = type;
-			this.numRooms = numRooms;
-			String strType = getTypeString();
-			TMXLoader tmxLoader;
-			for(int i = 0; i < startRooms.length; i++) {
-				tmxLoader = new TMXLoader("maps/procedural/" + strType + "/start_16x16_" + (i + 1) + ".tmx");
-				startRooms[i] = new LSProceduralSection(tmxLoader.getMap());
-			}
-			for(int i = 0; i < rooms.length; i++) {
-				tmxLoader = new TMXLoader("maps/procedural/" + strType + "/16x16_" + (i + 1) + ".tmx");
-				rooms[i] = new LSProceduralSection(tmxLoader.getMap());
-			}
-			for(int i = 0; i < endRooms.length; i++) {
-				tmxLoader = new TMXLoader("maps/procedural/" + strType + "/end_16x16_" + (i + 1) + ".tmx");
-				endRooms[i] = new LSProceduralSection(tmxLoader.getMap());
-			}
-		}
-
-		public String getTypeString() {
-			switch(this.type) {
-				case CORPUS:
-					return "corpus";
-				default:
-					return "";
-			}
-		}
-	}
-
 	private static int[][] solidityMap;
 	public static Vector2 playerSpawn = new Vector2();
 	public static ArrayList<Vector2> enemySpawns = null;
@@ -309,29 +182,126 @@ public class MapManager {
 
 	// START Tiled TMX Parsing stuff
 
-	public static void loadProceduralMap(LSProceduralMapConfig mapCfg) {
-		int startIdx = ThreadLocalRandom.current().nextInt(0, mapCfg.startRooms.length);
+	public static void loadProceduralMap(MapConfig mapCfg) {
+		// Keep a list of added sections
+		ArrayList<MapSegment> renderedSegments = new ArrayList<>();
 
-		LSProceduralSection startSection = mapCfg.startRooms[startIdx];
-		loadTMX(startSection.map);
+		solidityMap = new int[16 * mapCfg.numRooms + 2][16];
 
-		for(LSSectionConnector conn : startSection.arrConnectors) {
+		Object[] objStartSeg = mapCfg.startSegments.values().toArray();
+		ArrayList<MapSegment> startSegs = (ArrayList<MapSegment>) getRandObj(objStartSeg);
 
-		}
+		Vector2 currOffset = new Vector2(0.0f, 32.0f);
 
+		// First room
+		MapSegment currSeg = getRandObj(startSegs);
+		loadTMX(currSeg.map, currOffset);
+		renderedSegments.add(currSeg);
+
+		// Load rooms in between
 		for(int i = 0; i < mapCfg.numRooms; i++) {
+			MapSegmentConnector currConn = getRandomValidConnector(currSeg.connectors);
+			if(currConn == null) {
+				System.err.println("Null connector found on segment #" + i);
+				continue;
+			}
+			MapSegment nextSeg = getRandomValidSegment(mapCfg.mainSegments, currConn);
 
+			ArrayList<MapSegmentConnector> nextValidConns = new ArrayList<>();
+			for(MapSegmentConnector c : nextSeg.connectors) {
+				if(currConn.isValidConnection(c)) {
+					nextValidConns.add(c);
+				}
+			}
+			MapSegmentConnector nextConn = getRandObj(nextValidConns);
+
+			currConn.connect(nextConn);
+
+			switch(currConn.side) {
+				case CENTRE:
+					break;
+				case TOP:
+					currOffset.y -= nextSeg.getHeight();
+					break;
+				case RIGHT:
+					currOffset.x += currSeg.getWidth();
+					break;
+				case BOTTOM:
+					currOffset.y += currSeg.getHeight();
+					break;
+				case LEFT:
+					currOffset.x -= nextSeg.getWidth();
+					break;
+			}
+			System.out.println("Segment " + i
+					+ "\n conn: " + currConn.toString()
+					+ "\n offset: " + currOffset.toString()
+			);
+			loadTMX(nextSeg.map, new Vector2(currOffset.x, currOffset.y));
+
+			renderedSegments.add(nextSeg);
+			currSeg = nextSeg;
 		}
+
+		// Load end room
 
 		System.out.println(mapCfg.toString());
 	}
 
+	private static MapSegmentConnector getRandomValidConnector(ArrayList<MapSegmentConnector> conns) {
+		ArrayList<MapSegmentConnector> validConns = new ArrayList<>();
+		for(MapSegmentConnector c : conns) {
+			if(c.side == MapSegmentConnector.MapSegmentConnectorSide.LEFT || c.isConnected()) {
+				continue;
+			}
+			validConns.add(c);
+		}
+		MapSegmentConnector randConn = getRandObj(validConns);
+		return  randConn;
+	}
+
+	private static MapSegment getRandomValidSegment(HashMap<String, ArrayList<MapSegment>> mapSegments, MapSegmentConnector conn) {
+		ArrayList<MapSegment> arrSegments = mapSegments.get(conn.getMatchingSideType());
+		ArrayList<MapSegment> validSegments = new ArrayList<>();
+		for(MapSegment seg : arrSegments) {
+			boolean hasLeftConn = false;
+			for(MapSegmentConnector c : seg.connectors) {
+				if(c.side == MapSegmentConnector.MapSegmentConnectorSide.LEFT) {
+					hasLeftConn = true;
+					break;
+				}
+			}
+			if(conn.side != MapSegmentConnector.MapSegmentConnectorSide.RIGHT && seg.connectors.size() <= 2 && hasLeftConn) {
+				continue;
+			}
+			validSegments.add(seg);
+		}
+		MapSegment randSeg = getRandObj(validSegments);
+		return randSeg;
+	}
+
+	private static <T> T getRandObj(T[] arr) {
+		int bound = arr.length;
+		if(bound <= 0) {
+			return null;
+		}
+		return arr[ThreadLocalRandom.current().nextInt(0, bound)];
+	}
+
+	private static <T> T getRandObj(ArrayList<T> arr) {
+		int bound = arr.size();
+		if(bound <= 0) {
+			return null;
+		}
+		return arr.get(ThreadLocalRandom.current().nextInt(0, bound));
+	}
+
 	private static void loadTMX(Map map) {
+		solidityMap = new int[map.getWidth()][map.getHeight()];
 		loadTMX(map, new Vector2());
 	}
 
 	private static void loadTMX(Map map, Vector2 offset) {
-		solidityMap = new int[map.getWidth()][map.getHeight()];
 		ArrayList<TileSet> tileSets = map.getTileSets();
 		ArrayList<TextureAtlas> textureAtlases = new ArrayList<>();
 		for(TileSet tileSet : tileSets) {
@@ -351,14 +321,14 @@ public class MapManager {
 			Tile[] tiles = layer.getTiles();
 			if(layer.getName().equals("main")) {
 				// Main layer with collision
-				instantiateTiles(tiles, true, w, h, 5, map, tileSets, textureAtlases);
+				instantiateTiles(tiles, true, w, h, 5, map, tileSets, textureAtlases, offset);
 				isBackgroundLayer = false;
 			} else if(isBackgroundLayer) {
 				// Background layer with no collision
-				instantiateTiles(tiles, false, w, h, -10, map, tileSets, textureAtlases);
+				instantiateTiles(tiles, false, w, h, -10, map, tileSets, textureAtlases, offset);
 			} else if(!isBackgroundLayer) {
 				// Foreground layer with no collision
-				instantiateTiles(tiles, false, w, h, 10, map, tileSets, textureAtlases);
+				instantiateTiles(tiles, false, w, h, 10, map, tileSets, textureAtlases, offset);
 			}
 		}
 
@@ -368,15 +338,15 @@ public class MapManager {
 			if(objectGroup.getName().equals("enemies")) {
 				enemyObjectGroup = objectGroup;
 			} else {
-				instantiateObjects(objectGroup.getObjects(), ta);
+				instantiateObjects(objectGroup.getObjects(), ta, offset);
 			}
 		}
 		if(enemyObjectGroup != null) {
-			instantiateEnemies(enemyObjectGroup.getObjects());
+			instantiateEnemies(enemyObjectGroup.getObjects(), offset);
 		}
 	}
 
-	public static void instantiateTiles(Tile[] tiles, boolean collision, float tileWidth, float tileHeight, int zindex, Map map, ArrayList<TileSet> tileSets, ArrayList<TextureAtlas> textureAtlases) {
+	public static void instantiateTiles(Tile[] tiles, boolean collision, float tileWidth, float tileHeight, int zindex, Map map, ArrayList<TileSet> tileSets, ArrayList<TextureAtlas> textureAtlases, Vector2 offset) {
 		for (int i = 0; i < tiles.length; i++) {
 			Tile t = tiles[i];
 			long gid = t.getGid();
@@ -385,8 +355,9 @@ public class MapManager {
 			}
 			int col = i % map.getWidth();
 			int row = i / map.getWidth();
-			float x = col * tileWidth;
-			float y = row * tileHeight;
+			Vector2 pos = new Vector2();
+			float x = (col + offset.x) * tileWidth;
+			float y = (row + offset.y) * tileHeight;
 
 			int tileSetIdx = -1;
 			TileSet ts = null;
@@ -422,9 +393,9 @@ public class MapManager {
 		}
 	}
 
-	public static void instantiateObjects(TMXObject[] objects, TextureAtlas ta) {
+	public static void instantiateObjects(TMXObject[] objects, TextureAtlas ta, Vector2 offset) {
 		for(TMXObject object : objects) {
-			Vector2 pos = new Vector2(object.getX() * 6.25f, object.getY() * 6.25f);
+			Vector2 pos = new Vector2((object.getX() + offset.x) * 6.25f, (object.getY() + offset.y) * 6.25f);
 			float w = object.getWidth() * 6.25f;
 			float h = object.getHeight() * 6.25f;
 			boolean flipH = Boolean.parseBoolean(object.getProperty("flipH", "false"));
@@ -505,9 +476,9 @@ public class MapManager {
 		}
 	}
 
-	public static void instantiateEnemies(TMXObject[] objects) {
+	public static void instantiateEnemies(TMXObject[] objects, Vector2 offset) {
 		for(TMXObject object : objects) {
-			Vector2 pos = new Vector2(object.getX() * 6.25f, object.getY() * 6.25f);
+			Vector2 pos = new Vector2((object.getX() + offset.x) * 6.25f, (object.getY() + offset.y) * 6.25f);
 			float w = object.getWidth() * 6.25f;
 			float h = object.getHeight() * 6.25f;
 			switch(object.getType()) {

@@ -14,7 +14,7 @@ import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game;
-import com.ezardlabs.lostsector.MapManager;
+import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.SurvivalManager;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.Player;

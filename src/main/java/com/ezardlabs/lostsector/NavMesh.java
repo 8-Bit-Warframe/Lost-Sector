@@ -3,6 +3,7 @@ package com.ezardlabs.lostsector;
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.NavMesh.NavPoint.NavPointType;
+import com.ezardlabs.lostsector.map.MapManager;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
