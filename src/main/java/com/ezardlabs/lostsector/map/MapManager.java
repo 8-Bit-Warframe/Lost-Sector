@@ -180,38 +180,37 @@ public class MapManager {
 		}
 	}
 
-	// START Tiled TMX Parsing stuff
+	// START Procedural mapping stuff
 
 	public static void loadProceduralMap(MapConfig mapCfg) {
 		// Keep a list of added sections
-		ArrayList<MapSegment> renderedSegments = new ArrayList<>();
+		ArrayList<MapSegment> renderSegments = new ArrayList<>();
 
 		solidityMap = new int[16 * mapCfg.numRooms + 2][16];
 
 		MapSegment currSeg = null;
-		MapSegment nextSeg = mapCfg.defaultStartSeg;
 		Vector2 nextOffset = new Vector2(0.0f, 512.0f);
 		// Load rooms in between
 		for(int i = 0; i < mapCfg.numRooms; i++) {
+			MapSegment nextSeg;
 			if(i == 0) {
 				// First segment
-				Object[] objStartSeg = mapCfg.startSegments.values().toArray();
-				ArrayList<MapSegment> startSegs = (ArrayList<MapSegment>) getRandObj(objStartSeg);
-				nextSeg = getRandObj(startSegs);
-			} else if(i == mapCfg.numRooms - 1) {
-				// Last segment
-				Object[] objStartSeg = mapCfg.endSegments.values().toArray();
-				ArrayList<MapSegment> startSegs = (ArrayList<MapSegment>) getRandObj(objStartSeg);
-				nextSeg = getRandObj(startSegs);
-				continue;	// Do nothing for now.
+				Object[] objStartSeg = mapCfg.spawnSegments.values().toArray();
+				ArrayList<MapSegment> spawnSegs = (ArrayList<MapSegment>) getRandObj(objStartSeg);
+				nextSeg = getRandObj(spawnSegs);
 			} else {
-				// Segments in between first and last.
 				MapSegmentConnector currConn = getRandomValidConnector(currSeg.connectors);
 				if (currConn == null) {
 					System.err.println("Null connector found on segment #" + i);
 					continue;
 				}
-				nextSeg = getRandomValidSegment(mapCfg.mainSegments, currConn);
+				if(i == mapCfg.numRooms - 1) {
+					// Extraction segment
+					nextSeg = getRandomValidSegment(mapCfg.extractSegments, currConn);
+				} else {
+					// Main segments.
+					nextSeg = getRandomValidSegment(mapCfg.mainSegments, currConn);
+				}
 
 				ArrayList<MapSegmentConnector> nextValidConns = new ArrayList<>();
 				for (MapSegmentConnector c : nextSeg.connectors) {
@@ -245,12 +244,13 @@ public class MapManager {
 				);
 			}
 			nextSeg.pos = new Vector2(nextOffset.x, nextOffset.y);
-			loadMapSegment(nextSeg);
-			renderedSegments.add(nextSeg);
+			renderSegments.add(nextSeg);
 			currSeg = nextSeg;
 		}
 
-		// Load end room
+		for(MapSegment seg : renderSegments) {
+			loadMapSegment(seg);
+		}
 
 		System.out.println(mapCfg.toString());
 	}
@@ -304,6 +304,8 @@ public class MapManager {
 	private static void loadMapSegment(MapSegment seg) {
 		loadTMX(seg.map, seg.pos);
 	}
+
+	// START Tiled TMX Parsing stuff
 
 	private static void loadTMX(Map map) {
 		solidityMap = new int[map.getWidth()][map.getHeight()];

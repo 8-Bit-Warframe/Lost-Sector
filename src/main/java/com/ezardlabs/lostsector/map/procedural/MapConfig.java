@@ -1,6 +1,7 @@
 package com.ezardlabs.lostsector.map.procedural;
 
 import com.ezardlabs.dethsquare.tmx.TMXLoader;
+import com.ezardlabs.dethsquare.util.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,46 +13,54 @@ import java.util.HashMap;
 public class MapConfig {
 
     public enum ProceduralType {
-        NONE,
         CORPUS
     }
-
-    public static final int MAX_START = 2;
-    public static final int MAX_MAIN = 6;
-    public static final int MAX_END = 1;
-
-    public HashMap<String, ArrayList<MapSegment>> startSegments;
-    public HashMap<String, ArrayList<MapSegment>> mainSegments;
-    public HashMap<String, ArrayList<MapSegment>> endSegments;
-
-    public MapSegment defaultStartSeg;
 
     public ProceduralType type;
     public int numRooms;
 
-    public MapConfig(ProceduralType type, int numRooms) {
-        startSegments = new HashMap<>();
-        mainSegments = new HashMap<>();
-        endSegments = new HashMap<>();
+    public HashMap<String, ArrayList<MapSegment>> spawnSegments;
+    public HashMap<String, ArrayList<MapSegment>> mainSegments;
+    public HashMap<String, ArrayList<MapSegment>> connectSegments;
+    public HashMap<String, ArrayList<MapSegment>> endSegments;
+    public HashMap<String, ArrayList<MapSegment>> extractSegments;
 
+    public String strSpawnTileSetPath;
+    public String strMainTileSetPath;
+    public String strConnectTileSetPath;
+    public String strEndTileSetPath;
+    public String strExtractTileSetPath;
+
+    public MapConfig(ProceduralType type, int numRooms) {
         this.type = type;
         this.numRooms = numRooms;
+
+        spawnSegments = new HashMap<>();
+        mainSegments = new HashMap<>();
+        connectSegments = new HashMap<>();
+        endSegments = new HashMap<>();
+        extractSegments = new HashMap<>();
+
         String strType = getTypeString();
+        this.strSpawnTileSetPath = "maps/procedural/" + strType + "/spawn";
+        this.strMainTileSetPath = "maps/procedural/" + strType + "/main";
+        this.strConnectTileSetPath = "maps/procedural/" + strType + "/connect";
+        this.strEndTileSetPath = "maps/procedural/" + strType + "/end";
+        this.strExtractTileSetPath = "maps/procedural/" + strType + "/extract";
+
+        loadSegments(this.spawnSegments, this.strSpawnTileSetPath);
+        loadSegments(this.mainSegments, this.strMainTileSetPath);
+        loadSegments(this.connectSegments, this.strConnectTileSetPath);
+        loadSegments(this.endSegments, this.strEndTileSetPath);
+        loadSegments(this.extractSegments, this.strExtractTileSetPath);
+    }
+
+    private void loadSegments(HashMap<String, ArrayList<MapSegment>> segments, String dirPath) {
         TMXLoader tmxLoader;
-        for(int i = 0; i < MAX_START; i++) {
-            tmxLoader = new TMXLoader("maps/procedural/" + strType + "/start_16x16_" + (i + 1) + ".tmx");
-            addSegment(startSegments, new MapSegment(tmxLoader.getMap()));
-            if(i == 0) {
-                this.defaultStartSeg = new MapSegment(tmxLoader.getMap());
-            }
-        }
-        for(int i = 0; i < MAX_MAIN; i++) {
-            tmxLoader = new TMXLoader("maps/procedural/" + strType + "/16x16_" + (i + 1) + ".tmx");
-            addSegment(mainSegments, new MapSegment(tmxLoader.getMap()));
-        }
-        for(int i = 0; i < MAX_END; i++) {
-            tmxLoader = new TMXLoader("maps/procedural/" + strType + "/end_16x16_" + (i + 1) + ".tmx");
-            addSegment(endSegments, new MapSegment(tmxLoader.getMap()));
+        String[] strFileNames = Utils.getAllFileNames(dirPath);
+        for(int i = 0; i < strFileNames.length; i++) {
+            tmxLoader = new TMXLoader(dirPath + "/" + strFileNames[i]);
+            addSegment(segments, new MapSegment(tmxLoader.getMap()));
         }
     }
 
