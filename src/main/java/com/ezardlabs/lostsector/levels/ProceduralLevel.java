@@ -27,7 +27,7 @@ public class ProceduralLevel extends Level {
     @Override
     public void onLoad() {
         MapManager.playerSpawn = new Vector2(20.0f, 20.0f);
-        MapConfig mapCfg = new MapConfig(MapConfig.ProceduralType.CORPUS, 5);
+        MapConfig mapCfg = new MapConfig(MapConfig.ProceduralType.CORPUS, 16);
         MapManager.loadProceduralMap(mapCfg);
 
         HUD.init();

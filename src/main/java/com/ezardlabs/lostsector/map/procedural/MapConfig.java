@@ -1,7 +1,9 @@
 package com.ezardlabs.lostsector.map.procedural;
 
+import com.ezardlabs.dethsquare.tmx.Map;
 import com.ezardlabs.dethsquare.tmx.TMXLoader;
 import com.ezardlabs.dethsquare.util.Utils;
+import com.ezardlabs.lostsector.map.MapManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +20,8 @@ public class MapConfig {
 
     public ProceduralType type;
     public int numRooms;
+    public int minMapHeight;
+    public int maxMapHeight;
 
     public HashMap<String, ArrayList<MapSegment>> spawnSegments;
     public HashMap<String, ArrayList<MapSegment>> mainSegments;
@@ -34,6 +38,8 @@ public class MapConfig {
     public MapConfig(ProceduralType type, int numRooms) {
         this.type = type;
         this.numRooms = numRooms;
+        this.minMapHeight = (int)((-3 * MapManager.TILE_SIZE) + MapManager.PROC_START_POS.y);
+        this.maxMapHeight = (int)((3 * MapManager.TILE_SIZE) + MapManager.PROC_START_POS.y);
 
         spawnSegments = new HashMap<>();
         mainSegments = new HashMap<>();
@@ -60,7 +66,12 @@ public class MapConfig {
         String[] strFileNames = Utils.getAllFileNames(dirPath);
         for(int i = 0; i < strFileNames.length; i++) {
             tmxLoader = new TMXLoader(dirPath + "/" + strFileNames[i]);
-            addSegment(segments, new MapSegment(tmxLoader.getMap()));
+            Map newMap = tmxLoader.getMap();
+            if(newMap.getWidth() % MapManager.MAP_SEGMENT_SIZE != 0 || newMap.getHeight() % MapManager.MAP_SEGMENT_SIZE != 0) {
+                System.err.println("The dimensions of '" + newMap.getFilePath() + "' are not a multiple of " + MapManager.MAP_SEGMENT_SIZE + ".");
+                continue;
+            }
+            addSegment(segments, new MapSegment(newMap));
         }
     }
 

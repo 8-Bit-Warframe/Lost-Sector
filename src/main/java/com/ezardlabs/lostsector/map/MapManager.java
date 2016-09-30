@@ -29,6 +29,11 @@ import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MapManager {
+	public static final float MAP_SCALE = 6.25f;
+	public static final int TILE_SIZE = 16;
+	public static final int MAP_SEGMENT_SIZE = 16;	// Number of tiles that make up a map segment unit. ie. all map segments must be a multiple of this number.
+	public static final Vector2 PROC_START_POS = new Vector2(0.0f, 256.0f);
+
 	private static int[][] solidityMap;
 	public static Vector2 playerSpawn = new Vector2();
 	public static ArrayList<Vector2> enemySpawns = null;
@@ -186,10 +191,15 @@ public class MapManager {
 		// Keep a list of added sections
 		ArrayList<MapSegment> renderSegments = new ArrayList<>();
 
-		solidityMap = new int[16 * mapCfg.numRooms + 2][16];
+		solidityMap = new int[MAP_SEGMENT_SIZE * mapCfg.numRooms][MAP_SEGMENT_SIZE * mapCfg.numRooms];
 
 		MapSegment currSeg = null;
-		Vector2 nextOffset = new Vector2(0.0f, 512.0f);
+		Vector2 nextOffset = new Vector2(PROC_START_POS.x, PROC_START_POS.y);
+
+		final int mapSegGridW = (int)(mapCfg.numRooms + (nextOffset.x / MAP_SEGMENT_SIZE));
+		final int mapSegGridH = (int)(mapCfg.numRooms + (nextOffset.y / MAP_SEGMENT_SIZE));
+		MapSegment[][] mapSegGrid = new MapSegment[mapSegGridW][mapSegGridH];
+
 		// Load rooms in between
 		for(int i = 0; i < mapCfg.numRooms; i++) {
 			MapSegment nextSeg;
@@ -198,18 +208,22 @@ public class MapManager {
 				Object[] objStartSeg = mapCfg.spawnSegments.values().toArray();
 				ArrayList<MapSegment> spawnSegs = (ArrayList<MapSegment>) getRandObj(objStartSeg);
 				nextSeg = getRandObj(spawnSegs);
+				System.out.print("Next Segment " + i + ": " + nextSeg.map.getFilePath()
+						+ "\n offset: " + nextOffset.toString()
+				);
 			} else {
-				MapSegmentConnector currConn = getRandomValidConnector(currSeg.connectors);
+				MapSegmentConnector currConn = getRandomValidConnector(mapCfg, currSeg, mapSegGrid, true);
 				if (currConn == null) {
 					System.err.println("Null connector found on segment #" + i);
 					continue;
 				}
+				System.out.println("    Exit From: " + currConn.toString());
 				if(i == mapCfg.numRooms - 1) {
 					// Extraction segment
-					nextSeg = getRandomValidSegment(mapCfg.extractSegments, currConn);
+					nextSeg = getRandomValidSegment(mapCfg, mapCfg.extractSegments,currSeg, currConn, mapSegGrid, true);
 				} else {
 					// Main segments.
-					nextSeg = getRandomValidSegment(mapCfg.mainSegments, currConn);
+					nextSeg = getRandomValidSegment(mapCfg, mapCfg.mainSegments, currSeg, currConn, mapSegGrid, true);
 				}
 
 				ArrayList<MapSegmentConnector> nextValidConns = new ArrayList<>();
@@ -226,27 +240,36 @@ public class MapManager {
 					case CENTRE:
 						break;
 					case TOP:
+						nextOffset.x += (currConn.pos.x / currSeg.map.getTileWidth()) - (nextConn.pos.x / nextSeg.map.getTileWidth());
 						nextOffset.y -= nextSeg.getHeight();
 						break;
 					case RIGHT:
 						nextOffset.x += currSeg.getWidth();
+						nextOffset.y += (currConn.pos.y / currSeg.map.getTileHeight()) - (nextConn.pos.y / nextSeg.map.getTileHeight());
 						break;
 					case BOTTOM:
+						nextOffset.x += (currConn.pos.x / currSeg.map.getTileWidth()) - (nextConn.pos.x / nextSeg.map.getTileWidth());
 						nextOffset.y += currSeg.getHeight();
 						break;
 					case LEFT:
 						nextOffset.x -= nextSeg.getWidth();
+						nextOffset.y += (currConn.pos.y / currSeg.map.getTileHeight()) - (nextConn.pos.y / nextSeg.map.getTileHeight());
 						break;
 				}
-				System.out.println("Next Segment " + i
-						+ "\n conn: " + nextConn.toString()
-						+ "\n offset: " + nextOffset.toString()
+				System.out.println("Next Segment " + i + ": " + nextSeg.map.getFilePath()
+						+ "\n    Enter From: " + nextConn.toString() + " offset: " + nextOffset.toString()
 				);
 			}
 			nextSeg.pos = new Vector2(nextOffset.x, nextOffset.y);
 			renderSegments.add(nextSeg);
+			addToMapSegGrid(mapSegGrid, nextSeg);
 			currSeg = nextSeg;
 		}
+
+		System.out.println("Main Path Grid:");
+		printMapSegmentGrid(mapSegGrid, mapSegGridW, mapSegGridH);
+
+		// Find "free" connectors and connect them
 
 		for(MapSegment seg : renderSegments) {
 			loadMapSegment(seg);
@@ -255,30 +278,53 @@ public class MapManager {
 		System.out.println(mapCfg.toString());
 	}
 
-	private static MapSegmentConnector getRandomValidConnector(ArrayList<MapSegmentConnector> conns) {
+	private static MapSegmentConnector getRandomValidConnector(MapConfig mapCfg, MapSegment mapSeg, MapSegment[][] mapSegmentGrid, boolean forMainPath) {
 		ArrayList<MapSegmentConnector> validConns = new ArrayList<>();
-		for(MapSegmentConnector c : conns) {
-			if(c.side == MapSegmentConnector.MapSegmentConnectorSide.LEFT || c.isConnected()) {
+		for(MapSegmentConnector c : mapSeg.connectors) {
+			if(c.isConnected()) {
 				continue;
+			}
+			switch(c.side) {
+				case CENTRE:
+					break;
+				case TOP:
+//					if(mapSeg.pos.y <= mapCfg.minMapHeight) {
+//						continue;
+//					}
+					break;
+				case RIGHT:
+					break;
+				case BOTTOM:
+//					if(mapSeg.pos.y + (mapSeg.getHeight() * mapSeg.map.getTileHeight()) >= mapCfg.maxMapHeight) {
+//						continue;
+//					}
+					break;
+				case LEFT:
+					if (forMainPath) {
+						continue;
+					}
+					break;
 			}
 			validConns.add(c);
 		}
 		return  getRandObj(validConns);
 	}
 
-	private static MapSegment getRandomValidSegment(HashMap<String, ArrayList<MapSegment>> mapSegments, MapSegmentConnector conn) {
+	private static MapSegment getRandomValidSegment(MapConfig mapCfg, HashMap<String, ArrayList<MapSegment>> mapSegments, MapSegment mapSeg, MapSegmentConnector conn, MapSegment[][] mapSegmentGrid, boolean forMainPath) {
 		ArrayList<MapSegment> arrSegments = mapSegments.get(conn.getMatchingSideType());
 		ArrayList<MapSegment> validSegments = new ArrayList<>();
 		for(MapSegment seg : arrSegments) {
-			boolean hasLeftConn = false;
-			for(MapSegmentConnector c : seg.connectors) {
-				if(c.side == MapSegmentConnector.MapSegmentConnectorSide.LEFT) {
-					hasLeftConn = true;
-					break;
+			if(forMainPath) {
+				boolean hasLeftConn = false;
+				for (MapSegmentConnector c : seg.connectors) {
+					if (c.side == MapSegmentConnector.MapSegmentConnectorSide.LEFT) {
+						hasLeftConn = true;
+						break;
+					}
 				}
-			}
-			if(conn.side != MapSegmentConnector.MapSegmentConnectorSide.RIGHT && seg.connectors.size() <= 2 && hasLeftConn) {
-				continue;
+				if (conn.side != MapSegmentConnector.MapSegmentConnectorSide.RIGHT && seg.connectors.size() <= 2 && hasLeftConn) {
+					continue;
+				}
 			}
 			validSegments.add(new MapSegment(seg.map));
 		}
@@ -305,6 +351,61 @@ public class MapManager {
 		loadTMX(seg.map, seg.pos);
 	}
 
+	private static MapSegment getMapSegment(MapSegment[][] mapSegGrid, Vector2 pos) {
+		MapSegment retMapSeg = null;
+		int gridX = (int)(pos.x / TILE_SIZE);
+		int gridY = (int)(pos.y / TILE_SIZE);
+		try {
+			retMapSeg = mapSegGrid[gridX][gridY];
+		} catch(ArrayIndexOutOfBoundsException ex) {
+			ex.printStackTrace();
+		}
+		return retMapSeg;
+	}
+
+	private static void addToMapSegGrid(MapSegment[][] mapSegGrid, MapSegment mapSeg) {
+		int startGridX = (int)(mapSeg.pos.x / TILE_SIZE);
+		int startGridY = (int)(mapSeg.pos.y / TILE_SIZE);
+		int gridW = mapSeg.map.getWidth() / MAP_SEGMENT_SIZE;
+		int gridY = mapSeg.map.getHeight() / MAP_SEGMENT_SIZE;
+		for(int x = 0; x < gridW; x++) {
+			for(int y = 0; y < gridY; y++) {
+				mapSegGrid[startGridX + x][startGridY + y] = mapSeg;
+			}
+		}
+	}
+
+	private static void printMapSegmentGrid(MapSegment[][] mapSegGrid, int mapSegGridW, int mapSegGridH) {
+		int spaces = 3;
+		for(int x = 0; x < mapSegGridW + 1; x++) {
+			String col = x + "";
+			System.out.print("|" + col);
+			for(int i = col.length(); i < spaces; i++) {
+				System.out.print(" ");
+			}
+		}
+		System.out.println();
+
+		for(int y = 0; y < mapSegGridH; y++) {
+			String row = (y + 1) + "";
+			System.out.print("|" + row);
+			for(int j = row.length(); j < spaces; j++) {
+				System.out.print(" ");
+			}
+			for(int x = 0; x < mapSegGridW; x++) {
+				String str = "";
+				if(mapSegGrid[x][y] != null) {
+					str += " *";
+				}
+				System.out.print("|" + str);
+				for(int i = str.length(); i < spaces; i++) {
+					System.out.print(" ");
+				}
+			}
+			System.out.println();
+		}
+	}
+
 	// START Tiled TMX Parsing stuff
 
 	private static void loadTMX(Map map) {
@@ -329,8 +430,8 @@ public class MapManager {
 
 			textureAtlases.add(new TextureAtlas(folder + "/" + tileSet.getImageSource(), tileSet.getTileWidth(), tileSet.getTileHeight()));
 		}
-		float w = map.getTileWidth() * 6.25f;
-		float h = map.getTileHeight() * 6.25f;
+		float w = map.getTileWidth() * MAP_SCALE;
+		float h = map.getTileHeight() * MAP_SCALE;
 		boolean isBackgroundLayer = true;
 		for(Layer layer : map.getTileLayers()) {
 			Tile[] tiles = layer.getTiles();
@@ -410,9 +511,9 @@ public class MapManager {
 
 	public static void instantiateObjects(TMXObject[] objects, TextureAtlas ta, Vector2 offset) {
 		for(TMXObject object : objects) {
-			Vector2 pos = new Vector2((object.getX() + offset.x * 16.0f) * 6.25f, (object.getY() + offset.y * 16.0f) * 6.25f);
-			float w = object.getWidth() * 6.25f;
-			float h = object.getHeight() * 6.25f;
+			Vector2 pos = new Vector2((object.getX() + offset.x * TILE_SIZE) * MAP_SCALE, (object.getY() + offset.y * TILE_SIZE) * MAP_SCALE);
+			float w = object.getWidth() * MAP_SCALE;
+			float h = object.getHeight() * MAP_SCALE;
 			boolean flipH = Boolean.parseBoolean(object.getProperty("flipH", "false"));
 			boolean flipV = Boolean.parseBoolean(object.getProperty("flipV", "false"));
 			switch(object.getType()) {
@@ -422,12 +523,12 @@ public class MapManager {
 				case "locker":
 					if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 0)
 						GameObject
-								.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200).setFlipped(flipH, flipV)), pos);
+								.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), TILE_SIZE * MAP_SCALE, TILE_SIZE * 2 * MAP_SCALE).setFlipped(flipH, flipV)), pos);
 					else
 						GameObject
-								.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200).setFlipped(flipH, flipV), new Animator(
+								.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), TILE_SIZE * MAP_SCALE, TILE_SIZE * 2 * MAP_SCALE).setFlipped(flipH, flipV), new Animator(
 							new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
-									125)), new Collider(100, 200, true)), pos);
+									125)), new Collider(TILE_SIZE * MAP_SCALE, TILE_SIZE * 2 * MAP_SCALE, true)), pos);
 					break;
 				case "locker_locked":
 					GameObject
@@ -493,9 +594,9 @@ public class MapManager {
 
 	public static void instantiateEnemies(TMXObject[] objects, Vector2 offset) {
 		for(TMXObject object : objects) {
-			Vector2 pos = new Vector2((object.getX() + offset.x) * 6.25f, (object.getY() + offset.y) * 6.25f);
-			float w = object.getWidth() * 6.25f;
-			float h = object.getHeight() * 6.25f;
+			Vector2 pos = new Vector2((object.getX() + offset.x) * MAP_SCALE, (object.getY() + offset.y) * MAP_SCALE);
+			float w = object.getWidth() * MAP_SCALE;
+			float h = object.getHeight() * MAP_SCALE;
 			switch(object.getType()) {
 				case "spawn":
 					enemySpawns.add(pos);
