@@ -269,7 +269,28 @@ public class MapManager {
 		System.out.println("Main Path Grid:");
 		printMapSegmentGrid(mapSegGrid, mapSegGridW, mapSegGridH);
 
-		// Find "free" connectors and connect them
+		// Find "free" connectors and fill them up.
+		ArrayList<MapSegment> lockSegmentsToRender = new ArrayList<>();
+		for(MapSegment seg : renderSegments) {
+			for(MapSegmentConnector conn : seg.connectors) {
+				if(conn.isConnected()) {
+					continue;
+				}
+				ArrayList<MapSegment> lockSegments = mapCfg.lockSegments.get(conn.toString());
+				// Get valid lock segment and instantiate copy
+				MapSegment lockSeg = new MapSegment(getRandObj(lockSegments).map);
+				lockSeg.pos = seg.pos;
+				if(lockSeg.connectors.size() != 1)
+				{
+					System.err.println("Lock segment '" + lockSeg.map.getFilePath() + "' has more than one connector!");
+				}
+				conn.connect(lockSeg.connectors.get(0));
+				lockSegmentsToRender.add(lockSeg);
+			}
+		}
+		for(MapSegment seg : lockSegmentsToRender) {
+			renderSegments.add(seg);
+		}
 
 		for(MapSegment seg : renderSegments) {
 			loadMapSegment(seg);

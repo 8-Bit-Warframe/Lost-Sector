@@ -4,6 +4,7 @@ import com.ezardlabs.dethsquare.tmx.Map;
 import com.ezardlabs.dethsquare.tmx.TMXLoader;
 import com.ezardlabs.dethsquare.util.Utils;
 import com.ezardlabs.lostsector.map.MapManager;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,12 +29,14 @@ public class MapConfig {
     public HashMap<String, ArrayList<MapSegment>> connectSegments;
     public HashMap<String, ArrayList<MapSegment>> endSegments;
     public HashMap<String, ArrayList<MapSegment>> extractSegments;
+    public HashMap<String, ArrayList<MapSegment>> lockSegments;
 
-    public String strSpawnTileSetPath;
-    public String strMainTileSetPath;
-    public String strConnectTileSetPath;
-    public String strEndTileSetPath;
-    public String strExtractTileSetPath;
+    public String strSpawnDir;
+    public String strMainDir;
+    public String strConnectDir;
+    public String strEndDir;
+    public String strExtractDir;
+    public String strLockDir;
 
     public MapConfig(ProceduralType type, int numRooms) {
         this.type = type;
@@ -46,50 +49,65 @@ public class MapConfig {
         connectSegments = new HashMap<>();
         endSegments = new HashMap<>();
         extractSegments = new HashMap<>();
+        lockSegments = new HashMap<>();
 
         String strType = getTypeString();
-        this.strSpawnTileSetPath = "maps/procedural/" + strType + "/spawn";
-        this.strMainTileSetPath = "maps/procedural/" + strType + "/main";
-        this.strConnectTileSetPath = "maps/procedural/" + strType + "/connect";
-        this.strEndTileSetPath = "maps/procedural/" + strType + "/end";
-        this.strExtractTileSetPath = "maps/procedural/" + strType + "/extract";
+        this.strSpawnDir = "maps/procedural/" + strType + "/spawn";
+        this.strMainDir = "maps/procedural/" + strType + "/main";
+        this.strConnectDir = "maps/procedural/" + strType + "/connect";
+        this.strEndDir = "maps/procedural/" + strType + "/end";
+        this.strExtractDir = "maps/procedural/" + strType + "/extract";
+        this.strLockDir = "maps/procedural/" + strType + "/lock";
 
-        loadSegments(this.spawnSegments, this.strSpawnTileSetPath);
-        loadSegments(this.mainSegments, this.strMainTileSetPath);
-        loadSegments(this.connectSegments, this.strConnectTileSetPath);
-        loadSegments(this.endSegments, this.strEndTileSetPath);
-        loadSegments(this.extractSegments, this.strExtractTileSetPath);
-    }
+        loadSegments(this.spawnSegments, this.strSpawnDir);
+        loadSegments(this.mainSegments, this.strMainDir);
+        loadSegments(this.connectSegments, this.strConnectDir);
+        loadSegments(this.endSegments, this.strEndDir);
+        loadSegments(this.extractSegments, this.strExtractDir);
+        loadSegments(this.lockSegments, this.strLockDir);
 
-    private void loadSegments(HashMap<String, ArrayList<MapSegment>> segments, String dirPath) {
-        TMXLoader tmxLoader;
-        String[] strFileNames = Utils.getAllFileNames(dirPath);
-        for(int i = 0; i < strFileNames.length; i++) {
-            tmxLoader = new TMXLoader(dirPath + "/" + strFileNames[i]);
-            Map newMap = tmxLoader.getMap();
-            if(newMap.getWidth() % MapManager.MAP_SEGMENT_SIZE != 0 || newMap.getHeight() % MapManager.MAP_SEGMENT_SIZE != 0) {
-                System.err.println("The dimensions of '" + newMap.getFilePath() + "' are not a multiple of " + MapManager.MAP_SEGMENT_SIZE + ".");
-                continue;
+        for(String key : this.mainSegments.keySet()) {
+            System.out.println(key);
+            for(MapSegment seg : this.mainSegments.get(key)) {
+                System.out.println("\t" + seg.map.getFilePath());
             }
-            addSegment(segments, new MapSegment(newMap));
         }
     }
 
     public String getTypeString() {
         switch(this.type) {
             case CORPUS:
-                return "corpus";
+                return "corpus_test";
             default:
                 return "";
         }
     }
 
-    private void addSegment(HashMap<String, ArrayList<MapSegment>> segments, MapSegment seg) {
-        for(MapSegmentConnector conn : seg.connectors) {
-            if(!segments.containsKey(conn.toString())) {
-                segments.put(conn.toString(), new ArrayList<>());
+    private void loadSegments(HashMap<String, ArrayList<MapSegment>> segments, String dirPath) {
+        System.out.println("Loading TMX MapSegments: " + dirPath);
+        TMXLoader tmxLoader;
+        String[] strFileNames = Utils.getAllFileNames(dirPath);
+        for(int i = 0; i < strFileNames.length; i++) {
+            if(strFileNames[i] == null || !strFileNames[i].endsWith(".tmx")) {
+                continue;
             }
-            segments.get(conn.toString()).add(seg);
+            tmxLoader = new TMXLoader(dirPath + "/" + strFileNames[i]);
+            Map newMap = tmxLoader.getMap();
+            if(newMap.getWidth() % MapManager.MAP_SEGMENT_SIZE != 0 || newMap.getHeight() % MapManager.MAP_SEGMENT_SIZE != 0) {
+                System.err.println("The dimensions of '" + newMap.getFilePath() + "' are not a multiple of " + MapManager.MAP_SEGMENT_SIZE + ".");
+                continue;
+            }
+            addSegment(segments, new MapSegment(newMap), segments == this.lockSegments);
+        }
+    }
+
+    private void addSegment(HashMap<String, ArrayList<MapSegment>> segments, MapSegment seg, boolean isLockSegment) {
+        for(MapSegmentConnector conn : seg.connectors) {
+            String type = (isLockSegment ? conn.toString() : conn.getSideType());
+            if(!segments.containsKey(type)) {
+                segments.put(type, new ArrayList<>());
+            }
+            segments.get(type).add(seg);
         }
     }
 }

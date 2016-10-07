@@ -19,20 +19,30 @@ public class MapSegmentConnector {
     }
 
     public Map parentMap;
+    public String str;
     public String sideType;
     public MapSegmentConnectorSide side;
     public int type;
+    public int lock;
     public Vector2 pos;
     public MapSegmentConnector connection;
 
-    public MapSegmentConnector(Map parentMap, String sideType, Vector2 pos) {
+    public MapSegmentConnector(Map parentMap, String str, Vector2 pos) {
         this.parentMap = parentMap;
-        this.sideType = sideType;
+        this.str = str;
         this.pos = pos;
         this.connection = null;
-        String[] typeSplit = sideType.split("_");
+        String[] typeSplit = this.str.split("_");
         this.side = MapSegmentConnectorSide.CENTRE;
         this.type = Integer.parseInt(typeSplit[1]);
+        if(typeSplit.length >= 3) {
+            this.lock = Integer.parseInt(typeSplit[2]);
+            this.sideType = typeSplit[0] + "_" + typeSplit[1];
+        } else {
+            this.lock = 0;
+            this.sideType = str;
+            this.str += "_0";
+        }
         switch(typeSplit[0]) {
             case "c":
                 side = MapSegmentConnectorSide.CENTRE;
@@ -50,10 +60,11 @@ public class MapSegmentConnector {
                 side = MapSegmentConnectorSide.LEFT;
                 break;
         }
+//        System.out.println(toString());
     }
 
     public boolean equals(MapSegmentConnector conn) {
-        return (this.side == conn.side && this.type == conn.type);
+        return (this.side == conn.side && this.type == conn.type && this.lock == conn.lock);
     }
 
     public boolean isValidConnection(MapSegmentConnector conn) {
@@ -84,6 +95,10 @@ public class MapSegmentConnector {
         conn.connection = this;
     }
 
+    public String getSideType() {
+        return this.sideType;
+    }
+
     public String getMatchingSideType() {
         String retSideType = "";
         switch(this.side) {
@@ -112,6 +127,6 @@ public class MapSegmentConnector {
 
     @Override
     public String toString() {
-        return this.sideType;
+        return this.str;
     }
 }
