@@ -446,13 +446,15 @@ public class MapManager {
 		ArrayList<TextureAtlas> textureAtlases = new ArrayList<>();
 		for(TileSet tileSet : tileSets) {
 			String filePath = tileSet.getFilePath();
+			if(filePath.length() <= 0) {
+				filePath = map.getFilePath();
+			}
 			int lastSlash = filePath.lastIndexOf("/");
 			String folder = "";
 			if(lastSlash >= 0) {
 				folder = filePath.substring(0, lastSlash);
 			}
-
-			textureAtlases.add(new TextureAtlas(folder + "/" + tileSet.getImageSource(), tileSet.getTileWidth(), tileSet.getTileHeight()));
+			textureAtlases.add(new TextureAtlas(folder + "/"+ tileSet.getImageSource(), tileSet.getTileWidth(), tileSet.getTileHeight()));
 		}
 		float w = map.getTileWidth() * MAP_SCALE;
 		float h = map.getTileHeight() * MAP_SCALE;
