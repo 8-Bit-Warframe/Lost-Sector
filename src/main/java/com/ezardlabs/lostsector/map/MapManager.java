@@ -277,6 +277,9 @@ public class MapManager {
 					continue;
 				}
 				ArrayList<MapSegment> lockSegments = mapCfg.lockSegments.get(conn.toString());
+				if(lockSegments == null) {
+					continue;
+				}
 				// Get valid lock segment and instantiate copy
 				MapSegment lockSeg = new MapSegment(getRandObj(lockSegments).map);
 				lockSeg.pos = seg.pos;
