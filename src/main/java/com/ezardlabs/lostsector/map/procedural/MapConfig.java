@@ -4,7 +4,6 @@ import com.ezardlabs.dethsquare.tmx.Map;
 import com.ezardlabs.dethsquare.tmx.TMXLoader;
 import com.ezardlabs.dethsquare.util.Utils;
 import com.ezardlabs.lostsector.map.MapManager;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,7 +76,7 @@ public class MapConfig {
     public String getTypeString() {
         switch(this.type) {
             case CORPUS:
-                return "corpus_test";
+                return "corpus";
             default:
                 return "";
         }
