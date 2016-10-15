@@ -25,7 +25,7 @@ public class MapConfig {
 
     public HashMap<String, ArrayList<MapSegment>> spawnSegments;
     public HashMap<String, ArrayList<MapSegment>> mainSegments;
-    public HashMap<String, ArrayList<MapSegment>> connectSegments;
+//    public HashMap<String, ArrayList<MapSegment>> connectSegments;
     public HashMap<String, ArrayList<MapSegment>> endSegments;
     public HashMap<String, ArrayList<MapSegment>> extractSegments;
     public HashMap<String, ArrayList<MapSegment>> lockSegments;
@@ -45,7 +45,7 @@ public class MapConfig {
 
         spawnSegments = new HashMap<>();
         mainSegments = new HashMap<>();
-        connectSegments = new HashMap<>();
+//        connectSegments = new HashMap<>();
         endSegments = new HashMap<>();
         extractSegments = new HashMap<>();
         lockSegments = new HashMap<>();
@@ -60,7 +60,7 @@ public class MapConfig {
 
         loadSegments(this.spawnSegments, this.strSpawnDir);
         loadSegments(this.mainSegments, this.strMainDir);
-        loadSegments(this.connectSegments, this.strConnectDir);
+//        loadSegments(this.connectSegments, this.strConnectDir);
         loadSegments(this.endSegments, this.strEndDir);
         loadSegments(this.extractSegments, this.strExtractDir);
         loadSegments(this.lockSegments, this.strLockDir);
