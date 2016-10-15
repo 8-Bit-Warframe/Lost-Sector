@@ -4,11 +4,13 @@ import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.Transform;
+import com.ezardlabs.dethsquare.Vector2;
 
 public class CameraMovement extends Script {
 	Camera camera;
 	int followType = 0;
 	Transform target;
+	private Vector2 offset = new Vector2();
 	private boolean isQuaking = false;
 	private long quakeEndPoint = 0;
 	private float quakeStrength = 0;
@@ -24,17 +26,20 @@ public class CameraMovement extends Script {
 
 	public void update() {
 		if (target != null) {
+			float x = target.position.x - offset.x;
+			float y = target.position.y + offset.y;
+
 			float cameraX;
-			if (target.position.x < Screen.width / 2) {
+			if (x < Screen.width / 2) {
 				cameraX = 0;
 			} else {
-				cameraX = target.position.x - Screen.width / 2;
+				cameraX = x - Screen.width / 2;
 			}
 			float cameraY;
-			if (target.position.y < Screen.height / 2) {
+			if (y < Screen.height / 2) {
 				cameraY = 0;
 			} else {
-				cameraY = target.position.y - Screen.height / 2;
+				cameraY = y - Screen.height / 2;
 			}
 			switch (followType) {
 				case 1:
@@ -61,9 +66,21 @@ public class CameraMovement extends Script {
 		this.target = target;
 	}
 
+	public void follow(Transform target, Vector2 offset) {
+		followType = 1;
+		this.target = target;
+		this.offset = offset;
+	}
+
 	public void smoothFollow(Transform target) {
 		followType = 2;
 		this.target = target;
+	}
+
+	public void smoothFollow(Transform target, Vector2 offset) {
+		followType = 2;
+		this.target = target;
+		this.offset = offset;
 	}
 
 	public void startQuake(long length, float strengthFactor) {
