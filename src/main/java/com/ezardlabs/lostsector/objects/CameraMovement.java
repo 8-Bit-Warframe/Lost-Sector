@@ -10,7 +10,7 @@ public class CameraMovement extends Script {
 	Camera camera;
 	int followType = 0;
 	Transform target;
-	private Vector2 offset = new Vector2();
+	private Vector2 offset = new Vector2(-400, 0);
 	private boolean isQuaking = false;
 	private long quakeEndPoint = 0;
 	private float quakeStrength = 0;
