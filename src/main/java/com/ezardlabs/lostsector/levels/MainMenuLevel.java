@@ -21,7 +21,7 @@ public class MainMenuLevel extends Level {
 	public void onLoad() {
 		GameObject.instantiate(new GameObject("Camera", new Camera(true)), new Vector2());
 
-		GameObject.instantiate(new GameObject("MainMenuLisetOpen", new Renderer(), new Animator(),
+		GameObject.instantiate(new GameObject("Liset", new Renderer(), new Animator(),
 				new MainMenuLiset(false)), new Vector2(Screen.width / 2 - 96 * 8 / 2, 75));
 
 		GameObject.instantiate(new GameObject("MainMenuLogo",
