@@ -5,7 +5,6 @@ import com.ezardlabs.dethsquare.GuiText;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
 import com.ezardlabs.dethsquare.Renderer;
-import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
@@ -47,15 +46,15 @@ public class Menu extends Script {
 		float height = (2 * options.length + 1) * 50;
 		gameObject = new GameObject("Menu",
 				new Renderer("images/menus/main/menu" + options.length + ".png", 400, height));
-		GameObject.instantiate(gameObject, new Vector2(Screen.width / 2 - 200,
-				Screen.height / 2 - ((2 * options.length + 1) * 50) / 2));
+		GameObject.instantiate(gameObject,
+				new Vector2(1920 / 2 - 200, 1080 / 2 - ((2 * options.length + 1) * 50) / 2));
 		texts = new GameObject[options.length];
 		guiTexts = new GuiText[options.length];
 		for (int i = 0; i < texts.length; i++) {
 			guiTexts[i] = new GuiText(options[i], font, 50);
 			texts[i] = GameObject.instantiate(new GameObject("Menu Option", guiTexts[i]),
-					new Vector2(Screen.width / 2f - guiTexts[i].getWidth() / 2f,
-							Screen.height / 2 - height / 2 + (1 + i * 2) * 50));
+					new Vector2(1920 / 2f - guiTexts[i].getWidth() / 2f,
+							1080 / 2 - height / 2 + (1 + i * 2) * 50));
 		}
 	}
 
