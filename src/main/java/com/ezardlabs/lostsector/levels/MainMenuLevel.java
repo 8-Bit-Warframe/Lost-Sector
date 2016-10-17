@@ -21,8 +21,9 @@ public class MainMenuLevel extends Level {
 	public void onLoad() {
 		GameObject.instantiate(new GameObject("Camera", new Camera(true)), new Vector2());
 
-		GameObject.instantiate(new GameObject("Liset", new Renderer(), new Animator(),
-				new MainMenuLiset(false)), new Vector2(Screen.width / 2 - 96 * 8 / 2, 75));
+		GameObject.instantiate(
+				new GameObject("Liset", new Renderer(), new Animator(), new MainMenuLiset(false)),
+				new Vector2(Screen.width / 2 - 96 * 8 / 2, 75));
 
 		GameObject.instantiate(new GameObject("MainMenuLogo",
 						new GuiRenderer("images/menus/main/logo.png", 900, 225)),
@@ -32,24 +33,11 @@ public class MainMenuLevel extends Level {
 		GameObject.instantiate(new GameObject("MainMenu", m = new Menu(new String[]{"Explore",
 						"Survival",
 						"Procedural",
-						"Multiplayer"}, new MenuAction[]{new MenuAction() {
-					@Override
-					public void onMenuItemSelected(Menu menu, int index, String text) {
-						LevelManager.loadLevel("explore");
-					}
-				},
-						new MenuAction() {
-							@Override
-							public void onMenuItemSelected(Menu menu, int index, String text) {
-								LevelManager.loadLevel("survival");
-							}
-						},
-						new MenuAction() {
-							@Override
-							public void onMenuItemSelected(Menu menu, int index, String text) {
-								LevelManager.loadLevel("procedural");
-							}
-						}}, new Vector2(0, 250)),
+						"Multiplayer"},
+						new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("explore"),
+								(menu, index, text) -> LevelManager.loadLevel("survival"),
+								(menu, index, text) -> LevelManager.loadLevel("procedural")},
+						new Vector2(0, 250)),
 						new AudioSource(new AudioClip("audio/this_is_what_you_are" + ".ogg"), true, 50)),
 				new Vector2());
 		m.open();
