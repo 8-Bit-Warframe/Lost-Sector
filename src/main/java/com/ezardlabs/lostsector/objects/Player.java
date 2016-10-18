@@ -41,7 +41,7 @@ public class Player extends Script {
 
 	private Menu escMenu = new Menu(new String[]{"Main Menu",
 			"Close"}, new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("mainmenu"),
-			(menu, index, text) -> menu.close()}, true);
+			(menu, index, text) -> menu.close()});
 
 	public enum State {
 		IDLE,
