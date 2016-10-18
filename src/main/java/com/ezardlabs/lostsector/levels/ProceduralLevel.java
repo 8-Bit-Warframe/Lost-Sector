@@ -2,7 +2,6 @@ package com.ezardlabs.lostsector.levels;
 
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.AudioSource;
-import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
