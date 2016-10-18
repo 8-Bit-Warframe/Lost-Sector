@@ -10,6 +10,7 @@ import com.ezardlabs.dethsquare.Collider.CollisionLocation;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
+import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
@@ -21,7 +22,8 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.Utils;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.hud.WeaponControl.WeaponType;
-import com.ezardlabs.lostsector.objects.menus.EscMenu;
+import com.ezardlabs.lostsector.objects.menus.Menu;
+import com.ezardlabs.lostsector.objects.menus.Menu.MenuAction;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
 import java.util.Timer;
@@ -36,6 +38,10 @@ public class Player extends Script {
 
 	public State state = State.IDLE;
 	public boolean dead = false;
+
+	private Menu escMenu = new Menu(new String[]{"Main Menu",
+			"Close"}, new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("mainmenu"),
+			(menu, index, text) -> menu.close()}, true);
 
 	public enum State {
 		IDLE,
@@ -56,20 +62,16 @@ public class Player extends Script {
 		warframe = gameObject.getComponentOfType(Warframe.class);
 		gameObject.setTag("player");
 		HUD.setWarframeName(warframe.getName());
+		gameObject.addComponent(escMenu);
 	}
 
 	@Override
 	public void update() {
-		if(Input.getKeyUp(KeyCode.ESCAPE)) {
-			if(EscMenu.visible) {
-				EscMenu.hide();
-			} else {
-				EscMenu.show();
-			}
-		}
-		if(EscMenu.visible) {
-			EscMenu.update();
+		if (escMenu.isOpen()) {
+			if (Input.getKeyDown(KeyCode.ESCAPE)) escMenu.close();
 			return;
+		} else if (Input.getKeyDown(KeyCode.ESCAPE)) {
+			escMenu.open();
 		}
 
 		HUD.update(warframe.getHealth(), warframe.getShield(), warframe.getEnergy());
