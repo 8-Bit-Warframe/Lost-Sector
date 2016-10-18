@@ -29,17 +29,16 @@ public class MainMenuLevel extends Level {
 						new GuiRenderer("images/menus/main/logo.png", 900, 225)),
 				new Vector2(Screen.width / 2 - 450, 10));
 
-		Menu m;
-		GameObject.instantiate(new GameObject("MainMenu", m = new Menu(new String[]{"Explore",
+		GameObject.instantiate(new GameObject("MainMenu", new Menu(new String[]{"Explore",
 						"Survival",
 						"Procedural",
 						"Multiplayer"},
 						new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("explore"),
 								(menu, index, text) -> LevelManager.loadLevel("survival"),
-								(menu, index, text) -> LevelManager.loadLevel("procedural")},
-						new Vector2(0, 250)),
+								(menu, index, text) -> LevelManager.loadLevel("procedural"),
+								(menu, index, text) -> LevelManager.loadLevel("multiplayer")},
+						new Vector2(0, 250), true),
 						new AudioSource(new AudioClip("audio/this_is_what_you_are" + ".ogg"), true, 50)),
 				new Vector2());
-		m.open();
 	}
 }
