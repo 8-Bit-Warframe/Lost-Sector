@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" nextobjectid="9">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" nextobjectid="10">
  <properties>
   <property name="isStart" type="bool" value="true"/>
  </properties>
@@ -546,5 +546,8 @@
     <property name="type" type="int" value="0"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup name="enemies">
+  <object id="9" type="supra_crewman" x="112" y="80" width="32" height="32"/>
  </objectgroup>
 </map>

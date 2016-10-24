@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" nextobjectid="5">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" nextobjectid="8">
  <properties>
   <property name="isStart" type="bool" value="true"/>
  </properties>
@@ -528,5 +528,12 @@
  <objectgroup name="connectors">
   <object id="2" type="l_0" gid="12101" x="0" y="176" width="16" height="16"/>
   <object id="4" type="r_0" gid="12099" x="240" y="176" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup name="enemies">
+  <object id="5" type="prova_crewman" x="64" y="208" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="objects">
+  <object id="6" type="locker" x="112" y="160" width="16" height="32"/>
+  <object id="7" type="locker" x="128" y="160" width="16" height="32"/>
  </objectgroup>
 </map>

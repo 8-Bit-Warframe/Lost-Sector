@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" nextobjectid="4">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" nextobjectid="7">
  <properties>
   <property name="isStart" type="bool" value="true"/>
  </properties>
@@ -536,5 +536,12 @@
     <property name="type" type="int" value="0"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup name="enemies">
+  <object id="4" type="supra_crewman" x="0" y="208" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="objects">
+  <object id="5" type="locker" x="112" y="144" width="16" height="32"/>
+  <object id="6" type="locker" x="128" y="144" width="16" height="32"/>
  </objectgroup>
 </map>

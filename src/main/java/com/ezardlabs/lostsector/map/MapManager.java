@@ -191,10 +191,12 @@ public class MapManager {
 		// Keep a list of added sections
 		ArrayList<MapSegment> renderSegments = new ArrayList<>();
 
-		solidityMap = new int[MAP_SEGMENT_SIZE * mapCfg.numRooms][MAP_SEGMENT_SIZE * mapCfg.numRooms];
-
 		MapSegment currSeg = null;
 		Vector2 nextOffset = new Vector2(PROC_START_POS.x, PROC_START_POS.y);
+
+		int solidityW = (mapCfg.numRooms * MAP_SEGMENT_SIZE) + ((int)PROC_START_POS.x / TILE_SIZE * MAP_SEGMENT_SIZE);
+		int solidityH = (mapCfg.numRooms * MAP_SEGMENT_SIZE) + ((int)PROC_START_POS.y / TILE_SIZE * MAP_SEGMENT_SIZE);
+		solidityMap = new int[solidityW][solidityH];
 
 		final int mapSegGridW = (int)(mapCfg.numRooms + (nextOffset.x / MAP_SEGMENT_SIZE));
 		final int mapSegGridH = (int)(mapCfg.numRooms + (nextOffset.y / MAP_SEGMENT_SIZE));
@@ -298,6 +300,8 @@ public class MapManager {
 		for(MapSegment seg : renderSegments) {
 			loadMapSegment(seg);
 		}
+
+		NavMesh.init(solidityMap);
 
 		System.out.println(mapCfg.toString());
 	}
@@ -479,7 +483,7 @@ public class MapManager {
 		for(ObjectGroup objectGroup : map.getObjectGroups()) {
 			if(objectGroup.getName().equals("enemies")) {
 				enemyObjectGroup = objectGroup;
-			} else {
+			} else if(!objectGroup.getName().equals("connectors")) {
 				instantiateObjects(objectGroup.getObjects(), ta, offset);
 			}
 		}
@@ -620,7 +624,7 @@ public class MapManager {
 
 	public static void instantiateEnemies(TMXObject[] objects, Vector2 offset) {
 		for(TMXObject object : objects) {
-			Vector2 pos = new Vector2((object.getX() + offset.x) * MAP_SCALE, (object.getY() + offset.y) * MAP_SCALE);
+			Vector2 pos = new Vector2((object.getX() + offset.x * TILE_SIZE) * MAP_SCALE, (object.getY() + offset.y * TILE_SIZE) * MAP_SCALE);
 			float w = object.getWidth() * MAP_SCALE;
 			float h = object.getHeight() * MAP_SCALE;
 			switch(object.getType()) {

@@ -76,7 +76,7 @@ public class MapConfig {
     public String getTypeString() {
         switch(this.type) {
             case CORPUS:
-                return "corpus";
+                return "corpus_test";
             default:
                 return "";
         }
