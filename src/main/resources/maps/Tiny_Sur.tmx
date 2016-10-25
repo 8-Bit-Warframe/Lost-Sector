@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="90" height="50" tilewidth="16" tileheight="16" nextobjectid="67">
- <tileset firstgid="1" name="order5 wip" tilewidth="16" tileheight="16" tilecount="6625" columns="53">
+ <tileset firstgid="1" name="order5wip" tilewidth="16" tileheight="16" tilecount="6625" columns="53">
   <image source="order5 wip.png" width="848" height="2000"/>
  </tileset>
  <layer name="wall" width="90" height="50">
