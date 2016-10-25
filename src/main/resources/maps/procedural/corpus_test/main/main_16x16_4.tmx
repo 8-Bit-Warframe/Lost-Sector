@@ -543,7 +543,7 @@
   </object>
  </objectgroup>
  <objectgroup name="enemies">
-  <object id="5" type="prova_crewman" x="224" y="208" width="32" height="32"/>
+  <object id="5" type="prova_crewman" x="176" y="176" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="objects"/>
 </map>

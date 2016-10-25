@@ -538,7 +538,7 @@
   </object>
  </objectgroup>
  <objectgroup name="enemies">
-  <object id="4" type="supra_crewman" x="0" y="208" width="32" height="32"/>
+  <object id="4" type="supra_crewman" x="64" y="160" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="objects">
   <object id="5" type="locker" x="112" y="144" width="16" height="32"/>

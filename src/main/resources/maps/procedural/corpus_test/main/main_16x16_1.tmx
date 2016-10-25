@@ -205,26 +205,26 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="4033"/>
    <tile gid="4034"/>
    <tile gid="4034"/>
    <tile gid="4035"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="4129"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="4131"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -533,7 +533,7 @@
   <object id="5" type="prova_crewman" x="64" y="208" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="objects">
-  <object id="6" type="locker" x="112" y="160" width="16" height="32"/>
-  <object id="7" type="locker" x="128" y="160" width="16" height="32"/>
+  <object id="6" type="locker" x="112" y="176" width="16" height="32"/>
+  <object id="7" type="locker" x="128" y="176" width="16" height="32"/>
  </objectgroup>
 </map>

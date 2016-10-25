@@ -303,6 +303,8 @@ public class MapManager {
 
 		NavMesh.init(solidityMap);
 
+		printSolidityMapArray();
+
 		System.out.println(mapCfg.toString());
 	}
 
@@ -434,6 +436,34 @@ public class MapManager {
 		}
 	}
 
+	private static void printSolidityMap() {
+		System.out.print("{");
+		for(int i = 0; i < solidityMap.length; i++) {
+			System.out.print("{");
+			for(int j = 0; j < solidityMap[i].length; j++) {
+				System.out.print(solidityMap[i][j]);
+				if(j < solidityMap[i].length - 1) {
+					System.out.print(",");
+				}
+			}
+			System.out.print("}");
+			if(i < solidityMap.length - 1) {
+				System.out.print(",");
+			}
+		}
+		System.out.print("}");
+	}
+
+	private static void printSolidityMapArray() {
+		System.out.println();
+		for(int i = 0; i < solidityMap.length; i++) {
+			for(int j = 0; j < solidityMap[i].length; j++) {
+				System.out.print(solidityMap[i][j]);
+			}
+			System.out.println();
+		}
+	}
+
 	// START Tiled TMX Parsing stuff
 
 	private static void loadTMX(Map map) {
@@ -526,7 +556,7 @@ public class MapManager {
 						new Vector2(x, y)
 				);
 				try {
-					solidityMap[col][row] = 1;
+					solidityMap[(int)(col + offset.x)][(int)(row + offset.y)] = 1;
 				} catch(ArrayIndexOutOfBoundsException ex) {
 					System.out.println("Error setting solidityMap at index [" + col + "][" + row + "]");
 				}
