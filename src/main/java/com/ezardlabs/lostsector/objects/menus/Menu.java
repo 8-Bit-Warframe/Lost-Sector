@@ -51,7 +51,7 @@ public class Menu extends Script {
 		float height = (2 * options.length + 1) * 50;
 		background = new GameObject("Menu",
 				new GuiRenderer("images/menus/main/menu" + options.length + ".png", 400, height));
-		GameObject.instantiate(background, new Vector2(-10000, -10000));
+		background = GameObject.instantiate(background, new Vector2(-10000, -10000));
 		texts = new GameObject[options.length];
 		guiTexts = new GuiText[options.length];
 		for (int i = 0; i < texts.length; i++) {
