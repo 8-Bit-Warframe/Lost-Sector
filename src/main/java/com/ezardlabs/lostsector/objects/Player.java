@@ -40,18 +40,8 @@ public class Player extends Script {
 	public boolean dead = false;
 
 	private Menu escMenu = new Menu(new String[]{"Main Menu",
-			"Close"}, new MenuAction[]{new MenuAction() {
-		@Override
-		public void onMenuItemSelected(Menu menu, int index, String text) {
-			LevelManager.loadLevel("mainmenu");
-		}
-	},
-			new MenuAction() {
-				@Override
-				public void onMenuItemSelected(Menu menu, int index, String text) {
-					menu.close();
-				}
-			}});
+			"Close"}, new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("mainmenu"),
+			(menu, index, text) -> menu.close()});
 
 	public enum State {
 		IDLE,
