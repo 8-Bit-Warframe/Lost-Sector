@@ -100,7 +100,7 @@ public class Menu extends Script {
 		return open;
 	}
 
-	public abstract static class MenuAction {
-		public abstract void onMenuItemSelected(Menu menu, int index, String text);
+	public interface MenuAction {
+		void onMenuItemSelected(Menu menu, int index, String text);
 	}
 }
