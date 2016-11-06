@@ -5,6 +5,8 @@ import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.util.BaseGame;
 import com.ezardlabs.lostsector.levels.ExploreLevel;
 import com.ezardlabs.lostsector.levels.MainMenuLevel;
+import com.ezardlabs.lostsector.levels.MultiplayerLevel;
+import com.ezardlabs.lostsector.levels.MultiplayerLobbyLevel;
 import com.ezardlabs.lostsector.levels.ProceduralLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
 
@@ -23,8 +25,10 @@ public class Game extends BaseGame {
 		LevelManager.registerLevel("explore", new ExploreLevel());
 		LevelManager.registerLevel("survival", new SurvivalLevel());
 		LevelManager.registerLevel("procedural", new ProceduralLevel());
-		LevelManager.registerLevel("mainmenu", new MainMenuLevel());
+		LevelManager.registerLevel("multiplayer_lobby", new MultiplayerLobbyLevel());
+		LevelManager.registerLevel("multiplayer", new MultiplayerLevel());
+		LevelManager.registerLevel("main_menu", new MainMenuLevel());
 
-		LevelManager.loadLevel("mainmenu");
+		LevelManager.loadLevel("main_menu");
 	}
 }
