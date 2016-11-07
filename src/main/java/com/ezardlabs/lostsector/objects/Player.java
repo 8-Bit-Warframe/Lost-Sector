@@ -40,7 +40,7 @@ public class Player extends Script {
 	public boolean dead = false;
 
 	private Menu escMenu = new Menu(new String[]{"Main Menu",
-			"Close"}, new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("mainmenu"),
+			"Close"}, new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("main_menu"),
 			(menu, index, text) -> menu.close()});
 
 	public enum State {
