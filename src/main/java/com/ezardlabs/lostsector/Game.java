@@ -20,7 +20,6 @@ import com.ezardlabs.lostsector.levels.ProceduralLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.environment.Door;
-import com.ezardlabs.lostsector.objects.environment.LaserDoor;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
 public class Game extends BaseGame {
@@ -62,8 +61,6 @@ public class Game extends BaseGame {
 				"images/environment/atlas.txt");
 		PrefabManager.addPrefab("door",
 				() -> new GameObject("Door", new Door(ta), new Renderer(), new Animator(),
-						new Collider(50, 500, true)),
-				() -> new GameObject("Laser Door", new LaserDoor(ta), new Renderer(),
-						new Animator(), new Collider(50, 500, true)));
+						new Collider(50, 500, true), new NetworkAnimator()));
 	}
 }
