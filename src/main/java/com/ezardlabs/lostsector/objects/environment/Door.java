@@ -21,6 +21,8 @@ public class Door extends Script {
 
 	@Override
 	public void start() {
+		gameObject.renderer.setTextureAtlas(ta, 200, 500);
+		gameObject.renderer.setSprite(ta.getSprite("door0"));
 		gameObject.animator.addAnimations(getOpenAnimation(ta), getCloseAnimation(ta));
 		GameObject.instantiate(
 				new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)),
