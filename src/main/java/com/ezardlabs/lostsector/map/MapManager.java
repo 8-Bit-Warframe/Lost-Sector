@@ -10,7 +10,13 @@ import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.tmx.*;
+import com.ezardlabs.dethsquare.tmx.Layer;
+import com.ezardlabs.dethsquare.tmx.Map;
+import com.ezardlabs.dethsquare.tmx.ObjectGroup;
+import com.ezardlabs.dethsquare.tmx.TMXLoader;
+import com.ezardlabs.dethsquare.tmx.TMXObject;
+import com.ezardlabs.dethsquare.tmx.Tile;
+import com.ezardlabs.dethsquare.tmx.TileSet;
 import com.ezardlabs.lostsector.NavMesh;
 import com.ezardlabs.lostsector.map.procedural.MapConfig;
 import com.ezardlabs.lostsector.map.procedural.MapSegment;
@@ -20,6 +26,7 @@ import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.SupraCrewman;
 import com.ezardlabs.lostsector.objects.environment.Camera;
 import com.ezardlabs.lostsector.objects.environment.Door;
+import com.ezardlabs.lostsector.objects.environment.LaserDoor;
 import com.ezardlabs.lostsector.objects.environment.Locker;
 
 import java.io.BufferedReader;
@@ -111,7 +118,8 @@ public class MapManager {
 			float w = Float.valueOf(split[2]) * 3.125f;
 			float h = Float.valueOf(split[3]) * 3.125f;
 			if (split[4].equals("door")) {
-				GameObject.instantiate(new GameObject("Door", new Door(), new Collider(w, h, true), new Renderer(ta, ta.getSprite("door0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
+				GameObject.instantiate(new GameObject("Door", new Door(ta), new Collider(w, h,
+						true), new Renderer(ta, ta.getSprite("door0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
 						new Animator(new Animation("open", new Sprite[]{ta.getSprite("door0"),
 								ta.getSprite("door1"),
 								ta.getSprite("door2"),
@@ -127,7 +135,8 @@ public class MapManager {
 								ta.getSprite("door0")}, AnimationType.ONE_SHOT, 80))), new Vector2(x, y));
 			} else if (split[4].equals("ldoor")) {
 				GameObject
-						.instantiate(new GameObject("Door", new Door(), new Collider(100, 500, true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
+						.instantiate(new GameObject("Door", new Door(ta), new Collider(100, 500,
+								true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
 						new Animator(new Animation("open", new Sprite[]{ta.getSprite("ldoor")}, AnimationType.ONE_SHOT, 80), new Animation("close", new Sprite[]{ta.getSprite("ldoor0"),
 								ta.getSprite("ldoor1"),
 								ta.getSprite("ldoor2"),
@@ -567,40 +576,13 @@ public class MapManager {
 									125)), new Collider(100, 200, true)), pos);
 					break;
 				case "door":
-					if(flipH) {
-					}
-					GameObject
-							.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("door0"), w, h).setFlipped(flipH, flipV),
-							new Animator(new Animation("open", new Sprite[]{ta.getSprite("door0"),
-									ta.getSprite("door1"),
-									ta.getSprite("door2"),
-									ta.getSprite("door3"),
-									ta.getSprite("door4"),
-									ta.getSprite("door5"),
-									ta.getSprite("door6")}, AnimationType.ONE_SHOT, 80), new Animation("close", new Sprite[]{ta.getSprite("door6"),
-									ta.getSprite("door5"),
-									ta.getSprite("door4"),
-									ta.getSprite("door3"),
-									ta.getSprite("door2"),
-									ta.getSprite("door1"),
-									ta.getSprite("door0")}, AnimationType.ONE_SHOT, 80))), pos);
+					GameObject.instantiate(
+							new GameObject("Door", new Door(ta), new Collider(w * 0.5f, h, true),
+									new Renderer(), new Animator()), pos);
 					break;
 				case "ldoor":
-					if(flipH) {
-					}
-					GameObject
-							.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(flipH, flipV),
-							new Animator(new Animation("open", new Sprite[]{ta.getSprite("ldoor")}, AnimationType.ONE_SHOT, 80), new Animation("close", new Sprite[]{ta.getSprite("ldoor0"),
-									ta.getSprite("ldoor1"),
-									ta.getSprite("ldoor2"),
-									ta.getSprite("ldoor3"),
-									ta.getSprite("ldoor4"),
-									ta.getSprite("ldoor5"),
-									ta.getSprite("ldoor6"),
-									ta.getSprite("ldoor7"),
-									ta.getSprite("ldoor8"),
-									ta.getSprite("ldoor9"),
-									ta.getSprite("ldoor10")}, AnimationType.OSCILLATE, 80))), pos);
+					GameObject.instantiate(new GameObject("Door", new LaserDoor(ta),
+							new Collider(w * 0.5f, h, true), new Renderer(), new Animator()), pos);
 					break;
 			}
 
