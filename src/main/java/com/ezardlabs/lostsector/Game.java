@@ -6,6 +6,7 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Rigidbody;
+import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.dethsquare.multiplayer.NetworkAnimator;
 import com.ezardlabs.dethsquare.multiplayer.NetworkTransform;
@@ -18,6 +19,8 @@ import com.ezardlabs.lostsector.levels.MultiplayerLobbyLevel;
 import com.ezardlabs.lostsector.levels.ProceduralLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
 import com.ezardlabs.lostsector.objects.Player;
+import com.ezardlabs.lostsector.objects.environment.Door;
+import com.ezardlabs.lostsector.objects.environment.LaserDoor;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
 public class Game extends BaseGame {
@@ -51,5 +54,16 @@ public class Game extends BaseGame {
 						new Rigidbody(), new NetworkTransform(), new NetworkAnimator()),
 				() -> new GameObject("Player " + Network.getPlayerId(), new Renderer(),
 						new Animator(), new Frost(), new NetworkTransform(),
-						new NetworkAnimator()));}
+						new NetworkAnimator()));
+	}
+
+	private void registerDoorPrefabs() {
+		TextureAtlas ta = new TextureAtlas("images/environment/atlas.png",
+				"images/environment/atlas.txt");
+		PrefabManager.addPrefab("door",
+				() -> new GameObject("Door", new Door(ta), new Renderer(), new Animator(),
+						new Collider(50, 500, true)),
+				() -> new GameObject("Laser Door", new LaserDoor(ta), new Renderer(),
+						new Animator(), new Collider(50, 500, true)));
+	}
 }
