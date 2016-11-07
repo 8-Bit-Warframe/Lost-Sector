@@ -22,7 +22,7 @@ public class Door extends Script {
 	@Override
 	public void start() {
 		gameObject.renderer.setTextureAtlas(ta, 200, 500);
-		gameObject.renderer.setSprite(ta.getSprite("door0"));
+		gameObject.renderer.setSprite(getInitialSprite(ta));
 		gameObject.animator.addAnimations(getOpenAnimation(ta), getCloseAnimation(ta));
 		GameObject.instantiate(
 				new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)),
@@ -62,6 +62,10 @@ public class Door extends Script {
 				ta.getSprite("door2"),
 				ta.getSprite("door1"),
 				ta.getSprite("door0")}, AnimationType.ONE_SHOT, 80);
+	}
+
+	protected Sprite getInitialSprite(TextureAtlas ta) {
+		return ta.getSprite("door0");
 	}
 
 	private class DoorDetection extends Script {

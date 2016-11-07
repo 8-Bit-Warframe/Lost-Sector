@@ -31,4 +31,9 @@ public class LaserDoor extends Door {
 				ta.getSprite("ldoor9"),
 				ta.getSprite("ldoor10")}, AnimationType.OSCILLATE, 80);
 	}
+
+	@Override
+	protected Sprite getInitialSprite(TextureAtlas ta) {
+		return ta.getSprite("ldoor0");
+	}
 }
