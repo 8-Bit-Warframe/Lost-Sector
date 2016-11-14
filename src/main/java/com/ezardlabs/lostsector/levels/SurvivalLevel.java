@@ -14,11 +14,10 @@ import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game;
-import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.SurvivalManager;
+import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
 public class SurvivalLevel extends Level {
@@ -28,8 +27,6 @@ public class SurvivalLevel extends Level {
 	@Override
 	public void onLoad() {
 		MapManager.loadMap("Tiny_Sur");
-
-		HUD.init();
 
 		createPlayer();
 

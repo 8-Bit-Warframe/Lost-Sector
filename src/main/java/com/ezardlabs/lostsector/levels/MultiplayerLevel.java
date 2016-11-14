@@ -7,7 +7,6 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.objects.CameraMovement;
-import com.ezardlabs.lostsector.objects.hud.HUD;
 
 public class MultiplayerLevel extends Level {
 
@@ -15,8 +14,6 @@ public class MultiplayerLevel extends Level {
 	public void onLoad() {
 		MapManager.playerSpawn = new Vector2(20, 20);
 		MapManager.loadMap("test");
-
-		HUD.init();
 
 		GameObject player = Network.instantiate("player",
 				new Vector2(MapManager.playerSpawn.x + Network.getPlayerId() * 200,

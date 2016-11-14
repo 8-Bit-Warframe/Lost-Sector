@@ -9,7 +9,6 @@ import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.IceWave;
@@ -21,7 +20,6 @@ public class Frost extends Warframe {
 
 	public Frost() {
 		super("frost", 15, 3, 150);
-		setStatusIndicator(HUD.statusIndicator);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public class Frost extends Warframe {
 		}));
 		setPrimaryWeapon(new Lanka(gameObject));
 		setMeleeWeapon(new Nikana(gameObject));
-		HUD.weaponControl.setWeapons(new Lanka(gameObject), new Nikana(gameObject));
-		HUD.weaponControl.switchWeapons();
 	}
 
 	@Override

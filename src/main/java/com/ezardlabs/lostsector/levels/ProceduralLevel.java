@@ -17,7 +17,6 @@ import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.map.procedural.MapConfig;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
 public class ProceduralLevel extends Level {
@@ -28,8 +27,6 @@ public class ProceduralLevel extends Level {
         MapManager.playerSpawn = new Vector2(20.0f, 20.0f);
         MapConfig mapCfg = new MapConfig(MapConfig.ProceduralType.CORPUS, 16);
         MapManager.loadProceduralMap(mapCfg);
-
-        HUD.init();
 
         createPlayer();
 

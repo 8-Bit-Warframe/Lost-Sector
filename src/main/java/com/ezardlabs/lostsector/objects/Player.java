@@ -35,6 +35,7 @@ public class Player extends Script {
 	private int x = 0;
 	private float speed = 12.5f;
 	private Warframe warframe;
+	private HUD hud;
 
 	public State state = State.IDLE;
 	public boolean dead = false;
@@ -60,8 +61,8 @@ public class Player extends Script {
 	public void start() {
 		player = gameObject;
 		warframe = gameObject.getComponentOfType(Warframe.class);
+		hud = gameObject.getComponentOfType(HUD.class);
 		gameObject.setTag("player");
-		HUD.setWarframeName(warframe.getName());
 		gameObject.addComponent(escMenu);
 	}
 
@@ -73,8 +74,6 @@ public class Player extends Script {
 		} else if (Input.getKeyDown(KeyCode.ESCAPE)) {
 			escMenu.open();
 		}
-
-		HUD.update(warframe.getHealth(), warframe.getShield(), warframe.getEnergy());
 
 		if (dead) return;
 
@@ -214,7 +213,8 @@ public class Player extends Script {
 	private boolean jumpCheck() {
 		boolean touchJump = false;
 		for (Touch t : Input.touches) {
-			if (!HUD.switchButtonHitTest(t) && !HUD.attackButtonHitTest(t) && t.phase == TouchPhase.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f &&
+			if (!hud.switchButtonHitTest(t) && !hud.attackButtonHitTest(t) && t.phase == TouchPhase
+					.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f &&
 					Vector2.distance(t.position, t.startPosition) < 150 * Screen.scale) {
 				touchJump = true;
 			}
@@ -237,9 +237,9 @@ public class Player extends Script {
 
 	private boolean meleeCheck() {
 		boolean touchMelee = false;
-		if (Utils.PLATFORM == Utils.Platform.ANDROID && HUD.getCurrentWeaponType() == WeaponType.MELEE) {
+		if (Utils.PLATFORM == Utils.Platform.ANDROID && hud.getCurrentWeaponType() == WeaponType.MELEE) {
 			for (Touch t : Input.touches) {
-				if (t.phase == Touch.TouchPhase.BEGAN && HUD.isAttackButtonPressed(t.position)) {
+				if (t.phase == Touch.TouchPhase.BEGAN && hud.isAttackButtonPressed(t.position)) {
 					touchMelee = true;
 					break;
 				}
@@ -254,9 +254,9 @@ public class Player extends Script {
 
 	private boolean shootCheck() {
 		boolean touchRanged = false;
-		if (Utils.PLATFORM == Utils.Platform.ANDROID && HUD.getCurrentWeaponType() == WeaponType.RANGED) {
+		if (Utils.PLATFORM == Utils.Platform.ANDROID && hud.getCurrentWeaponType() == WeaponType.RANGED) {
 			for (Touch t : Input.touches) {
-				if (t.phase == Touch.TouchPhase.BEGAN && HUD.isAttackButtonPressed(t.position)) {
+				if (t.phase == Touch.TouchPhase.BEGAN && hud.isAttackButtonPressed(t.position)) {
 					touchRanged = true;
 					break;
 				}
@@ -272,10 +272,10 @@ public class Player extends Script {
 	private void switchWeaponCheck() {
 		boolean touchSwitch = false;
 		if (Utils.PLATFORM == Utils.Platform.ANDROID) {
-			touchSwitch = HUD.isSwitchButtonPressed();
+			touchSwitch = hud.isSwitchButtonPressed();
 		}
 		if (Input.getKeyDown(KeyCode.L) || touchSwitch) {
-			HUD.switchWeapons();
+			hud.switchWeapons();
 		}
 	}
 

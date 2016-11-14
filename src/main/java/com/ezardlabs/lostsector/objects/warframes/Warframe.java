@@ -28,7 +28,6 @@ public abstract class Warframe extends Avatar {
 	protected int energy;
 	public RangedWeapon rangedWeapon;
 	public MeleeWeapon meleeWeapon;
-	private StatusIndicator statusIndicator;
 	private long nextShieldRegen = 0;
 
 	public Warframe(String name, int maxHealth, int maxShield, int maxEnergy) {
@@ -111,7 +110,6 @@ public abstract class Warframe extends Avatar {
 
 					@Override
 					public void onAnimationFinished(Animator animator) {
-						statusIndicator.spawnGravestone(transform.position);
 						GameObject.destroy(gameObject, 2000);
 						new Timer().schedule(new TimerTask() {
 							@Override
@@ -142,10 +140,6 @@ public abstract class Warframe extends Avatar {
 	public final void setMeleeWeapon(MeleeWeapon meleeWeapon) {
 		this.meleeWeapon = meleeWeapon;
 		gameObject.animator.addAnimations(meleeWeapon.getAnimations(ta));
-	}
-
-	public void setStatusIndicator(StatusIndicator statusIndicator) {
-		this.statusIndicator = statusIndicator;
 	}
 
 	public void addHealth(int health) {

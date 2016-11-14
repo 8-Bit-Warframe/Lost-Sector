@@ -17,7 +17,6 @@ import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
 public class ExploreLevel extends Level {
@@ -27,8 +26,6 @@ public class ExploreLevel extends Level {
 	public void onLoad() {
 		MapManager.playerSpawn = new Vector2(20.0f, 20.0f);
 		MapManager.loadMap("Explore");
-
-		HUD.init();
 
 		createPlayer();
 
