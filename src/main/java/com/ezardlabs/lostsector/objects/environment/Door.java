@@ -91,7 +91,7 @@ public class Door extends Script {
 
 		@Override
 		public void onTriggerEnter(Collider other) {
-			if (other.gameObject.getTag().equals("player") ||
+			if (other.gameObject.getTag() != null && other.gameObject.getTag().equals("player") ||
 					other.gameObject.getTag().equals("enemy")) {
 				colliders.add(other);
 			}
