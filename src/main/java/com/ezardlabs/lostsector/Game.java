@@ -48,7 +48,7 @@ public class Game extends BaseGame {
 
 	private void registerPlayerPrefabs() {
 		PrefabManager.addPrefab("player",
-				() -> new GameObject("Player " + Network.getPlayerId(), new Player(),
+				() -> new GameObject("Player " + Network.getPlayerId(), new Player(), new HUD(),
 						new Renderer(), new Animator(), new Frost(), new Collider(200, 200),
 						new Rigidbody(), new NetworkTransform(), new NetworkAnimator()),
 				() -> new GameObject("Player " + Network.getPlayerId(), new Renderer(),
