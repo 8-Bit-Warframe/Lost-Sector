@@ -36,9 +36,9 @@ public class Player extends Script {
 	private float speed = 12.5f;
 	private Warframe warframe;
 	private HUD hud;
+	private boolean gravestoneSpawned = false;
 
 	public State state = State.IDLE;
-	public boolean dead = false;
 
 	private Menu escMenu = new Menu(new String[]{"Main Menu",
 			"Close"}, new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("main_menu"),
@@ -75,7 +75,13 @@ public class Player extends Script {
 			escMenu.open();
 		}
 
-		if (dead) return;
+		if (warframe.getHealth() <= 0) {
+			if (!gravestoneSpawned) {
+				warframe.spawnGravestone();
+				gravestoneSpawned = true;
+			}
+			return;
+		}
 
 		x = getMovement();
 

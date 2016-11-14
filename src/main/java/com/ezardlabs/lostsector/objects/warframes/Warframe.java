@@ -6,14 +6,13 @@ import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.LevelManager;
+import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.levels.ExploreLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
 import com.ezardlabs.lostsector.objects.Avatar;
-import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.hud.StatusIndicator;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
 
@@ -155,9 +154,6 @@ public abstract class Warframe extends Avatar {
 			if (this.health <= 0) {
 				this.health = 0;
 				gameObject.animator.play("die");
-				if (gameObject.getComponent(Player.class) != null) {
-					gameObject.getComponent(Player.class).dead = true;
-				}
 				gameObject.setTag(null);
 				Game.players = new GameObject[0];
 			}
@@ -185,5 +181,11 @@ public abstract class Warframe extends Avatar {
 
 	public int getShield() {
 		return shield;
+	}
+
+	public void spawnGravestone() {
+		GameObject.instantiate(
+				new GameObject("Tombstone", new Renderer(ta, ta.getSprite("gravestone"), 200, 200)),
+				transform.position.offset(0, 25));
 	}
 }
