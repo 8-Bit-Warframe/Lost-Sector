@@ -251,7 +251,7 @@ public class Player extends Script {
 				}
 			}
 		}
-		if (Input.getKeyDown(KeyCode.MOUSE_LEFT) || Input.getKeyDown(KeyCode.K) || touchMelee) {
+		if (Input.getKey(KeyCode.MOUSE_LEFT) || Input.getKey(KeyCode.K) || touchMelee) {
 			state = State.MELEE;
 			return true;
 		}
