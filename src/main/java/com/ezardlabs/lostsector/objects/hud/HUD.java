@@ -16,7 +16,7 @@ public class HUD extends Script {
 		TextureAtlas ta = new TextureAtlas("images/hud/atlas.png", "images/hud/atlas.txt");
 		statusIndicator.init(ta);
 //		weaponControl.init(ta);
-		warframe = gameObject.getComponent(Warframe.class);
+		warframe = gameObject.getComponentOfType(Warframe.class);
 		statusIndicator.setWarframeName(warframe.getName());
 	}
 
