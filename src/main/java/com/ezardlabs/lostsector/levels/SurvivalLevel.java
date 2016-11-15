@@ -13,6 +13,7 @@ import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.SurvivalManager;
 import com.ezardlabs.lostsector.map.MapManager;
@@ -28,12 +29,18 @@ public class SurvivalLevel extends Level {
 	public void onLoad() {
 		MapManager.loadMap("Tiny_Sur");
 
-		createPlayer();
+		Game.players = new GameObject[]{Network.instantiate("player", new Vector2(MapManager
+				.playerSpawn))};
 
 		AudioSource as = new AudioSource();
+
+		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm, as), new Vector2
+				(MapManager.playerSpawn));
+
+		cm.smoothFollow(Game.players[0].transform);
+
 		as.play(new AudioSource.AudioClip("audio/theme.ogg"));
 		survivalManager = new SurvivalManager(MapManager.enemySpawns);
-		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm, as), new Vector2());
 		GameObject.instantiate(new GameObject("SurvivalManager", survivalManager), new Vector2());
 
 		TextureAtlas fontTA = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
