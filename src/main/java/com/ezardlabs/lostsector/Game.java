@@ -7,8 +7,8 @@ import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas;
-import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.dethsquare.multiplayer.NetworkAnimator;
+import com.ezardlabs.dethsquare.multiplayer.NetworkRenderer;
 import com.ezardlabs.dethsquare.multiplayer.NetworkTransform;
 import com.ezardlabs.dethsquare.prefabs.PrefabManager;
 import com.ezardlabs.dethsquare.util.BaseGame;
@@ -20,6 +20,8 @@ import com.ezardlabs.lostsector.levels.ProceduralLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.environment.Door;
+import com.ezardlabs.lostsector.objects.environment.LaserDoor;
+import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
 public class Game extends BaseGame {
@@ -42,26 +44,34 @@ public class Game extends BaseGame {
 		LevelManager.registerLevel("main_menu", new MainMenuLevel());
 
 		registerPlayerPrefabs();
+		registerDoorPrefabs();
 
-		LevelManager.loadLevel("main_menu");
+		LevelManager.loadLevel("multiplayer_lobby");
 	}
 
 	private void registerPlayerPrefabs() {
 		PrefabManager.addPrefab("player",
-				() -> new GameObject("Player " + Network.getPlayerId(), "player", new Player(),
+				() -> new GameObject("Player", "player", new Player(),
 						new HUD(), new Renderer(), new Animator(), new Frost(),
 						new Collider(200, 200), new Rigidbody(), new NetworkTransform(),
-						new NetworkAnimator()),
-				() -> new GameObject("Player " + Network.getPlayerId(), "player", new Renderer(),
-						new Animator(), new Frost(), new NetworkTransform(),
-						new NetworkAnimator()));
+						new NetworkRenderer(), new NetworkAnimator()),
+				() -> new GameObject("Other Player", "player", new Renderer(),
+						new Animator(), new Frost(), new Collider(200, 200), new NetworkTransform(),
+						new NetworkRenderer(), new NetworkAnimator()));
 	}
 
 	private void registerDoorPrefabs() {
-		TextureAtlas ta = new TextureAtlas("images/environment/atlas.png",
-				"images/environment/atlas.txt");
-		PrefabManager.addPrefab("door",
-				() -> new GameObject("Door", new Door(ta), new Renderer(), new Animator(),
-						new Collider(50, 500, true), new NetworkAnimator()));
+		PrefabManager.addPrefab("door", () -> new GameObject("Door", new Door(
+				new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt")),
+				new Renderer(), new Animator(), new Collider(100, 500, true),
+				new NetworkAnimator()), () -> new GameObject("Door", new Door(
+				new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt")),
+				new Renderer(), new Animator(), new NetworkAnimator()));
+		PrefabManager.addPrefab("laser_door", () -> new GameObject("Laser Door", new LaserDoor(
+				new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt")),
+				new Renderer(), new Animator(), new Collider(100, 500, true),
+				new NetworkAnimator()), () -> new GameObject("Laser Door", new LaserDoor(
+				new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt")),
+				new Renderer(), new Animator(), new NetworkAnimator()));
 	}
 }
