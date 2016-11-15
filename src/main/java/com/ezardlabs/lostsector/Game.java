@@ -21,6 +21,7 @@ import com.ezardlabs.lostsector.levels.SurvivalLevel;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.environment.Door;
 import com.ezardlabs.lostsector.objects.environment.LaserDoor;
+import com.ezardlabs.lostsector.objects.environment.Locker;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.projectiles.LankaBeam;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
@@ -47,6 +48,7 @@ public class Game extends BaseGame {
 		registerPlayerPrefabs();
 		registerProjectilePrefabs();
 		registerDoorPrefabs();
+		registerLockerPrefabs();
 
 		LevelManager.loadLevel("multiplayer_lobby");
 	}
@@ -83,5 +85,21 @@ public class Game extends BaseGame {
 				new NetworkAnimator()), () -> new GameObject("Laser Door", new LaserDoor(
 				new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt")),
 				new Renderer(), new Animator(), new NetworkAnimator()));
+	}
+
+	private void registerLockerPrefabs() {
+		PrefabManager.addPrefab("locker_locked",
+				() -> new GameObject("Locker", true, new Renderer(), new Locker(true,
+						new TextureAtlas("images/environment/atlas.png",
+								"images/environment/atlas.txt"))));
+		PrefabManager.addPrefab("locker_unlocked",
+				() -> new GameObject("Locker", true, new Renderer(), new Locker(false,
+						new TextureAtlas("images/environment/atlas.png",
+								"images/environment/atlas.txt")), new Collider(100, 200, true),
+						new Animator(), new NetworkAnimator()),
+				() -> new GameObject("Locker", true, new Renderer(), new Locker(false,
+						new TextureAtlas("images/environment/atlas.png",
+								"images/environment/atlas.txt")), new Animator(),
+						new NetworkAnimator()));
 	}
 }

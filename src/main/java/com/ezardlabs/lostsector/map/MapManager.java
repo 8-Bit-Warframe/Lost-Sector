@@ -11,6 +11,7 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.prefabs.PrefabManager;
 import com.ezardlabs.dethsquare.tmx.Layer;
 import com.ezardlabs.dethsquare.tmx.Map;
 import com.ezardlabs.dethsquare.tmx.ObjectGroup;
@@ -27,7 +28,6 @@ import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.SupraCrewman;
 import com.ezardlabs.lostsector.objects.environment.Camera;
 import com.ezardlabs.lostsector.objects.environment.Door;
-import com.ezardlabs.lostsector.objects.environment.Locker;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -165,13 +165,13 @@ public class MapManager {
 			float x = Float.valueOf(split[0]) * 3.125f;
 			float y = Float.valueOf(split[1]) * 3.125f;
 			if (Boolean.valueOf(split[2])) {
-				GameObject
-						.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200)), new Vector2(x, y));
+//				GameObject
+//						.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200)), new Vector2(x, y));
 			} else {
-				GameObject
-						.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200), new Animator(
-						new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
-								125)), new Collider(100, 200, true)), new Vector2(x, y));
+//				GameObject
+//						.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200), new Animator(
+//						new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
+//								125)), new Collider(100, 200, true)), new Vector2(x, y));
 			}
 		}
 	}
@@ -556,24 +556,19 @@ public class MapManager {
 					playerSpawn = new Vector2(pos.x, pos.y);
 					break;
 				case "locker":
-					if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 0)
-						GameObject
-								.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), TILE_SIZE * MAP_SCALE, TILE_SIZE * 2 * MAP_SCALE).setFlipped(flipH, flipV)), pos);
-					else
-						GameObject
-								.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), TILE_SIZE * MAP_SCALE, TILE_SIZE * 2 * MAP_SCALE).setFlipped(flipH, flipV), new Animator(
-							new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
-									125)), new Collider(TILE_SIZE * MAP_SCALE, TILE_SIZE * 2 * MAP_SCALE, true)), pos);
+					if (Network.isHost()) {
+						if ((int) (Math.random() * 2) == 0) {
+							Network.instantiate("locker_locked", pos);
+						} else {
+							Network.instantiate("locker_unlocked", pos);
+						}
+					}
 					break;
 				case "locker_locked":
-					GameObject
-							.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200).setFlipped(flipH, flipV)), pos);
+					GameObject.instantiate(PrefabManager.loadPrefab("locker_locked"), pos);
 					break;
 				case "locker_unlocked":
-					GameObject
-							.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200).setFlipped(flipH, flipV), new Animator(
-							new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
-									125)), new Collider(100, 200, true)), pos);
+					if (Network.isHost()) Network.instantiate("locker_unlocked", pos);
 					break;
 				case "door":
 					if (Network.isHost()) Network.instantiate("door", pos);
