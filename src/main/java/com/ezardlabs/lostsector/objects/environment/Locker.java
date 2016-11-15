@@ -39,7 +39,7 @@ public class Locker extends Component {
 
 	@Override
 	public void onTriggerEnter(Collider other) {
-		if (!locked && !unlocking && Network.isHost() &&
+		if (!locked && !unlocking && Network.isHost() && other.gameObject.getTag() != null &&
 				other.gameObject.getTag().equals("player")) {
 			unlocking = true;
 			//noinspection ConstantConditions
