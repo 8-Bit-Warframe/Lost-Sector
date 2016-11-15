@@ -50,7 +50,7 @@ public class Game extends BaseGame {
 		registerDoorPrefabs();
 		registerLockerPrefabs();
 
-		LevelManager.loadLevel("multiplayer_lobby");
+		LevelManager.loadLevel("main_menu");
 	}
 
 	private void registerPlayerPrefabs() {
