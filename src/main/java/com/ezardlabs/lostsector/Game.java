@@ -22,6 +22,7 @@ import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.environment.Door;
 import com.ezardlabs.lostsector.objects.environment.LaserDoor;
 import com.ezardlabs.lostsector.objects.hud.HUD;
+import com.ezardlabs.lostsector.objects.projectiles.LankaBeam;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
 public class Game extends BaseGame {
@@ -44,6 +45,7 @@ public class Game extends BaseGame {
 		LevelManager.registerLevel("main_menu", new MainMenuLevel());
 
 		registerPlayerPrefabs();
+		registerProjectilePrefabs();
 		registerDoorPrefabs();
 
 		LevelManager.loadLevel("multiplayer_lobby");
@@ -58,6 +60,14 @@ public class Game extends BaseGame {
 				() -> new GameObject("Other Player", "player", new Renderer(),
 						new Animator(), new Frost(), new Collider(200, 200), new NetworkTransform(),
 						new NetworkRenderer(), new NetworkAnimator()));
+	}
+
+	private void registerProjectilePrefabs() {
+		PrefabManager.addPrefab("lanka_beam",
+				() -> new GameObject("Lanka Beam", new Renderer("images/blue.png", 0, 0),
+						new LankaBeam(500), new NetworkTransform(), new NetworkRenderer()),
+				() -> new GameObject("Lanka Beam", new Renderer("images/blue.png", 0, 0),
+						new NetworkTransform(), new NetworkRenderer()));
 	}
 
 	private void registerDoorPrefabs() {
