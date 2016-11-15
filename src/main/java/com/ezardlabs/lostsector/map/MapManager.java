@@ -10,6 +10,7 @@ import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.dethsquare.tmx.Layer;
 import com.ezardlabs.dethsquare.tmx.Map;
 import com.ezardlabs.dethsquare.tmx.ObjectGroup;
@@ -26,7 +27,6 @@ import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.SupraCrewman;
 import com.ezardlabs.lostsector.objects.environment.Camera;
 import com.ezardlabs.lostsector.objects.environment.Door;
-import com.ezardlabs.lostsector.objects.environment.LaserDoor;
 import com.ezardlabs.lostsector.objects.environment.Locker;
 
 import java.io.BufferedReader;
@@ -576,22 +576,15 @@ public class MapManager {
 									125)), new Collider(100, 200, true)), pos);
 					break;
 				case "door":
-					GameObject.instantiate(
-							new GameObject("Door", new Door(ta), new Collider(w * 0.5f, h, true),
-									new Renderer(), new Animator()), pos);
+					if (Network.isHost()) Network.instantiate("door", pos);
 					break;
 				case "ldoor":
-					GameObject.instantiate(new GameObject("Door", new LaserDoor(ta),
-							new Collider(w * 0.5f, h, true), new Renderer(), new Animator()), pos);
+					if (Network.isHost()) Network.instantiate("laser_door", pos);
 					break;
 			}
 
 			// For doors
 			if(object.getType().contains("door")) {
-//				GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y));
-//				GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y + 128 * 3.125f));
-				GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(w, h * 0.2f)), pos);
-				GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(w, h * 0.2f)), new Vector2(pos.x, pos.y + h * 0.8f));
 				solidityMap[((int) (pos.x / 100))][((int) (pos.y / 100))] = 1;
 				solidityMap[((int) (pos.x / 100)) + 1][((int) (pos.y / 100))] = 1;
 				solidityMap[((int) (pos.x / 100))][((int) (pos.y / 100)) + 4] = 1;
