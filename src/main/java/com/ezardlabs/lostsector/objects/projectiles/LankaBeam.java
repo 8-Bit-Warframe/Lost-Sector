@@ -13,9 +13,8 @@ public class LankaBeam extends Script {
 	private long startTime;
 	private int width;
 
-	public LankaBeam(long chargeTime, int direction) {
+	public LankaBeam(long chargeTime) {
 		this.chargeTime = chargeTime;
-		this.direction = direction;
 	}
 
 	@Override
@@ -57,5 +56,9 @@ public class LankaBeam extends Script {
 				}
 			}
 		}
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
 	}
 }

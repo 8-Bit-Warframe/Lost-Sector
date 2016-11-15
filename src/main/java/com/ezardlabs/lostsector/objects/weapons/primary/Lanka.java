@@ -5,9 +5,9 @@ import com.ezardlabs.dethsquare.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.Player.State;
 import com.ezardlabs.lostsector.objects.projectiles.LankaBeam;
@@ -52,8 +52,9 @@ public class Lanka extends RangedWeapon {
 							return ++currentFrame;
 						} else {
 							if (!beamCreated) {
-								GameObject.instantiate(new GameObject("Lanka Beam", new Renderer("images/blue.png", 0, 0), new LankaBeam(500, player.renderer.hFlipped ? -1 : 1)), player.transform.position.offset(player.renderer.hFlipped ? -112.5f : 312.5f, 109.375f));
-								beamCreated = true;
+								GameObject beam = Network.instantiate("lanka_beam", player.transform.position.offset(player.renderer.hFlipped ? -112.5f : 312.5f, 109.375f));
+								beam.getComponent(LankaBeam.class).setDirection(player.renderer.hFlipped ? -1 : 1);
+//								beamCreated = true;
 							}
 							return 2;
 						}
