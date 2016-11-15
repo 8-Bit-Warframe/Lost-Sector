@@ -38,11 +38,11 @@ public class Locker extends Component {
 
 	@Override
 	public void onTriggerEnter(Collider other) {
-		if (!locked && !unlocking && other.gameObject.name.equals("Player")) {
+		if (!locked && !unlocking && other.gameObject.getTag().equals("player")) {
 			unlocking = true;
 			//noinspection ConstantConditions
 			gameObject.getComponent(Animator.class).play("unlock");
-			Warframe w = (Warframe) other.gameObject.getComponentOfType(Warframe.class);
+			Warframe w = other.gameObject.getComponentOfType(Warframe.class);
 			//noinspection ConstantConditions
 			w.addHealth(20);
 			w.addEnergy(25);
