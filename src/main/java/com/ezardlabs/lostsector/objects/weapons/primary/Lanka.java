@@ -54,7 +54,7 @@ public class Lanka extends RangedWeapon {
 							if (!beamCreated) {
 								GameObject beam = Network.instantiate("lanka_beam", player.transform.position.offset(player.renderer.hFlipped ? -112.5f : 312.5f, 109.375f));
 								beam.getComponent(LankaBeam.class).setDirection(player.renderer.hFlipped ? -1 : 1);
-//								beamCreated = true;
+								beamCreated = true;
 							}
 							return 2;
 						}
