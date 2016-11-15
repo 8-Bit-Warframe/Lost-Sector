@@ -7,9 +7,9 @@ import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
 
 public class CameraMovement extends Script {
-	Camera camera;
-	int followType = 0;
-	Transform target;
+	private Camera camera;
+	private int followType = 0;
+	private Transform target;
 	private Vector2 offset = new Vector2(-450, 0);
 	private boolean isQuaking = false;
 	private long quakeEndPoint = 0;
