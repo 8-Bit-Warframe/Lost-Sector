@@ -7,6 +7,7 @@ import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Component;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
 public class Locker extends Component {
@@ -38,7 +39,8 @@ public class Locker extends Component {
 
 	@Override
 	public void onTriggerEnter(Collider other) {
-		if (!locked && !unlocking && other.gameObject.getTag().equals("player")) {
+		if (!locked && !unlocking && Network.isHost() &&
+				other.gameObject.getTag().equals("player")) {
 			unlocking = true;
 			//noinspection ConstantConditions
 			gameObject.getComponent(Animator.class).play("unlock");
