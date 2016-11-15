@@ -4,15 +4,17 @@ import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game;
-import com.ezardlabs.lostsector.levels.ExploreLevel;
-import com.ezardlabs.lostsector.levels.SurvivalLevel;
+import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.objects.Avatar;
+import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
 
@@ -109,12 +111,14 @@ public abstract class Warframe extends Avatar {
 
 					@Override
 					public void onAnimationFinished(Animator animator) {
-						GameObject.destroy(gameObject, 2000);
+						Network.destroy(gameObject, 2000);
 						new Timer().schedule(new TimerTask() {
 							@Override
 							public void run() {
-						if (LevelManager.getCurrentLevelName().equals("explore")) ExploreLevel.createPlayer();
-						if (LevelManager.getCurrentLevelName().equals("survival")) SurvivalLevel.createPlayer();
+								GameObject player = Network
+										.instantiate("player", new Vector2(MapManager.playerSpawn));
+								Camera.main.gameObject.getComponent(CameraMovement.class)
+													  .smoothFollow(player.transform);
 							}
 						}, 2000);
 					}
