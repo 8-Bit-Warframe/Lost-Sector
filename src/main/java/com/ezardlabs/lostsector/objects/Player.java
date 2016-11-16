@@ -148,6 +148,8 @@ public class Player extends Script {
 				break;
 			case CASTING:
 				break;
+			default:
+				break;
 		}
 
 		switch (state) {
@@ -184,6 +186,8 @@ public class Player extends Script {
 				break;
 			case CASTING:
 				gameObject.animator.play("cast");
+				break;
+			default:
 				break;
 		}
 		if (transform.position.x < 0) transform.translate(-transform.position.x, 0);
