@@ -56,6 +56,8 @@ public class CameraMovement extends Script {
 						transform.position.y += dy / dn * (dn * 0.2f);
 					}
 					break;
+				default:
+					break;
 			}
 		}
 		if (isQuaking) updateQuake();
