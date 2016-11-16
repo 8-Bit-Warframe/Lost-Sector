@@ -4,7 +4,6 @@ import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Camera;
-import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Collider.Collision;
 import com.ezardlabs.dethsquare.Collider.CollisionLocation;
 import com.ezardlabs.dethsquare.GameObject;
@@ -356,7 +355,7 @@ public class Player extends Script {
 	}
 
 	@Override
-	public void onCollision(Collider other, Collision collision) {
+	public void onCollision(Collision collision) {
 		if (collision.location == CollisionLocation.BOTTOM && (state == State.FALLING || state == State.JUMPING || state == State.DOUBLE_JUMPING)) {
 			jumpCount = 0;
 			if (collision.speed > 37) {

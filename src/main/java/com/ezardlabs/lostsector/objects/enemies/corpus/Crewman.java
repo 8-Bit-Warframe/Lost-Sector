@@ -1,6 +1,7 @@
 package com.ezardlabs.lostsector.objects.enemies.corpus;
 
 import com.ezardlabs.dethsquare.Collider;
+import com.ezardlabs.dethsquare.Collider.Collision;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.NavMesh;
@@ -70,7 +71,7 @@ public class Crewman extends Enemy {
 	}
 
 	@Override
-	public void onCollision(Collider other, Collider.Collision collision) {
+	public void onCollision(Collision collision) {
 		if (collision.speed > 37 && collision.location == Collider.CollisionLocation.BOTTOM) {
 			gameObject.animator.play("land");
 			landing = true;
