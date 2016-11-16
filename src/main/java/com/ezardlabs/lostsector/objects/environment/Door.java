@@ -25,12 +25,10 @@ public class Door extends Script {
 		gameObject.renderer.setTextureAtlas(ta, 200, 500);
 		gameObject.renderer.setSprite(getInitialSprite(ta));
 		gameObject.animator.addAnimations(getOpenAnimation(ta), getCloseAnimation(ta));
-		GameObject.instantiate(
-				new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)),
+		GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(200, 100)),
 				new Vector2(transform.position));
-		GameObject.instantiate(
-				new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)),
-				transform.position.offset(0, 128 * 3.125f));
+		GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(200, 100)),
+				transform.position.offset(0, 400));
 		if (Network.isHost()) {
 			GameObject.instantiate(new GameObject("DoorDetection", new Collider(1200, 500, true),
 					new DoorDetection(this)), transform.position.offset(-500, 0));
