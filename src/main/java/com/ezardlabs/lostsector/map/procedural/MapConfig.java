@@ -2,7 +2,7 @@ package com.ezardlabs.lostsector.map.procedural;
 
 import com.ezardlabs.dethsquare.tmx.Map;
 import com.ezardlabs.dethsquare.tmx.TMXLoader;
-import com.ezardlabs.dethsquare.util.Utils;
+import com.ezardlabs.dethsquare.util.IOUtils;
 import com.ezardlabs.lostsector.map.MapManager;
 
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class MapConfig {
     private void loadSegments(HashMap<String, ArrayList<MapSegment>> segments, String dirPath) {
         System.out.println("Loading TMX MapSegments: " + dirPath);
         TMXLoader tmxLoader;
-        String[] strFileNames = Utils.getAllFileNames(dirPath);
+        String[] strFileNames = IOUtils.listFileNames(dirPath);
         for(int i = 0; i < strFileNames.length; i++) {
             if(strFileNames[i] == null || !strFileNames[i].endsWith(".tmx")) {
                 continue;
