@@ -45,7 +45,7 @@ public class MapConfig {
         this.minMapHeight = (int)((-3 * MapManager.TILE_SIZE) + MapManager.PROC_START_POS.y);
         this.maxMapHeight = (int)((3 * MapManager.TILE_SIZE) + MapManager.PROC_START_POS.y);
 
-        this.proceduralSeed = -1;
+        this.proceduralSeed = System.currentTimeMillis();
 
         spawnSegments = new HashMap<>();
         mainSegments = new HashMap<>();
