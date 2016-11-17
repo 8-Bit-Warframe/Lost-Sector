@@ -2,7 +2,6 @@ package com.ezardlabs.lostsector.levels;
 
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.AudioSource;
-import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
@@ -13,12 +12,12 @@ import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.map.procedural.MapConfig;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 
 public class ProceduralLevel extends Level {
@@ -30,15 +29,15 @@ public class ProceduralLevel extends Level {
         MapConfig mapCfg = new MapConfig(MapConfig.ProceduralType.CORPUS, 16);
         MapManager.loadProceduralMap(mapCfg);
 
-        HUD.init();
-
-        createPlayer();
+        Game.players = new GameObject[]{Network.instantiate("player", new Vector2(MapManager
+                .playerSpawn))};
 
         AudioSource as = new AudioSource();
 
         GameObject.instantiate(new GameObject("Camera", new Camera(true), cm, as), new Vector2
-                (MapManager.playerSpawn.x, MapManager.playerSpawn.y));
-//        as.play(new AudioClip("audio/theme.ogg"));
+                (MapManager.playerSpawn));
+
+        cm.smoothFollow(Game.players[0].transform);
 
         TextureAtlas fontTA = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
         GameObject.instantiate(

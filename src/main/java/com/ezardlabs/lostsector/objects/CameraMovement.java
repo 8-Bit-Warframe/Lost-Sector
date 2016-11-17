@@ -1,22 +1,19 @@
 package com.ezardlabs.lostsector.objects;
 
-import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
 
 public class CameraMovement extends Script {
-	Camera camera;
-	int followType = 0;
-	Transform target;
-	private Vector2 offset = new Vector2(-400, 0);
+	private int followType = 0;
+	private Transform target;
+	private Vector2 offset = new Vector2(-450, 0);
 	private boolean isQuaking = false;
 	private long quakeEndPoint = 0;
 	private float quakeStrength = 0;
 
 	public void start() {
-		camera = gameObject.getComponent(Camera.class);
 		if (target != null) {
 			follow(target);
 			update();
@@ -30,16 +27,16 @@ public class CameraMovement extends Script {
 			float y = target.position.y + offset.y;
 
 			float cameraX;
-			if (x < Screen.width / 2) {
+			if (x < (Screen.width / 2) / Screen.scale) {
 				cameraX = 0;
 			} else {
-				cameraX = x - Screen.width / 2;
+				cameraX = x - (Screen.width / 2) / Screen.scale;
 			}
 			float cameraY;
-			if (y < Screen.height / 2) {
+			if (y < (Screen.height / 2) / Screen.scale) {
 				cameraY = 0;
 			} else {
-				cameraY = y - Screen.height / 2;
+				cameraY = y - (Screen.height / 2) / Screen.scale;
 			}
 			switch (followType) {
 				case 1:
@@ -55,6 +52,8 @@ public class CameraMovement extends Script {
 						transform.position.x += dx / dn * (dn * 0.04F);
 						transform.position.y += dy / dn * (dn * 0.2f);
 					}
+					break;
+				default:
 					break;
 			}
 		}

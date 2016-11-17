@@ -1,49 +1,51 @@
 package com.ezardlabs.lostsector.objects.hud;
 
+import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Touch;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.objects.hud.WeaponControl.WeaponType;
+import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
-public class HUD {
-	public static StatusIndicator statusIndicator = new StatusIndicator();
-	public static WeaponControl weaponControl = new WeaponControl();
+public class HUD extends Script {
+	private StatusIndicator statusIndicator = new StatusIndicator();
+	private WeaponControl weaponControl = new WeaponControl();
+	private Warframe warframe;
 
-	public static void init() {
+	public void start() {
 		TextureAtlas ta = new TextureAtlas("images/hud/atlas.png", "images/hud/atlas.txt");
 		statusIndicator.init(ta);
 //		weaponControl.init(ta);
+		warframe = gameObject.getComponentOfType(Warframe.class);
+		statusIndicator.setWarframeName(warframe.getName());
 	}
-	public static void update(int health, int shield, int energy) {
-		statusIndicator.update(health, shield, energy);
+
+	public void update() {
+		statusIndicator.update(warframe.getHealth(), warframe.getShield(), warframe.getEnergy());
 //		weaponControl.update();
 	}
 
-	public static void setWarframeName(String warframeName) {
-		statusIndicator.setWarframeName(warframeName);
-	}
-
-	public static boolean isAttackButtonPressed(Vector2 position) {
+	public boolean isAttackButtonPressed(Vector2 position) {
 		return weaponControl.isAttackButtonPressed();
 	}
 
-	public static WeaponType getCurrentWeaponType() {
+	public WeaponType getCurrentWeaponType() {
 		return weaponControl.getCurrentWeaponType();
 	}
 
-	public static void switchWeapons() {
+	public void switchWeapons() {
 		weaponControl.switchWeapons();
 	}
 
-	public static boolean isSwitchButtonPressed() {
+	public boolean isSwitchButtonPressed() {
 		return weaponControl.isSwitchButtonPressed();
 	}
 
-	public static boolean attackButtonHitTest(Touch t) {
+	public boolean attackButtonHitTest(Touch t) {
 		return weaponControl.attackButtonHitTest(t);
 	}
 
-	public static boolean switchButtonHitTest(Touch t) {
+	public boolean switchButtonHitTest(Touch t) {
 		return weaponControl.switchButtonHitTest(t);
 	}
 }

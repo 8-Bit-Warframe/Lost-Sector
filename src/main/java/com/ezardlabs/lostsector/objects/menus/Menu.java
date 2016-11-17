@@ -20,6 +20,7 @@ public class Menu extends Script {
 	private GameObject[] texts;
 	private GuiText[] guiTexts;
 
+	private boolean startOpen = false;
 	private boolean open = false;
 
 	public Menu(String[] options, MenuAction[] actions) {
@@ -38,7 +39,7 @@ public class Menu extends Script {
 		this.options = options;
 		this.actions = actions;
 		this.offset = offset;
-		this.open = open;
+		this.startOpen = open;
 
 		if (options.length < 1 || options.length > 4) {
 			throw new Error("You must supply between 1 and 4 options to the menu");
@@ -51,7 +52,7 @@ public class Menu extends Script {
 		float height = (2 * options.length + 1) * 50;
 		background = new GameObject("Menu",
 				new GuiRenderer("images/menus/main/menu" + options.length + ".png", 400, height));
-		GameObject.instantiate(background, new Vector2(-10000, -10000));
+		background = GameObject.instantiate(background, new Vector2(-10000, -10000));
 		texts = new GameObject[options.length];
 		guiTexts = new GuiText[options.length];
 		for (int i = 0; i < texts.length; i++) {
@@ -59,13 +60,14 @@ public class Menu extends Script {
 			texts[i] = GameObject.instantiate(new GameObject("Menu Option", guiTexts[i]),
 					new Vector2(-10000, -10000));
 		}
-		if (open) {
-			open();
-		}
 	}
 
 	@Override
 	public void update() {
+		if (startOpen) {
+			open();
+			startOpen = false;
+		}
 		if (open && guiTexts != null && Input.getKeyDown(KeyCode.MOUSE_LEFT)) {
 			for (int i = 0; i < guiTexts.length; i++) {
 				if (guiTexts[i].hitTest(Input.mousePosition)) {

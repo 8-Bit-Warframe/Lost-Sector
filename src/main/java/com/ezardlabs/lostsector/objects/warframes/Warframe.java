@@ -4,16 +4,17 @@ import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.LevelManager;
+import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game;
-import com.ezardlabs.lostsector.levels.ExploreLevel;
-import com.ezardlabs.lostsector.levels.SurvivalLevel;
+import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.objects.Avatar;
-import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.hud.StatusIndicator;
+import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
 
@@ -28,7 +29,6 @@ public abstract class Warframe extends Avatar {
 	protected int energy;
 	public RangedWeapon rangedWeapon;
 	public MeleeWeapon meleeWeapon;
-	private StatusIndicator statusIndicator;
 	private long nextShieldRegen = 0;
 
 	public Warframe(String name, int maxHealth, int maxShield, int maxEnergy) {
@@ -111,13 +111,14 @@ public abstract class Warframe extends Avatar {
 
 					@Override
 					public void onAnimationFinished(Animator animator) {
-						statusIndicator.spawnGravestone(transform.position);
-						GameObject.destroy(gameObject, 2000);
+						Network.destroy(gameObject, 2000);
 						new Timer().schedule(new TimerTask() {
 							@Override
 							public void run() {
-						if (LevelManager.getCurrentLevelName().equals("explore")) ExploreLevel.createPlayer();
-						if (LevelManager.getCurrentLevelName().equals("survival")) SurvivalLevel.createPlayer();
+								GameObject player = Network
+										.instantiate("player", new Vector2(MapManager.playerSpawn));
+								Camera.main.gameObject.getComponent(CameraMovement.class)
+													  .smoothFollow(player.transform);
 							}
 						}, 2000);
 					}
@@ -144,10 +145,6 @@ public abstract class Warframe extends Avatar {
 		gameObject.animator.addAnimations(meleeWeapon.getAnimations(ta));
 	}
 
-	public void setStatusIndicator(StatusIndicator statusIndicator) {
-		this.statusIndicator = statusIndicator;
-	}
-
 	public void addHealth(int health) {
 		this.health += health;
 		if (this.health > maxHealth) this.health = maxHealth;
@@ -161,9 +158,6 @@ public abstract class Warframe extends Avatar {
 			if (this.health <= 0) {
 				this.health = 0;
 				gameObject.animator.play("die");
-				if (gameObject.getComponent(Player.class) != null) {
-					gameObject.getComponent(Player.class).dead = true;
-				}
 				gameObject.setTag(null);
 				Game.players = new GameObject[0];
 			}
@@ -191,5 +185,11 @@ public abstract class Warframe extends Avatar {
 
 	public int getShield() {
 		return shield;
+	}
+
+	public void spawnGravestone() {
+		GameObject.instantiate(
+				new GameObject("Tombstone", new Renderer(ta, ta.getSprite("gravestone"), 200, 200)),
+				transform.position.offset(0, 25));
 	}
 }

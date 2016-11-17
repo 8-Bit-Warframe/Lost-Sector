@@ -6,21 +6,24 @@ import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
-import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.tmx.*;
+import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.prefabs.PrefabManager;
+import com.ezardlabs.dethsquare.tmx.Layer;
+import com.ezardlabs.dethsquare.tmx.Map;
+import com.ezardlabs.dethsquare.tmx.ObjectGroup;
+import com.ezardlabs.dethsquare.tmx.TMXLoader;
+import com.ezardlabs.dethsquare.tmx.TMXObject;
+import com.ezardlabs.dethsquare.tmx.Tile;
+import com.ezardlabs.dethsquare.tmx.TileSet;
 import com.ezardlabs.lostsector.NavMesh;
 import com.ezardlabs.lostsector.map.procedural.MapConfig;
 import com.ezardlabs.lostsector.map.procedural.MapSegment;
 import com.ezardlabs.lostsector.map.procedural.MapSegmentConnector;
-import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
-import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
-import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.SupraCrewman;
 import com.ezardlabs.lostsector.objects.environment.Camera;
 import com.ezardlabs.lostsector.objects.environment.Door;
-import com.ezardlabs.lostsector.objects.environment.Locker;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -111,7 +114,8 @@ public class MapManager {
 			float w = Float.valueOf(split[2]) * 3.125f;
 			float h = Float.valueOf(split[3]) * 3.125f;
 			if (split[4].equals("door")) {
-				GameObject.instantiate(new GameObject("Door", new Door(), new Collider(w, h, true), new Renderer(ta, ta.getSprite("door0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
+				GameObject.instantiate(new GameObject("Door", new Door(ta), new Collider(w, h,
+						true), new Renderer(ta, ta.getSprite("door0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
 						new Animator(new Animation("open", new Sprite[]{ta.getSprite("door0"),
 								ta.getSprite("door1"),
 								ta.getSprite("door2"),
@@ -127,7 +131,8 @@ public class MapManager {
 								ta.getSprite("door0")}, AnimationType.ONE_SHOT, 80))), new Vector2(x, y));
 			} else if (split[4].equals("ldoor")) {
 				GameObject
-						.instantiate(new GameObject("Door", new Door(), new Collider(100, 500, true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
+						.instantiate(new GameObject("Door", new Door(ta), new Collider(100, 500,
+								true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
 						new Animator(new Animation("open", new Sprite[]{ta.getSprite("ldoor")}, AnimationType.ONE_SHOT, 80), new Animation("close", new Sprite[]{ta.getSprite("ldoor0"),
 								ta.getSprite("ldoor1"),
 								ta.getSprite("ldoor2"),
@@ -156,13 +161,13 @@ public class MapManager {
 			float x = Float.valueOf(split[0]) * 3.125f;
 			float y = Float.valueOf(split[1]) * 3.125f;
 			if (Boolean.valueOf(split[2])) {
-				GameObject
-						.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200)), new Vector2(x, y));
+//				GameObject
+//						.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200)), new Vector2(x, y));
 			} else {
-				GameObject
-						.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200), new Animator(
-						new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
-								125)), new Collider(100, 200, true)), new Vector2(x, y));
+//				GameObject
+//						.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200), new Animator(
+//						new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
+//								125)), new Collider(100, 200, true)), new Vector2(x, y));
 			}
 		}
 	}
@@ -581,69 +586,30 @@ public class MapManager {
 					playerSpawn = new Vector2(pos.x, pos.y);
 					break;
 				case "locker":
-					if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 0)
-						GameObject
-								.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), TILE_SIZE * MAP_SCALE, TILE_SIZE * 2 * MAP_SCALE).setFlipped(flipH, flipV)), pos);
-					else
-						GameObject
-								.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), TILE_SIZE * MAP_SCALE, TILE_SIZE * 2 * MAP_SCALE).setFlipped(flipH, flipV), new Animator(
-							new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
-									125)), new Collider(TILE_SIZE * MAP_SCALE, TILE_SIZE * 2 * MAP_SCALE, true)), pos);
+					if (Network.isHost()) {
+						if ((int) (Math.random() * 2) == 0) {
+							Network.instantiate("locker_locked", pos);
+						} else {
+							Network.instantiate("locker_unlocked", pos);
+						}
+					}
 					break;
 				case "locker_locked":
-					GameObject
-							.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), 100, 200).setFlipped(flipH, flipV)), pos);
+					GameObject.instantiate(PrefabManager.loadPrefab("locker_locked"), pos);
 					break;
 				case "locker_unlocked":
-					GameObject
-							.instantiate(new GameObject("Locker", true, new Locker(false), new Renderer(ta, ta.getSprite("lock0"), 100, 200).setFlipped(flipH, flipV), new Animator(
-							new Animation("unlock", new Sprite[]{ta.getSprite("lock1"), ta.getSprite("lock2"), ta.getSprite("lock3"), ta.getSprite("lock4"), ta.getSprite("lock5")}, AnimationType.ONE_SHOT,
-									125)), new Collider(100, 200, true)), pos);
+					if (Network.isHost()) Network.instantiate("locker_unlocked", pos);
 					break;
 				case "door":
-					if(flipH) {
-					}
-					GameObject
-							.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("door0"), w, h).setFlipped(flipH, flipV),
-							new Animator(new Animation("open", new Sprite[]{ta.getSprite("door0"),
-									ta.getSprite("door1"),
-									ta.getSprite("door2"),
-									ta.getSprite("door3"),
-									ta.getSprite("door4"),
-									ta.getSprite("door5"),
-									ta.getSprite("door6")}, AnimationType.ONE_SHOT, 80), new Animation("close", new Sprite[]{ta.getSprite("door6"),
-									ta.getSprite("door5"),
-									ta.getSprite("door4"),
-									ta.getSprite("door3"),
-									ta.getSprite("door2"),
-									ta.getSprite("door1"),
-									ta.getSprite("door0")}, AnimationType.ONE_SHOT, 80))), pos);
+					if (Network.isHost()) Network.instantiate("door", pos);
 					break;
 				case "ldoor":
-					if(flipH) {
-					}
-					GameObject
-							.instantiate(new GameObject("Door", new Door(), new Collider(w * 0.5f, h, true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(flipH, flipV),
-							new Animator(new Animation("open", new Sprite[]{ta.getSprite("ldoor")}, AnimationType.ONE_SHOT, 80), new Animation("close", new Sprite[]{ta.getSprite("ldoor0"),
-									ta.getSprite("ldoor1"),
-									ta.getSprite("ldoor2"),
-									ta.getSprite("ldoor3"),
-									ta.getSprite("ldoor4"),
-									ta.getSprite("ldoor5"),
-									ta.getSprite("ldoor6"),
-									ta.getSprite("ldoor7"),
-									ta.getSprite("ldoor8"),
-									ta.getSprite("ldoor9"),
-									ta.getSprite("ldoor10")}, AnimationType.OSCILLATE, 80))), pos);
+					if (Network.isHost()) Network.instantiate("laser_door", pos);
 					break;
 			}
 
 			// For doors
 			if(object.getType().contains("door")) {
-//				GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y));
-//				GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y + 128 * 3.125f));
-				GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(w, h * 0.2f)), pos);
-				GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(w, h * 0.2f)), new Vector2(pos.x, pos.y + h * 0.8f));
 				solidityMap[((int) (pos.x / 100))][((int) (pos.y / 100))] = 1;
 				solidityMap[((int) (pos.x / 100)) + 1][((int) (pos.y / 100))] = 1;
 				solidityMap[((int) (pos.x / 100))][((int) (pos.y / 100)) + 4] = 1;
@@ -654,27 +620,19 @@ public class MapManager {
 
 	public static void instantiateEnemies(TMXObject[] objects, Vector2 offset) {
 		for(TMXObject object : objects) {
-			Vector2 pos = new Vector2((object.getX() + offset.x * TILE_SIZE) * MAP_SCALE, (object.getY() + offset.y * TILE_SIZE) * MAP_SCALE);
-			float w = object.getWidth() * MAP_SCALE;
-			float h = object.getHeight() * MAP_SCALE;
+			Vector2 pos = new Vector2((object.getX() + offset.x) * MAP_SCALE, (object.getY() + offset.y) * MAP_SCALE);
 			switch(object.getType()) {
 				case "spawn":
 					enemySpawns.add(pos);
 					break;
 				case "prova_crewman":
-					GameObject.instantiate(
-							new GameObject("Prova Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new ProvaCrewman()),
-							pos);
+					if (Network.isHost()) Network.instantiate("prova_crewman", pos);
 					break;
 				case "dera_crewman":
-					GameObject.instantiate(
-							new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new DeraCrewman()),
-							pos);
+					if (Network.isHost()) Network.instantiate("dera_crewman", pos);
 					break;
 				case "supra_crewman":
-					GameObject.instantiate(
-							new GameObject("Supra Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new SupraCrewman()),
-							pos);
+					if (Network.isHost()) Network.instantiate("supra_crewman", pos);
 					break;
 			}
 		}

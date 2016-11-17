@@ -146,7 +146,7 @@ public class ShockwaveMoa extends Moa {
 	}
 
 	@Override
-	public void onCollision(Collider other, Collider.Collision collision) {
+	public void onCollision(Collider.Collision collision) {
 		if (collision.speed > 37 && collision.location == Collider.CollisionLocation.BOTTOM) {
 			gameObject.animator.play("land");
 			landing = true;

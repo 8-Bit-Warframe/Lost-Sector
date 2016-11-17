@@ -140477,56 +140477,5 @@
   <object id="85" type="locker" x="2880" y="944" width="16" height="32"/>
  </objectgroup>
  <objectgroup name="enemies">
-  <object id="67" type="prova_crewman" x="320" y="480" width="32" height="32"/>
-  <object id="68" type="prova_crewman" x="608" y="816" width="32" height="32"/>
-  <object id="69" type="dera_crewman" x="912" y="816" width="32" height="32"/>
-  <object id="70" type="supra_crewman" x="960" y="816" width="32" height="32"/>
-  <object id="71" type="dera_crewman" x="1312" y="816" width="32" height="32"/>
-  <object id="72" type="dera_crewman" x="1392" y="816" width="32" height="32"/>
-  <object id="73" type="supra_crewman" x="2192" y="688" width="32" height="32"/>
-  <object id="74" type="dera_crewman" x="2368" y="480" width="32" height="32"/>
-  <object id="75" type="dera_crewman" x="2480" y="352" width="32" height="32"/>
-  <object id="76" type="prova_crewman" x="1920" y="80" width="32" height="32"/>
-  <object id="77" type="supra_crewman" x="1600" y="352" width="32" height="32"/>
-  <object id="79" type="dera_crewman" x="2944" y="944" width="32" height="32"/>
-  <object id="80" type="supra_crewman" x="3456" y="1008" width="32" height="32"/>
-  <object id="81" type="prova_crewman" x="3520" y="624" width="32" height="32"/>
-  <object id="82" type="supra_crewman" x="3968" y="384" width="32" height="32"/>
-  <object id="83" type="dera_crewman" x="4224" y="128" width="32" height="32"/>
-  <object id="84" type="dera_crewman" x="4080" y="1088" width="32" height="32"/>
-  <object id="89" type="prova_crewman" x="1920" y="816" width="32" height="32"/>
-  <object id="91" type="prova_crewman" x="1824" y="816" width="32" height="32"/>
-  <object id="92" type="dera_crewman" x="2800" y="352" width="32" height="32"/>
-  <object id="95" type="prova_crewman" x="2624" y="688" width="32" height="32"/>
-  <object id="98" type="prova_crewman" x="2272" y="1120" width="32" height="32"/>
-  <object id="99" type="prova_crewman" x="3648" y="1072" width="32" height="32"/>
-  <object id="101" type="prova_crewman" x="3232" y="624" width="32" height="32"/>
-  <object id="104" type="prova_crewman" x="2272" y="1200" width="32" height="32"/>
-  <object id="105" type="prova_crewman" x="2336" y="1200" width="32" height="32"/>
-  <object id="107" type="prova_crewman" x="448" y="624" width="32" height="32"/>
-  <object id="108" type="dera_crewman" x="896" y="912" width="32" height="32"/>
-  <object id="109" type="dera_crewman" x="944" y="912" width="32" height="32"/>
-  <object id="110" type="prova_crewman" x="1440" y="816" width="32" height="32"/>
-  <object id="111" type="supra_crewman" x="2272" y="560" width="32" height="32"/>
-  <object id="112" type="dera_crewman" x="2192" y="352" width="32" height="32"/>
-  <object id="113" type="dera_crewman" x="2000" y="416" width="32" height="32"/>
-  <object id="114" type="dera_crewman" x="3104" y="352" width="32" height="32"/>
-  <object id="115" type="dera_crewman" x="3072" y="352" width="32" height="32"/>
-  <object id="116" type="dera_crewman" x="3392" y="352" width="32" height="32"/>
-  <object id="117" type="dera_crewman" x="3568" y="1072" width="32" height="32"/>
-  <object id="118" type="dera_crewman" x="3600" y="1072" width="32" height="32"/>
-  <object id="119" type="dera_crewman" x="3504" y="864" width="32" height="32"/>
-  <object id="120" type="dera_crewman" x="3328" y="1072" width="32" height="32"/>
-  <object id="121" type="dera_crewman" x="3184" y="848" width="32" height="32"/>
-  <object id="122" type="prova_crewman" x="3424" y="1008" width="32" height="32"/>
-  <object id="123" type="prova_crewman" x="3024" y="944" width="32" height="32"/>
-  <object id="124" type="prova_crewman" x="2736" y="1200" width="32" height="32"/>
-  <object id="126" type="dera_crewman" x="2560" y="1200" width="32" height="32"/>
-  <object id="127" type="prova_crewman" x="2192" y="1200" width="32" height="32"/>
-  <object id="128" type="prova_crewman" x="2128" y="1200" width="32" height="32"/>
-  <object id="129" type="prova_crewman" x="3840" y="672" width="32" height="32"/>
-  <object id="130" type="supra_crewman" x="4128" y="1088" width="32" height="32"/>
-  <object id="131" type="supra_crewman" x="4176" y="1088" width="32" height="32"/>
-  <object id="132" type="prova_crewman" x="4160" y="128" width="32" height="32"/>
  </objectgroup>
 </map>

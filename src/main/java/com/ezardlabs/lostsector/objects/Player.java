@@ -4,7 +4,6 @@ import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Camera;
-import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Collider.Collision;
 import com.ezardlabs.dethsquare.Collider.CollisionLocation;
 import com.ezardlabs.dethsquare.GameObject;
@@ -35,12 +34,13 @@ public class Player extends Script {
 	private int x = 0;
 	private float speed = 12.5f;
 	private Warframe warframe;
+	private HUD hud;
+	private boolean gravestoneSpawned = false;
 
 	public State state = State.IDLE;
-	public boolean dead = false;
 
 	private Menu escMenu = new Menu(new String[]{"Main Menu",
-			"Close"}, new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("mainmenu"),
+			"Close"}, new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("main_menu"),
 			(menu, index, text) -> menu.close()});
 
 	public enum State {
@@ -60,8 +60,8 @@ public class Player extends Script {
 	public void start() {
 		player = gameObject;
 		warframe = gameObject.getComponentOfType(Warframe.class);
+		hud = gameObject.getComponentOfType(HUD.class);
 		gameObject.setTag("player");
-		HUD.setWarframeName(warframe.getName());
 		gameObject.addComponent(escMenu);
 	}
 
@@ -74,9 +74,13 @@ public class Player extends Script {
 			escMenu.open();
 		}
 
-		HUD.update(warframe.getHealth(), warframe.getShield(), warframe.getEnergy());
-
-		if (dead) return;
+		if (warframe.getHealth() <= 0) {
+			if (!gravestoneSpawned) {
+				warframe.spawnGravestone();
+				gravestoneSpawned = true;
+			}
+			return;
+		}
 
 		x = getMovement();
 
@@ -144,6 +148,8 @@ public class Player extends Script {
 				break;
 			case CASTING:
 				break;
+			default:
+				break;
 		}
 
 		switch (state) {
@@ -181,6 +187,8 @@ public class Player extends Script {
 			case CASTING:
 				gameObject.animator.play("cast");
 				break;
+			default:
+				break;
 		}
 		if (transform.position.x < 0) transform.translate(-transform.position.x, 0);
 		if (transform.position.y < 0) transform.translate(0, -transform.position.y);
@@ -214,7 +222,8 @@ public class Player extends Script {
 	private boolean jumpCheck() {
 		boolean touchJump = false;
 		for (Touch t : Input.touches) {
-			if (!HUD.switchButtonHitTest(t) && !HUD.attackButtonHitTest(t) && t.phase == TouchPhase.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f &&
+			if (!hud.switchButtonHitTest(t) && !hud.attackButtonHitTest(t) && t.phase == TouchPhase
+					.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f &&
 					Vector2.distance(t.position, t.startPosition) < 150 * Screen.scale) {
 				touchJump = true;
 			}
@@ -237,15 +246,15 @@ public class Player extends Script {
 
 	private boolean meleeCheck() {
 		boolean touchMelee = false;
-		if (Utils.PLATFORM == Utils.Platform.ANDROID && HUD.getCurrentWeaponType() == WeaponType.MELEE) {
+		if (Utils.PLATFORM == Utils.Platform.ANDROID && hud.getCurrentWeaponType() == WeaponType.MELEE) {
 			for (Touch t : Input.touches) {
-				if (t.phase == Touch.TouchPhase.BEGAN && HUD.isAttackButtonPressed(t.position)) {
+				if (t.phase == Touch.TouchPhase.BEGAN && hud.isAttackButtonPressed(t.position)) {
 					touchMelee = true;
 					break;
 				}
 			}
 		}
-		if (Input.getKeyDown(KeyCode.MOUSE_LEFT) || Input.getKeyDown(KeyCode.K) || touchMelee) {
+		if (Input.getKey(KeyCode.MOUSE_LEFT) || Input.getKey(KeyCode.K) || touchMelee) {
 			state = State.MELEE;
 			return true;
 		}
@@ -254,9 +263,9 @@ public class Player extends Script {
 
 	private boolean shootCheck() {
 		boolean touchRanged = false;
-		if (Utils.PLATFORM == Utils.Platform.ANDROID && HUD.getCurrentWeaponType() == WeaponType.RANGED) {
+		if (Utils.PLATFORM == Utils.Platform.ANDROID && hud.getCurrentWeaponType() == WeaponType.RANGED) {
 			for (Touch t : Input.touches) {
-				if (t.phase == Touch.TouchPhase.BEGAN && HUD.isAttackButtonPressed(t.position)) {
+				if (t.phase == Touch.TouchPhase.BEGAN && hud.isAttackButtonPressed(t.position)) {
 					touchRanged = true;
 					break;
 				}
@@ -272,10 +281,10 @@ public class Player extends Script {
 	private void switchWeaponCheck() {
 		boolean touchSwitch = false;
 		if (Utils.PLATFORM == Utils.Platform.ANDROID) {
-			touchSwitch = HUD.isSwitchButtonPressed();
+			touchSwitch = hud.isSwitchButtonPressed();
 		}
 		if (Input.getKeyDown(KeyCode.L) || touchSwitch) {
-			HUD.switchWeapons();
+			hud.switchWeapons();
 		}
 	}
 
@@ -350,7 +359,7 @@ public class Player extends Script {
 	}
 
 	@Override
-	public void onCollision(Collider other, Collision collision) {
+	public void onCollision(Collision collision) {
 		if (collision.location == CollisionLocation.BOTTOM && (state == State.FALLING || state == State.JUMPING || state == State.DOUBLE_JUMPING)) {
 			jumpCount = 0;
 			if (collision.speed > 37) {

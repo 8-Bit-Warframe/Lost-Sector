@@ -4,6 +4,7 @@ import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.RectF;
 import com.ezardlabs.dethsquare.Script;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
@@ -13,9 +14,8 @@ public class LankaBeam extends Script {
 	private long startTime;
 	private int width;
 
-	public LankaBeam(long chargeTime, int direction) {
+	public LankaBeam(long chargeTime) {
 		this.chargeTime = chargeTime;
-		this.direction = direction;
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class LankaBeam extends Script {
 			gameObject.renderer.setOffsets(0, (int) -halfHeight);
 		} else {
 			gameObject.renderer.setImage("images/white.png", width, halfHeight * 2);
-			GameObject.destroy(gameObject, 100);
+			Network.destroy(gameObject, 100);
 			gameObject.removeComponent(LankaBeam.class);
 			RectF beam = new RectF(transform.position.x, transform.position.y - halfHeight, transform.position.x + width, transform.position.y + halfHeight);
 			Collider c;
@@ -57,5 +57,9 @@ public class LankaBeam extends Script {
 				}
 			}
 		}
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
 	}
 }
