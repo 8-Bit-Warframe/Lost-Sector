@@ -380,10 +380,7 @@ public class MapManager {
 		if(bound <= 0) {
 			return null;
 		}
-		if(bound == 1) {
-			return arr[0];
-		}
-		return arr[rand.nextInt(bound - 1)];
+		return arr[rand.nextInt(bound)];
 	}
 
 	private static <T> T getRandObj(ArrayList<T> arr) {
@@ -391,10 +388,7 @@ public class MapManager {
 		if(bound <= 0) {
 			return null;
 		}
-		if(bound == 1) {
-			return arr.get(0);
-		}
-		return arr.get(rand.nextInt(bound - 1));
+		return arr.get(rand.nextInt(bound));
 	}
 
 	private static void loadMapSegment(MapSegment seg) {
@@ -601,7 +595,7 @@ public class MapManager {
 					playerSpawn = new Vector2(pos.x, pos.y);
 					break;
 				case "locker":
-					if(0 + (int)(rand.nextDouble() * ((1 - 0) + 1)) == 0)
+					if(rand.nextInt(2) == 0)
 						GameObject
 								.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), TILE_SIZE * MAP_SCALE, TILE_SIZE * 2 * MAP_SCALE).setFlipped(flipH, flipV)), pos);
 					else
