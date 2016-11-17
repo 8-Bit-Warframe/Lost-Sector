@@ -29,7 +29,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public class MapManager {
 	public static final float MAP_SCALE = 6.25f;
@@ -41,6 +41,9 @@ public class MapManager {
 	public static Vector2 playerSpawn = new Vector2();
 	public static ArrayList<Vector2> enemySpawns = null;
 	public static String overrideMapName = null;
+
+	public static long proceduralSeed = -1;
+	public static Random rand = null;
 
 	public static void loadMap(String name) {
 		if(overrideMapName != null) {
@@ -193,6 +196,15 @@ public class MapManager {
 	// START Procedural mapping stuff
 
 	public static void loadProceduralMap(MapConfig mapCfg) {
+		// Get random seed from mapCfg.  If not a valid seed, create a new one from system time.
+		proceduralSeed = mapCfg.proceduralSeed;
+		if(proceduralSeed < 0) {
+			proceduralSeed = System.currentTimeMillis();
+//			proceduralSeed = 1479363189995L;	// Testing
+		}
+		rand = new Random(proceduralSeed);
+		System.out.println("Procedural Seed: " + proceduralSeed);
+
 		// Keep a list of added sections
 		ArrayList<MapSegment> renderSegments = new ArrayList<>();
 
@@ -308,7 +320,7 @@ public class MapManager {
 
 		NavMesh.init(solidityMap);
 
-		printSolidityMapArray();
+//		printSolidityMapArray();
 
 		System.out.println(mapCfg.toString());
 	}
@@ -371,7 +383,7 @@ public class MapManager {
 		if(bound <= 0) {
 			return null;
 		}
-		return arr[ThreadLocalRandom.current().nextInt(0, bound)];
+		return arr[rand.nextInt(bound)];
 	}
 
 	private static <T> T getRandObj(ArrayList<T> arr) {
@@ -379,7 +391,7 @@ public class MapManager {
 		if(bound <= 0) {
 			return null;
 		}
-		return arr.get(ThreadLocalRandom.current().nextInt(0, bound));
+		return arr.get(rand.nextInt(bound));
 	}
 
 	private static void loadMapSegment(MapSegment seg) {
@@ -587,7 +599,7 @@ public class MapManager {
 					break;
 				case "locker":
 					if (Network.isHost()) {
-						if ((int) (Math.random() * 2) == 0) {
+						if (rand.nextInt(2) == 0) {
 							Network.instantiate("locker_locked", pos);
 						} else {
 							Network.instantiate("locker_unlocked", pos);

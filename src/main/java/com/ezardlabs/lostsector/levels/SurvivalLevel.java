@@ -75,7 +75,8 @@ public class SurvivalLevel extends Level {
 	public static void createPlayer() {
 		Game.players = new GameObject[]{new GameObject("Player", new Player(), new Renderer(),
 				new Animator(), new Frost(), new Collider(200, 200), new Rigidbody())};
-		GameObject.instantiate(Game.players[0], MapManager.playerSpawn);
+
+		GameObject.instantiate(Game.players[0], new Vector2(MapManager.playerSpawn.x, MapManager.playerSpawn.y));
 
 		cm.smoothFollow(Game.players[0].transform);
 	}

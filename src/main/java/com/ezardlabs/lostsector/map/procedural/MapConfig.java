@@ -37,11 +37,15 @@ public class MapConfig {
     public String strExtractDir;
     public String strLockDir;
 
+    public long proceduralSeed;
+
     public MapConfig(ProceduralType type, int numRooms) {
         this.type = type;
         this.numRooms = numRooms;
         this.minMapHeight = (int)((-3 * MapManager.TILE_SIZE) + MapManager.PROC_START_POS.y);
         this.maxMapHeight = (int)((3 * MapManager.TILE_SIZE) + MapManager.PROC_START_POS.y);
+
+        this.proceduralSeed = -1;
 
         spawnSegments = new HashMap<>();
         mainSegments = new HashMap<>();
