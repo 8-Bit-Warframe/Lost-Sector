@@ -19,6 +19,9 @@ import com.ezardlabs.lostsector.levels.MultiplayerLobbyLevel;
 import com.ezardlabs.lostsector.levels.ProceduralLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
 import com.ezardlabs.lostsector.objects.Player;
+import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
+import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
+import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.SupraCrewman;
 import com.ezardlabs.lostsector.objects.environment.Door;
 import com.ezardlabs.lostsector.objects.environment.LaserDoor;
 import com.ezardlabs.lostsector.objects.environment.Locker;
@@ -49,6 +52,7 @@ public class Game extends BaseGame {
 		registerProjectilePrefabs();
 		registerDoorPrefabs();
 		registerLockerPrefabs();
+		registerEnemyPrefabs();
 
 		LevelManager.loadLevel("main_menu");
 	}
@@ -100,6 +104,30 @@ public class Game extends BaseGame {
 				() -> new GameObject("Locker", true, new Renderer(), new Locker(false,
 						new TextureAtlas("images/environment/atlas.png",
 								"images/environment/atlas.txt")), new Animator(),
+						new NetworkAnimator()));
+	}
+
+	private void registerEnemyPrefabs() {
+		PrefabManager.addPrefab("dera_crewman",
+				() -> new GameObject("Dera Crewman", new Renderer(), new Animator(),
+						new Collider(200, 200), new Rigidbody(), new DeraCrewman(),
+						new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()),
+				() -> new GameObject("Dera Crewman", new Renderer(), new Animator(),
+						new Collider(200, 200), new NetworkTransform(), new NetworkRenderer(),
+						new NetworkAnimator()));
+		PrefabManager.addPrefab("prova_crewman",
+				() -> new GameObject("Prova Crewman", new Renderer(), new Animator(),
+						new Collider(200, 200), new Rigidbody(), new ProvaCrewman(),
+						new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()),
+				() -> new GameObject("Prova Crewman", new Renderer(), new Animator(),
+						new Collider(200, 200), new NetworkTransform(), new NetworkRenderer(),
+						new NetworkAnimator()));
+		PrefabManager.addPrefab("supra_crewman",
+				() -> new GameObject("Supra Crewman", new Renderer(), new Animator(),
+						new Collider(200, 200), new Rigidbody(), new SupraCrewman(),
+						new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()),
+				() -> new GameObject("Supra Crewman", new Renderer(), new Animator(),
+						new Collider(200, 200), new NetworkTransform(), new NetworkRenderer(),
 						new NetworkAnimator()));
 	}
 }
