@@ -1,13 +1,11 @@
 package com.ezardlabs.lostsector.objects;
 
-import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
 
 public class CameraMovement extends Script {
-	private Camera camera;
 	private int followType = 0;
 	private Transform target;
 	private Vector2 offset = new Vector2(-450, 0);
@@ -16,7 +14,6 @@ public class CameraMovement extends Script {
 	private float quakeStrength = 0;
 
 	public void start() {
-		camera = gameObject.getComponent(Camera.class);
 		if (target != null) {
 			follow(target);
 			update();
