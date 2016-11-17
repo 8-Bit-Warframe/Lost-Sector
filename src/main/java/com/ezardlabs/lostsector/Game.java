@@ -59,12 +59,11 @@ public class Game extends BaseGame {
 
 	private void registerPlayerPrefabs() {
 		PrefabManager.addPrefab("player",
-				() -> new GameObject("Player", "player", new Player(),
-						new HUD(), new Renderer(), new Animator(), new Frost(),
-						new Collider(200, 200), new Rigidbody(), new NetworkTransform(),
-						new NetworkRenderer(), new NetworkAnimator()),
-				() -> new GameObject("Other Player", "player", new Renderer(),
-						new Animator(), new Frost(), new Collider(200, 200), new NetworkTransform(),
+				() -> new GameObject("Player", "player", new Player(), new HUD(), new Renderer(),
+						new Animator(), new Frost(), new Collider(200, 200), new Rigidbody(),
+						new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()),
+				() -> new GameObject("Other Player", "player", new Renderer(), new Animator(),
+						new Frost(), new Collider(200, 200), new NetworkTransform(),
 						new NetworkRenderer(), new NetworkAnimator()));
 	}
 
