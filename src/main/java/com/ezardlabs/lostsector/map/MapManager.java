@@ -6,7 +6,6 @@ import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
-import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
@@ -23,9 +22,6 @@ import com.ezardlabs.lostsector.NavMesh;
 import com.ezardlabs.lostsector.map.procedural.MapConfig;
 import com.ezardlabs.lostsector.map.procedural.MapSegment;
 import com.ezardlabs.lostsector.map.procedural.MapSegmentConnector;
-import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
-import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
-import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.SupraCrewman;
 import com.ezardlabs.lostsector.objects.environment.Camera;
 import com.ezardlabs.lostsector.objects.environment.Door;
 
@@ -591,26 +587,18 @@ public class MapManager {
 	public static void instantiateEnemies(TMXObject[] objects, Vector2 offset) {
 		for(TMXObject object : objects) {
 			Vector2 pos = new Vector2((object.getX() + offset.x) * MAP_SCALE, (object.getY() + offset.y) * MAP_SCALE);
-			float w = object.getWidth() * MAP_SCALE;
-			float h = object.getHeight() * MAP_SCALE;
 			switch(object.getType()) {
 				case "spawn":
 					enemySpawns.add(pos);
 					break;
 				case "prova_crewman":
-					GameObject.instantiate(
-							new GameObject("Prova Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new ProvaCrewman()),
-							pos);
+					if (Network.isHost()) Network.instantiate("prova_crewman", pos);
 					break;
 				case "dera_crewman":
-					GameObject.instantiate(
-							new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new DeraCrewman()),
-							pos);
+					if (Network.isHost()) Network.instantiate("dera_crewman", pos);
 					break;
 				case "supra_crewman":
-					GameObject.instantiate(
-							new GameObject("Supra Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new SupraCrewman()),
-							pos);
+					if (Network.isHost()) Network.instantiate("supra_crewman", pos);
 					break;
 			}
 		}
