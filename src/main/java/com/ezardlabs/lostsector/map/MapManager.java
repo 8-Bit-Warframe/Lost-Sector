@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class MapManager {
 	public static final float MAP_SCALE = 6.25f;
@@ -198,8 +197,10 @@ public class MapManager {
 		proceduralSeed = mapCfg.proceduralSeed;
 		if(proceduralSeed < 0) {
 			proceduralSeed = System.currentTimeMillis();
+//			proceduralSeed = 1479363189995L;	// Testing
 		}
 		rand = new Random(proceduralSeed);
+		System.out.println("Procedural Seed: " + proceduralSeed);
 		
 		// Keep a list of added sections
 		ArrayList<MapSegment> renderSegments = new ArrayList<>();
@@ -379,7 +380,10 @@ public class MapManager {
 		if(bound <= 0) {
 			return null;
 		}
-		return arr[ThreadLocalRandom.current().nextInt(0, bound)];
+		if(bound == 1) {
+			return arr[0];
+		}
+		return arr[rand.nextInt(bound - 1)];
 	}
 
 	private static <T> T getRandObj(ArrayList<T> arr) {
@@ -387,7 +391,10 @@ public class MapManager {
 		if(bound <= 0) {
 			return null;
 		}
-		return arr.get(ThreadLocalRandom.current().nextInt(0, bound));
+		if(bound == 1) {
+			return arr.get(0);
+		}
+		return arr.get(rand.nextInt(bound - 1));
 	}
 
 	private static void loadMapSegment(MapSegment seg) {
