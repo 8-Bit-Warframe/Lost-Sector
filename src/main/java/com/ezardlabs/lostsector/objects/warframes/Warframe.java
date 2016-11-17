@@ -10,6 +10,7 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.levels.ExploreLevel;
+import com.ezardlabs.lostsector.levels.ProceduralLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
 import com.ezardlabs.lostsector.objects.Avatar;
 import com.ezardlabs.lostsector.objects.Player;
@@ -118,6 +119,7 @@ public abstract class Warframe extends Avatar {
 							public void run() {
 						if (LevelManager.getCurrentLevelName().equals("explore")) ExploreLevel.createPlayer();
 						if (LevelManager.getCurrentLevelName().equals("survival")) SurvivalLevel.createPlayer();
+						if (LevelManager.getCurrentLevelName().equals("procedural")) ProceduralLevel.createPlayer();
 							}
 						}, 2000);
 					}

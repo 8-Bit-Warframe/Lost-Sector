@@ -18,6 +18,8 @@ import com.ezardlabs.lostsector.map.procedural.MapSegmentConnector;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.SupraCrewman;
+import com.ezardlabs.lostsector.objects.enemies.halloween.corpus.crewmen.PumpkinDeraCrewman;
+import com.ezardlabs.lostsector.objects.enemies.halloween.grineer.WereDrahk;
 import com.ezardlabs.lostsector.objects.environment.Camera;
 import com.ezardlabs.lostsector.objects.environment.Door;
 import com.ezardlabs.lostsector.objects.environment.Locker;
@@ -26,6 +28,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MapManager {
@@ -38,6 +41,9 @@ public class MapManager {
 	public static Vector2 playerSpawn = new Vector2();
 	public static ArrayList<Vector2> enemySpawns = null;
 	public static String overrideMapName = null;
+
+	public static long proceduralSeed = -1;
+	public static Random rand = null;
 
 	public static void loadMap(String name) {
 		if(overrideMapName != null) {
@@ -188,6 +194,13 @@ public class MapManager {
 	// START Procedural mapping stuff
 
 	public static void loadProceduralMap(MapConfig mapCfg) {
+		// Get random seed from mapCfg.  If not a valid seed, create a new one from system time.
+		proceduralSeed = mapCfg.proceduralSeed;
+		if(proceduralSeed < 0) {
+			proceduralSeed = System.currentTimeMillis();
+		}
+		rand = new Random(proceduralSeed);
+		
 		// Keep a list of added sections
 		ArrayList<MapSegment> renderSegments = new ArrayList<>();
 
@@ -303,7 +316,7 @@ public class MapManager {
 
 		NavMesh.init(solidityMap);
 
-		printSolidityMapArray();
+//		printSolidityMapArray();
 
 		System.out.println(mapCfg.toString());
 	}
@@ -581,7 +594,7 @@ public class MapManager {
 					playerSpawn = new Vector2(pos.x, pos.y);
 					break;
 				case "locker":
-					if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 0)
+					if(0 + (int)(rand.nextDouble() * ((1 - 0) + 1)) == 0)
 						GameObject
 								.instantiate(new GameObject("Locker", true, new Locker(true), new Renderer(ta, ta.getSprite("lockred"), TILE_SIZE * MAP_SCALE, TILE_SIZE * 2 * MAP_SCALE).setFlipped(flipH, flipV)), pos);
 					else
@@ -674,6 +687,17 @@ public class MapManager {
 				case "supra_crewman":
 					GameObject.instantiate(
 							new GameObject("Supra Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new SupraCrewman()),
+							pos);
+					break;
+				// Halloween Enemies
+				case "pumpkin_dera_crewman":
+					GameObject.instantiate(
+							new GameObject("Pumpkin Dera Crewman", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new PumpkinDeraCrewman()),
+							pos);
+					break;
+				case "weredrahk":
+					GameObject.instantiate(
+							new GameObject("Weredrahk", new Renderer(), new Animator(), new Collider(w, h), new Rigidbody(), new WereDrahk()),
 							pos);
 					break;
 			}
