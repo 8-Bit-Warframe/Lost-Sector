@@ -599,7 +599,7 @@ public class MapManager {
 					break;
 				case "locker":
 					if (Network.isHost()) {
-						if (rand.nextInt(2) == 0) {
+						if ((int) (Math.random() * 2) == 0) {
 							Network.instantiate("locker_locked", pos);
 						} else {
 							Network.instantiate("locker_unlocked", pos);
