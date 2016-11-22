@@ -65,7 +65,7 @@ public class IceWave extends Script {
 				hFlipped ? new Vector2(transform.position.x + 800, transform.position.y + 200) : new Vector2(transform.position.x, transform.position.y + 200)), 1000);
 	}
 
-	class IceWaveCollision extends Script {
+	private class IceWaveCollision extends Script {
 
 		@Override
 		public void update() {
