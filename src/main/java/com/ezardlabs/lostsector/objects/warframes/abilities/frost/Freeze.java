@@ -13,11 +13,7 @@ import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
 public class Freeze extends Script {
-	private final int direction;
-
-	public Freeze(int direction) {
-		this.direction = direction;
-	}
+	private int direction = 0;
 
 	@Override
 	public void start() {
@@ -68,5 +64,9 @@ public class Freeze extends Script {
 				gameObject.animator.play("shatter");
 			}
 		}
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
 	}
 }
