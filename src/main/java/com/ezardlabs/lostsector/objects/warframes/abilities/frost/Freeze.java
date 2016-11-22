@@ -13,17 +13,17 @@ import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
 public class Freeze extends Script {
-	private final boolean hFlipped;
+	private final int direction;
 
-	public Freeze(boolean hFlipped) {
-		this.hFlipped = hFlipped;
+	public Freeze(int direction) {
+		this.direction = direction;
 	}
 
 	@Override
 	public void start() {
 		TextureAtlas ta = new TextureAtlas("images/warframes/abilities/frost/freeze/atlas.png", "images/warframes/abilities/frost/freeze/atlas.txt");
 		gameObject.renderer.setTextureAtlas(ta, 100, 100);
-		gameObject.renderer.setFlipped(hFlipped, false);
+		gameObject.renderer.setFlipped(direction == -1, false);
 		gameObject.animator.setAnimations(new Animation("move", new Sprite[]{ta.getSprite("cube0"),
 						ta.getSprite("cube1"),
 						ta.getSprite("cube2"),
@@ -53,7 +53,7 @@ public class Freeze extends Script {
 
 	@Override
 	public void update() {
-		transform.translate(15f * (hFlipped ? -1 : 1), 0);
+		transform.translate(15f * direction, 0);
 	}
 
 	@Override
