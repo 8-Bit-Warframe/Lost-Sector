@@ -3,9 +3,7 @@ package com.ezardlabs.lostsector.objects.warframes;
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
-import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.multiplayer.Network;
@@ -13,7 +11,6 @@ import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.IceWave;
-import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Snowglobe;
 import com.ezardlabs.lostsector.objects.weapons.melee.Nikana;
 import com.ezardlabs.lostsector.objects.weapons.primary.Lanka;
 
@@ -92,8 +89,7 @@ public class Frost extends Warframe {
 
 	@Override
 	public void ability3() {
-		GameObject
-				.instantiate(new GameObject("Snowglobe", new Renderer(), new Animator(), new Collider(800, 600), new Snowglobe()), transform.position.offset(-300, -200));
+		Network.instantiate("snowglobe", transform.position.offset(-300, -200));
 	}
 
 	@Override
