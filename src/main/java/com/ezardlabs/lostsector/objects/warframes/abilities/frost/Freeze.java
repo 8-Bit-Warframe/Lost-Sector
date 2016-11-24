@@ -9,6 +9,7 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
@@ -59,7 +60,7 @@ public class Freeze extends Script {
 				//noinspection ConstantConditions
 				other.gameObject.getComponentOfType(Enemy.class).applyDamage(1, DamageType.COLD, transform.position);
 				gameObject.removeComponent(Collider.class);
-				GameObject.destroy(gameObject);
+				Network.destroy(gameObject);
 			} else if (other.gameObject.getTag().equals("solid") && other.gameObject.name != null && !other.gameObject.name.equals("Snowglobe")) {
 				gameObject.animator.play("shatter");
 			}
