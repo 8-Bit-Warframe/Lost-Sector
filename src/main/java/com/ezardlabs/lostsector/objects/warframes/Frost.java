@@ -8,6 +8,7 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
@@ -69,8 +70,11 @@ public class Frost extends Warframe {
 
 	@Override
 	public void ability1() {
-		GameObject.instantiate(new GameObject("Freeze", new Renderer(), new Animator(), new Freeze(gameObject.renderer.hFlipped), new Collider(100, 100, true)),
-				new Vector2(gameObject.renderer.hFlipped ? transform.position.x : transform.position.x + 100, transform.position.y + 50));
+		GameObject freeze = Network.instantiate("freeze", new Vector2(
+				gameObject.renderer.hFlipped ? transform.position.x : transform.position.x + 100,
+				transform.position.y + 50));
+		//noinspection ConstantConditions
+		freeze.getComponent(Freeze.class).setDirection(gameObject.renderer.hFlipped ? -1 : 1);
 	}
 
 	@Override
