@@ -81,9 +81,12 @@ public class Frost extends Warframe {
 	public void ability2() {
 		//noinspection ConstantConditions
 		if (gameObject.getComponent(Player.class).jumpCount == 0) {
-			GameObject
-					.instantiate(new GameObject("Ice Wave", new Renderer(), new Animator(), new IceWave(gameObject.renderer.hFlipped), new Collider(300, 200, true)),
-					new Vector2(gameObject.renderer.hFlipped ? transform.position.x - 800 : transform.position.x + 200, transform.position.y - 200));
+			GameObject iceWave = Network.instantiate("ice_wave", new Vector2(
+					gameObject.renderer.hFlipped ?
+							transform.position.x - 800 : transform.position.x + 200,
+					transform.position.y - 200));
+			//noinspection ConstantConditions
+			iceWave.getComponent(IceWave.class).setDirection(gameObject.renderer.hFlipped ? -1 : 1);
 		}
 	}
 

@@ -8,24 +8,21 @@ import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
 import java.util.ArrayList;
 
 public class IceWave extends Script {
-	private final boolean hFlipped;
+	private int direction = 0;
 	private ArrayList<GameObject> damagedEnemies = new ArrayList<>();
-
-	public IceWave(boolean hFlipped) {
-		this.hFlipped = hFlipped;
-	}
 
 	@Override
 	public void start() {
-		TextureAtlas ta = new TextureAtlas("images/warframes/abilities/frost/icewave/atlas.png", "images/warframes/abilities/frost/icewave/atlas.txt");
+		TextureAtlas ta = new TextureAtlas("images/warframes/abilities/frost/icewave/atlas.png",
+				"images/warframes/abilities/frost/icewave/atlas.txt");
 		gameObject.renderer.setTextureAtlas(ta, 800, 400);
-		gameObject.renderer.setFlipped(hFlipped, false);
 		gameObject.animator.setAnimations(new Animation("move", new Sprite[]{ta.getSprite("iw0"),
 				ta.getSprite("iw1"),
 				ta.getSprite("iw2"),
@@ -59,24 +56,36 @@ public class IceWave extends Script {
 				ta.getSprite("iw30"),
 				ta.getSprite("iw31")}, AnimationType.ONE_SHOT, 50));
 		gameObject.animator.play("move");
-		GameObject.destroy(gameObject, 1600);
-		GameObject.destroy(GameObject
-				.instantiate(new GameObject("Ice Wave Collider", new Collider(10, 200, true), new IceWaveCollision()),
-				hFlipped ? new Vector2(transform.position.x + 800, transform.position.y + 200) : new Vector2(transform.position.x, transform.position.y + 200)), 1000);
+		Network.destroy(gameObject, 1600);
+		if (Network.isHost()) {
+			GameObject.destroy(GameObject.instantiate(
+					new GameObject("Ice Wave Collider", new Collider(10, 200, true),
+							new IceWaveCollision()),
+					direction == -1 ? new Vector2(transform.position.x + 800,
+							transform.position.y + 200) : new Vector2(transform.position.x,
+							transform.position.y + 200)), 1000);
+		}
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
+		gameObject.renderer.setFlipped(direction == -1, false);
 	}
 
 	private class IceWaveCollision extends Script {
 
 		@Override
 		public void update() {
-			transform.translate(hFlipped ? -10 : 10, 0);
+			transform.translate(10 * direction, 0);
 		}
 
 		@Override
 		public void onTriggerEnter(Collider other) {
-			if (other.gameObject.getTag() != null && other.gameObject.getTag().equals("enemy") && !damagedEnemies.contains(other.gameObject)) {
+			if (other.gameObject.getTag() != null && other.gameObject.getTag().equals("enemy") &&
+					!damagedEnemies.contains(other.gameObject)) {
 				//noinspection ConstantConditions
-				other.gameObject.getComponentOfType(Enemy.class).applyDamage(1, DamageType.COLD, transform.position);
+				other.gameObject.getComponentOfType(Enemy.class)
+								.applyDamage(1, DamageType.COLD, transform.position);
 				damagedEnemies.add(other.gameObject);
 			}
 		}
