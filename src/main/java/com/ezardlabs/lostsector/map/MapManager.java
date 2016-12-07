@@ -613,10 +613,10 @@ public class MapManager {
 					if (Network.isHost()) Network.instantiate("locker_unlocked", pos);
 					break;
 				case "door":
-					if (Network.isHost()) Network.instantiate("door", pos);
+					GameObject.instantiate(PrefabManager.loadPrefab("door"), pos);
 					break;
 				case "ldoor":
-					if (Network.isHost()) Network.instantiate("laser_door", pos);
+					GameObject.instantiate(PrefabManager.loadPrefab("laser_door"), pos);
 					break;
 			}
 

@@ -78,16 +78,10 @@ public class Game extends BaseGame {
 	private void registerDoorPrefabs() {
 		PrefabManager.addPrefab("door", () -> new GameObject("Door", new Door(
 				new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt")),
-				new Renderer(), new Animator(), new Collider(100, 500, true),
-				new NetworkAnimator()), () -> new GameObject("Door", new Door(
-				new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt")),
-				new Renderer(), new Animator(), new NetworkAnimator()));
+				new Renderer(), new Animator(), new Collider(100, 500, true)));
 		PrefabManager.addPrefab("laser_door", () -> new GameObject("Laser Door", new LaserDoor(
 				new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt")),
-				new Renderer(), new Animator(), new Collider(100, 500, true),
-				new NetworkAnimator()), () -> new GameObject("Laser Door", new LaserDoor(
-				new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt")),
-				new Renderer(), new Animator(), new NetworkAnimator()));
+				new Renderer(), new Animator(), new Collider(100, 500, true)));
 	}
 
 	private void registerLockerPrefabs() {

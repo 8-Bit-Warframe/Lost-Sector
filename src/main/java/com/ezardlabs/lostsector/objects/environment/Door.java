@@ -8,7 +8,6 @@ import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.multiplayer.Network;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentHashMap.KeySetView;
@@ -29,10 +28,8 @@ public class Door extends Script {
 				new Vector2(transform.position));
 		GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(200, 100)),
 				transform.position.offset(0, 400));
-		if (Network.isHost()) {
-			GameObject.instantiate(new GameObject("DoorDetection", new Collider(1200, 500, true),
-					new DoorDetection(this)), transform.position.offset(-500, 0));
-		}
+		GameObject.instantiate(new GameObject("DoorDetection", new Collider(1200, 500, true),
+				new DoorDetection(this)), transform.position.offset(-500, 0));
 	}
 
 	private void open() {
