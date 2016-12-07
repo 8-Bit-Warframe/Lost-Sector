@@ -67,9 +67,13 @@ public class IceWave extends Script {
 		}
 	}
 
+	@Override
+	public void update() {
+		gameObject.renderer.setFlipped(direction == -1, false);
+	}
+
 	public void setDirection(int direction) {
 		this.direction = direction;
-		gameObject.renderer.setFlipped(direction == -1, false);
 	}
 
 	private class IceWaveCollision extends Script {
