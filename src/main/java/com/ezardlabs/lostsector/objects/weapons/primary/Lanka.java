@@ -44,12 +44,12 @@ public class Lanka extends RangedWeapon {
 					case 4:
 					case 5:
 						count = 0;
-						return ++currentFrame;
+						return currentFrame + 1;
 					case 6:
 						return -1;
 					case 2:
 						if (count++ == 4) {
-							return ++currentFrame;
+							return currentFrame + 1;
 						} else {
 							if (!beamCreated) {
 								GameObject beam = Network.instantiate("lanka_beam", player.transform.position.offset(player.renderer.hFlipped ? -112.5f : 312.5f, 109.375f));
