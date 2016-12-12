@@ -35,11 +35,15 @@ public class Door extends Script {
 	private void open() {
 		gameObject.animator.play("open");
 		gameObject.setTag(null);
+		gameObject.collider.bounds.setWidth(0);
+		gameObject.collider.bounds.setHeight(0);
 	}
 
 	private void close() {
 		gameObject.animator.play("close");
 		gameObject.setTag("solid");
+		gameObject.collider.bounds.setWidth(100);
+		gameObject.collider.bounds.setHeight(500);
 	}
 
 	protected Animation getOpenAnimation(TextureAtlas ta) {
