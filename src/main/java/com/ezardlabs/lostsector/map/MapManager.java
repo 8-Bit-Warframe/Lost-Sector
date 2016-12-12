@@ -632,7 +632,7 @@ public class MapManager {
 
 	public static void instantiateEnemies(TMXObject[] objects, Vector2 offset) {
 		for(TMXObject object : objects) {
-			Vector2 pos = new Vector2((object.getX() + offset.x) * MAP_SCALE, (object.getY() + offset.y) * MAP_SCALE);
+			Vector2 pos = new Vector2((object.getX() + offset.x * TILE_SIZE) * MAP_SCALE, (object.getY() + offset.y * TILE_SIZE) * MAP_SCALE);
 			switch(object.getType()) {
 				case "spawn":
 					enemySpawns.add(pos);
