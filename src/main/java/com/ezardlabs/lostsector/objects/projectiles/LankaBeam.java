@@ -2,8 +2,11 @@ package com.ezardlabs.lostsector.objects.projectiles;
 
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.Physics;
+import com.ezardlabs.dethsquare.Physics.RaycastHit;
 import com.ezardlabs.dethsquare.RectF;
 import com.ezardlabs.dethsquare.Script;
+import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
@@ -21,18 +24,8 @@ public class LankaBeam extends Script {
 	@Override
 	public void start() {
 		startTime = System.currentTimeMillis();
-		float closestX = direction == 1 ? Float.MAX_VALUE : Float.MIN_VALUE;
-		for (Collider c : Collider.staticColliders) {
-			if (c.gameObject.name.equals("Door") && c.gameObject.getTag() == null) continue;
-			if (!c.gameObject.name.equals("Locker") && c.bounds.top < transform.position.y && c.bounds.bottom > transform.position.y) {
-				if (direction == 1 && c.bounds.left > transform.position.x && c.bounds.left < closestX) {
-					closestX = c.bounds.left;
-				} else if (direction == -1 && c.bounds.right < transform.position.x && c.bounds.right > closestX) {
-					closestX = c.bounds.right;
-				}
-			}
-		}
-		width = (int) Math.abs(transform.position.x - closestX);
+		RaycastHit hit = Physics.raycast(transform.position, new Vector2(1, 0), Float.MAX_VALUE);
+		width = (int) Math.abs(transform.position.x - hit.point.x);
 		if (direction == -1) transform.position.x -= width;
 		gameObject.renderer.setSize(width, 0);
 		gameObject.renderer.setzIndex(3);
