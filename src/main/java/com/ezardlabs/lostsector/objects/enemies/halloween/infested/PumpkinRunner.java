@@ -1,4 +1,4 @@
-package com.ezardlabs.lostsector.objects.enemies.halloween.generic;
+package com.ezardlabs.lostsector.objects.enemies.halloween.infested;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
@@ -17,7 +17,12 @@ public class PumpkinRunner extends Enemy {
 	private boolean rising = false;
 
 	public PumpkinRunner() {
-		super("pumpkin_runner", 2);
+		super(2);
+	}
+
+	@Override
+	protected String getAtlasPath() {
+		return "halloween/infested/pumpkin_runner";
 	}
 
 	@Override

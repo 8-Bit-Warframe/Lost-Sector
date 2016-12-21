@@ -15,8 +15,9 @@ public class ProvaCrewman extends Crewman {
 	Vector2 target;
 	private boolean attacking = false;
 
-	public ProvaCrewman() {
-		super("prova");
+	@Override
+	protected String getAtlasPath() {
+		return "corpus/crewmen/prova";
 	}
 
 	@Override

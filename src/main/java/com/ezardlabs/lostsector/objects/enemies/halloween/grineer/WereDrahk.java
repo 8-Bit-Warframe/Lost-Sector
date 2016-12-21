@@ -16,7 +16,7 @@ public class WereDrahk extends Enemy {
 	private boolean attacking = false;
 
 	public WereDrahk() {
-		super("weredrahk", 5);
+		super(5);
 	}
 
 	@Override
@@ -165,6 +165,11 @@ public class WereDrahk extends Enemy {
 	@Override
 	protected Animation getFrozenShatterAnimation() {
 		return getDieAnimation("frozen_shatter");
+	}
+
+	@Override
+	protected String getAtlasPath() {
+		return "";
 	}
 
 	private Animation getDieAnimation(String name) {

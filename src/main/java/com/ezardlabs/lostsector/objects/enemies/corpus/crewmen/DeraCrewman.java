@@ -17,8 +17,9 @@ public class DeraCrewman extends Crewman {
 	private AudioSource audio = new AudioSource();
 	private AudioClip shoot;
 
-	public DeraCrewman() {
-		super("dera");
+	@Override
+	protected String getAtlasPath() {
+		return "corpus/crewmen/dera";
 	}
 
 	@Override

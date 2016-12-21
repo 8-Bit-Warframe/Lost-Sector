@@ -10,13 +10,18 @@ import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.lostsector.objects.enemies.corpus.Crewman;
-import com.ezardlabs.lostsector.objects.enemies.halloween.generic.Pumpkin;
+import com.ezardlabs.lostsector.objects.enemies.halloween.infested.Pumpkin;
 import com.ezardlabs.lostsector.objects.projectiles.Laser;
 
 public class PumpkinDeraCrewman extends Crewman {
 
 	public PumpkinDeraCrewman() {
-		super("pumpkin_dera");
+		super();
+	}
+
+	@Override
+	protected String getAtlasPath() {
+		return "halloween/corpus/crewmen/pumpkin_dera";
 	}
 
 	private Animation getDieAnimation(String name) {

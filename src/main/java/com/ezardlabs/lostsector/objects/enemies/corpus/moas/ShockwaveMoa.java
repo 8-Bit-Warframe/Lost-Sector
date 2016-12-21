@@ -20,8 +20,9 @@ public class ShockwaveMoa extends Moa {
 	private boolean shooting = false;
 	private Vector2 target;
 
-	public ShockwaveMoa() {
-		super("shockwave");
+	@Override
+	protected String getAtlasPath() {
+		return "corpus/moa/shockwave";
 	}
 
 	@Override

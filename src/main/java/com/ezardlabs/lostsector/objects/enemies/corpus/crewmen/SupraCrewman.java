@@ -13,7 +13,12 @@ import com.ezardlabs.lostsector.objects.projectiles.Laser;
 public class SupraCrewman extends Crewman {
 
 	public SupraCrewman() {
-		super("supra");
+		super();
+	}
+
+	@Override
+	protected String getAtlasPath() {
+		return "corpus/crewmen/supra";
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.ezardlabs.lostsector.objects.enemies.halloween.generic;
+package com.ezardlabs.lostsector.objects.enemies.halloween.infested;
 
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.AnimationType;
@@ -14,7 +14,12 @@ public class Pumpkin extends Enemy {
 	private long createdAt = 0;
 
 	public Pumpkin() {
-		super("pumpkin", 1);
+		super(1);
+	}
+
+	@Override
+	protected String getAtlasPath() {
+		return "halloween/infested/pumpkin";
 	}
 
 	@Override

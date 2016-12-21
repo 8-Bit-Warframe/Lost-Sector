@@ -7,10 +7,10 @@ import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
-public class Moa extends Enemy {
+public abstract class Moa extends Enemy {
 
-	public Moa(String name) {
-		super("corpus/moa/" + name, 2);
+	public Moa() {
+		super(2);
 	}
 
 	protected Animation getRunAnimation() {

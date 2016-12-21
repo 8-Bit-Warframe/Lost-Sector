@@ -20,9 +20,14 @@ public abstract class Enemy extends Avatar {
 	protected boolean landing = false;
 	protected boolean dead = false;
 
-	public Enemy(String name, int health) {
+	public Enemy(int health) {
 		super(health);
-		ta = new TextureAtlas("images/enemies/" + name + "/atlas.png", "images/enemies/" + name + "/atlas.txt");
+		String atlasPath = getAtlasPath();
+		if (!atlasPath.endsWith("/")) {
+			atlasPath += "/";
+		}
+		ta = new TextureAtlas("images/enemies/" + atlasPath + "/atlas.png",
+				"images/enemies/" + atlasPath + "/atlas.txt");
 		uid = Math.random();
 	}
 
@@ -354,4 +359,6 @@ public abstract class Enemy extends Avatar {
 			}
 		});
 	}
+
+	protected abstract String getAtlasPath();
 }

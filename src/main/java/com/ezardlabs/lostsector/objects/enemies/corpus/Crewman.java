@@ -7,12 +7,12 @@ import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.NavMesh;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
-public class Crewman extends Enemy {
+public abstract class Crewman extends Enemy {
 	Vector2 target;
 	boolean shooting = false;
 
-	public Crewman(String name) {
-		super("corpus/crewmen/" + name, 3);
+	public Crewman() {
+		super(3);
 	}
 
 	@Override
