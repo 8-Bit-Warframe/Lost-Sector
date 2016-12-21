@@ -22,12 +22,8 @@ public abstract class Enemy extends Avatar {
 
 	public Enemy(int health) {
 		super(health);
-		String atlasPath = getAtlasPath();
-		if (!atlasPath.endsWith("/")) {
-			atlasPath += "/";
-		}
-		ta = new TextureAtlas("images/enemies/" + atlasPath + "/atlas.png",
-				"images/enemies/" + atlasPath + "/atlas.txt");
+		ta = new TextureAtlas("images/enemies/" + getAtlasPath() + "/atlas.png",
+				"images/enemies/" + getAtlasPath() + "/atlas.txt");
 		uid = Math.random();
 	}
 
