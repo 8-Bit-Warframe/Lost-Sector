@@ -32,5 +32,4 @@ compileJava.dependsOn indexResources
 
 dependencies {
     compile project(':dethsquare')
-    testCompile group: 'junit', name: 'junit', version: '4.11'
 }
