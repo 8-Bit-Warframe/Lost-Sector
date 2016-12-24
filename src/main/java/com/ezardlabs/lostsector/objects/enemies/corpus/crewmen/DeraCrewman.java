@@ -27,6 +27,7 @@ public class DeraCrewman extends Crewman {
 		super.start();
 		shoot = new AudioClip("audio/dera_shoot.ogg");
 		gameObject.addComponent(audio);
+		audio.setAudioClip(shoot);
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class DeraCrewman extends Crewman {
 							new Collider(100, 100, true), new Laser(2)), transform.position
 							.offset(gameObject.renderer.hFlipped ? -12.5f : 87.5f,
 									frameNum == 1 ? 75 : 50));
-					audio.play(shoot);
+					audio.play();
 
 				}
 			}

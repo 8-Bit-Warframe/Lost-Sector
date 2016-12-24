@@ -27,12 +27,11 @@ public class ExploreLevel extends Level {
 
 		AudioSource as = new AudioSource();
 
-		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm, as), new Vector2
-				(MapManager.playerSpawn));
+		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm,
+						new AudioSource(new AudioClip("audio/theme.ogg"), true)),
+				new Vector2(MapManager.playerSpawn));
 
 		cm.smoothFollow(Game.players[0].transform);
-
-		as.play(new AudioClip("audio/theme.ogg"));
 
 		TextureAtlas fontTA = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
 		GameObject.instantiate(

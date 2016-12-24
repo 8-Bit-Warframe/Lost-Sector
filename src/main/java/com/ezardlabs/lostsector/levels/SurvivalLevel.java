@@ -2,6 +2,7 @@ package com.ezardlabs.lostsector.levels;
 
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.AudioSource;
+import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
@@ -32,14 +33,12 @@ public class SurvivalLevel extends Level {
 		Game.players = new GameObject[]{Network.instantiate("player", new Vector2(MapManager
 				.playerSpawn))};
 
-		AudioSource as = new AudioSource();
-
-		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm, as), new Vector2
-				(MapManager.playerSpawn));
+		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm,
+						new AudioSource(new AudioClip("audio/theme.ogg"), true)),
+				new Vector2(MapManager.playerSpawn));
 
 		cm.smoothFollow(Game.players[0].transform);
 
-		as.play(new AudioSource.AudioClip("audio/theme.ogg"));
 		survivalManager = new SurvivalManager(MapManager.enemySpawns);
 		GameObject.instantiate(new GameObject("SurvivalManager", survivalManager), new Vector2());
 
