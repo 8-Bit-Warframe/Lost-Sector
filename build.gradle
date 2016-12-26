@@ -29,7 +29,3 @@ task indexResources << {
 }
 
 compileJava.dependsOn indexResources
-
-dependencies {
-    compile project(':dethsquare')
-}
