@@ -28,6 +28,7 @@ import com.ezardlabs.lostsector.objects.environment.Locker;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.projectiles.LankaBeam;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
+import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
 
 public class Game extends BaseGame {
 	public static GameObject[] players;
@@ -49,6 +50,7 @@ public class Game extends BaseGame {
 		LevelManager.registerLevel("main_menu", new MainMenuLevel());
 
 		registerPlayerPrefabs();
+		registerWarframeAbilityPrefabs();
 		registerProjectilePrefabs();
 		registerDoorPrefabs();
 		registerLockerPrefabs();
@@ -65,6 +67,13 @@ public class Game extends BaseGame {
 				() -> new GameObject("Other Player", "player", new Renderer(), new Animator(),
 						new Frost(), new Collider(200, 200), new NetworkTransform(),
 						new NetworkRenderer(), new NetworkAnimator()));
+	}
+
+	private void registerWarframeAbilityPrefabs() {
+		PrefabManager.addPrefab("freeze",
+				() -> new GameObject("Freeze", new Renderer(), new Animator(),
+						new Collider(100, 100, true), new Freeze(),
+						new NetworkTransform(), new NetworkAnimator()));
 	}
 
 	private void registerProjectilePrefabs() {
