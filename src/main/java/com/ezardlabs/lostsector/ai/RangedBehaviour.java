@@ -1,16 +1,11 @@
 package com.ezardlabs.lostsector.ai;
 
 public class RangedBehaviour extends Behaviour {
-	private final int range;
+	private final float range;
 
-	public RangedBehaviour(float moveSpeed, int range) {
-		super(moveSpeed);
+	RangedBehaviour(float moveSpeed, boolean willPatrol, float visionRange,
+			float range) {
+		super(moveSpeed, willPatrol, visionRange);
 		this.range = range;
-	}
-
-	@Override
-	public void update() {
-		super.update();
-
 	}
 }

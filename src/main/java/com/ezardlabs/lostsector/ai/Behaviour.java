@@ -1,18 +1,82 @@
 package com.ezardlabs.lostsector.ai;
 
-import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Script;
-import com.ezardlabs.dethsquare.Transform;
-import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.lostsector.NavMesh;
-import com.ezardlabs.lostsector.NavMesh.NavPoint;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public abstract class Behaviour extends Script {
-	private final float moveSpeed;
+	private float moveSpeed;
+	private final boolean willPatrol;
+	private final float visionRange;
+	private State state = State.IDLE;
+
+	protected enum State {
+		IDLE,
+		PATROLLING,
+		SEARCHING,
+		TRACKING,
+		ATTACKING
+	}
+
+	Behaviour(float moveSpeed, boolean willPatrol, float visionRange) {
+		this.moveSpeed = moveSpeed;
+		this.willPatrol = willPatrol;
+		this.visionRange = visionRange;
+	}
+
+	@SuppressWarnings("unchecked")
+	private abstract static class Builder<T extends Builder> {
+		float moveSpeed = 10;
+		float visionRange = 2000;
+		boolean willPatrol = false;
+
+		public T setMoveSpeed(float moveSpeed) {
+			this.moveSpeed = moveSpeed;
+			return (T) this;
+		}
+
+		public T setWillPatrol(boolean willPatrol) {
+			this.willPatrol = willPatrol;
+			return (T) this;
+		}
+
+		public T setVisionRange(float visionRange) {
+			this.visionRange = visionRange;
+			return (T) this;
+		}
+
+		public abstract Behaviour create();
+	}
+
+	public static class MeleeBuilder extends Builder<MeleeBuilder> {
+		private float meleeRange;
+
+		public MeleeBuilder setMeleeRange(float meleeRange) {
+			this.meleeRange = meleeRange;
+			return this;
+		}
+
+		@Override
+		public MeleeBehaviour create() {
+			return new MeleeBehaviour(moveSpeed, willPatrol, visionRange,
+					meleeRange);
+		}
+	}
+
+	public static class RangedBuilder extends Builder<RangedBuilder> {
+		private float range = 1500;
+
+		public RangedBuilder setRange(float range) {
+			this.range = range;
+			return this;
+		}
+
+		@Override
+		public RangedBehaviour create() {
+			return new RangedBehaviour(moveSpeed, willPatrol, visionRange,
+					range);
+		}
+	}
+
+/*	private final float moveSpeed;
 	private NavPoint lastTargetNavPoint;
 	private ArrayList<NavPoint> path;
 	protected Transform target;
@@ -97,5 +161,5 @@ public abstract class Behaviour extends Script {
 
 //			System.out.println("After: " + transform.position + " -> " + target);
 		}
-	}
+	}*/
 }
