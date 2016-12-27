@@ -13,15 +13,15 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.map.MapManager;
-import com.ezardlabs.lostsector.objects.Entity;
 import com.ezardlabs.lostsector.objects.CameraMovement;
+import com.ezardlabs.lostsector.objects.ShieldedEntity;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public abstract class Warframe extends Entity {
+public abstract class Warframe extends ShieldedEntity {
 	protected final TextureAtlas ta;
 	protected final int maxShield;
 	protected int shield;
@@ -32,7 +32,7 @@ public abstract class Warframe extends Entity {
 	private long nextShieldRegen = 0;
 
 	public Warframe(String name, int maxHealth, int maxShield, int maxEnergy) {
-		super(maxHealth);
+		super(maxHealth, maxShield, 2000);
 		this.maxShield = maxShield;
 		shield = maxShield;
 		this.maxEnergy = maxEnergy;
@@ -45,14 +45,6 @@ public abstract class Warframe extends Entity {
 		gameObject.renderer.setTextureAtlas(ta, 200, 200);
 		gameObject.animator.setAnimations(getIdleAnimation(), getRunAnimation(), getJumpAnimation(), getDoubleJumpAnimation(), getFallAnimation(), getLandAnimation(), getDieAnimation());
 		gameObject.animator.play("idle");
-	}
-
-	@Override
-	public void update() {
-		if (shield < maxShield && System.currentTimeMillis() > nextShieldRegen) {
-			shield++;
-			nextShieldRegen += 2000;
-		}
 	}
 
 	protected Animation getIdleAnimation() {
