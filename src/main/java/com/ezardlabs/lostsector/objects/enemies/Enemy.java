@@ -338,7 +338,7 @@ public abstract class Enemy extends Avatar {
 				ta.getSprite("frozen_shatter8")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
-				if (!(gameObject.transform.scale.x < 0)) {
+				if (gameObject.transform.scale.x > 0) {
 					transform.translate(-100, 0);
 				}
 				gameObject.renderer.setSize(300, 200);
