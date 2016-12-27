@@ -13,7 +13,7 @@ public class CameraMovement extends Script {
 	private long quakeEndPoint = 0;
 	private float quakeStrength = 0;
 
-	enum FollowType {
+	public enum FollowType {
 		DIRECT,
 		SMOOTH
 	}
