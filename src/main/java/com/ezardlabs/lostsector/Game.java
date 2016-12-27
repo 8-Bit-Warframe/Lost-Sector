@@ -30,6 +30,7 @@ import com.ezardlabs.lostsector.objects.projectiles.LankaBeam;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.IceWave;
+import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Snowglobe;
 
 public class Game extends BaseGame {
 	public static GameObject[] players;
@@ -78,6 +79,10 @@ public class Game extends BaseGame {
 		PrefabManager.addPrefab("ice_wave",
 				() -> new GameObject("Ice Wave", new Renderer(),
 						new Animator(), new IceWave(), new NetworkAnimator()));
+		PrefabManager.addPrefab("snowglobe",
+				() -> new GameObject("Snowglobe", new Renderer(),
+						new Animator(), new Collider(800, 600),
+						new Snowglobe(), new NetworkAnimator()));
 	}
 
 	private void registerProjectilePrefabs() {
