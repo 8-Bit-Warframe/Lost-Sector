@@ -6,6 +6,7 @@ import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game;
+import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.NavMesh;
 
 public class Kubrow extends Entity {
@@ -256,5 +257,9 @@ public class Kubrow extends Entity {
 		} else {
 			gameObject.animator.play("run");
 		}
+	}
+
+	@Override
+	protected void die(DamageType damageType, Vector2 attackOrigin) {
 	}
 }

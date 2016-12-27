@@ -37,6 +37,24 @@ public abstract class Enemy extends Entity {
 		gameObject.animator.play("idle");
 		gameObject.renderer.transform.scale.x = -1;
 		gameObject.renderer.setzIndex(3);
+		setDamageListener(new DamageListener() {
+			@Override
+			public void onDamageReceived(int damage, DamageType damageType,
+					Vector2 attackOrigin) {
+				switch (damageType) {
+					case NORMAL:
+						break;
+					case SLASH:
+						break;
+					case COLD:
+						gameObject.animator.play("frozen");
+						frozen = true;
+						break;
+					case KUBROW:
+						break;
+				}
+			}
+		});
 		Level level = LevelManager.getCurrentLevel();
 		if (level instanceof MissionLevel) {
 			((MissionLevel) level).getMission().notifyEnemySpawn(this);
@@ -45,19 +63,6 @@ public abstract class Enemy extends Entity {
 
 	public final void jump() {
 		gameObject.rigidbody.velocity.y = -25f;
-	}
-
-	public final void applyDamage(int damage, DamageType damageType, Vector2 attackerPosition) {
-		switch (damageType) {
-			case COLD:
-				gameObject.animator.play("frozen");
-				frozen = true;
-				break;
-		}
-		health -= damage;
-		if (health <= 0) {
-			die(damageType, attackerPosition);
-		}
 	}
 
 //	public void kubrowAttack(Vector2 kubrowPosition) {
@@ -77,14 +82,14 @@ public abstract class Enemy extends Entity {
 //		die(DamageType.KUBROW);
 //	}
 
-	public void die(DamageType damageType, Vector2 attackerPosition) {
+	public void die(DamageType damageType, Vector2 attackOrigin) {
 		gameObject.setTag(null);
 		dead = true;
 		if (frozen) {
 			gameObject.animator.play("frozen_shatter");
 		} else {
 			String direction;
-			if (attackerPosition.x < transform.position.x) {
+			if (attackOrigin.x < transform.position.x) {
 				if (gameObject.transform.scale.x < 0) {
 					direction = "front";
 				} else {

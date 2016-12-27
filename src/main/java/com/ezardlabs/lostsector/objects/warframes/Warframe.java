@@ -11,7 +11,7 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.multiplayer.Network;
-import com.ezardlabs.lostsector.Game;
+import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.ShieldedEntity;
@@ -23,8 +23,6 @@ import java.util.TimerTask;
 
 public abstract class Warframe extends ShieldedEntity {
 	protected final TextureAtlas ta;
-	protected final int maxShield;
-	protected int shield;
 	protected final int maxEnergy;
 	protected int energy;
 	public RangedWeapon rangedWeapon;
@@ -33,8 +31,6 @@ public abstract class Warframe extends ShieldedEntity {
 
 	public Warframe(String name, int maxHealth, int maxShield, int maxEnergy) {
 		super(maxHealth, maxShield, 2000);
-		this.maxShield = maxShield;
-		shield = maxShield;
 		this.maxEnergy = maxEnergy;
 		energy = maxEnergy;
 		ta = new TextureAtlas("images/warframes/" + name + "/atlas.png", "images/warframes/" + name + "/atlas.txt");
@@ -137,26 +133,6 @@ public abstract class Warframe extends ShieldedEntity {
 		gameObject.animator.addAnimations(meleeWeapon.getAnimations(ta));
 	}
 
-	public void addHealth(int health) {
-		this.health += health;
-		if (this.health > maxHealth) this.health = maxHealth;
-	}
-
-	public void removeHealth(int health) {
-		if (shield > 0) {
-			shield--;
-		} else {
-			this.health -= health;
-			if (this.health <= 0) {
-				this.health = 0;
-				gameObject.animator.play("die");
-				gameObject.setTag(null);
-				Game.players = new GameObject[0];
-			}
-		}
-		nextShieldRegen = System.currentTimeMillis() + 2000;
-	}
-
 	public void addEnergy(int energy) {
 		this.energy += energy;
 		if (this.energy > maxEnergy) this.energy = maxEnergy;
@@ -175,11 +151,14 @@ public abstract class Warframe extends ShieldedEntity {
 		return energy;
 	}
 
-	public int getShield() {
-		return shield;
+	@Override
+	protected void die(DamageType damageType, Vector2 attackOrigin) {
+		gameObject.animator.play("die");
+		gameObject.setTag(null);
+		spawnGravestone();
 	}
 
-	public void spawnGravestone() {
+	private void spawnGravestone() {
 		GameObject.instantiate(
 				new GameObject("Tombstone", new Renderer(ta, ta.getSprite("gravestone"), 200, 200)),
 				transform.position.offset(0, 25));

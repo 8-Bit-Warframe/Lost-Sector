@@ -75,10 +75,6 @@ public class Player extends Script {
 		}
 
 		if (warframe.getHealth() <= 0) {
-			if (!gravestoneSpawned) {
-				warframe.spawnGravestone();
-				gravestoneSpawned = true;
-			}
 			return;
 		}
 

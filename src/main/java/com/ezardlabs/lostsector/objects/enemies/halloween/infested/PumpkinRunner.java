@@ -7,9 +7,10 @@ import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game;
+import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.NavMesh;
+import com.ezardlabs.lostsector.objects.Entity;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
-import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
 public class PumpkinRunner extends Enemy {
 	Vector2 target;
@@ -67,9 +68,11 @@ public class PumpkinRunner extends Enemy {
 					for (int i = 0; i < Game.players.length; i++) {
 						if (Math.abs(transform.position.x -
 								Game.players[i].transform.position.x) <= 100) {
-							Warframe w = Game.players[i].getComponentOfType(Warframe.class);
-							if (w != null) {
-								w.removeHealth(10);
+							Entity e = Game.players[i]
+									.getComponentOfType(Entity.class);
+							if (e != null) {
+								e.applyDamage(10, DamageType.NORMAL,
+										transform.position);
 							}
 						}
 					}

@@ -3,7 +3,8 @@ package com.ezardlabs.lostsector.objects.projectiles;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Script;
-import com.ezardlabs.lostsector.objects.warframes.Warframe;
+import com.ezardlabs.lostsector.Game.DamageType;
+import com.ezardlabs.lostsector.objects.Entity;
 
 public class Laser extends Script {
 
@@ -29,7 +30,9 @@ public class Laser extends Script {
 		if (other.gameObject.getTag() != null) {
 			if (other.gameObject.getTag().equals("player")) {
 				//noinspection ConstantConditions
-				other.gameObject.getComponentOfType(Warframe.class).removeHealth(damage);
+				other.gameObject.getComponentOfType(Entity.class)
+								.applyDamage(damage, DamageType.NORMAL,
+										transform.position);
 				gameObject.removeComponent(Collider.class);
 				GameObject.destroy(gameObject);
 			} else if (other.gameObject.getTag().equals("solid")) {
