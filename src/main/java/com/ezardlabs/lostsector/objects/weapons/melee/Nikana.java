@@ -60,7 +60,6 @@ public class Nikana extends MeleeWeapon implements AnimationListener {
 
 					@Override
 					public void onAnimationFinished(Animator animator) {
-						System.out.println("Stow finished");
 						//noinspection ConstantConditions
 						animator.gameObject.getComponent(Player.class).state = State.IDLE;
 						animator.gameObject.renderer.setSize(200, 200);
