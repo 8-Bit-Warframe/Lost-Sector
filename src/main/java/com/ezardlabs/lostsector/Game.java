@@ -78,12 +78,12 @@ public class Game extends BaseGame {
 						new Collider(100, 100, true), new Freeze(),
 						new NetworkTransform(), new NetworkAnimator()));
 		PrefabManager.addPrefab("ice_wave",
-				() -> new GameObject("Ice Wave", new Renderer(),
-						new Animator(), new IceWave(), new NetworkAnimator()));
+				() -> new GameObject("Ice Wave", new Renderer(), new Animator(),
+						new IceWave(), new NetworkAnimator()));
 		PrefabManager.addPrefab("snowglobe",
 				() -> new GameObject("Snowglobe", new Renderer(),
-						new Animator(), new Collider(800, 600),
-						new Snowglobe(), new NetworkAnimator()));
+						new Animator(), new Collider(800, 600), new Snowglobe(),
+						new NetworkAnimator()));
 		PrefabManager.addPrefab("avalanche",
 				() -> new GameObject("Avalanche", new Avalanche()));
 	}
