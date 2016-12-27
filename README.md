@@ -1,0 +1,1 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ea0809eb278941b7883a3d237249e34e)](https://www.codacy.com/app/8-Bit-Warframe/Lost-Sector)
