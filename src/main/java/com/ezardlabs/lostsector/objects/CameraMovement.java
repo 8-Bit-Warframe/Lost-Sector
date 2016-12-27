@@ -6,12 +6,26 @@ import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
 
 public class CameraMovement extends Script {
-	private int followType = 0;
+	private FollowType followType;
 	private Transform target;
 	private Vector2 offset = new Vector2(-450, 0);
 	private boolean isQuaking = false;
 	private long quakeEndPoint = 0;
 	private float quakeStrength = 0;
+
+	enum FollowType {
+		DIRECT,
+		SMOOTH
+	}
+
+	public CameraMovement() {
+		this(null, FollowType.DIRECT);
+	}
+
+	public CameraMovement(Transform target, FollowType followType) {
+		this.target = target;
+		this.followType = followType;
+	}
 
 	public void start() {
 		if (target != null) {
@@ -39,11 +53,11 @@ public class CameraMovement extends Script {
 				cameraY = y - (Screen.height / 2) / Screen.scale;
 			}
 			switch (followType) {
-				case 1:
+				case DIRECT:
 					transform.position.x = cameraX;
 					transform.position.y = cameraY;
 					break;
-				case 2:
+				case SMOOTH:
 					float dx = cameraX - transform.position.x;
 					float dy = cameraY - transform.position.y;
 					double h = Math.sqrt(dx * dx + dy * dy);
@@ -61,23 +75,23 @@ public class CameraMovement extends Script {
 	}
 
 	public void follow(Transform target) {
-		followType = 1;
+		followType = FollowType.DIRECT;
 		this.target = target;
 	}
 
 	public void follow(Transform target, Vector2 offset) {
-		followType = 1;
+		followType = FollowType.DIRECT;
 		this.target = target;
 		this.offset = offset;
 	}
 
 	public void smoothFollow(Transform target) {
-		followType = 2;
+		followType = FollowType.SMOOTH;
 		this.target = target;
 	}
 
 	public void smoothFollow(Transform target, Vector2 offset) {
-		followType = 2;
+		followType = FollowType.SMOOTH;
 		this.target = target;
 		this.offset = offset;
 	}
