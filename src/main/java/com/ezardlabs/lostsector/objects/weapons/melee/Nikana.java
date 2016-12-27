@@ -49,7 +49,7 @@ public class Nikana extends MeleeWeapon implements AnimationListener {
 						ta.getSprite("nikana_dash10"),
 						ta.getSprite("nikana_dash11"),
 						ta.getSprite("nikana_dash12")}, AnimationType.ONE_SHOT, 120, this),
-				new Animation("stow", new TextureAtlas.Sprite[]{ta.getSprite("nikana_stow0")}, AnimationType.ONE_SHOT, 50, new Animation.AnimationListener() {
+				new Animation("stow", new TextureAtlas.Sprite[]{ta.getSprite("nikana_stow0")}, AnimationType.ONE_SHOT, 200, new AnimationListener() {
 					@Override
 					public void onAnimatedStarted(Animator animator) {
 					}
@@ -60,6 +60,7 @@ public class Nikana extends MeleeWeapon implements AnimationListener {
 
 					@Override
 					public void onAnimationFinished(Animator animator) {
+						System.out.println("Stow finished");
 						//noinspection ConstantConditions
 						animator.gameObject.getComponent(Player.class).state = State.IDLE;
 						animator.gameObject.renderer.setSize(200, 200);
