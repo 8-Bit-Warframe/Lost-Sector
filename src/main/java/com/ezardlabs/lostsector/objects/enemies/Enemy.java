@@ -10,6 +10,7 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game.DamageType;
+import com.ezardlabs.lostsector.levels.MissionLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
 import com.ezardlabs.lostsector.objects.Avatar;
 
@@ -36,6 +37,10 @@ public abstract class Enemy extends Avatar {
 		gameObject.animator.play("idle");
 		gameObject.renderer.transform.scale.x = -1;
 		gameObject.renderer.setzIndex(3);
+		Level level = LevelManager.getCurrentLevel();
+		if (level instanceof MissionLevel) {
+			((MissionLevel) level).getMission().notifyEnemySpawn(this);
+		}
 	}
 
 	public final void jump() {
@@ -113,6 +118,9 @@ public abstract class Enemy extends Avatar {
 			gameObject.animator.play("die_" + type + "_" + direction);
 		}
 		Level level = LevelManager.getCurrentLevel();
+		if (level instanceof MissionLevel) {
+			((MissionLevel) level).getMission().notifyEnemyDeath(this);
+		}
 		if (level instanceof SurvivalLevel) {
 			((SurvivalLevel) level).survivalManager.score++;
 		}
