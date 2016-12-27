@@ -28,6 +28,7 @@ import com.ezardlabs.lostsector.objects.environment.Locker;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.projectiles.LankaBeam;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
+import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.IceWave;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Snowglobe;
@@ -83,6 +84,8 @@ public class Game extends BaseGame {
 				() -> new GameObject("Snowglobe", new Renderer(),
 						new Animator(), new Collider(800, 600),
 						new Snowglobe(), new NetworkAnimator()));
+		PrefabManager.addPrefab("avalanche",
+				() -> new GameObject("Avalanche", new Avalanche()));
 	}
 
 	private void registerProjectilePrefabs() {
