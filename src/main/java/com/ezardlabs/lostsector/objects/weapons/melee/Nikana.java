@@ -1,6 +1,7 @@
 package com.ezardlabs.lostsector.objects.weapons.melee;
 
 import com.ezardlabs.dethsquare.Animation;
+import com.ezardlabs.dethsquare.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.GameObject;
@@ -13,7 +14,7 @@ import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
+public class Nikana extends MeleeWeapon implements AnimationListener {
 	private Timer t;
 	private boolean readyForNextAnimation = false;
 
