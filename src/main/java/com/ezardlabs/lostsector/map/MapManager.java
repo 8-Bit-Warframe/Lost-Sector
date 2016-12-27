@@ -97,12 +97,17 @@ public class MapManager {
 			float w = Float.valueOf(split[2]) * 3.125f;
 			float h = Float.valueOf(split[3]) * 3.125f;
 			if (Boolean.valueOf(split[5])) {
-				GameObject.instantiate(
-						new GameObject("Collider Tile", true, new Renderer(ta, ta.getSprite(split[4]), w, h).setFlipped(Boolean.valueOf(split[6]), Boolean.valueOf(split[7])), new Collider(w, h)),
-						new Vector2(x, y));
+				GameObject.instantiate(new GameObject("Collider Tile", true,
+								new Renderer(ta, ta.getSprite(split[4]), w, h),
+								new Collider(w, h)), new Vector2(x, y),
+						new Vector2(Boolean.valueOf(split[6]) ? -1 : 1,
+								Boolean.valueOf(split[7]) ? -1 : 1));
 			} else {
-				GameObject
-						.instantiate(new GameObject("Tile", true, new Renderer(ta, ta.getSprite(split[4]), w, h).setFlipped(Boolean.valueOf(split[6]), Boolean.valueOf(split[7]))), new Vector2(x, y));
+				GameObject.instantiate(new GameObject("Tile", true,
+								new Renderer(ta, ta.getSprite(split[4]), w, h)),
+						new Vector2(x, y),
+						new Vector2(Boolean.valueOf(split[6]) ? -1 : 1,
+								Boolean.valueOf(split[7]) ? -1 : 1));
 			}
 			solidityMap[((int) (x / 100))][((int) (y / 100))] = Boolean.valueOf(split[5]) ? 1 : 0;
 		}
@@ -118,7 +123,7 @@ public class MapManager {
 			float h = Float.valueOf(split[3]) * 3.125f;
 			if (split[4].equals("door")) {
 				GameObject.instantiate(new GameObject("Door", new Door(ta), new Collider(w, h,
-						true), new Renderer(ta, ta.getSprite("door0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
+						true), new Renderer(ta, ta.getSprite("door0"), w, h),
 						new Animator(new Animation("open", new Sprite[]{ta.getSprite("door0"),
 								ta.getSprite("door1"),
 								ta.getSprite("door2"),
@@ -131,11 +136,13 @@ public class MapManager {
 								ta.getSprite("door3"),
 								ta.getSprite("door2"),
 								ta.getSprite("door1"),
-								ta.getSprite("door0")}, AnimationType.ONE_SHOT, 80))), new Vector2(x, y));
+								ta.getSprite("door0")}, AnimationType.ONE_SHOT,
+								80))), new Vector2(x, y),
+						new Vector2(Boolean.valueOf(split[5]) ? -1 : 1, 1));
 			} else if (split[4].equals("ldoor")) {
 				GameObject
 						.instantiate(new GameObject("Door", new Door(ta), new Collider(100, 500,
-								true), new Renderer(ta, ta.getSprite("ldoor0"), w, h).setFlipped(Boolean.valueOf(split[5]), false),
+								true), new Renderer(ta, ta.getSprite("ldoor0"), w, h),
 						new Animator(new Animation("open", new Sprite[]{ta.getSprite("ldoor")}, AnimationType.ONE_SHOT, 80), new Animation("close", new Sprite[]{ta.getSprite("ldoor0"),
 								ta.getSprite("ldoor1"),
 								ta.getSprite("ldoor2"),
@@ -146,7 +153,11 @@ public class MapManager {
 								ta.getSprite("ldoor7"),
 								ta.getSprite("ldoor8"),
 								ta.getSprite("ldoor9"),
-								ta.getSprite("ldoor10")}, AnimationType.OSCILLATE, 80))), new Vector2(x, y));
+								ta.getSprite("ldoor10")},
+								AnimationType.OSCILLATE, 80))),
+								new Vector2(x, y),
+								new Vector2(Boolean.valueOf(split[5]) ? -1 : 1,
+										1));
 			}
 			GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y));
 			GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(64 * 3.125f, 32 * 3.125f)), new Vector2(x, y + 128 * 3.125f));
@@ -566,11 +577,12 @@ public class MapManager {
 			}
 			TextureAtlas ta = textureAtlases.get(tileSetIdx);
 			Sprite sprite = ta.getSprite(String.valueOf(gid - ts.getFirstGid()));
-			Renderer renderer = new Renderer(ta, sprite, tileWidth, tileHeight).setzIndex(zindex).setFlipped(t.isFlippedHorizontal(), t.isFlippedVertical());
+			Renderer renderer = new Renderer(ta, sprite, tileWidth, tileHeight).setzIndex(zindex);
 			if(collision) {
 				GameObject.instantiate(
 						new GameObject("Tile", true, renderer, new Collider(tileWidth, tileHeight)),
-						new Vector2(x, y)
+						new Vector2(x, y), new Vector2(t.isFlippedHorizontal
+								() ? -1 : 1, t.isFlippedVertical() ? -1 : 1)
 				);
 				try {
 					solidityMap[(int)(col + offset.x)][(int)(row + offset.y)] = 1;
@@ -580,7 +592,8 @@ public class MapManager {
 			} else {
 				GameObject.instantiate(
 						new GameObject("Tile", true, renderer),
-						new Vector2(x, y)
+						new Vector2(x, y), new Vector2(t.isFlippedHorizontal
+								() ? -1 : 1, t.isFlippedVertical() ? -1 : 1)
 				);
 			}
 		}

@@ -3,6 +3,7 @@ package com.ezardlabs.lostsector.objects.warframes.abilities.frost;
 import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Collider;
+import com.ezardlabs.dethsquare.Component;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
@@ -14,8 +15,8 @@ import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
 import java.util.ArrayList;
 
-public class IceWave extends Script {
-	private int direction = 0;
+public class IceWave extends Component {
+//	private int direction = 0;
 	private ArrayList<GameObject> damagedEnemies = new ArrayList<>();
 
 	@Override
@@ -58,29 +59,24 @@ public class IceWave extends Script {
 		gameObject.animator.play("move");
 		Network.destroy(gameObject, 1600);
 		if (Network.isHost()) {
-			GameObject.destroy(GameObject.instantiate(
-					new GameObject("Ice Wave Collider", new Collider(10, 200, true),
+			GameObject iceWaveCollider = GameObject.instantiate(
+					new GameObject("Ice Wave Collider",
+							new Collider(10, 200, true),
 							new IceWaveCollision()),
-					direction == -1 ? new Vector2(transform.position.x + 800,
-							transform.position.y + 200) : new Vector2(transform.position.x,
-							transform.position.y + 200)), 1000);
+					transform.scale.x < 0 ? new Vector2(
+							transform.position.x + 800,
+							transform.position.y + 200) : new Vector2(
+							transform.position.x, transform.position.y + 200));
+			iceWaveCollider.transform.scale.set(transform.scale);
+			GameObject.destroy(iceWaveCollider, 1000);
 		}
-	}
-
-	@Override
-	public void update() {
-		gameObject.renderer.setFlipped(direction == -1, false);
-	}
-
-	public void setDirection(int direction) {
-		this.direction = direction;
 	}
 
 	private class IceWaveCollision extends Script {
 
 		@Override
 		public void update() {
-			transform.translate(10 * direction, 0);
+			transform.translate(10 * transform.scale.x, 0);
 		}
 
 		@Override

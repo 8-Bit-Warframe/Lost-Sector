@@ -220,9 +220,9 @@ public class Kubrow extends Avatar {
 			}
 			if (target != null) {
 				if (target.x < transform.position.x) {
-					gameObject.renderer.hFlipped = true;
+					gameObject.transform.scale.x = -1;
 				} else if (target.x > transform.position.x) {
-					gameObject.renderer.hFlipped = false;
+					gameObject.transform.scale.x  = 1;
 				}
 				if (target.y < transform.position.y) {
 					if (gameObject.rigidbody.velocity.y >= 0) {

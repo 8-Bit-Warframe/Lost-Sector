@@ -9,8 +9,6 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
-import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
-import com.ezardlabs.lostsector.objects.warframes.abilities.frost.IceWave;
 import com.ezardlabs.lostsector.objects.weapons.melee.Nikana;
 import com.ezardlabs.lostsector.objects.weapons.primary.Lanka;
 
@@ -68,10 +66,12 @@ public class Frost extends Warframe {
 	@Override
 	public void ability1() {
 		GameObject freeze = Network.instantiate("freeze", new Vector2(
-				gameObject.renderer.hFlipped ? transform.position.x : transform.position.x + 100,
-				transform.position.y + 50));
+				gameObject.transform.scale.x < 0 ? transform.position.x :
+						transform.position.x + 100, transform.position.y + 50));
+		freeze.transform.scale.set(gameObject.transform.scale);
 		//noinspection ConstantConditions
-		freeze.getComponent(Freeze.class).setDirection(gameObject.renderer.hFlipped ? -1 : 1);
+//		freeze.getComponent(Freeze.class)
+//			  .setDirection(gameObject.transform.scale.x < 0 ? -1 : 1);
 	}
 
 	@Override
@@ -79,11 +79,14 @@ public class Frost extends Warframe {
 		//noinspection ConstantConditions
 		if (gameObject.getComponent(Player.class).jumpCount == 0) {
 			GameObject iceWave = Network.instantiate("ice_wave", new Vector2(
-					gameObject.renderer.hFlipped ?
-							transform.position.x - 800 : transform.position.x + 200,
+					gameObject.transform.scale.x < 0 ?
+							transform.position.x - 800 :
+							transform.position.x + 200,
 					transform.position.y - 200));
 			//noinspection ConstantConditions
-			iceWave.getComponent(IceWave.class).setDirection(gameObject.renderer.hFlipped ? -1 : 1);
+//			iceWave.getComponent(IceWave.class)
+//				   .setDirection(gameObject.transform.scale.x < 0 ? -1 : 1);
+			iceWave.transform.scale.set(transform.scale);
 		}
 	}
 

@@ -116,14 +116,12 @@ public class PumpkinDeraCrewman extends Crewman {
 			@Override
 			public void onFrame(Animator animator, int frameNum) {
 				if (frameNum % 2 == 1) {
-					GameObject
-							.instantiate(new GameObject("Laser",
-											new Renderer("images/laser_yellow.png", 100, 100)
-													.setFlipped(gameObject.renderer.hFlipped,
-															false), new Collider(100, 100, true),
-											new Laser(2)), transform.position
-											.offset(gameObject.renderer.hFlipped ? -12.5f : 87.5f,
-													frameNum == 1 ? 75 : 50));
+					GameObject.instantiate(new GameObject("Laser",
+									new Renderer("images/laser_yellow.png", 100, 100),
+									new Collider(100, 100, true), new Laser(2)),
+							transform.position.offset(transform.scale.x <
+											0 ? -12.5f : 87.5f,
+									frameNum == 1 ? 75 : 50), transform.scale);
 				}
 			}
 

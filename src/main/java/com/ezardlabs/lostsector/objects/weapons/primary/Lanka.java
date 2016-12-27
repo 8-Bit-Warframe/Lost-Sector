@@ -52,8 +52,8 @@ public class Lanka extends RangedWeapon {
 							return currentFrame + 1;
 						} else {
 							if (!beamCreated) {
-								GameObject beam = Network.instantiate("lanka_beam", player.transform.position.offset(player.renderer.hFlipped ? -112.5f : 312.5f, 109.375f));
-								beam.getComponent(LankaBeam.class).setDirection(player.renderer.hFlipped ? -1 : 1);
+								GameObject beam = Network.instantiate("lanka_beam", player.transform.position.offset(player.transform.scale.x < 0 ? -112.5f : 312.5f, 109.375f));
+								beam.getComponent(LankaBeam.class).setDirection(player.transform.scale.x);
 								beamCreated = true;
 							}
 							return 2;
@@ -66,8 +66,9 @@ public class Lanka extends RangedWeapon {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
 				animator.gameObject.renderer.setSize(400, 300);
-				animator.gameObject.renderer.setOffsets(animator.gameObject.renderer.hFlipped ?
-						-200 : 0, -100);
+				animator.gameObject.renderer
+						.setOffsets(animator.transform.scale.x < 0 ? -200 : 0,
+								-100);
 			}
 
 			@Override

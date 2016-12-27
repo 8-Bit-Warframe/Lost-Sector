@@ -100,9 +100,9 @@ public class ShockwaveMoa extends Moa {
 				shooting = true;
 				gameObject.animator.play("shoot");
 				if (Game.players[0].transform.position.x < transform.position.x) {
-					gameObject.renderer.hFlipped = true;
+					gameObject.transform.scale.x = -1;
 				} else if (Game.players[0].transform.position.x > transform.position.x) {
-					gameObject.renderer.hFlipped = false;
+					gameObject.transform.scale.x = 1;
 				}
 				return;
 			} else {
@@ -116,9 +116,9 @@ public class ShockwaveMoa extends Moa {
 				}
 				if (target != null) {
 					if (target.x < transform.position.x) {
-						gameObject.renderer.hFlipped = true;
+						gameObject.transform.scale.x = -1;
 					} else if (target.x > transform.position.x) {
-						gameObject.renderer.hFlipped = false;
+						gameObject.transform.scale.x = 1;
 					}
 					if (target.y - 100 < transform.position.y) {
 						if (gameObject.rigidbody.velocity.y >= 0) {

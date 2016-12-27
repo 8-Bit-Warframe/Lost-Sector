@@ -100,7 +100,7 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 		if (t != null) {
 			t.cancel();
 		}
-		int offSet = animator.gameObject.renderer.hFlipped ? -200 : 0;
+		int offSet = animator.gameObject.transform.scale.x < 0 ? -200 : 0;
 		int damage = 0;
 		switch(currentAnimation) {
 			case "slice1":
@@ -128,14 +128,14 @@ public class Nikana extends MeleeWeapon implements Animation.AnimationListener {
 		animator.gameObject.renderer.setSize(400, 300);
 		animator.gameObject.renderer.setOffsets(-100, -100);
 		if (currentAnimation.contains("slice1")) {
-			animator.gameObject.rigidbody.velocity.x = 15 * (animator.gameObject.renderer.hFlipped ? -1
-					: 1);
+			animator.gameObject.rigidbody.velocity.x =
+					15 * animator.transform.scale.x;
 		} else if (currentAnimation.contains("slice")) {
-			animator.gameObject.rigidbody.velocity.x = 20 * (animator.gameObject.renderer.hFlipped ? -1
-					: 1);
+			animator.gameObject.rigidbody.velocity.x =
+					20 * animator.transform.scale.x;
 		} else if (currentAnimation.contains("dash")) {
-			animator.gameObject.rigidbody.velocity.x = 25 * (animator.gameObject.renderer.hFlipped ? -1
-					: 1);
+			animator.gameObject.rigidbody.velocity.x =
+					25 * animator.transform.scale.x;
 		}
 	}
 

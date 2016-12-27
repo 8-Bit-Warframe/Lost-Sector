@@ -13,7 +13,7 @@ import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
 public class LankaBeam extends Script {
 	private long chargeTime;
-	private int direction;
+	private float direction;
 	private long startTime;
 	private int width;
 
@@ -26,7 +26,7 @@ public class LankaBeam extends Script {
 		startTime = System.currentTimeMillis();
 		RaycastHit hit = Physics.raycast(transform.position, new Vector2(1, 0), Float.MAX_VALUE);
 		width = (int) Math.abs(transform.position.x - hit.point.x);
-		if (direction == -1) transform.position.x -= width;
+		if (direction < 0) transform.position.x -= width;
 		gameObject.renderer.setSize(width, 0);
 		gameObject.renderer.setzIndex(3);
 	}
@@ -46,13 +46,13 @@ public class LankaBeam extends Script {
 			for (GameObject go : GameObject.findAllWithTag("enemy")) {
 				if ((c = go.getComponent(Collider.class)) != null && c.bounds.intersect(beam)) {
 					//noinspection ConstantConditions
-					go.getComponentOfType(Enemy.class).applyDamage(10, DamageType.SLASH, direction == 1 ? transform.position : transform.position.offset(width, 0));
+					go.getComponentOfType(Enemy.class).applyDamage(10, DamageType.SLASH, direction > 0 ? transform.position : transform.position.offset(width, 0));
 				}
 			}
 		}
 	}
 
-	public void setDirection(int direction) {
+	public void setDirection(float direction) {
 		this.direction = direction;
 	}
 }

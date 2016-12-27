@@ -80,13 +80,13 @@ public class WereDrahk extends Enemy {
 			if (Game.players.length > 0 &&
 					transform.position.y == Game.players[0].transform.position.y &&
 					Math.abs(transform.position.x - Game.players[0].transform.position.x) <=
-							(gameObject.renderer.hFlipped ? 100 : 200)) {
+							(gameObject.transform.scale.x < 0 ? 100 : 200)) {
 				attacking = true;
 				gameObject.animator.play("attack");
 				if (Game.players[0].transform.position.x < transform.position.x) {
-					gameObject.renderer.hFlipped = true;
+					gameObject.transform.scale.x = -1;
 				} else if (Game.players[0].transform.position.x > transform.position.x) {
-					gameObject.renderer.hFlipped = false;
+					gameObject.transform.scale.x = 1;
 				}
 				return;
 			} else {
@@ -105,9 +105,9 @@ public class WereDrahk extends Enemy {
 				}
 				if (target != null) {
 					if (target.x < transform.position.x) {
-						gameObject.renderer.hFlipped = true;
+						gameObject.transform.scale.x = -1;
 					} else if (target.x > transform.position.x) {
-						gameObject.renderer.hFlipped = false;
+						gameObject.transform.scale.x = 1;
 					}
 					if (target.y < transform.position.y) {
 						if (gameObject.rigidbody.velocity.y >= 0) {

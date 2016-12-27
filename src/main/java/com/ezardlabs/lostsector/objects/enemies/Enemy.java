@@ -34,7 +34,7 @@ public abstract class Enemy extends Avatar {
 		gameObject.animator.setAnimations(getIdleAnimation(), getRunAnimation(), getJumpAnimation(), getFallAnimation(), getLandAnimation(), getShootAnimation(), getDieShootFrontAnimation(),
 				getDieShootBackAnimation(), getDieSlashFrontAnimation(), getDieSlashBackAnimation(), getDieKubrowFrontAnimation(), getDieKubrowBackAnimation(), getFrozenAnimation(), getFrozenMeltAnimation(), getFrozenShatterAnimation());
 		gameObject.animator.play("idle");
-		gameObject.renderer.setFlipped(true, false);
+		gameObject.renderer.transform.scale.x = -1;
 		gameObject.renderer.setzIndex(3);
 	}
 
@@ -80,13 +80,13 @@ public abstract class Enemy extends Avatar {
 		} else {
 			String direction;
 			if (attackerPosition.x < transform.position.x) {
-				if (gameObject.renderer.hFlipped) {
+				if (gameObject.transform.scale.x < 0) {
 					direction = "front";
 				} else {
 					direction = "back";
 				}
 			} else {
-				if (gameObject.renderer.hFlipped) {
+				if (gameObject.transform.scale.x < 0) {
 					direction = "back";
 				} else {
 					direction = "front";
@@ -198,7 +198,7 @@ public abstract class Enemy extends Avatar {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
 				gameObject.renderer.setSize(400, 200);
-				if (gameObject.renderer.hFlipped)
+				if (gameObject.transform.scale.x < 0)
 					gameObject.renderer.setOffsets(0, 0);
 				else
 					gameObject.renderer.setOffsets(-400, 0);
@@ -338,7 +338,7 @@ public abstract class Enemy extends Avatar {
 				ta.getSprite("frozen_shatter8")}, AnimationType.ONE_SHOT, 100, new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
-				if (!gameObject.renderer.hFlipped) {
+				if (!(gameObject.transform.scale.x < 0)) {
 					transform.translate(-100, 0);
 				}
 				gameObject.renderer.setSize(300, 200);

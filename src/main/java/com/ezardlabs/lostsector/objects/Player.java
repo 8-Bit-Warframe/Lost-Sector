@@ -86,9 +86,9 @@ public class Player extends Script {
 
 		if (state != State.SHOOTING) {
 			if (x < 0) {
-				gameObject.renderer.hFlipped = true;
+				gameObject.transform.scale.x = -1;
 			} else if (x > 0) {
-				gameObject.renderer.hFlipped = false;
+				gameObject.transform.scale.x  = 1;
 			}
 		}
 
