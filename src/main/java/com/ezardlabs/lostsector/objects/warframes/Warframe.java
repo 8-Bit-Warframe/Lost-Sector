@@ -13,7 +13,7 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.map.MapManager;
-import com.ezardlabs.lostsector.objects.Avatar;
+import com.ezardlabs.lostsector.objects.Entity;
 import com.ezardlabs.lostsector.objects.CameraMovement;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
@@ -21,7 +21,7 @@ import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public abstract class Warframe extends Avatar {
+public abstract class Warframe extends Entity {
 	protected final TextureAtlas ta;
 	protected final int maxShield;
 	protected int shield;

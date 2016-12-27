@@ -8,7 +8,7 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.NavMesh;
 
-public class Kubrow extends Avatar {
+public class Kubrow extends Entity {
 	private float speed = 10;
 	public boolean attacking = false;
 	TargetType targetType = TargetType.PLAYER;

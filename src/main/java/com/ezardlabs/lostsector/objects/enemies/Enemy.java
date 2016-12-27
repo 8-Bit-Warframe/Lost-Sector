@@ -12,9 +12,9 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.levels.MissionLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
-import com.ezardlabs.lostsector.objects.Avatar;
+import com.ezardlabs.lostsector.objects.Entity;
 
-public abstract class Enemy extends Avatar {
+public abstract class Enemy extends Entity {
 	protected final TextureAtlas ta;
 	public boolean frozen = false;
 	public final double uid;
