@@ -42,7 +42,8 @@ public class Menu extends Script {
 		this.startOpen = open;
 
 		if (options.length < 1 || options.length > 4) {
-			throw new Error("You must supply between 1 and 4 options to the menu");
+			throw new IllegalArgumentException(
+					"You must supply between 1 and 4 options to the menu");
 		}
 		font = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
 	}
