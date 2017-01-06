@@ -35,7 +35,6 @@ public class Player extends Script {
 	private float speed = 12.5f;
 	private Warframe warframe;
 	private HUD hud;
-	private boolean gravestoneSpawned = false;
 
 	public State state = State.IDLE;
 
