@@ -291,11 +291,10 @@ public class Player extends Script {
 				ability1 = true;
 			}
 		}
-		if (ability1 || Input.getKeyDown(KeyCode.ALPHA_1)) {
-			if (warframe.hasEnergy(5)) {
-				warframe.removeEnergy(5);
-				warframe.ability1();
-			}
+		if ((ability1 || Input.getKeyDown(KeyCode.ALPHA_1)) &&
+				warframe.hasEnergy(5)) {
+			warframe.removeEnergy(5);
+			warframe.ability1();
 		}
 	}
 
@@ -306,11 +305,10 @@ public class Player extends Script {
 				ability2 = true;
 			}
 		}
-		if (ability2 || Input.getKeyDown(KeyCode.ALPHA_2)) {
-			if (warframe.hasEnergy(10)) {
-				warframe.removeEnergy(10);
-				warframe.ability2();
-			}
+		if ((ability2 || Input.getKeyDown(KeyCode.ALPHA_2)) &&
+				warframe.hasEnergy(10)) {
+			warframe.removeEnergy(10);
+			warframe.ability2();
 		}
 	}
 
@@ -321,11 +319,10 @@ public class Player extends Script {
 				ability3 = true;
 			}
 		}
-		if (ability3 || Input.getKeyDown(KeyCode.ALPHA_3)) {
-			if (warframe.hasEnergy(25)) {
-				warframe.removeEnergy(25);
-				warframe.ability3();
-			}
+		if ((ability3 || Input.getKeyDown(KeyCode.ALPHA_3)) &&
+				warframe.hasEnergy(25)) {
+			warframe.removeEnergy(25);
+			warframe.ability3();
 		}
 	}
 
@@ -336,13 +333,12 @@ public class Player extends Script {
 				ability4 = true;
 			}
 		}
-		if ((state == State.IDLE || state == State.RUNNING) && (ability4 || Input
-				.getKeyDown(KeyCode.ALPHA_4))) {
-			if (warframe.hasEnergy(50)) {
-				warframe.removeEnergy(50);
-				warframe.ability4();
-				state = State.CASTING;
-			}
+		if ((state == State.IDLE || state == State.RUNNING) &&
+				(ability4 || Input.getKeyDown(KeyCode.ALPHA_4)) &&
+				warframe.hasEnergy(50)) {
+			warframe.removeEnergy(50);
+			warframe.ability4();
+			state = State.CASTING;
 		}
 	}
 
