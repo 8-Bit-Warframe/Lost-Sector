@@ -140,7 +140,8 @@ public abstract class Warframe extends ShieldedEntity {
 
 	public void removeEnergy(int energy) {
 		this.energy -= energy;
-		if (this.energy < 0) throw new Error("Energy cannot be reduced to below 0");
+		if (this.energy < 0) throw new IllegalStateException(
+				"Energy cannot be reduced to below 0");
 	}
 
 	public boolean hasEnergy(int energy) {
