@@ -31,7 +31,7 @@ public abstract class ShieldedEntity extends Entity {
 	public final void update() {
 		if (shield < maxShield && System.currentTimeMillis() > nextShieldRegen) {
 			shield++;
-			nextShieldRegen += shieldRegenTime;
+			nextShieldRegen = System.currentTimeMillis() + shieldRegenTime;
 		}
 	}
 
@@ -40,6 +40,7 @@ public abstract class ShieldedEntity extends Entity {
 			Vector2 attackOrigin) {
 		if (shield > 0) {
 			shield--;
+			nextShieldRegen = System.currentTimeMillis() + shieldRegenTime;
 			super.applyDamage(0, damageType, attackOrigin);
 		} else {
 			super.applyDamage(damage, damageType, attackOrigin);
