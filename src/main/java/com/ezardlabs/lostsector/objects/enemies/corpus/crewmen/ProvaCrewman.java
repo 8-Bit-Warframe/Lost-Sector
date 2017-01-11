@@ -45,7 +45,7 @@ public class ProvaCrewman extends Crewman {
 									Entity e = Game.players[i]
 											.getComponentOfType(Entity.class);
 									if (e != null) {
-										e.applyDamage(10, DamageType.NORMAL,
+										e.applyDamage(2, DamageType.NORMAL,
 												transform.position);
 									}
 								}
