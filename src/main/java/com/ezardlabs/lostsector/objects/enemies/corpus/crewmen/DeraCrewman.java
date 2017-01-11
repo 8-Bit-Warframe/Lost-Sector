@@ -66,7 +66,7 @@ public class DeraCrewman extends Crewman {
 					GameObject laser = GameObject.instantiate(
 							new GameObject("Laser",
 									new Renderer("images/laser.png", 100, 100),
-									new Collider(100, 100, true), new Laser(2)),
+									new Collider(100, 100, true), new Laser(1)),
 							transform.position
 									.offset(gameObject.transform.scale.x <
 													0 ? -12.5f : 87.5f,
