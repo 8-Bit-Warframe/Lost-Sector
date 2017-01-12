@@ -22,7 +22,6 @@ import com.ezardlabs.lostsector.NavMesh;
 import com.ezardlabs.lostsector.map.procedural.MapConfig;
 import com.ezardlabs.lostsector.map.procedural.MapSegment;
 import com.ezardlabs.lostsector.map.procedural.MapSegmentConnector;
-import com.ezardlabs.lostsector.objects.environment.Camera;
 import com.ezardlabs.lostsector.objects.environment.Door;
 
 import java.io.BufferedReader;
@@ -186,23 +185,23 @@ public class MapManager {
 		}
 	}
 
-	private static void readInCameras(BufferedReader reader, TextureAtlas ta) throws IOException {
-		String temp;
-		while ((temp = reader.readLine()) != null && !temp.equals("END CAMERAS")) {
-			String[] split = temp.split(",");
-			float x = Float.valueOf(split[0]) * 3.125f;
-			float y = Float.valueOf(split[1]) * 3.125f;
-			GameObject.instantiate(new GameObject("Camera", true, new Renderer(ta, ta.getSprite("camera0"), 100, 100), new Animator(new Animation("cycle", new Sprite[]{ta.getSprite("camera0"),
-					ta.getSprite("camera1"),
-					ta.getSprite("camera2"),
-					ta.getSprite("camera3"),
-					ta.getSprite("camera4"),
-					ta.getSprite("camera5"),
-					ta.getSprite("camera6"),
-					ta.getSprite("camera7"),
-					ta.getSprite("camera8")}, AnimationType.OSCILLATE, 500)), new Camera()), new Vector2(x, y));
-		}
-	}
+//	private static void readInCameras(BufferedReader reader, TextureAtlas ta) throws IOException {
+//		String temp;
+//		while ((temp = reader.readLine()) != null && !temp.equals("END CAMERAS")) {
+//			String[] split = temp.split(",");
+//			float x = Float.valueOf(split[0]) * 3.125f;
+//			float y = Float.valueOf(split[1]) * 3.125f;
+//			GameObject.instantiate(new GameObject("Camera", true, new Renderer(ta, ta.getSprite("camera0"), 100, 100), new Animator(new Animation("cycle", new Sprite[]{ta.getSprite("camera0"),
+//					ta.getSprite("camera1"),
+//					ta.getSprite("camera2"),
+//					ta.getSprite("camera3"),
+//					ta.getSprite("camera4"),
+//					ta.getSprite("camera5"),
+//					ta.getSprite("camera6"),
+//					ta.getSprite("camera7"),
+//					ta.getSprite("camera8")}, AnimationType.OSCILLATE, 500)), new Camera()), new Vector2(x, y));
+//		}
+//	}
 
 	// START Procedural mapping stuff
 
