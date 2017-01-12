@@ -240,6 +240,8 @@ public class Kubrow extends Entity {
 							case 200:
 								gameObject.rigidbody.velocity.y = -30f;
 								break;
+							default:
+								break;
 						}
 					}
 				} else {

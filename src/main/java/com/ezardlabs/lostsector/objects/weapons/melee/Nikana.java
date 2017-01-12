@@ -122,6 +122,8 @@ public class Nikana extends MeleeWeapon implements AnimationListener {
 			case "dash3":
 				damage = 3;
 				break;
+			default:
+				break;
 		}
 		damageEnemies(damage, animator.transform.position.x + offSet, animator.transform.position.y, animator.transform.position.x + animator.gameObject.renderer.width + offSet, animator.transform.position.y + animator.gameObject.renderer.height);
 

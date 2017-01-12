@@ -129,6 +129,8 @@ public class MapManager {
 						nextOffset.x -= nextSeg.getWidth();
 						nextOffset.y += (currConn.pos.y / currSeg.map.getTileHeight()) - (nextConn.pos.y / nextSeg.map.getTileHeight());
 						break;
+					default:
+						break;
 				}
 				System.out.println("Next Segment " + i + ": " + nextSeg.map.getFilePath()
 						+ "\n    Enter From: " + nextConn.toString() + " offset: " + nextOffset.toString()
@@ -205,6 +207,8 @@ public class MapManager {
 					if (forMainPath) {
 						continue;
 					}
+					break;
+				default:
 					break;
 			}
 			validConns.add(c);
@@ -475,6 +479,8 @@ public class MapManager {
 				case "ldoor":
 					GameObject.instantiate(PrefabManager.loadPrefab("laser_door"), pos);
 					break;
+				default:
+					break;
 			}
 
 			// For doors
@@ -502,6 +508,8 @@ public class MapManager {
 					break;
 				case "supra_crewman":
 					if (Network.isHost()) Network.instantiate("supra_crewman", pos);
+					break;
+				default:
 					break;
 			}
 		}
