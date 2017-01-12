@@ -58,6 +58,8 @@ public class Lanka extends RangedWeapon {
 							}
 							return 2;
 						}
+					default:
+						break;
 				}
 				return 0;
 			}

@@ -52,6 +52,8 @@ public abstract class Enemy extends Entity {
 						break;
 					case KUBROW:
 						break;
+					default:
+						break;
 				}
 			}
 		});

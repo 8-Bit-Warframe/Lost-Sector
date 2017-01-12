@@ -59,6 +59,8 @@ public class MapSegmentConnector {
             case "l":
                 side = MapSegmentConnectorSide.LEFT;
                 break;
+            default:
+                break;
         }
 //        System.out.println(toString());
     }
@@ -84,6 +86,8 @@ public class MapSegmentConnector {
                 break;
             case LEFT:
                 correctSide = (conn.side == MapSegmentConnectorSide.RIGHT);
+                break;
+            default:
                 break;
         }
         // Sides must fit and type must be the same.
@@ -116,6 +120,8 @@ public class MapSegmentConnector {
                 break;
             case LEFT:
                 retSideType += "r_";
+                break;
+            default:
                 break;
         }
         return retSideType + this.type;

@@ -47,6 +47,8 @@ public class MultiplayerLobbyLevel extends Level {
 //						}, 1000);
 						LevelManager.loadLevel("multiplayer");
 						break;
+					default:
+						break;
 				}
 //			} catch (InterruptedException e) {
 //				e.printStackTrace();
