@@ -3,14 +3,17 @@ package com.ezardlabs.lostsector.objects.menus;
 
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.GuiRenderer;
+import com.ezardlabs.dethsquare.GuiText;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
 import com.ezardlabs.dethsquare.Script;
+import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 
 public class Slider extends Script {
 	private final int min;
 	private final int max;
+	private final String text;
 	private final String iconPath;
 	private final SliderValueListener listener;
 	private GameObject[] bars;
@@ -21,10 +24,12 @@ public class Slider extends Script {
 	private long lastChange = 0;
 	private int value = 5;
 
-	Slider(int min, int max, int value, String iconPath, SliderValueListener listener) {
+	Slider(int min, int max, int value, String text, String iconPath,
+			SliderValueListener listener) {
 		this.min = min;
 		this.max = max;
 		this.value = value;
+		this.text = text;
 		this.iconPath = iconPath;
 		this.listener = listener;
 		this.bars = new GameObject[max - 1];
@@ -39,13 +44,19 @@ public class Slider extends Script {
 		GameObject.instantiate(new GameObject("Slider Icon", new GuiRenderer(iconPath, 65, 65)),
 				transform.position.offset(12.5f, 12.5f)).transform.setParent(transform);
 
+		TextureAtlas font = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
+		GameObject.instantiate(new GameObject("Slider Text", new GuiText(text, font, 31.25f)),
+				new Vector2(transform.position.offset(93.75f, -56.25f)));
+
 		GameObject.instantiate(new GameObject("Slider Decrease",
 				decrease = new GuiRenderer("images/menus/settings/slider_decrease" + ".png", 68.75f,
-						31.25f)), transform.position.offset(493.75f, 31.25f)).transform.setParent(transform);
+						31.25f)), transform.position.offset(493.75f, 31.25f)).transform
+				.setParent(transform);
 
 		GameObject.instantiate(new GameObject("Slider Increase",
 				increase = new GuiRenderer("images/menus/settings/slider_increase" + ".png", 68.75f,
-						31.25f)), transform.position.offset(543.75f, 31.25f)).transform.setParent(transform);
+						31.25f)), transform.position.offset(543.75f, 31.25f)).transform
+				.setParent(transform);
 
 		for (int i = 0; i < bars.length; i++) {
 			bars[i] = GameObject.instantiate(new GameObject("Slider Bar",
