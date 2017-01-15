@@ -5,6 +5,7 @@ import com.ezardlabs.dethsquare.GuiRenderer;
 import com.ezardlabs.dethsquare.GuiText;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
+import com.ezardlabs.dethsquare.PlayerPrefs;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
@@ -12,6 +13,9 @@ import com.ezardlabs.dethsquare.Vector2;
 import java.util.HashMap;
 
 public class SettingsMenu extends Script {
+	private static final String AUDIO_MASTER_VOLUME = "audio_master_volume";
+	private static final String AUDIO_MUSIC_VOLUME = "audio_music_volume";
+	private static final String AUDIO_SFX_VOLUME = "audio_sfx_volume";
 	private static final TextureAtlas FONT = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
 	private final SettingsTab audio = new SettingsTab();
 	private final SettingsTab graphics = new SettingsTab();
@@ -84,14 +88,17 @@ public class SettingsMenu extends Script {
 						transform.position.y + 77.5f - audioText.getFontSize() / 2));
 
 		audio.addObject(new GameObject("Master Audio Slider", new Slider(0, 15, 5, "MASTER",
-				"images/menus/settings/slider_icon_audio_master" + ".png", newValue -> {
-		})), new Vector2(transform.position.x + 206.25f, transform.position.y + 256.25f));
+						"images/menus/settings/slider_icon_audio_master" + ".png",
+						newValue -> PlayerPrefs.setFloat(AUDIO_MASTER_VOLUME, newValue))),
+				new Vector2(transform.position.x + 206.25f, transform.position.y + 256.25f));
 		audio.addObject(new GameObject("Music Audio Slider", new Slider(0, 15, 5, "MUSIC",
-				"images/menus/settings/slider_icon_audio_music" + ".png", newValue -> {
-		})), new Vector2(transform.position.x + 206.25f, transform.position.y + 456.25f));
+						"images/menus/settings/slider_icon_audio_music" + ".png",
+						newValue -> PlayerPrefs.setFloat(AUDIO_MUSIC_VOLUME, newValue))),
+				new Vector2(transform.position.x + 206.25f, transform.position.y + 456.25f));
 		audio.addObject(new GameObject("SFX Audio Slider", new Slider(0, 15, 5, "SOUND EFFECTS",
-				"images/menus/settings/slider_icon_audio_sfx.png", newValue -> {
-		})), new Vector2(transform.position.x + 206.25f, transform.position.y + 656.25f));
+						"images/menus/settings/slider_icon_audio_sfx.png",
+						newValue -> PlayerPrefs.setFloat(AUDIO_SFX_VOLUME, newValue))),
+				new Vector2(transform.position.x + 206.25f, transform.position.y + 656.25f));
 	}
 
 	private void setupGraphicsTab() {
