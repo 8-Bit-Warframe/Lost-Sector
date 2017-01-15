@@ -19,11 +19,19 @@ public class SettingsMenu extends Script {
 	private final GuiText audioText = new GuiText("AUDIO", FONT, 31.25f);
 	private final GuiText graphicsText = new GuiText("GRAPHICS", FONT, 31.25f);
 	private final GuiText controlsText = new GuiText("CONTROLS", FONT, 31.25f);
+	private final GuiText menuText = new GuiText("MENU", FONT, 31.25f);
 
 	@Override
 	public void start() {
 		GameObject.instantiate(new GameObject("Settings Background",
 				new GuiRenderer("images/menus/settings/base.png", 1200, 1000)), transform.position);
+
+		GameObject.instantiate(new GameObject("Menu Button", new GuiRenderer("images/menus/settings/menu.png", 575,
+						118.75f)),
+				new Vector2(transform.position.offset(550, 881.25f)));
+
+		GameObject.instantiate(new GameObject("Menu Button Text", menuText), new Vector2(transform
+				.position.offset(837.5f - menuText.getWidth() / 2, 943.75f - menuText.getFontSize() / 2)));
 
 		setupAudioTab();
 		setupGraphicsTab();
@@ -49,6 +57,9 @@ public class SettingsMenu extends Script {
 			audio.hide();
 			graphics.hide();
 			controls.show();
+		}
+		if (Input.getKeyDown(KeyCode.MOUSE_LEFT) && menuText.hitTest(Input.mousePosition)) {
+			// go back to main menu
 		}
 	}
 
