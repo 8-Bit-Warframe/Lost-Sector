@@ -20,18 +20,27 @@ public class SettingsMenu extends Script {
 	private final GuiText graphicsText = new GuiText("GRAPHICS", FONT, 31.25f);
 	private final GuiText controlsText = new GuiText("CONTROLS", FONT, 31.25f);
 	private final GuiText menuText = new GuiText("MENU", FONT, 31.25f);
+	private final GameObject[] circles = new GameObject[3];
 
 	@Override
 	public void start() {
 		GameObject.instantiate(new GameObject("Settings Background",
 				new GuiRenderer("images/menus/settings/base.png", 1200, 1000)), transform.position);
 
-		GameObject.instantiate(new GameObject("Menu Button", new GuiRenderer("images/menus/settings/menu.png", 575,
-						118.75f)),
+		GameObject.instantiate(new GameObject("Menu Button",
+						new GuiRenderer("images/menus/settings/menu.png", 575, 118.75f)),
 				new Vector2(transform.position.offset(550, 881.25f)));
 
-		GameObject.instantiate(new GameObject("Menu Button Text", menuText), new Vector2(transform
-				.position.offset(837.5f - menuText.getWidth() / 2, 943.75f - menuText.getFontSize() / 2)));
+		GameObject.instantiate(new GameObject("Menu Button Text", menuText), new Vector2(
+				transform.position.offset(837.5f - menuText.getWidth() / 2,
+						943.75f - menuText.getFontSize() / 2)));
+
+		for (int i = 0; i < circles.length; i++) {
+			circles[i] = GameObject.instantiate(new GameObject("Circle " + i,
+							new GuiRenderer("images/menus/settings/circle" + i + ".png", 81.25f, 81.25f)),
+					new Vector2(10000, 10000));
+		}
+		circles[0].transform.position.set(transform.position.offset(1106.25f, 125));
 
 		setupAudioTab();
 		setupGraphicsTab();
@@ -41,22 +50,28 @@ public class SettingsMenu extends Script {
 	@Override
 	public void update() {
 		if (Input.getKeyDown(KeyCode.MOUSE_LEFT) && audioText.hitTest(Input.mousePosition)) {
-			System.out.println("Showing audio");
 			audio.show();
 			graphics.hide();
 			controls.hide();
+			circles[0].transform.position.set(transform.position.offset(1106.25f, 125));
+			circles[1].transform.position.set(transform.position.offset(10000, 10000));
+			circles[2].transform.position.set(transform.position.offset(10000, 10000));
 		}
 		if (Input.getKeyDown(KeyCode.MOUSE_LEFT) && graphicsText.hitTest(Input.mousePosition)) {
-			System.out.println("Showing graphics");
 			audio.hide();
 			graphics.show();
 			controls.hide();
+			circles[0].transform.position.set(transform.position.offset(10000, 10000));
+			circles[1].transform.position.set(transform.position.offset(1106.25f, 125));
+			circles[2].transform.position.set(transform.position.offset(10000, 10000));
 		}
 		if (Input.getKeyDown(KeyCode.MOUSE_LEFT) && controlsText.hitTest(Input.mousePosition)) {
-			System.out.println("Showing controls");
 			audio.hide();
 			graphics.hide();
 			controls.show();
+			circles[0].transform.position.set(transform.position.offset(10000, 10000));
+			circles[1].transform.position.set(transform.position.offset(10000, 10000));
+			circles[2].transform.position.set(transform.position.offset(1106.25f, 125));
 		}
 		if (Input.getKeyDown(KeyCode.MOUSE_LEFT) && menuText.hitTest(Input.mousePosition)) {
 			// go back to main menu
@@ -105,7 +120,6 @@ public class SettingsMenu extends Script {
 		}
 
 		private void hide() {
-			System.out.println(objects.keySet());
 			for (GameObject go : objects.keySet()) {
 				go.transform.position.set(10000, 10000);
 			}
