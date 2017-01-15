@@ -1,5 +1,6 @@
 package com.ezardlabs.lostsector.levels;
 
+import com.ezardlabs.dethsquare.AudioManager.AudioGroup;
 import com.ezardlabs.dethsquare.AudioSource;
 import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Camera;
@@ -22,24 +23,18 @@ public class ExploreLevel extends Level {
 		MapManager.playerSpawn = new Vector2(20.0f, 20.0f);
 		MapManager.loadMap("Explore");
 
-		Game.players = new GameObject[]{Network.instantiate("player", new Vector2(MapManager
-				.playerSpawn))};
-
-		AudioSource as = new AudioSource();
+		Game.players = new GameObject[]{Network.instantiate("player",
+				new Vector2(MapManager.playerSpawn))};
 
 		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm,
-						new AudioSource(new AudioClip("audio/theme.ogg"), true)),
+						new AudioSource(new AudioClip("audio/theme.ogg"), true, AudioGroup.MUSIC)),
 				new Vector2(MapManager.playerSpawn));
 
 		cm.smoothFollow(Game.players[0].transform);
 
 		TextureAtlas fontTA = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
-		GameObject.instantiate(
-				new GameObject(
-						"MainMenuWIP",
-						new GuiText("DEV BUILD : WORK IN PROGRESS!", fontTA, 30)
-				),
-				new Vector2(10, Screen.height - 30 - 10)
-		);
+		GameObject.instantiate(new GameObject("MainMenuWIP",
+						new GuiText("DEV BUILD : WORK IN PROGRESS!", fontTA, 30)),
+				new Vector2(10, Screen.height - 30 - 10));
 	}
 }

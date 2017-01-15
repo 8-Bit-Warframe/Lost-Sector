@@ -4,6 +4,7 @@ import com.ezardlabs.dethsquare.Animation;
 import com.ezardlabs.dethsquare.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.AudioManager.AudioGroup;
 import com.ezardlabs.dethsquare.AudioSource;
 import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Collider;
@@ -14,7 +15,7 @@ import com.ezardlabs.lostsector.objects.enemies.corpus.Crewman;
 import com.ezardlabs.lostsector.objects.projectiles.Laser;
 
 public class DeraCrewman extends Crewman {
-	private AudioSource audio = new AudioSource();
+	private AudioSource audio = new AudioSource(AudioGroup.SFX);
 	private AudioClip shoot;
 
 	@Override

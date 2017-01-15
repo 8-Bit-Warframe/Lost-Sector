@@ -1,6 +1,7 @@
 package com.ezardlabs.lostsector.levels;
 
 import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.AudioManager.AudioGroup;
 import com.ezardlabs.dethsquare.AudioSource;
 import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Camera;
@@ -29,15 +30,15 @@ public class MainMenuLevel extends Level {
 				new Vector2(960 - 450, 10));
 
 		GameObject.instantiate(new GameObject("MainMenu", new Menu(new String[]{"Explore",
-						"Survival",
-						"Procedural",
-						"Multiplayer"},
-						new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("explore"),
-								(menu, index, text) -> LevelManager.loadLevel("survival"),
-								(menu, index, text) -> LevelManager.loadLevel("procedural"),
-								(menu, index, text) -> LevelManager.loadLevel("multiplayer_lobby")},
-						new Vector2(0, 250), true),
-						new AudioSource(new AudioClip("audio/this_is_what_you_are" + ".ogg"), true, 50)),
-				new Vector2());
+				"Survival",
+				"Procedural",
+				"Multiplayer"},
+				new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("explore"),
+						(menu, index, text) -> LevelManager.loadLevel("survival"),
+						(menu, index, text) -> LevelManager.loadLevel("procedural"),
+						(menu, index, text) -> LevelManager.loadLevel("multiplayer_lobby")},
+				new Vector2(0, 250), true),
+				new AudioSource(new AudioClip("audio/this_is_what_you_are" + ".ogg"), true,
+						AudioGroup.MUSIC)), new Vector2());
 	}
 }
