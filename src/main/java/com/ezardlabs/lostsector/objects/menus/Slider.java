@@ -46,7 +46,8 @@ public class Slider extends Script {
 
 		TextureAtlas font = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
 		GameObject.instantiate(new GameObject("Slider Text", new GuiText(text, font, 31.25f)),
-				new Vector2(transform.position.offset(93.75f, -56.25f)));
+				new Vector2(transform.position.offset(93.75f, -56.25f))).transform
+				.setParent(transform);
 
 		GameObject.instantiate(new GameObject("Slider Decrease",
 				decrease = new GuiRenderer("images/menus/settings/slider_decrease" + ".png", 68.75f,
