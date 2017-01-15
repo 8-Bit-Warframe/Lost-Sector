@@ -12,8 +12,6 @@ import com.ezardlabs.dethsquare.Vector2;
 import java.util.HashMap;
 
 public class SettingsMenu extends Script {
-	private static final int LEFT = 360;
-	private static final int TOP = 40;
 	private static final TextureAtlas FONT = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
 	private final SettingsTab audio = new SettingsTab();
 	private final SettingsTab graphics = new SettingsTab();
@@ -56,33 +54,36 @@ public class SettingsMenu extends Script {
 
 	private void setupAudioTab() {
 		GameObject.instantiate(new GameObject("Audio Tab", audioText),
-				new Vector2(LEFT + 212.5f - audioText.getWidth() / 2f,
-						TOP + 77.5f - audioText.getFontSize() / 2));
+				new Vector2(transform.position.x + 212.5f - audioText.getWidth() / 2f,
+						transform.position.y + 77.5f - audioText.getFontSize() / 2));
 
 		audio.addObject(new GameObject("Master Audio Slider",
-				new Slider(0, 15, 5, "images/menus/settings/slider_icon_audio_master.png",
-						newValue -> {
-						})), new Vector2(LEFT + 206.25f, TOP + 256.25f));
+						new Slider(0, 15, 5, "images/menus/settings/slider_icon_audio_master.png",
+								newValue -> {
+								})),
+				new Vector2(transform.position.x + 206.25f, transform.position.y + 256.25f));
 		audio.addObject(new GameObject("Music Audio Slider",
-				new Slider(0, 15, 5, "images/menus/settings/slider_icon_audio_music.png",
-						newValue -> {
-						})), new Vector2(LEFT + 206.25f, TOP + 456.25f));
+						new Slider(0, 15, 5, "images/menus/settings/slider_icon_audio_music.png",
+								newValue -> {
+								})),
+				new Vector2(transform.position.x + 206.25f, transform.position.y + 456.25f));
 		audio.addObject(new GameObject("SFX Audio Slider",
-				new Slider(0, 15, 5, "images/menus/settings/slider_icon_audio_sfx.png",
-						newValue -> {
-						})), new Vector2(LEFT + 206.25f, TOP + 656.25f));
+						new Slider(0, 15, 5, "images/menus/settings/slider_icon_audio_sfx.png",
+								newValue -> {
+								})),
+				new Vector2(transform.position.x + 206.25f, transform.position.y + 656.25f));
 	}
 
 	private void setupGraphicsTab() {
 		GameObject.instantiate(new GameObject("Graphics Tab", graphicsText),
-				new Vector2(LEFT + 556.25f - graphicsText.getWidth() / 2f,
-						TOP + 77.5f - graphicsText.getFontSize() / 2));
+				new Vector2(transform.position.x + 556.25f - graphicsText.getWidth() / 2f,
+						transform.position.y + 77.5f - graphicsText.getFontSize() / 2));
 	}
 
 	private void setupControlsTab() {
 		GameObject.instantiate(new GameObject("Controls Tab", controlsText),
-				new Vector2(LEFT + 900 - controlsText.getWidth() / 2f,
-						TOP + 77.5f - controlsText.getFontSize() / 2));
+				new Vector2(transform.position.x + 900 - controlsText.getWidth() / 2f,
+						transform.position.y + 77.5f - controlsText.getFontSize() / 2));
 	}
 
 	private class SettingsTab {
