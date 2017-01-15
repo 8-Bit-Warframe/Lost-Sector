@@ -6,6 +6,7 @@ import com.ezardlabs.dethsquare.GuiRenderer;
 import com.ezardlabs.dethsquare.GuiText;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
+import com.ezardlabs.dethsquare.PlayerPrefs;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
@@ -15,6 +16,7 @@ public class Slider extends Script {
 	private final int max;
 	private final String text;
 	private final String iconPath;
+	private final String playerPrefKey;
 	private final SliderValueListener listener;
 	private GameObject[] bars;
 	private GameObject valueBar;
@@ -24,13 +26,14 @@ public class Slider extends Script {
 	private long lastChange = 0;
 	private int value = 5;
 
-	Slider(int min, int max, int value, String text, String iconPath,
+	Slider(int min, int max, int defaultValue, String text, String iconPath, String playerPrefKey,
 			SliderValueListener listener) {
 		this.min = min;
 		this.max = max;
-		this.value = value;
+		this.value = PlayerPrefs.getInt(playerPrefKey, defaultValue);
 		this.text = text;
 		this.iconPath = iconPath;
+		this.playerPrefKey = playerPrefKey;
 		this.listener = listener;
 		this.bars = new GameObject[max - 1];
 	}
@@ -83,17 +86,20 @@ public class Slider extends Script {
 		if (Input.getKey(KeyCode.MOUSE_LEFT) && decrease.hitTest(Input.mousePosition) &&
 				value > min && System.currentTimeMillis() - lastChange > 100) {
 			value--;
-			listener.onValueChanged(value);
-			lastChange = System.currentTimeMillis();
-			moveBars();
+			valueChanged();
 		}
 		if (Input.getKey(KeyCode.MOUSE_LEFT) && increase.hitTest(Input.mousePosition) &&
 				value < max && System.currentTimeMillis() - lastChange > 100) {
 			value++;
-			listener.onValueChanged(value);
-			lastChange = System.currentTimeMillis();
-			moveBars();
+			valueChanged();
 		}
+	}
+
+	private void valueChanged() {
+		PlayerPrefs.setInt(playerPrefKey, value);
+		listener.onValueChanged(value);
+		lastChange = System.currentTimeMillis();
+		moveBars();
 	}
 
 	private void moveBars() {
