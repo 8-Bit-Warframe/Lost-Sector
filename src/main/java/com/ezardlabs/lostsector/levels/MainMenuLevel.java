@@ -31,12 +31,12 @@ public class MainMenuLevel extends Level {
 
 		GameObject.instantiate(new GameObject("MainMenu", new Menu(new String[]{"Explore",
 				"Survival",
-				"Procedural",
-				"Multiplayer"},
+				"Procedural"/*,
+				"Multiplayer"*/},
 				new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("explore"),
 						(menu, index, text) -> LevelManager.loadLevel("survival"),
-						(menu, index, text) -> LevelManager.loadLevel("procedural"),
-						(menu, index, text) -> LevelManager.loadLevel("multiplayer_lobby")},
+						(menu, index, text) -> LevelManager.loadLevel("procedural")/*,
+						(menu, index, text) -> LevelManager.loadLevel("multiplayer_lobby")*/},
 				new Vector2(0, 250), true),
 				new AudioSource(new AudioClip("audio/this_is_what_you_are" + ".ogg"), true,
 						AudioGroup.MUSIC)), new Vector2());
