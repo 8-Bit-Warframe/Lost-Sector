@@ -24,7 +24,9 @@ public class LankaBeam extends Script {
 	@Override
 	public void start() {
 		startTime = System.currentTimeMillis();
-		RaycastHit hit = Physics.raycast(transform.position, new Vector2(1, 0), Float.MAX_VALUE);
+		RaycastHit hit = Physics
+				.raycast(transform.position, new Vector2(1 * direction, 0), Float.MAX_VALUE,
+						"solid");
 		width = (int) Math.abs(transform.position.x - hit.point.x);
 		if (direction < 0) transform.position.x -= width;
 		gameObject.renderer.setSize(width, 0);
