@@ -7,7 +7,7 @@ import com.ezardlabs.lostsector.map.MapManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.ezardlabs.dethsquare.util.Utils.IO;
+import static com.ezardlabs.dethsquare.util.Dethsquare.IO;
 
 /**
  * Created by Benjamin on 2016-08-28.

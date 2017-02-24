@@ -18,7 +18,7 @@ import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Touch;
 import com.ezardlabs.dethsquare.Touch.TouchPhase;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.util.Utils;
+import com.ezardlabs.dethsquare.util.Dethsquare;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.hud.WeaponControl.WeaponType;
 import com.ezardlabs.lostsector.objects.menus.Menu;
@@ -190,7 +190,7 @@ public class Player extends Script {
 	}
 
 	private int getMovement() {
-		switch (Utils.PLATFORM) {
+		switch (Dethsquare.PLATFORM) {
 			case ANDROID:
 				int movement = 0;
 				if (Input.touches.length == 0) return movement;
@@ -241,7 +241,7 @@ public class Player extends Script {
 
 	private boolean meleeCheck() {
 		boolean touchMelee = false;
-		if (Utils.PLATFORM == Utils.Platform.ANDROID && hud.getCurrentWeaponType() == WeaponType.MELEE) {
+		if (Dethsquare.PLATFORM == Dethsquare.Platform.ANDROID && hud.getCurrentWeaponType() == WeaponType.MELEE) {
 			for (Touch t : Input.touches) {
 				if (t.phase == Touch.TouchPhase.BEGAN && hud.isAttackButtonPressed(t.position)) {
 					touchMelee = true;
@@ -258,7 +258,7 @@ public class Player extends Script {
 
 	private boolean shootCheck() {
 		boolean touchRanged = false;
-		if (Utils.PLATFORM == Utils.Platform.ANDROID && hud.getCurrentWeaponType() == WeaponType.RANGED) {
+		if (Dethsquare.PLATFORM == Dethsquare.Platform.ANDROID && hud.getCurrentWeaponType() == WeaponType.RANGED) {
 			for (Touch t : Input.touches) {
 				if (t.phase == Touch.TouchPhase.BEGAN && hud.isAttackButtonPressed(t.position)) {
 					touchRanged = true;
@@ -275,7 +275,7 @@ public class Player extends Script {
 
 	private void switchWeaponCheck() {
 		boolean touchSwitch = false;
-		if (Utils.PLATFORM == Utils.Platform.ANDROID) {
+		if (Dethsquare.PLATFORM == Dethsquare.Platform.ANDROID) {
 			touchSwitch = hud.isSwitchButtonPressed();
 		}
 		if (Input.getKeyDown(KeyCode.L) || touchSwitch) {
