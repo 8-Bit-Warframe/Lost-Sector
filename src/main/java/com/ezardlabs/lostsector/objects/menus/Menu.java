@@ -5,6 +5,7 @@ import com.ezardlabs.dethsquare.GuiRenderer;
 import com.ezardlabs.dethsquare.GuiText;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
+import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
@@ -82,11 +83,11 @@ public class Menu extends Script {
 	public void open() {
 		open = true;
 		float height = (2 * options.length + 1) * 50;
-		background.transform.position.set(1920 / 2 - 200 + offset.x,
-				1080 / 2 - ((2 * options.length + 1) * 50) / 2 + offset.y);
+		background.transform.position.set(Screen.width / 2 - 200 + offset.x,
+				Screen.height / 2 - ((2 * options.length + 1) * 50) / 2 + offset.y);
 		for (int i = 0; i < texts.length; i++) {
-			texts[i].transform.position.set(1920 / 2f - guiTexts[i].getWidth() / 2f + offset.x,
-					1080 / 2 - height / 2 + (1 + i * 2) * 50 + offset.y);
+			texts[i].transform.position.set(Screen.width / 2f - guiTexts[i].getWidth() / 2f + offset.x,
+					Screen.height / 2 - height / 2 + (1 + i * 2) * 50 + offset.y);
 		}
 	}
 
