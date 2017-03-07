@@ -47,6 +47,7 @@ public class PumpkinDeraCrewman extends Crewman {
 
 			@Override
 			public void onAnimationFinished(Animator animator) {
+				// TODO Change collider size/offset so that it matches the pumpkin
 				GameObject.instantiate(new GameObject("Pumpkin", new Renderer(), new Animator(),
 						new Collider(200, 200), new Rigidbody(), new Pumpkin()), transform.position);
 				GameObject.destroy(gameObject);
