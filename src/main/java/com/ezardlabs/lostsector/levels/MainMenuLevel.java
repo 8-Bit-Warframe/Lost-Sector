@@ -10,6 +10,7 @@ import com.ezardlabs.dethsquare.GuiRenderer;
 import com.ezardlabs.dethsquare.Level;
 import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Renderer;
+import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.objects.menus.MainMenuLiset;
 import com.ezardlabs.lostsector.objects.menus.Menu;
@@ -23,11 +24,11 @@ public class MainMenuLevel extends Level {
 
 		GameObject.instantiate(
 				new GameObject("Liset", new Renderer(), new Animator(), new MainMenuLiset(false)),
-				new Vector2(960 - 96 * 8 / 2, 75));
+				new Vector2(Screen.width / 2 - 96 * 8 / 2, 75 * Screen.scale));
 
 		GameObject.instantiate(new GameObject("MainMenuLogo",
 						new GuiRenderer("images/menus/main/logo.png", 900, 225)),
-				new Vector2(960 - 450, 10));
+				new Vector2(Screen.width / 2 - 450, 10 * Screen.scale));
 
 		GameObject.instantiate(new GameObject("MainMenu", new Menu(new String[]{"Explore",
 				"Survival",
