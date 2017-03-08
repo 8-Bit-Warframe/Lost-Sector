@@ -23,7 +23,7 @@ public abstract class Behaviour extends Script {
 	}
 
 	@SuppressWarnings("unchecked")
-	private abstract static class Builder<T extends Builder> {
+	protected abstract static class Builder<T extends Builder> {
 		float moveSpeed = 10;
 		float visionRange = 2000;
 		boolean willPatrol = false;
@@ -44,36 +44,6 @@ public abstract class Behaviour extends Script {
 		}
 
 		public abstract Behaviour create();
-	}
-
-	public static class MeleeBuilder extends Builder<MeleeBuilder> {
-		private float meleeRange;
-
-		public MeleeBuilder setMeleeRange(float meleeRange) {
-			this.meleeRange = meleeRange;
-			return this;
-		}
-
-		@Override
-		public MeleeBehaviour create() {
-			return new MeleeBehaviour(moveSpeed, willPatrol, visionRange,
-					meleeRange);
-		}
-	}
-
-	public static class RangedBuilder extends Builder<RangedBuilder> {
-		private float range = 1500;
-
-		public RangedBuilder setRange(float range) {
-			this.range = range;
-			return this;
-		}
-
-		@Override
-		public RangedBehaviour create() {
-			return new RangedBehaviour(moveSpeed, willPatrol, visionRange,
-					range);
-		}
 	}
 
 /*	private final float moveSpeed;
