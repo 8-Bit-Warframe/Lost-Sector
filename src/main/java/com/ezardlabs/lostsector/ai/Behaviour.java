@@ -2,9 +2,8 @@ package com.ezardlabs.lostsector.ai;
 
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Collider.Collision;
-import com.ezardlabs.dethsquare.Script;
 
-public abstract class Behaviour extends Script {
+public abstract class Behaviour {
 	private float moveSpeed;
 	private final boolean willPatrol;
 	private final float visionRange;
@@ -34,7 +33,6 @@ public abstract class Behaviour extends Script {
 		this.visionRange = visionRange;
 	}
 
-	@Override
 	public void onCollision(Collision collision) {
 		if (collision.speed > 37 && collision.location == Collider.CollisionLocation.BOTTOM) {
 			gameObject.animator.play("land");
