@@ -8,7 +8,12 @@ import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.multiplayer.Matchmaker;
+import com.ezardlabs.dethsquare.multiplayer.Matchmaker.MatchmakingListener;
+import com.ezardlabs.dethsquare.multiplayer.MatchmakingGame;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class MultiplayerLobbyLevel extends Level {
 
@@ -20,39 +25,29 @@ public class MultiplayerLobbyLevel extends Level {
 				new Vector2(Screen.width / 2 - guiText.getWidth() / 2, Screen.height / 2 - 25));
 		GameObject.instantiate(new GameObject("Camera", new Camera(true)), new Vector2());
 
-		Network.findGame(state -> {
-//			try {
-				switch (state) {
-					case MATCHMAKING_SEARCHING:
-						guiText.setText("Searching for a game...");
-						break;
-					case MATCHMAKING_FOUND:
-						guiText.setText("Game found");
-//						Thread.sleep(1000);
-						break;
-					case GAME_CONNECTING:
-						guiText.setText("Connecting players...");
-//						Thread.sleep(1000);
-						break;
-					case GAME_CONNECTED:
-						guiText.setText("Players connected");
-//						Thread.sleep(1000);
+		InetAddress ip = null;
+		try {
+			ip = InetAddress.getByName("8bitwarframe.com");
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		Matchmaker matchmaker = new Matchmaker(ip, 3000);
+		matchmaker.findGame(new MatchmakingListener() {
+			@Override
+			public boolean onCreateGame() {
+				LevelManager.loadLevel("multiplayer");
+				return true;
+			}
 
+			@Override
+			public void onGameFound(MatchmakingGame game) {
+				LevelManager.loadLevel("multiplayer");
+			}
 
-//						new Timer().schedule(new TimerTask() {
-//							@Override
-//							public void run() {
-//								LevelManager.loadLevel("multiplayer");
-//							}
-//						}, 1000);
-						LevelManager.loadLevel("multiplayer");
-						break;
-					default:
-						break;
-				}
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
+			@Override
+			public void onError(String error) {
+				System.err.println(error);
+			}
 		});
 	}
 }
