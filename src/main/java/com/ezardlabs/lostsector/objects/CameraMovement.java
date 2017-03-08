@@ -29,9 +29,12 @@ public class CameraMovement extends Script {
 
 	public void start() {
 		if (target != null) {
+			FollowType original = followType;
 			follow(target);
 			update();
-			smoothFollow(target);
+			if (original == FollowType.SMOOTH) {
+				smoothFollow(target);
+			}
 		}
 	}
 
