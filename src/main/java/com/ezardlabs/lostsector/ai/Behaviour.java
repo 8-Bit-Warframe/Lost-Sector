@@ -7,8 +7,18 @@ public abstract class Behaviour extends Script {
 	private final boolean willPatrol;
 	private final float visionRange;
 	private State state = State.IDLE;
+	private CombatState combatState = CombatState.IDLE;
 
 	protected enum State {
+		IDLE,
+		MOVING,
+		JUMPING,
+		FALLING,
+		LANDING,
+		FROZEN
+	}
+
+	protected enum CombatState {
 		IDLE,
 		PATROLLING,
 		SEARCHING,
