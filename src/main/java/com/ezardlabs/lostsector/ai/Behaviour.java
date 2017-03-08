@@ -10,7 +10,7 @@ public abstract class Behaviour {
 	private State state = State.IDLE;
 	private CombatState combatState = CombatState.IDLE;
 
-	protected enum State {
+	public enum State {
 		IDLE,
 		MOVING,
 		JUMPING,
@@ -33,9 +33,12 @@ public abstract class Behaviour {
 		this.visionRange = visionRange;
 	}
 
+	public State getState() {
+		return state;
+	}
+
 	public void onCollision(Collision collision) {
 		if (collision.speed > 37 && collision.location == Collider.CollisionLocation.BOTTOM) {
-			gameObject.animator.play("land");
 			state = State.LANDING;
 		}
 	}
