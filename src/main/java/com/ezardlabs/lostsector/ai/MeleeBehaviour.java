@@ -8,7 +8,7 @@ public class MeleeBehaviour extends Behaviour {
 		this.meleeRange = meleeRange;
 	}
 
-	protected abstract static class Builder extends Behaviour.Builder<Builder> {
+	public static class Builder extends Behaviour.Builder<Builder> {
 		private float meleeRange;
 
 		public Builder setMeleeRange(float meleeRange) {
