@@ -64,6 +64,7 @@ public abstract class Behaviour {
 				// TODO implement patrolling
 				break;
 			case TRACKING:
+				// TODO only update path if target has moved to a new NavPoint
 				path = NavMesh.getPath(transform, target);
 				break;
 			case SEARCHING:
