@@ -85,7 +85,7 @@ public abstract class Behaviour {
 
 	protected abstract CombatState onEnemySighted(Transform self, Transform enemy);
 
-	protected Transform visionCheck(Transform transform) {
+	private Transform visionCheck(Transform transform) {
 		RaycastHit hit = Physics.raycast(transform.position.offset(transform.scale.x > 0 ? 200 : 0, 100),
 				new Vector2(transform.scale.x, 0), visionRange, "player");
 		if (hit == null) {
