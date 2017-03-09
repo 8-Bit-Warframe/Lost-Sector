@@ -50,7 +50,7 @@ public abstract class Behaviour {
 		}
 	}
 
-	protected abstract void onEnemySighted(Transform enemy);
+	protected abstract void onEnemySighted(Transform self, Transform enemy);
 
 	protected Transform visionCheck(Transform transform) {
 		RaycastHit hit = Physics.raycast(transform.position.offset(transform.scale.x > 0 ? 200 : 0, 100),
