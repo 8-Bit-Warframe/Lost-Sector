@@ -2,6 +2,10 @@ package com.ezardlabs.lostsector.ai;
 
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Collider.Collision;
+import com.ezardlabs.dethsquare.Physics;
+import com.ezardlabs.dethsquare.Physics.RaycastHit;
+import com.ezardlabs.dethsquare.Transform;
+import com.ezardlabs.dethsquare.Vector2;
 
 public abstract class Behaviour {
 	private float moveSpeed;
@@ -42,6 +46,16 @@ public abstract class Behaviour {
 	public void onCollision(Collision collision) {
 		if (collision.speed > 37 && collision.location == Collider.CollisionLocation.BOTTOM) {
 			state = State.LANDING;
+		}
+	}
+
+	protected Transform visionCheck(Transform transform) {
+		RaycastHit hit = Physics.raycast(transform.position.offset(transform.scale.x > 0 ? 200 : 0, 100),
+				new Vector2(transform.scale.x, 0), visionRange, "player");
+		if (hit == null) {
+			return null;
+		} else {
+			return hit.transform;
 		}
 	}
 
