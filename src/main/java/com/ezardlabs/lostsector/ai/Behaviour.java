@@ -37,7 +37,7 @@ public abstract class Behaviour {
 		this.visionRange = visionRange;
 	}
 
-	public final void update() {
+	public final void update(Transform transform) {
 	}
 
 	public State getState() {
