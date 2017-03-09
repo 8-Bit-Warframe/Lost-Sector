@@ -38,6 +38,10 @@ public abstract class Behaviour {
 	}
 
 	public final void update(Transform transform) {
+		Transform sightedEnemy = visionCheck(transform);
+		if (sightedEnemy != null) {
+			onEnemySighted(transform, sightedEnemy);
+		}
 	}
 
 	public State getState() {
