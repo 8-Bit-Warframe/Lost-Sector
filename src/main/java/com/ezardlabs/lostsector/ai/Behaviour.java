@@ -6,6 +6,8 @@ import com.ezardlabs.dethsquare.Physics;
 import com.ezardlabs.dethsquare.Physics.RaycastHit;
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.lostsector.NavMesh;
+import com.ezardlabs.lostsector.NavMesh.NavPoint;
 
 public abstract class Behaviour {
 	private float moveSpeed;
@@ -13,6 +15,8 @@ public abstract class Behaviour {
 	private final float visionRange;
 	private State state = State.IDLE;
 	private CombatState combatState = CombatState.IDLE;
+	private Transform target = null;
+	private NavPoint[] path = null;
 
 	public enum State {
 		IDLE,
@@ -40,7 +44,32 @@ public abstract class Behaviour {
 	public final void update(Transform transform) {
 		Transform sightedEnemy = visionCheck(transform);
 		if (sightedEnemy != null) {
-			onEnemySighted(transform, sightedEnemy);
+			combatState = onEnemySighted(transform, sightedEnemy);
+			switch (combatState) {
+				case IDLE:
+				case PATROLLING:
+					target = null;
+					break;
+				case TRACKING:
+				case SEARCHING:
+				case ATTACKING:
+					target = sightedEnemy;
+					break;
+			}
+		}
+		switch (combatState) {
+			case IDLE:
+				break;
+			case PATROLLING:
+				// TODO implement patrolling
+				break;
+			case TRACKING:
+				path = NavMesh.getPath(transform, target);
+				break;
+			case SEARCHING:
+				break;
+			case ATTACKING:
+				break;
 		}
 	}
 
