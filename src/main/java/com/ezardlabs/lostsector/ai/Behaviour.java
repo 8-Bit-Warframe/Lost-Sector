@@ -26,8 +26,8 @@ public abstract class Behaviour {
 	protected enum CombatState {
 		IDLE,
 		PATROLLING,
-		SEARCHING,
 		TRACKING,
+		SEARCHING,
 		ATTACKING
 	}
 
