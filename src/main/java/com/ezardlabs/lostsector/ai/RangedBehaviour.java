@@ -1,11 +1,22 @@
 package com.ezardlabs.lostsector.ai;
 
+import com.ezardlabs.dethsquare.Transform;
+
 public class RangedBehaviour extends Behaviour {
 	private final float range;
 
 	RangedBehaviour(float moveSpeed, boolean willPatrol, float visionRange, float range) {
 		super(moveSpeed, willPatrol, visionRange);
 		this.range = range;
+	}
+
+	@Override
+	protected CombatState onEnemySighted(Transform self, Transform enemy) {
+		if (Math.abs(self.position.x - enemy.position.x) <= range) {
+			return CombatState.ATTACKING;
+		} else {
+			return CombatState.TRACKING;
+		}
 	}
 
 	public static class Builder extends Behaviour.Builder<Builder> {
