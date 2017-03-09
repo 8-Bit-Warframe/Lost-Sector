@@ -37,7 +37,8 @@ public abstract class Behaviour {
 		this.visionRange = visionRange;
 	}
 
-	public abstract void update();
+	public final void update() {
+	}
 
 	public State getState() {
 		return state;
@@ -48,6 +49,8 @@ public abstract class Behaviour {
 			state = State.LANDING;
 		}
 	}
+
+	protected abstract void onEnemySighted(Transform enemy);
 
 	protected Transform visionCheck(Transform transform) {
 		RaycastHit hit = Physics.raycast(transform.position.offset(transform.scale.x > 0 ? 200 : 0, 100),
