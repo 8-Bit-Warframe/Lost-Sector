@@ -6,10 +6,12 @@ import com.ezardlabs.lostsector.objects.Entity;
 
 public class MeleeBehaviour extends Behaviour {
 	private final float meleeRange;
+	private final int meleeDamage;
 
-	MeleeBehaviour(float moveSpeed, boolean willPatrol, float visionRange, float meleeRange) {
+	MeleeBehaviour(float moveSpeed, boolean willPatrol, float visionRange, float meleeRange, int meleeDamage) {
 		super(moveSpeed, willPatrol, visionRange);
 		this.meleeRange = meleeRange;
+		this.meleeDamage = meleeDamage;
 	}
 
 	@Override
@@ -35,15 +37,21 @@ public class MeleeBehaviour extends Behaviour {
 
 	public static class Builder extends Behaviour.Builder<Builder> {
 		private float meleeRange;
+		private int meleeDamage;
 
 		public Builder setMeleeRange(float meleeRange) {
 			this.meleeRange = meleeRange;
 			return this;
 		}
 
+		public Builder setMeleeDamage(int meleeDamage) {
+			this.meleeDamage = meleeDamage;
+			return this;
+		}
+
 		@Override
 		public MeleeBehaviour create() {
-			return new MeleeBehaviour(moveSpeed, willPatrol, visionRange, meleeRange);
+			return new MeleeBehaviour(moveSpeed, willPatrol, visionRange, meleeRange, meleeDamage);
 		}
 	}
 }
