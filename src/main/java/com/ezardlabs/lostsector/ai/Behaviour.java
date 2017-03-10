@@ -74,7 +74,10 @@ public abstract class Behaviour {
 			case ATTACKING:
 				break;
 		}
-		move(transform);
+		if (combatState == CombatState.PATROLLING || combatState == CombatState.TRACKING ||
+				combatState == CombatState.SEARCHING) {
+			move(transform);
+		}
 	}
 
 	private void move(Transform transform) {
