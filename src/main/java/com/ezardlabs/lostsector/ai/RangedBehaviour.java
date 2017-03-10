@@ -19,6 +19,11 @@ public class RangedBehaviour extends Behaviour {
 		}
 	}
 
+	@Override
+	protected CombatState attack(Transform target) {
+		return null;
+	}
+
 	public static class Builder extends Behaviour.Builder<Builder> {
 		private float range = 1500;
 
