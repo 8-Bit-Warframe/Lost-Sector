@@ -17,6 +17,7 @@ public abstract class Behaviour {
 	private CombatState combatState = CombatState.IDLE;
 	private Transform target = null;
 	private NavPoint[] path = null;
+	private int pathIndex = 0;
 
 	public enum State {
 		IDLE,
@@ -66,12 +67,62 @@ public abstract class Behaviour {
 			case TRACKING:
 				// TODO only update path if target has moved to a new NavPoint
 				path = NavMesh.getPath(transform, target);
+				pathIndex = 0;
 				break;
 			case SEARCHING:
 				break;
 			case ATTACKING:
 				break;
 		}
+		move(transform);
+	}
+
+	private void move(Transform transform) {
+		if (path != null && path.length > 0 && pathIndex < path.length) {
+			System.out.println(transform.position.x + ", " + NavMesh.getNavPoint(transform.position).position.x);
+			if (path[pathIndex].position.x == transform.position.x) {
+				pathIndex++;
+			}
+			if (path.length > pathIndex + 2) {
+				if (path[pathIndex + 1].position.x < path[pathIndex].position.x &&
+						transform.position.x < path[pathIndex].position.x) {
+					pathIndex++;
+				}
+				if (path[pathIndex + 1].position.x > path[pathIndex].position.x &&
+						transform.position.x > path[pathIndex].position.x) {
+					pathIndex++;
+				}
+			}
+			if (pathIndex >= path.length) {
+				return;
+			}
+			if (path[pathIndex].position.x < transform.position.x) {
+				transform.scale.x = -1;
+			} else {
+				transform.scale.x = 1;
+			}
+			if (path[pathIndex].position.y < transform.position.y && transform.gameObject.rigidbody.velocity.y >= 0) {
+				jump(transform);
+			}
+			if (path[pathIndex].position.x > transform.position.x) {
+				transform.translate(moveSpeed, 0);
+				if (path[pathIndex].position.x <= transform.position.x) {
+					pathIndex++;
+				}
+			} else if (path[pathIndex].position.x < transform.position.x) {
+				transform.translate(-moveSpeed, 0);
+				if (path[pathIndex].position.x >= transform.position.x) {
+					pathIndex++;
+				}
+			}
+		} else {
+			state = State.IDLE;
+		}
+	}
+
+	private void jump(Transform transform) {
+		transform.gameObject.rigidbody.velocity.y = -30;
+		state = State.JUMPING;
 	}
 
 	public State getState() {
