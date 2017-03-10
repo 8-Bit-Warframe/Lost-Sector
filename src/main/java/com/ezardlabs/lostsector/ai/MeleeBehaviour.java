@@ -36,7 +36,7 @@ public class MeleeBehaviour extends Behaviour {
 				if (!damageApplied) {
 					Entity e = target.gameObject.getComponentOfType(Entity.class);
 					if (e != null) {
-						e.applyDamage(1, DamageType.NORMAL, self.position);
+						e.applyDamage(meleeDamage, DamageType.NORMAL, self.position);
 						damageApplied = true;
 					}
 				}
