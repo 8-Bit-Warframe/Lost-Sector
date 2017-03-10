@@ -25,7 +25,8 @@ public abstract class Behaviour {
 		JUMPING,
 		FALLING,
 		LANDING,
-		FROZEN
+		FROZEN,
+		ATTACKING
 	}
 
 	protected enum CombatState {
@@ -72,6 +73,7 @@ public abstract class Behaviour {
 			case SEARCHING:
 				break;
 			case ATTACKING:
+				state = State.ATTACKING;
 				break;
 		}
 		if (combatState == CombatState.PATROLLING || combatState == CombatState.TRACKING ||
