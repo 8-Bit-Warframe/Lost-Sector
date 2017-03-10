@@ -7,11 +7,16 @@ import com.ezardlabs.lostsector.objects.Entity;
 public class MeleeBehaviour extends Behaviour {
 	private final float meleeRange;
 	private final int meleeDamage;
+	private final int damageFrame;
 
-	MeleeBehaviour(float moveSpeed, boolean willPatrol, float visionRange, float meleeRange, int meleeDamage) {
+	private boolean damageApplied = false;
+
+	MeleeBehaviour(float moveSpeed, boolean willPatrol, float visionRange, float meleeRange, int meleeDamage,
+			int damageFrame) {
 		super(moveSpeed, willPatrol, visionRange);
 		this.meleeRange = meleeRange;
 		this.meleeDamage = meleeDamage;
+		this.damageFrame = damageFrame;
 	}
 
 	@Override
@@ -27,9 +32,16 @@ public class MeleeBehaviour extends Behaviour {
 	protected CombatState attack(Transform self, Transform target) {
 		if (Math.abs(target.position.y - self.position.y) <= 100 &&
 				Math.abs(target.position.x - self.position.x) <= 150) {
-			Entity e = target.gameObject.getComponentOfType(Entity.class);
-			if (e != null) {
-				e.applyDamage(1, DamageType.NORMAL, self.position);
+			if (self.gameObject.animator.getCurrentAnimationFrame() == damageFrame) {
+				if (!damageApplied) {
+					Entity e = target.gameObject.getComponentOfType(Entity.class);
+					if (e != null) {
+						e.applyDamage(1, DamageType.NORMAL, self.position);
+						damageApplied = true;
+					}
+				}
+			} else {
+				damageApplied = false;
 			}
 			return CombatState.ATTACKING;
 		} else {
@@ -40,6 +52,7 @@ public class MeleeBehaviour extends Behaviour {
 	public static class Builder extends Behaviour.Builder<Builder> {
 		private float meleeRange;
 		private int meleeDamage;
+		private int damageFrame;
 
 		public Builder setMeleeRange(float meleeRange) {
 			this.meleeRange = meleeRange;
@@ -51,9 +64,14 @@ public class MeleeBehaviour extends Behaviour {
 			return this;
 		}
 
+		public Builder setDamageFrame(int damageFrame) {
+			this.damageFrame = damageFrame;
+			return this;
+		}
+
 		@Override
 		public MeleeBehaviour create() {
-			return new MeleeBehaviour(moveSpeed, willPatrol, visionRange, meleeRange, meleeDamage);
+			return new MeleeBehaviour(moveSpeed, willPatrol, visionRange, meleeRange, meleeDamage, damageFrame);
 		}
 	}
 }
