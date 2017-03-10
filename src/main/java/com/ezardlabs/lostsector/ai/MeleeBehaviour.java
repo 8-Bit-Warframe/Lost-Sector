@@ -31,8 +31,10 @@ public class MeleeBehaviour extends Behaviour {
 			if (e != null) {
 				e.applyDamage(1, DamageType.NORMAL, self.position);
 			}
+			return CombatState.ATTACKING;
+		} else {
+			return CombatState.IDLE;
 		}
-		return null;
 	}
 
 	public static class Builder extends Behaviour.Builder<Builder> {
