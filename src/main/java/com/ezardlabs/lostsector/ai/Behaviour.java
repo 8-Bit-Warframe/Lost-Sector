@@ -106,11 +106,13 @@ public abstract class Behaviour {
 			}
 			if (path[pathIndex].position.x > transform.position.x) {
 				transform.translate(moveSpeed, 0);
+				state = State.MOVING;
 				if (path[pathIndex].position.x <= transform.position.x) {
 					pathIndex++;
 				}
 			} else if (path[pathIndex].position.x < transform.position.x) {
 				transform.translate(-moveSpeed, 0);
+				state = State.MOVING;
 				if (path[pathIndex].position.x >= transform.position.x) {
 					pathIndex++;
 				}
