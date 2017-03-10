@@ -139,7 +139,7 @@ public abstract class Behaviour {
 
 	protected abstract CombatState onEnemySighted(Transform self, Transform enemy);
 
-	protected abstract CombatState attack(Transform target);
+	protected abstract CombatState attack(Transform self, Transform target);
 
 	private Transform visionCheck(Transform transform) {
 		RaycastHit hit = Physics.raycast(transform.position.offset(transform.scale.x > 0 ? 200 : 0, 100),

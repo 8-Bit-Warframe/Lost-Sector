@@ -1,6 +1,8 @@
 package com.ezardlabs.lostsector.ai;
 
 import com.ezardlabs.dethsquare.Transform;
+import com.ezardlabs.lostsector.Game.DamageType;
+import com.ezardlabs.lostsector.objects.Entity;
 
 public class MeleeBehaviour extends Behaviour {
 	private final float meleeRange;
@@ -20,7 +22,14 @@ public class MeleeBehaviour extends Behaviour {
 	}
 
 	@Override
-	protected CombatState attack(Transform target) {
+	protected CombatState attack(Transform self, Transform target) {
+		if (Math.abs(target.position.y - self.position.y) <= 100 &&
+				Math.abs(target.position.x - self.position.x) <= 150) {
+			Entity e = target.gameObject.getComponentOfType(Entity.class);
+			if (e != null) {
+				e.applyDamage(1, DamageType.NORMAL, self.position);
+			}
+		}
 		return null;
 	}
 

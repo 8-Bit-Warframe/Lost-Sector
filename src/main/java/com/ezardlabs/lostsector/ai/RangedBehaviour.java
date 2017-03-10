@@ -20,7 +20,7 @@ public class RangedBehaviour extends Behaviour {
 	}
 
 	@Override
-	protected CombatState attack(Transform target) {
+	protected CombatState attack(Transform self, Transform target) {
 		return null;
 	}
 
