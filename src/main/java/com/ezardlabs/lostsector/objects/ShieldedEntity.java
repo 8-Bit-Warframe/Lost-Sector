@@ -40,10 +40,10 @@ public abstract class ShieldedEntity extends Entity {
 			Vector2 attackOrigin) {
 		if (shield > 0) {
 			shield--;
-			nextShieldRegen = System.currentTimeMillis() + shieldRegenTime;
 			super.applyDamage(0, damageType, attackOrigin);
 		} else {
 			super.applyDamage(damage, damageType, attackOrigin);
 		}
+		nextShieldRegen = System.currentTimeMillis() + shieldRegenTime;
 	}
 }
