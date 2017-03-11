@@ -45,7 +45,7 @@ public class MeleeBehaviour extends Behaviour {
 			}
 			return CombatState.ATTACKING;
 		} else {
-			return CombatState.IDLE;
+			return CombatState.TRACKING;
 		}
 	}
 

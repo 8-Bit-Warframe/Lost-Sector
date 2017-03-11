@@ -73,7 +73,7 @@ public abstract class Behaviour {
 			case SEARCHING:
 				break;
 			case ATTACKING:
-				state = State.ATTACKING;
+				combatState = attack(transform, target);
 				break;
 		}
 		if (combatState == CombatState.PATROLLING || combatState == CombatState.TRACKING ||
