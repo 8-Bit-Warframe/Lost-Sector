@@ -101,8 +101,8 @@ public class NavMesh {
 	}
 
 	public static NavPoint[] getPath(Vector2 a, Vector2 b) {
-		NavPoint start = navPoints[Math.round(a.x / 100f)][Math.round(a.y / 100f) + 1];
-		NavPoint end = navPoints[Math.round(b.x / 100f)][Math.round(b.y / 100f) + 1];
+		NavPoint start = getNavPoint(a);
+		NavPoint end = getNavPoint(b);
 		if (end != null && end.type == NavPointType.NONE) {
 			end = navPoints[Math.round((b.x / 100f) + 1)][Math.round(b.y / 100f) + 1];
 		}
@@ -157,7 +157,11 @@ public class NavMesh {
 	}
 
 	public static NavPoint getNavPoint(Vector2 position) {
-		return navPoints[Math.round(position.x / 100f)][Math.round(position.y / 100f) + 1];
+		return getNavPoint(position.x, position.y);
+	}
+
+	public static NavPoint getNavPoint(float x, float y) {
+		return navPoints[Math.round(x / 100f)][Math.round(y / 100f) + 1];
 	}
 
 	private static int count = 0;
