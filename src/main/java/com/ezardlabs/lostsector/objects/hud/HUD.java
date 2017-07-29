@@ -21,7 +21,8 @@ public class HUD extends Script {
 	}
 
 	public void update() {
-		statusIndicator.update(warframe.getHealth(), warframe.getShield(), warframe.getEnergy());
+		statusIndicator.update(Math.round((warframe.getHealth() / warframe.getMaxHealth()) * 15), warframe.getShield(),
+				warframe.getEnergy());
 //		weaponControl.update();
 	}
 

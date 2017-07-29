@@ -39,8 +39,7 @@ public abstract class Enemy extends Entity {
 		gameObject.renderer.setzIndex(3);
 		setDamageListener(new DamageListener() {
 			@Override
-			public void onDamageReceived(int damage, DamageType damageType,
-					Vector2 attackOrigin) {
+			public void onDamageReceived(float damage, DamageType damageType, Vector2 attackOrigin) {
 				switch (damageType) {
 					case NORMAL:
 						break;
