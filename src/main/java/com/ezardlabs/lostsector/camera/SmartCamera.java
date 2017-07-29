@@ -63,7 +63,9 @@ public class SmartCamera extends Script {
 
 		target.set(base.x + inputCurrent.x, base.y + inputCurrent.y);
 
-		Debug.drawCircle(target, 30, 1, 0, 0);
+		if (debug) {
+			Debug.drawCircle(target, 30, 1, 0, 0);
+		}
 
 		target.x -= (Screen.width / 2) / Screen.scale;
 		target.y -= (Screen.height / 2) / Screen.scale;
