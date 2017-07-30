@@ -1,0 +1,61 @@
+{
+	"defaults": {
+		"width": 200,
+		"height": 500,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 80
+	},
+	"animations": [
+		{
+			"name": "open",
+			"sprites": [
+				{
+					"name": "ldoor"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "close",
+			"sprites": [
+				{
+					"name": "ldoor0"
+				},
+				{
+					"name": "ldoor1"
+				},
+				{
+					"name": "ldoor2"
+				},
+				{
+					"name": "ldoor3"
+				},
+				{
+					"name": "ldoor4"
+				},
+				{
+					"name": "ldoor5"
+				},
+				{
+					"name": "ldoor6"
+				},
+				{
+					"name": "ldoor7"
+				},
+				{
+					"name": "ldoor8"
+				},
+				{
+					"name": "ldoor9"
+				},
+				{
+					"name": "ldoor10"
+				}
+			],
+			"type": "OSCILLATE"
+		}
+	]
+}
