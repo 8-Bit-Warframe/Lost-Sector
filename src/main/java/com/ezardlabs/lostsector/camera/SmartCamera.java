@@ -19,8 +19,11 @@ public class SmartCamera extends Script {
 	private Vector2 inputTarget = new Vector2();
 	private Vector2 inputCurrent = new Vector2();
 	private Vector2 target = new Vector2();
-
 	private Vector2 lastFollowTargetPos = new Vector2();
+
+	private boolean isQuaking = false;
+	private long quakeEnd = 0;
+	private float quakeStrength = 0;
 
 	public SmartCamera(Transform followTarget, float maxLookahead) {
 		this.followTarget = followTarget;
@@ -87,6 +90,10 @@ public class SmartCamera extends Script {
 		}
 
 		lastFollowTargetPos.set(followTarget.position);
+
+		if (isQuaking) {
+			updateQuake();
+		}
 	}
 
 	private void lerp(Vector2 current, Vector2 target) {
@@ -102,6 +109,18 @@ public class SmartCamera extends Script {
 
 	public void setFollowTarget(Transform followTarget) {
 		this.followTarget = followTarget;
+	}
+
+	public void startQuake(long length, float strengthFactor) {
+		this.quakeStrength = strengthFactor * 3.125f;
+		this.quakeEnd = (System.currentTimeMillis() + length);
+		this.isQuaking = true;
+	}
+
+	private void updateQuake() {
+		transform.position.x += (int) (35.0F * this.quakeStrength - Math.random() * 70.0D * this.quakeStrength);
+		transform.position.y += (int) (35.0F * this.quakeStrength - Math.random() * 70.0D * this.quakeStrength);
+		this.isQuaking = System.currentTimeMillis() < this.quakeEnd;
 	}
 
 	static void registerPOI(CameraPOI poi) {

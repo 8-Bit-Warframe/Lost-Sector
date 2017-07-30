@@ -19,6 +19,7 @@ import com.ezardlabs.dethsquare.Touch;
 import com.ezardlabs.dethsquare.Touch.TouchPhase;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.util.Dethsquare;
+import com.ezardlabs.lostsector.camera.SmartCamera;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.hud.WeaponControl.WeaponType;
 import com.ezardlabs.lostsector.objects.menus.Menu;
@@ -359,7 +360,7 @@ public class Player extends Script {
 //				gameObject.renderer.setOffsets(0, 0);
 //				gameObject.animator.play("land");
 				//noinspection ConstantConditions
-				Camera.main.gameObject.getComponent(CameraMovement.class).startQuake(100, 0.3f);
+				Camera.main.gameObject.getComponent(SmartCamera.class).startQuake(100, 0.3f);
 				TextureAtlas ta = new TextureAtlas("images/effects/dust.png", "images/effects/dust.txt");
 				GameObject.destroy(GameObject
 						.instantiate(new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50),
