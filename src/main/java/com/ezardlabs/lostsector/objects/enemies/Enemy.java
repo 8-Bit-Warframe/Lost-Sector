@@ -35,7 +35,7 @@ public abstract class Enemy extends Entity {
 		gameObject.animator.setAnimations(getIdleAnimation(), getRunAnimation(), getJumpAnimation(), getFallAnimation(), getLandAnimation(), getShootAnimation(), getDieShootFrontAnimation(),
 				getDieShootBackAnimation(), getDieSlashFrontAnimation(), getDieSlashBackAnimation(), getDieKubrowFrontAnimation(), getDieKubrowBackAnimation(), getFrozenAnimation(), getFrozenMeltAnimation(), getFrozenShatterAnimation());
 		gameObject.animator.play("idle");
-		gameObject.renderer.transform.scale.x = -1;
+		transform.scale.x = -1;
 		gameObject.renderer.setzIndex(3);
 		setDamageListener(new DamageListener() {
 			@Override
