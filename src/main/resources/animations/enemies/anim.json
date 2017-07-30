@@ -1,0 +1,248 @@
+{
+	"defaults": {
+		"width": 200,
+		"height": 200,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "idle",
+			"sprites": [
+				{
+					"name": "idle0",
+					"duration": 0
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "run",
+			"sprites": [
+				{
+					"name": "run0"
+				},
+				{
+					"name": "run1"
+				},
+				{
+					"name": "run2"
+				},
+				{
+					"name": "run3"
+				},
+				{
+					"name": "run4"
+				},
+				{
+					"name": "run5"
+				},
+				{
+					"name": "run6"
+				},
+				{
+					"name": "run7"
+				}
+			],
+			"type": "LOOP"
+		},
+		{
+			"name": "jump",
+			"sprites": [
+				{
+					"name": "jump0"
+				},
+				{
+					"name": "jump1"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "fall",
+			"sprites": [
+				{
+					"name": "fall0"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "land",
+			"sprites": [
+				{
+					"name": "land0"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "die_shoot_front",
+			"sprite": [
+				{
+					"name": "die_shoot_front0"
+				},
+				{
+					"name": "die_shoot_front1"
+				},
+				{
+					"name": "die_shoot_front2"
+				},
+				{
+					"name": "die_shoot_front3"
+				},
+				{
+					"name": "die_shoot_front4"
+				},
+				{
+					"name": "die_shoot_front5"
+				},
+				{
+					"name": "die_shoot_front6"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "die_shoot_back",
+			"sprite": [
+				{
+					"name": "die_shoot_back0"
+				},
+				{
+					"name": "die_shoot_back1"
+				},
+				{
+					"name": "die_shoot_back2"
+				},
+				{
+					"name": "die_shoot_back3"
+				},
+				{
+					"name": "die_shoot_back4"
+				},
+				{
+					"name": "die_shoot_back5"
+				},
+				{
+					"name": "die_shoot_back6"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "die_slash_front",
+			"sprite": [
+				{
+					"name": "die_slash_front0"
+				},
+				{
+					"name": "die_slash_front1"
+				},
+				{
+					"name": "die_slash_front2"
+				},
+				{
+					"name": "die_slash_front3"
+				},
+				{
+					"name": "die_slash_front4"
+				},
+				{
+					"name": "die_slash_front5"
+				},
+				{
+					"name": "die_slash_front6"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "die_slash_back",
+			"sprite": [
+				{
+					"name": "die_slash_back0"
+				},
+				{
+					"name": "die_slash_back1"
+				},
+				{
+					"name": "die_slash_back2"
+				},
+				{
+					"name": "die_slash_back3"
+				},
+				{
+					"name": "die_slash_back4"
+				},
+				{
+					"name": "die_slash_back5"
+				},
+				{
+					"name": "die_slash_back6"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "frozen",
+			"sprites": [
+				{
+					"name": "frozen0"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "frozen_melt",
+			"sprites": [
+				{
+					"name": "frozen_melt0"
+				},
+				{
+					"name": "frozen_melt1"
+				},
+				{
+					"name": "frozen_melt2"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "frozen_shatter",
+			"sprites": [
+				{
+					"name": "frozen_shatter0"
+				},
+				{
+					"name": "frozen_shatter1"
+				},
+				{
+					"name": "frozen_shatter2"
+				},
+				{
+					"name": "frozen_shatter3"
+				},
+				{
+					"name": "frozen_shatter4"
+				},
+				{
+					"name": "frozen_shatter5"
+				},
+				{
+					"name": "frozen_shatter6"
+				},
+				{
+					"name": "frozen_shatter7"
+				},
+				{
+					"name": "frozen_shatter8"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}
