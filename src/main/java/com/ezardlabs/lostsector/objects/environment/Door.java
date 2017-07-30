@@ -1,13 +1,13 @@
 package com.ezardlabs.lostsector.objects.environment;
 
-import com.ezardlabs.dethsquare.Animation;
-import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.animation.Animations;
+import com.ezardlabs.dethsquare.animation.Animations.Validator;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentHashMap.KeySetView;
@@ -23,7 +23,8 @@ public class Door extends Script {
 	public void start() {
 		gameObject.renderer.setTextureAtlas(ta, 200, 500);
 		gameObject.renderer.setSprite(getInitialSprite(ta));
-		gameObject.animator.addAnimations(getOpenAnimation(ta), getCloseAnimation(ta));
+		gameObject.animator.addAnimations(Animations.load("animations/environment/corpus/doors/door", ta, new
+				Validator("open", "close")));
 		GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(200, 100)),
 				new Vector2(transform.position));
 		GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(200, 100)),
@@ -44,26 +45,6 @@ public class Door extends Script {
 		gameObject.setTag("solid");
 		gameObject.collider.bounds.setWidth(100);
 		gameObject.collider.bounds.setHeight(500);
-	}
-
-	protected Animation getOpenAnimation(TextureAtlas ta) {
-		return new Animation("open", new Sprite[]{ta.getSprite("door0"),
-				ta.getSprite("door1"),
-				ta.getSprite("door2"),
-				ta.getSprite("door3"),
-				ta.getSprite("door4"),
-				ta.getSprite("door5"),
-				ta.getSprite("door6")}, AnimationType.ONE_SHOT, 80);
-	}
-
-	protected Animation getCloseAnimation(TextureAtlas ta) {
-		return new Animation("close", new Sprite[]{ta.getSprite("door6"),
-				ta.getSprite("door5"),
-				ta.getSprite("door4"),
-				ta.getSprite("door3"),
-				ta.getSprite("door2"),
-				ta.getSprite("door1"),
-				ta.getSprite("door0")}, AnimationType.ONE_SHOT, 80);
 	}
 
 	protected Sprite getInitialSprite(TextureAtlas ta) {

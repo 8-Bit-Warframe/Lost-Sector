@@ -1,0 +1,67 @@
+{
+	"defaults": {
+		"width": 200,
+		"height": 500,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 80
+	},
+	"animations": [
+		{
+			"name": "open",
+			"sprites": [
+				{
+					"name": "door0"
+				},
+				{
+					"name": "door1"
+				},
+				{
+					"name": "door2"
+				},
+				{
+					"name": "door3"
+				},
+				{
+					"name": "door4"
+				},
+				{
+					"name": "door5"
+				},
+				{
+					"name": "door6"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "close",
+			"sprites": [
+				{
+					"name": "door6"
+				},
+				{
+					"name": "door5"
+				},
+				{
+					"name": "door4"
+				},
+				{
+					"name": "door3"
+				},
+				{
+					"name": "door2"
+				},
+				{
+					"name": "door1"
+				},
+				{
+					"name": "door60"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}
