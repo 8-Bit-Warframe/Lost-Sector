@@ -1,0 +1,115 @@
+{
+	"defaults": {
+		"width": 800,
+		"height": 300,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "background",
+			"sprites": [
+				{
+					"name": "avalanche_background0"
+				},
+				{
+					"name": "avalanche_background1"
+				},
+				{
+					"name": "avalanche_background2"
+				},
+				{
+					"name": "avalanche_background3"
+				},
+				{
+					"name": "avalanche_background4"
+				},
+				{
+					"name": "avalanche_background5"
+				},
+				{
+					"name": "avalanche_background6"
+				},
+				{
+					"name": "avalanche_background7"
+				},
+				{
+					"name": "avalanche_background8"
+				},
+				{
+					"name": "avalanche_background9"
+				},
+				{
+					"name": "avalanche_background10"
+				},
+				{
+					"name": "avalanche_background11"
+				},
+				{
+					"name": "avalanche_background12"
+				},
+				{
+					"name": "avalanche_background13"
+				},
+				{
+					"name": "avalanche_background14"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "foreground",
+			"sprites": [
+				{
+					"name": "avalanche_foreground0"
+				},
+				{
+					"name": "avalanche_foreground1"
+				},
+				{
+					"name": "avalanche_foreground2"
+				},
+				{
+					"name": "avalanche_foreground3"
+				},
+				{
+					"name": "avalanche_foreground4"
+				},
+				{
+					"name": "avalanche_foreground5"
+				},
+				{
+					"name": "avalanche_foreground6"
+				},
+				{
+					"name": "avalanche_foreground7"
+				},
+				{
+					"name": "avalanche_foreground8"
+				},
+				{
+					"name": "avalanche_foreground9"
+				},
+				{
+					"name": "avalanche_foreground10"
+				},
+				{
+					"name": "avalanche_foreground11"
+				},
+				{
+					"name": "avalanche_foreground12"
+				},
+				{
+					"name": "avalanche_foreground13"
+				},
+				{
+					"name": "avalanche_foreground14"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}

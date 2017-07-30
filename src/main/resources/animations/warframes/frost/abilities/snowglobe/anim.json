@@ -1,0 +1,73 @@
+{
+	"defaults": {
+		"width": 800,
+		"height": 600,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "snowglobe",
+			"sprites": [
+				{
+					"name": "sg0"
+				},
+				{
+					"name": "sg1"
+				},
+				{
+					"name": "sg2"
+				},
+				{
+					"name": "sg3"
+				},
+				{
+					"name": "sg4"
+				},
+				{
+					"name": "sg5"
+				},
+				{
+					"name": "sg6"
+				},
+				{
+					"name": "sg7"
+				},
+				{
+					"name": "sg8"
+				},
+				{
+					"name": "sg9"
+				},
+				{
+					"name": "sg10"
+				},
+				{
+					"name": "sg11"
+				},
+				{
+					"name": "sg12"
+				},
+				{
+					"name": "sg13"
+				},
+				{
+					"name": "sg14"
+				},
+				{
+					"name": "sg15"
+				},
+				{
+					"name": "sg16"
+				},
+				{
+					"name": "sg17"
+				}
+			],
+			"type": "LOOP"
+		}
+	]
+}

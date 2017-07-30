@@ -1,0 +1,55 @@
+{
+	"defaults": {
+		"width": 100,
+		"height": 100,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "move",
+			"sprites": [
+				{
+					"name": "cube0"
+				},
+				{
+					"name": "cube1"
+				},
+				{
+					"name": "cube2"
+				},
+				{
+					"name": "cube3"
+				},
+				{
+					"name": "cube4"
+				},
+				{
+					"name": "cube5"
+				}
+			],
+			"type": "LOOP"
+		},
+		{
+			"name": "shatter",
+			"sprites": [
+				{
+					"name": "cube_shatter0"
+				},
+				{
+					"name": "cube_shatter1"
+				},
+				{
+					"name": "cube_shatter2"
+				},
+				{
+					"name": "cube_shatter3"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}

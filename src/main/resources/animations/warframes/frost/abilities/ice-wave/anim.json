@@ -1,0 +1,115 @@
+{
+	"defaults": {
+		"width": 800,
+		"height": 400,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 50
+	},
+	"animations": [
+		{
+			"name": "move",
+			"sprites": [
+				{
+					"name": "iw0"
+				},
+				{
+					"name": "iw1"
+				},
+				{
+					"name": "iw2"
+				},
+				{
+					"name": "iw3"
+				},
+				{
+					"name": "iw4"
+				},
+				{
+					"name": "iw5"
+				},
+				{
+					"name": "iw6"
+				},
+				{
+					"name": "iw7"
+				},
+				{
+					"name": "iw8"
+				},
+				{
+					"name": "iw9"
+				},
+				{
+					"name": "iw10"
+				},
+				{
+					"name": "iw11"
+				},
+				{
+					"name": "iw12"
+				},
+				{
+					"name": "iw13"
+				},
+				{
+					"name": "iw14"
+				},
+				{
+					"name": "iw15"
+				},
+				{
+					"name": "iw16"
+				},
+				{
+					"name": "iw17"
+				},
+				{
+					"name": "iw18"
+				},
+				{
+					"name": "iw19"
+				},
+				{
+					"name": "iw20"
+				},
+				{
+					"name": "iw21"
+				},
+				{
+					"name": "iw22"
+				},
+				{
+					"name": "iw23"
+				},
+				{
+					"name": "iw24"
+				},
+				{
+					"name": "iw25"
+				},
+				{
+					"name": "iw26"
+				},
+				{
+					"name": "iw27"
+				},
+				{
+					"name": "iw28"
+				},
+				{
+					"name": "iw29"
+				},
+				{
+					"name": "iw30"
+				},
+				{
+					"name": "iw31"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}
