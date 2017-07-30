@@ -1,12 +1,11 @@
 package com.ezardlabs.lostsector.objects.environment;
 
-import com.ezardlabs.dethsquare.Animation;
-import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Component;
 import com.ezardlabs.dethsquare.TextureAtlas;
-import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.dethsquare.animation.Animations;
+import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
@@ -27,13 +26,9 @@ public class Locker extends Component {
 		if (locked) {
 			gameObject.renderer.setSprite(ta.getSprite("lockred"));
 		} else {
-			gameObject.renderer.setSprite(ta.getSprite("lock0"));
-			gameObject.animator.addAnimations(new Animation("unlock",
-					new Sprite[]{ta.getSprite("lock1"),
-							ta.getSprite("lock2"),
-							ta.getSprite("lock3"),
-							ta.getSprite("lock4"),
-							ta.getSprite("lock5")}, AnimationType.ONE_SHOT, 125));
+			gameObject.animator.addAnimations(
+					Animations.load("animations/environment/corpus/locker", ta, new Validator("lock", "unlock")));
+			gameObject.animator.play("lock");
 		}
 	}
 

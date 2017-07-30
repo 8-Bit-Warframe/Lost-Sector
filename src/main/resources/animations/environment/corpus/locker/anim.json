@@ -1,0 +1,44 @@
+{
+	"extends": "enemies/corpus/crewmen",
+	"defaults": {
+		"width": 100,
+		"height": 200,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 125
+	},
+	"animations": [
+		{
+			"name": "lock",
+			"sprites": [
+				{
+					"name": "lock0"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "unlock",
+			"sprites": [
+				{
+					"name": "lock1"
+				},
+				{
+					"name": "lock2"
+				},
+				{
+					"name": "lock3"
+				},
+				{
+					"name": "lock4"
+				},
+				{
+					"name": "lock5"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}
