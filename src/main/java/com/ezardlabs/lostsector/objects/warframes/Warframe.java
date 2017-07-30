@@ -7,9 +7,13 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.lostsector.Game.DamageType;
+import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.objects.ShieldedEntity;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class Warframe extends ShieldedEntity {
 	protected final TextureAtlas ta;
@@ -80,6 +84,13 @@ public abstract class Warframe extends ShieldedEntity {
 		gameObject.animator.play("die");
 		gameObject.setTag(null);
 		spawnGravestone();
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				transform.position = MapManager.playerSpawn;
+				gameObject.setTag("player");
+			}
+		}, 2000);
 	}
 
 	private void spawnGravestone() {
