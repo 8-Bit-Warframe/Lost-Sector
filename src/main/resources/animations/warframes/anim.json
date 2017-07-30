@@ -1,0 +1,143 @@
+{
+	"defaults": {
+		"width": 200,
+		"height": 200,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "idle",
+			"sprites": [
+				{
+					"name": "idle0"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "run",
+			"sprites": [
+				{
+					"name": "run0"
+				},
+				{
+					"name": "run1"
+				},
+				{
+					"name": "run2"
+				},
+				{
+					"name": "run3"
+				},
+				{
+					"name": "run4"
+				},
+				{
+					"name": "run5"
+				}
+			],
+			"type": "LOOP"
+		},
+		{
+			"name": "jump",
+			"sprites": [
+				{
+					"name": "jump0"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "double-jump",
+			"sprites": [
+				{
+					"name": "jump1",
+					"duration": 50
+				},
+				{
+					"name": "jump2",
+					"duration": 50
+				},
+				{
+					"name": "jump3",
+					"duration": 50
+				},
+				{
+					"name": "jump4",
+					"duration": 50
+				},
+				{
+					"name": "jump5",
+					"duration": 50
+				},
+				{
+					"name": "jump6",
+					"duration": 50
+				},
+				{
+					"name": "jump7",
+					"duration": 50
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "fall",
+			"sprites": [
+				{
+					"name": "fall0",
+					"duration": 90
+				},
+				{
+					"name": "fall1",
+					"duration": 90
+				},
+				{
+					"name": "fall2",
+					"duration": 90
+				}
+			],
+			"type": "LOOP"
+		},
+		{
+			"name": "land",
+			"sprites": [
+				{
+					"name": "land0"
+				},
+				{
+					"name": "land1"
+				},
+				{
+					"name": "land2"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "die",
+			"sprites": [
+				{
+					"name": "die0"
+				},
+				{
+					"name": "die1"
+				},
+				{
+					"name": "die2"
+				},
+				{
+					"name": "die3"
+				},
+				{
+					"name": "die4"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}
