@@ -62,10 +62,6 @@ public abstract class Enemy extends Entity {
 		}
 	}
 
-	public final void jump() {
-		gameObject.rigidbody.velocity.y = -25f;
-	}
-
 //	public void kubrowAttack(Vector2 kubrowPosition) {
 //		if (kubrowPosition.x < transform.position.x) {
 //			if (gameObject.renderer.hFlipped) {
