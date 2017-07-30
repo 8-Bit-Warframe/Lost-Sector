@@ -122,19 +122,49 @@
 			"name": "die",
 			"sprites": [
 				{
-					"name": "die0"
+					"name": "die0",
+					"width": 400,
+					"height": 300,
+					"offset": {
+						"x": -200,
+						"y": -100
+					}
 				},
 				{
-					"name": "die1"
+					"name": "die1",
+					"width": 400,
+					"height": 300,
+					"offset": {
+						"x": -200,
+						"y": -100
+					}
 				},
 				{
-					"name": "die2"
+					"name": "die2",
+					"width": 400,
+					"height": 300,
+					"offset": {
+						"x": -200,
+						"y": -100
+					}
 				},
 				{
-					"name": "die3"
+					"name": "die3",
+					"width": 400,
+					"height": 300,
+					"offset": {
+						"x": -200,
+						"y": -100
+					}
 				},
 				{
-					"name": "die4"
+					"name": "die4",
+					"width": 400,
+					"height": 300,
+					"offset": {
+						"x": -200,
+						"y": -100
+					}
 				}
 			],
 			"type": "ONE_SHOT"
