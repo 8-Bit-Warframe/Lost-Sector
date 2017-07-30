@@ -1,0 +1,38 @@
+{
+	"extends": "enemies",
+	"defaults": {
+		"width": 200,
+		"height": 200,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "attack",
+			"sprites": [
+				{
+					"name": "attack0"
+				},
+				{
+					"name": "attack1"
+				},
+				{
+					"name": "attack2"
+				},
+				{
+					"name": "attack3"
+				},
+				{
+					"name": "attack4"
+				},
+				{
+					"name": "attack5"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}
