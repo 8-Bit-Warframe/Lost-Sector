@@ -1,10 +1,6 @@
 package com.ezardlabs.lostsector.objects.warframes;
 
-import com.ezardlabs.dethsquare.Animation;
-import com.ezardlabs.dethsquare.AnimationType;
-import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.objects.Player;
@@ -22,38 +18,38 @@ public class Frost extends Warframe {
 	public void start() {
 		super.start();
 		gameObject.renderer.setzIndex(4);
-		gameObject.animator.addAnimations(new Animation("cast_avalanche", new Sprite[]{ta.getSprite("avalanche0"),
-				ta.getSprite("avalanche1"),
-				ta.getSprite("avalanche2"),
-				ta.getSprite("avalanche3"),
-				ta.getSprite("avalanche4"),
-				ta.getSprite("avalanche5"),
-				ta.getSprite("avalanche6"),
-				ta.getSprite("avalanche7"),
-				ta.getSprite("avalanche8"),
-				ta.getSprite("avalanche8"),
-				ta.getSprite("avalanche10"),
-				ta.getSprite("avalanche11"),
-				ta.getSprite("avalanche12"),
-				ta.getSprite("avalanche13")}, AnimationType.ONE_SHOT, 100, new Animation.AnimationListener() {
-			@Override
-			public void onAnimatedStarted(Animator animator) {
-
-			}
-
-			@Override
-			public void onFrame(Animator animator, int frameNum) {
-
-			}
-
-			@Override
-			public void onAnimationFinished(Animator animator) {
-				Player p;
-				if ((p = animator.gameObject.getComponent(Player.class)) != null) {
-					p.state = Player.State.IDLE;
-				}
-			}
-		}));
+//		gameObject.animator.addAnimations(new Animation("cast_avalanche", new Sprite[]{ta.getSprite("avalanche0"),
+//				ta.getSprite("avalanche1"),
+//				ta.getSprite("avalanche2"),
+//				ta.getSprite("avalanche3"),
+//				ta.getSprite("avalanche4"),
+//				ta.getSprite("avalanche5"),
+//				ta.getSprite("avalanche6"),
+//				ta.getSprite("avalanche7"),
+//				ta.getSprite("avalanche8"),
+//				ta.getSprite("avalanche8"),
+//				ta.getSprite("avalanche10"),
+//				ta.getSprite("avalanche11"),
+//				ta.getSprite("avalanche12"),
+//				ta.getSprite("avalanche13")}, AnimationType.ONE_SHOT, 100, new Animation.AnimationListener() {
+//			@Override
+//			public void onAnimatedStarted(Animator animator) {
+//
+//			}
+//
+//			@Override
+//			public void onFrame(Animator animator, int frameNum) {
+//
+//			}
+//
+//			@Override
+//			public void onAnimationFinished(Animator animator) {
+//				Player p;
+//				if ((p = animator.gameObject.getComponent(Player.class)) != null) {
+//					p.state = Player.State.IDLE;
+//				}
+//			}
+//		}));
 		setPrimaryWeapon(new Lanka(gameObject));
 		setMeleeWeapon(new Nikana(gameObject));
 	}
@@ -61,6 +57,11 @@ public class Frost extends Warframe {
 	@Override
 	public String getName() {
 		return "Frost";
+	}
+
+	@Override
+	protected String getAnimationPath() {
+		return "warframes/frost";
 	}
 
 	@Override

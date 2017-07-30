@@ -1,0 +1,62 @@
+{
+	"extends": "warframes",
+	"defaults": {
+		"width": 200,
+		"height": 200,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "cast",
+			"sprites": [
+				{
+					"name": "avalanche0"
+				},
+				{
+					"name": "avalanche1"
+				},
+				{
+					"name": "avalanche2"
+				},
+				{
+					"name": "avalanche3"
+				},
+				{
+					"name": "avalanche4"
+				},
+				{
+					"name": "avalanche5"
+				},
+				{
+					"name": "avalanche6"
+				},
+				{
+					"name": "avalanche7"
+				},
+				{
+					"name": "avalanche8"
+				},
+				{
+					"name": "avalanche9"
+				},
+				{
+					"name": "avalanche10"
+				},
+				{
+					"name": "avalanche11"
+				},
+				{
+					"name": "avalanche12"
+				},
+				{
+					"name": "avalanche13"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}
