@@ -1,0 +1,90 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Dethsquare Engine Aniamtion",
+	"description": "Data about an entity in a Dethsquare Engine game",
+	"type": "object",
+	"properties": {
+		"extends": {
+			"type": "string"
+		},
+		"defaults": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"width": {
+					"type": "number"
+				},
+				"height": {
+					"type": "number"
+				},
+				"offset": {
+					"type": "object",
+					"properties": {
+						"x": {
+							"type": "number"
+						},
+						"y": {
+							"type": "number"
+						}
+					}
+				},
+				"duration": {
+					"type": "number"
+				}
+			}
+		},
+		"animations": {
+			"type": "array",
+			"items": {
+				"title": "Animation",
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"sprites": {
+						"type": "array",
+						"items": {
+							"title": "Sprite",
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"width": {
+									"type": "number"
+								},
+								"height": {
+									"type": "number"
+								},
+								"offset": {
+									"type": "object",
+									"properties": {
+										"x": {
+											"type": "number"
+										},
+										"y": {
+											"type": "number"
+										}
+									}
+								},
+								"duration": {
+									"type": "number"
+								}
+							}
+						}
+					},
+					"type": {
+						"enum": [
+							"LOOP",
+							"ONE_SHOT",
+							"OSCILLATE"
+						]
+					}
+				}
+			}
+		}
+	}
+}
