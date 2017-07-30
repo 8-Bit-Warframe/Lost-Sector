@@ -1,0 +1,140 @@
+{
+	"defaults": {
+		"width": 400,
+		"height": 300,
+		"offset": {
+			"x": -100,
+			"y": -100
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "slice1",
+			"sprites": [
+				{
+					"name": "nikana_slice0"
+				},
+				{
+					"name": "nikana_slice1"
+				},
+				{
+					"name": "nikana_slice2"
+				},
+				{
+					"name": "nikana_slice3"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "slice2",
+			"sprites": [
+				{
+					"name": "nikana_slice4"
+				},
+				{
+					"name": "nikana_slice5"
+				},
+				{
+					"name": "nikana_slice6"
+				},
+				{
+					"name": "nikana_slice7"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "slice3",
+			"sprites": [
+				{
+					"name": "nikana_slice8"
+				},
+				{
+					"name": "nikana_slice9"
+				},
+				{
+					"name": "nikana_slice10"
+				},
+				{
+					"name": "nikana_slice11"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "dash1",
+			"sprites": [
+				{
+					"name": "nikana_dash0"
+				},
+				{
+					"name": "nikana_dash1"
+				},
+				{
+					"name": "nikana_dash2"
+				},
+				{
+					"name": "nikana_dash3"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "dash2",
+			"sprites": [
+				{
+					"name": "nikana_dash4"
+				},
+				{
+					"name": "nikana_dash5"
+				},
+				{
+					"name": "nikana_dash6"
+				},
+				{
+					"name": "nikana_dash7"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "dash3",
+			"sprites": [
+				{
+					"name": "nikana_dash8"
+				},
+				{
+					"name": "nikana_dash9"
+				},
+				{
+					"name": "nikana_dash10"
+				},
+				{
+					"name": "nikana_dash11"
+				},
+				{
+					"name": "nikana_dash12"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "stow",
+			"sprites": [
+				{
+					"name": "nikana_show0",
+					"width": 200,
+					"height": 200,
+					"offset": {
+						"x": 0,
+						"y": 0
+					},
+					"duration": 120
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}
