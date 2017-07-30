@@ -80,7 +80,12 @@
 							"OSCILLATE"
 						]
 					}
-				}
+				},
+				"required": [
+					"name",
+					"sprites",
+					"type"
+				]
 			}
 		}
 	}
