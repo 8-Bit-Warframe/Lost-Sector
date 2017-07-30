@@ -1,7 +1,6 @@
 package com.ezardlabs.lostsector.ai;
 
-import com.ezardlabs.dethsquare.Collider;
-import com.ezardlabs.dethsquare.Collider.Collision;
+import com.ezardlabs.dethsquare.Mathf;
 import com.ezardlabs.dethsquare.Physics;
 import com.ezardlabs.dethsquare.Physics.RaycastHit;
 import com.ezardlabs.dethsquare.Transform;
@@ -18,6 +17,8 @@ public abstract class Behaviour {
 	private Transform target = null;
 	private NavPoint[] path = null;
 	private int pathIndex = 0;
+	private NavPoint currentNavPoint = null;
+	private NavPoint currentTargetNavPoint = null;
 
 	public enum State {
 		IDLE,
@@ -66,8 +67,13 @@ public abstract class Behaviour {
 				// TODO implement patrolling
 				break;
 			case TRACKING:
-				// TODO only update path if target has moved to a new NavPoint
-				path = NavMesh.getPath(transform, target);
+				NavPoint self = NavMesh.getNavPoint(transform.position.x, transform.position.y);
+				NavPoint targetNavPoint = NavMesh.getNavPoint(target.position);
+				if ((!self.equals(currentNavPoint) || !targetNavPoint.equals(currentTargetNavPoint)) && !self.links.isEmpty()) {
+					currentNavPoint = self;
+					currentTargetNavPoint = targetNavPoint;
+					path = NavMesh.getPath(currentNavPoint, currentTargetNavPoint);
+				}
 				pathIndex = 0;
 				break;
 			case SEARCHING:
@@ -76,70 +82,51 @@ public abstract class Behaviour {
 				combatState = attack(transform, target);
 				break;
 		}
-		if (combatState == CombatState.PATROLLING || combatState == CombatState.TRACKING ||
-				combatState == CombatState.SEARCHING) {
-			move(transform);
+		switch (combatState) {
+			case IDLE:
+				state = State.IDLE;
+				break;
+			case PATROLLING:
+			case TRACKING:
+			case SEARCHING:
+				state = move(transform);
+				break;
+			case ATTACKING:
+				state = State.ATTACKING;
+				break;
 		}
 	}
 
-	private void move(Transform transform) {
-		if (path != null && path.length > 0 && pathIndex < path.length) {
-			System.out.println(transform.position.x + ", " + NavMesh.getNavPoint(transform.position).position.x);
-			if (path[pathIndex].position.x == transform.position.x) {
-				pathIndex++;
-			}
-			if (path.length > pathIndex + 2) {
-				if (path[pathIndex + 1].position.x < path[pathIndex].position.x &&
-						transform.position.x < path[pathIndex].position.x) {
-					pathIndex++;
-				}
-				if (path[pathIndex + 1].position.x > path[pathIndex].position.x &&
-						transform.position.x > path[pathIndex].position.x) {
-					pathIndex++;
-				}
-			}
-			if (pathIndex >= path.length) {
-				return;
-			}
-			if (path[pathIndex].position.x < transform.position.x) {
-				transform.scale.x = -1;
-			} else {
-				transform.scale.x = 1;
-			}
-			if (path[pathIndex].position.y < transform.position.y && transform.gameObject.rigidbody.velocity.y >= 0) {
-				jump(transform);
-			}
-			if (path[pathIndex].position.x > transform.position.x) {
-				transform.translate(moveSpeed, 0);
-				state = State.MOVING;
-				if (path[pathIndex].position.x <= transform.position.x) {
-					pathIndex++;
-				}
-			} else if (path[pathIndex].position.x < transform.position.x) {
-				transform.translate(-moveSpeed, 0);
-				state = State.MOVING;
-				if (path[pathIndex].position.x >= transform.position.x) {
-					pathIndex++;
+	private State move(Transform transform) {
+		if (path != null && path.length > 0) {
+			if (pathIndex < path.length - 1) {
+				float direction = Mathf.clamp(path[pathIndex + 1].position.x - path[pathIndex].position.x, -1, 1);
+				transform.translate(moveSpeed * direction, 0);
+				transform.scale.x = direction;
+
+				if (transform.gameObject.rigidbody.velocity.y > transform.gameObject.rigidbody.gravity) {
+					return State.FALLING;
+				} else if (path[pathIndex + 1].position.y < path[pathIndex].position.y) {
+					if (state != State.JUMPING) {
+						jump(transform, Math.abs(path[pathIndex + 1].position.y - path[pathIndex].position.y));
+					}
+					return State.JUMPING;
+				} else if (direction == 0) {
+					return State.IDLE;
+				} else {
+					return State.MOVING;
 				}
 			}
-		} else {
-			state = State.IDLE;
 		}
+		return State.IDLE;
 	}
 
-	private void jump(Transform transform) {
-		transform.gameObject.rigidbody.velocity.y = -30;
-		state = State.JUMPING;
+	private void jump(Transform transform, float distance) {
+		transform.gameObject.rigidbody.velocity.y = (float) -Math.sqrt(2.5 * distance) - 2;
 	}
 
 	public State getState() {
 		return state;
-	}
-
-	public void onCollision(Collision collision) {
-		if (collision.speed > 37 && collision.location == Collider.CollisionLocation.BOTTOM) {
-			state = State.LANDING;
-		}
 	}
 
 	protected abstract CombatState onEnemySighted(Transform self, Transform enemy);
