@@ -7,20 +7,21 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.lostsector.Game.DamageType;
+import com.ezardlabs.lostsector.ai.Behaviour;
+import com.ezardlabs.lostsector.ai.Behaviour.State;
 import com.ezardlabs.lostsector.levels.MissionLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
 import com.ezardlabs.lostsector.objects.Entity;
 
 public abstract class Enemy extends Entity {
 	protected final TextureAtlas ta;
-	public boolean frozen = false;
-	protected boolean landing = false;
-	protected boolean dead = false;
+	protected final Behaviour behaviour;
 
-	public Enemy(int health) {
+	public Enemy(int health, Behaviour behaviour) {
 		super(health);
 		ta = new TextureAtlas("images/enemies/" + getAtlasPath() + "/atlas.png",
 				"images/enemies/" + getAtlasPath() + "/atlas.txt");
+		this.behaviour = behaviour;
 	}
 
 	@Override
@@ -43,7 +44,6 @@ public abstract class Enemy extends Entity {
 						break;
 					case COLD:
 						gameObject.animator.play("frozen");
-						frozen = true;
 						break;
 					case KUBROW:
 						break;
@@ -59,7 +59,36 @@ public abstract class Enemy extends Entity {
 		}
 	}
 
-//	public void kubrowAttack(Vector2 kubrowPosition) {
+	@Override
+	public void update() {
+		behaviour.update(transform);
+
+		switch (behaviour.getState()) {
+			case IDLE:
+				gameObject.animator.play("idle");
+				break;
+			case MOVING:
+				gameObject.animator.play("run");
+				break;
+			case JUMPING:
+				gameObject.animator.play("jump");
+				break;
+			case FALLING:
+				gameObject.animator.play("fall");
+				break;
+			case LANDING:
+				gameObject.animator.play("land");
+				break;
+			case FROZEN:
+				gameObject.animator.play("frozen");
+				break;
+			case ATTACKING:
+				gameObject.animator.play("attack");
+				break;
+		}
+	}
+
+	//	public void kubrowAttack(Vector2 kubrowPosition) {
 //		if (kubrowPosition.x < transform.position.x) {
 //			if (gameObject.renderer.hFlipped) {
 //				gameObject.animator.play("die_kubrow_front");
@@ -78,8 +107,7 @@ public abstract class Enemy extends Entity {
 
 	public void die(DamageType damageType, Vector2 attackOrigin) {
 		gameObject.setTag(null);
-		dead = true;
-		if (frozen) {
+		if (behaviour.getState() == State.FROZEN) {
 			gameObject.animator.play("frozen_shatter");
 		} else {
 			String direction;
