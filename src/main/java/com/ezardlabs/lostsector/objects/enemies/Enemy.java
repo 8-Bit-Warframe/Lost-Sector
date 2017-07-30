@@ -17,7 +17,6 @@ import com.ezardlabs.lostsector.objects.Entity;
 public abstract class Enemy extends Entity {
 	protected final TextureAtlas ta;
 	public boolean frozen = false;
-	public final double uid;
 	protected boolean landing = false;
 	protected boolean dead = false;
 
@@ -25,7 +24,6 @@ public abstract class Enemy extends Entity {
 		super(health);
 		ta = new TextureAtlas("images/enemies/" + getAtlasPath() + "/atlas.png",
 				"images/enemies/" + getAtlasPath() + "/atlas.txt");
-		uid = Math.random();
 	}
 
 	@Override
