@@ -70,7 +70,10 @@
 								"duration": {
 									"type": "number"
 								}
-							}
+							},
+							"required": [
+								"name"
+							]
 						}
 					},
 					"type": {
