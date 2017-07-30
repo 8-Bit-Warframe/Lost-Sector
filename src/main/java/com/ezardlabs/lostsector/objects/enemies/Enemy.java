@@ -61,30 +61,32 @@ public abstract class Enemy extends Entity {
 
 	@Override
 	public void update() {
-		behaviour.update(transform);
+		if (behaviour != null) {
+			behaviour.update(transform);
 
-		switch (behaviour.getState()) {
-			case IDLE:
-				gameObject.animator.play("idle");
-				break;
-			case MOVING:
-				gameObject.animator.play("run");
-				break;
-			case JUMPING:
-				gameObject.animator.play("jump");
-				break;
-			case FALLING:
-				gameObject.animator.play("fall");
-				break;
-			case LANDING:
-				gameObject.animator.play("land");
-				break;
-			case FROZEN:
-				gameObject.animator.play("frozen");
-				break;
-			case ATTACKING:
-				gameObject.animator.play("attack");
-				break;
+			switch (behaviour.getState()) {
+				case IDLE:
+					gameObject.animator.play("idle");
+					break;
+				case MOVING:
+					gameObject.animator.play("run");
+					break;
+				case JUMPING:
+					gameObject.animator.play("jump");
+					break;
+				case FALLING:
+					gameObject.animator.play("fall");
+					break;
+				case LANDING:
+					gameObject.animator.play("land");
+					break;
+				case FROZEN:
+					gameObject.animator.play("frozen");
+					break;
+				case ATTACKING:
+					gameObject.animator.play("attack");
+					break;
+			}
 		}
 	}
 
