@@ -30,6 +30,7 @@ public abstract class Entity extends Script {
 	}
 
 	public void applyDamage(float damage, DamageType damageType, Vector2 attackOrigin) {
+		if (damage == 0) return;
 		health -= damage;
 		if (damageListener != null) {
 			damageListener.onDamageReceived(damage, damageType, attackOrigin);

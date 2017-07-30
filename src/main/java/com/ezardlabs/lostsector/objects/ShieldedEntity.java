@@ -37,6 +37,7 @@ public abstract class ShieldedEntity extends Entity {
 
 	@Override
 	public void applyDamage(float damage, DamageType damageType, Vector2 attackOrigin) {
+		if (damage == 0) return;
 		if (shield > 0) {
 			shield--;
 			super.applyDamage(0, damageType, attackOrigin);
