@@ -1,5 +1,4 @@
 {
-	"extends": "enemies/corpus/crewmen",
 	"defaults": {
 		"width": 100,
 		"height": 200,
