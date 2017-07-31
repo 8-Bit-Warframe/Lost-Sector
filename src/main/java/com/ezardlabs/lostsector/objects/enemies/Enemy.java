@@ -37,19 +37,7 @@ public abstract class Enemy extends Entity {
 		setDamageListener(new DamageListener() {
 			@Override
 			public void onDamageReceived(float damage, DamageType damageType, Vector2 attackOrigin) {
-				switch (damageType) {
-					case NORMAL:
-						break;
-					case SLASH:
-						break;
-					case COLD:
-						gameObject.animator.play("frozen");
-						break;
-					case KUBROW:
-						break;
-					default:
-						break;
-				}
+				behaviour.onDamageReceived(damageType);
 			}
 		});
 
@@ -82,6 +70,9 @@ public abstract class Enemy extends Entity {
 					break;
 				case FROZEN:
 					gameObject.animator.play("frozen");
+					break;
+				case THAWING:
+					gameObject.animator.play("frozen_melt");
 					break;
 				case ATTACKING:
 					gameObject.animator.play("attack");
