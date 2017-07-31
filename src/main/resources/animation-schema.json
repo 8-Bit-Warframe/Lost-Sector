@@ -51,6 +51,41 @@
 					"name": {
 						"type": "string"
 					},
+					"defaults": {
+						"type": "object",
+						"properties": {
+							"width": {
+								"type": "number"
+							},
+							"height": {
+								"type": "number"
+							},
+							"offset": {
+								"type": "object",
+								"properties": {
+									"x": {
+										"type": "number"
+									},
+									"y": {
+										"type": "number"
+									}
+								},
+								"required": [
+									"x",
+									"y"
+								]
+							},
+							"duration": {
+								"type": "number"
+							}
+						},
+						"required": [
+							"width",
+							"height",
+							"offset",
+							"duration"
+						]
+					},
 					"sprites": {
 						"type": "array",
 						"items": {
