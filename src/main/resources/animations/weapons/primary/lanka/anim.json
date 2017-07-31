@@ -1,0 +1,38 @@
+{
+	"defaults": {
+		"width": 400,
+		"height": 300,
+		"offset": {
+
+		}
+	},
+	"animations": [
+		{
+			"name": "shoot",
+			"sprites": [
+				{
+					"name": "shoot0"
+				},
+				{
+					"name": "shoot1"
+				},
+				{
+					"name": "shoot2"
+				},
+				{
+					"name": "shoot3"
+				},
+				{
+					"name": "shoot4"
+				},
+				{
+					"name": "shoot5"
+				},
+				{
+					"name": "shoot6"
+				}
+			],
+			"type": "CUSTOM"
+		}
+	]
+}
