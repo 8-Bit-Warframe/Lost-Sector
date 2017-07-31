@@ -34,7 +34,13 @@
 				"duration": {
 					"type": "number"
 				}
-			}
+			},
+			"required": [
+				"width",
+				"height",
+				"offset",
+				"duration"
+			]
 		},
 		"animations": {
 			"type": "array",
