@@ -25,7 +25,11 @@
 						"y": {
 							"type": "number"
 						}
-					}
+					},
+					"required": [
+						"x",
+						"y"
+					]
 				},
 				"duration": {
 					"type": "number"
@@ -65,7 +69,11 @@
 										"y": {
 											"type": "number"
 										}
-									}
+									},
+									"required": [
+										"x",
+										"y"
+									]
 								},
 								"duration": {
 									"type": "number"
