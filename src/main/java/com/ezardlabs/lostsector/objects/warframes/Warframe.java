@@ -88,6 +88,9 @@ public abstract class Warframe extends ShieldedEntity {
 			@Override
 			public void run() {
 				transform.position = MapManager.playerSpawn;
+				health = maxHealth;
+				shield = maxShield;
+				energy = maxEnergy;
 				gameObject.setTag("player");
 			}
 		}, 2000);
