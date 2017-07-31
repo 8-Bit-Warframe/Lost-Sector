@@ -66,6 +66,7 @@ public class Lanka extends RangedWeapon {
 		animation.setAnimationListener(new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
+				animator.gameObject.renderer.setOffsets(animator.transform.scale.x < 0 ? -200 : 0, -100);
 			}
 
 			@Override
