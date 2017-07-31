@@ -1,0 +1,26 @@
+{
+	"extends": "enemies/corpus/crewmen",
+	"defaults": {
+		"width": 200,
+		"height": 200,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "shoot",
+			"sprites": [
+				{
+					"name": "shoot0"
+				},
+				{
+					"name": "shoot1"
+				}
+			],
+			"type": "LOOP"
+		}
+	]
+}

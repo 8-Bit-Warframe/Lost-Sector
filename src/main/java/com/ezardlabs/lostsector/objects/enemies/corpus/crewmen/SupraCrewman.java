@@ -1,19 +1,30 @@
 package com.ezardlabs.lostsector.objects.enemies.corpus.crewmen;
 
-import com.ezardlabs.dethsquare.Animation;
-import com.ezardlabs.dethsquare.AnimationType;
-import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
-import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.Transform;
+import com.ezardlabs.lostsector.ai.RangedBehaviour;
+import com.ezardlabs.lostsector.ai.RangedBehaviour.Builder.ShootAction;
 import com.ezardlabs.lostsector.objects.enemies.corpus.Crewman;
 import com.ezardlabs.lostsector.objects.projectiles.Laser;
 
 public class SupraCrewman extends Crewman {
 
 	public SupraCrewman() {
-		super();
+		super(new RangedBehaviour.Builder().setRange(100).setShootAction(new ShootAction() {
+			@Override
+			public void onShoot(Transform self, Transform target) {
+				self.gameObject.animator.play("shoot");
+				if (self.gameObject.animator.getCurrentAnimationFrame() == 1) {
+					GameObject laser = GameObject.instantiate(
+							new GameObject("Laser", new Renderer("images/laser.png", 100, 100),
+									new Collider(100, 100, true), new Laser(1)),
+							self.position.offset(self.gameObject.transform.scale.x < 0 ? -12.5f : 87.5f, 60));
+					laser.transform.scale.set(self.gameObject.transform.scale);
+				}
+			}
+		}).setMoveSpeed(10).setVisionRange(2000).setWillPatrol(false).create());
 	}
 
 	@Override
@@ -22,50 +33,7 @@ public class SupraCrewman extends Crewman {
 	}
 
 	@Override
-	protected Animation getShootAnimation() {
-		return new Animation("shoot", new TextureAtlas.Sprite[]{ta.getSprite("shoot0"),
-				ta.getSprite("shoot1")}, AnimationType.LOOP, 100, new Animation.AnimationListener() {
-			@Override
-			public void onAnimatedStarted(Animator animator) {
-
-			}
-
-			@Override
-			public void onFrame(Animator animator, int frameNum) {
-				if (frameNum == 1) {
-					GameObject laser = GameObject.instantiate(
-							new GameObject("Laser",
-									new Renderer("images/laser.png", 100, 100),
-									new Collider(100, 100, true), new Laser(1)),
-							transform.position
-									.offset(gameObject.transform.scale.x <
-											0 ? -12.5f : 87.5f, 60));
-					laser.transform.scale.set(gameObject.transform.scale);
-				}
-			}
-
-			@Override
-			public void onAnimationFinished(Animator animator) {
-
-			}
-		});
-	}
-
-	@Override
-	protected Animation getLandAnimation() {
-		return new Animation("land", new TextureAtlas.Sprite[]{ta.getSprite("land0")}, AnimationType.ONE_SHOT, 100, new Animation.AnimationListener() {
-			@Override
-			public void onAnimatedStarted(Animator animator) {
-			}
-
-			@Override
-			public void onFrame(Animator animator, int frameNum) {
-			}
-
-			@Override
-			public void onAnimationFinished(Animator animator) {
-				landing = false;
-			}
-		});
+	protected String getAnimationPath() {
+		return "enemies/corpus/crewmen/supra";
 	}
 }
