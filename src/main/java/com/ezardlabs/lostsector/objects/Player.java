@@ -1,6 +1,7 @@
 package com.ezardlabs.lostsector.objects;
 
 import com.ezardlabs.dethsquare.Animation;
+import com.ezardlabs.dethsquare.Animation.FrameData;
 import com.ezardlabs.dethsquare.AnimationType;
 import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Camera;
@@ -362,11 +363,14 @@ public class Player extends Script {
 				//noinspection ConstantConditions
 				Camera.main.gameObject.getComponent(SmartCamera.class).startQuake(100, 0.3f);
 				TextureAtlas ta = new TextureAtlas("images/effects/dust.png", "images/effects/dust.txt");
-				GameObject.destroy(GameObject
-						.instantiate(new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50),
-								new Animator(new Animation("dust", new Sprite[]{ta.getSprite("dust0"),
-										ta.getSprite("dust1"),
-										ta.getSprite("dust2")}, AnimationType.ONE_SHOT, 100))),
+				GameObject.destroy(GameObject.instantiate(
+						new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50), new Animator(
+								new Animation("dust",
+										new Sprite[]{ta.getSprite("dust0"), ta.getSprite("dust1"), ta.getSprite(
+												"dust2")},
+										new FrameData[]{new FrameData(700, 50, new Vector2(), 100), new FrameData(700,
+												50, new Vector2(), 100), new FrameData(700, 50, new Vector2(), 100)},
+										AnimationType.ONE_SHOT))),
 						new Vector2(transform.position.x - 262, transform.position.y + 150)), 300);
 				new Timer().schedule(new TimerTask() {
 					@Override
