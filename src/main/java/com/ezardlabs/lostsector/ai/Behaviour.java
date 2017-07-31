@@ -5,6 +5,7 @@ import com.ezardlabs.dethsquare.Physics;
 import com.ezardlabs.dethsquare.Physics.RaycastHit;
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.NavMesh;
 import com.ezardlabs.lostsector.NavMesh.NavPoint;
 
@@ -19,6 +20,11 @@ public abstract class Behaviour {
 	private int pathIndex = 0;
 	private NavPoint currentNavPoint = null;
 	private NavPoint currentTargetNavPoint = null;
+	private long freezeTime = 5000;
+	private long freezeStart;
+	private float[] freezeTint = {0, 0.3f, 0.6f};
+	private long thawTime = 1000;
+	private long thawStart;
 
 	public enum State {
 		IDLE,
@@ -27,6 +33,7 @@ public abstract class Behaviour {
 		FALLING,
 		LANDING,
 		FROZEN,
+		THAWING,
 		ATTACKING
 	}
 
@@ -45,6 +52,29 @@ public abstract class Behaviour {
 	}
 
 	public final void update(Transform transform) {
+		if (state == State.FROZEN) {
+			transform.gameObject.renderer.setTint(freezeTint[0], freezeTint[1], freezeTint[2]);
+
+			if (System.currentTimeMillis() - freezeStart > freezeTime) {
+				state = State.THAWING;
+				thawStart = System.currentTimeMillis();
+			}
+			return;
+		}
+
+		if (state == State.THAWING) {
+			long diff = System.currentTimeMillis() - thawStart;
+			if (diff < thawTime) {
+				float ratio = (float) diff / (float) thawTime;
+				transform.gameObject.renderer.setTint(freezeTint[0] - ratio * freezeTint[0],
+						freezeTint[1] - ratio * freezeTint[1], freezeTint[2] - ratio * freezeTint[2]);
+			} else {
+				transform.gameObject.renderer.setTint(0, 0, 0);
+				state = State.IDLE;
+			}
+			return;
+		}
+
 		Transform sightedEnemy = visionCheck(transform);
 		if (sightedEnemy != null) {
 			combatState = onEnemySighted(transform, sightedEnemy);
@@ -141,6 +171,25 @@ public abstract class Behaviour {
 		} else {
 			return hit.transform;
 		}
+	}
+
+	public void onDamageReceived(DamageType damageType) {
+		switch (damageType) {
+			case NORMAL:
+				break;
+			case SLASH:
+				break;
+			case COLD:
+				state = State.FROZEN;
+				freezeStart = System.currentTimeMillis();
+				break;
+			case KUBROW:
+				break;
+		}
+	}
+
+	public void die() {
+		System.out.println("died");
 	}
 
 	@SuppressWarnings("unchecked")
