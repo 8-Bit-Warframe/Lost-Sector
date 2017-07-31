@@ -81,7 +81,7 @@
 		},
 		{
 			"name": "die_shoot_front",
-			"sprite": [
+			"sprites": [
 				{
 					"name": "die_shoot_front0"
 				},
@@ -108,7 +108,7 @@
 		},
 		{
 			"name": "die_shoot_back",
-			"sprite": [
+			"sprites": [
 				{
 					"name": "die_shoot_back0"
 				},
@@ -135,7 +135,7 @@
 		},
 		{
 			"name": "die_slash_front",
-			"sprite": [
+			"sprites": [
 				{
 					"name": "die_slash_front0"
 				},
@@ -162,7 +162,7 @@
 		},
 		{
 			"name": "die_slash_back",
-			"sprite": [
+			"sprites": [
 				{
 					"name": "die_slash_back0"
 				},
