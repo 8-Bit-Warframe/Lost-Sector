@@ -22,6 +22,6 @@ public class ProvaCrewman extends Crewman {
 
 	@Override
 	protected String getAnimationPath() {
-		return "enemies/corpus/crewmen/prova";
+		return "animations/enemies/corpus/crewmen/prova";
 	}
 }

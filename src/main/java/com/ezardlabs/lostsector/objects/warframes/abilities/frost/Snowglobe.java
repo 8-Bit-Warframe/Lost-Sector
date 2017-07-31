@@ -14,7 +14,7 @@ public class Snowglobe extends Component {
 				"images/warframes/abilities/frost/snowglobe/atlas.txt");
 		gameObject.renderer.setTextureAtlas(ta, 800, 600);
 		gameObject.animator.setAnimations(
-				Animations.load("warframes/frost/abilities/snowglobe", ta, new Validator("snowglobe")));
+				Animations.load("animations/warframes/frost/abilities/snowglobe", ta, new Validator("snowglobe")));
 		gameObject.animator.play("snowglobe");
 		gameObject.renderer.setzIndex(4);
 		gameObject.setTag("solid");

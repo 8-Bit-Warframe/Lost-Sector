@@ -14,10 +14,11 @@ public class Freeze extends Script {
 
 	@Override
 	public void start() {
-		TextureAtlas ta = new TextureAtlas("images/warframes/abilities/frost/freeze/atlas.png", "images/warframes/abilities/frost/freeze/atlas.txt");
+		TextureAtlas ta = new TextureAtlas("images/warframes/abilities/frost/freeze/atlas.png",
+				"images/warframes/abilities/frost/freeze/atlas.txt");
 		gameObject.renderer.setTextureAtlas(ta, 100, 100);
 		gameObject.animator.setAnimations(
-				Animations.load("warframes/frost/abilities/freeze", ta, new Validator("move", "shatter")));
+				Animations.load("animations/warframes/frost/abilities/freeze", ta, new Validator("move", "shatter")));
 		gameObject.animator.play("move");
 	}
 
@@ -34,7 +35,8 @@ public class Freeze extends Script {
 				other.gameObject.getComponentOfType(Enemy.class).applyDamage(1, DamageType.COLD, transform.position);
 				gameObject.removeComponent(Collider.class);
 				Network.destroy(gameObject);
-			} else if (other.gameObject.getTag().equals("solid") && other.gameObject.name != null && !other.gameObject.name.equals("Snowglobe")) {
+			} else if (other.gameObject.getTag().equals("solid") && other.gameObject.name != null &&
+					!other.gameObject.name.equals("Snowglobe")) {
 				gameObject.animator.play("shatter");
 				gameObject.removeComponent(Freeze.class);
 				GameObject.destroy(gameObject, 400);

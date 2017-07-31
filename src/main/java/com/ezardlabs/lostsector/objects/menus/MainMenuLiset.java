@@ -13,7 +13,8 @@ public class MainMenuLiset extends Script {
 
 	public MainMenuLiset(boolean close) {
 		ta = new TextureAtlas("images/menus/liset_frost_atlas.png", "images/menus/liset_frost_atlas.txt");
-		animations = Animations.load("ui/main-menu-liset", ta, new Validator("liset_frost_open", "liset_frost_close"));
+		animations = Animations.load("animations/ui/main-menu-liset", ta, new Validator("liset_frost_open",
+				"liset_frost_close"));
 
 		this.close = close;
 	}

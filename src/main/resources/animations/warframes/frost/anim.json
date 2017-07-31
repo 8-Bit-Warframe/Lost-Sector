@@ -1,5 +1,5 @@
 {
-	"extends": "warframes",
+	"extends": "animations/warframes",
 	"defaults": {
 		"width": 200,
 		"height": 200,

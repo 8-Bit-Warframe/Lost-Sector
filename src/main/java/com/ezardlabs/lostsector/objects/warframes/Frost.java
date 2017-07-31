@@ -61,7 +61,7 @@ public class Frost extends Warframe {
 
 	@Override
 	protected String getAnimationPath() {
-		return "warframes/frost";
+		return "animations/warframes/frost";
 	}
 
 	@Override

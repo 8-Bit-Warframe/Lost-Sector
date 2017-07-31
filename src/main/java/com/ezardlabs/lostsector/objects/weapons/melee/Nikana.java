@@ -25,7 +25,7 @@ public class Nikana extends MeleeWeapon implements AnimationListener {
 
 	@Override
 	public Animation[] getAnimations(TextureAtlas ta) {
-		Animation[] animations = Animations.load("weapons/melee/nikana", ta,
+		Animation[] animations = Animations.load("animations/weapons/melee/nikana", ta,
 				new Validator("slice1", "slice2", "slice3", "dash1", "dash2", "dash3", "stow"));
 		for (Animation a : animations) {
 			if (a.name.contains("slice") || a.name.contains("dash")) {

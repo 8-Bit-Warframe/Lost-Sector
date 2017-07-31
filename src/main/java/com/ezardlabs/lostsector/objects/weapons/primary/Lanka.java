@@ -24,7 +24,7 @@ public class Lanka extends RangedWeapon {
 
 	@Override
 	public Animation getAnimation(TextureAtlas ta) {
-		Animation[] animations = Animations.load("weapons/primary/lanka", ta, new Validator("shoot"));
+		Animation[] animations = Animations.load("animations/weapons/primary/lanka", ta, new Validator("shoot"));
 		Animation animation = animations[0];
 
 		animation.setAnimationType(new AnimationType() {

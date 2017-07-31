@@ -34,7 +34,7 @@ public class ShockwaveMoa extends Moa {
 
 	@Override
 	protected String getAnimationPath() {
-		return "enemies/corpus/moa/shockwave";
+		return "animations/enemies/corpus/moa/shockwave";
 	}
 
 	@Override
@@ -50,8 +50,9 @@ public class ShockwaveMoa extends Moa {
 			public void onFrame(Animator animator, int frameNum) {
 				if (frameNum == 7) {
 					GameObject.instantiate(new GameObject("Shockwave", new Renderer(), new Animator(
-							Animations.load("enemies/corpus/moa/shockwave/effect", ta, new Validator("shockwave"))),
-							new Shockwave(transform.position.offset(100, 100))), transform.position.offset(-300, 175));
+									Animations.load("animations/enemies/corpus/moa/shockwave/effect", ta,
+											new Validator("shockwave"))), new Shockwave(transform.position.offset(100, 100))),
+							transform.position.offset(-300, 175));
 				}
 			}
 
