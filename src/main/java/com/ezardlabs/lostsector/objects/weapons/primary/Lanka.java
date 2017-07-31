@@ -14,7 +14,6 @@ import com.ezardlabs.lostsector.objects.projectiles.LankaBeam;
 import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
 
 public class Lanka extends RangedWeapon {
-	private final long chargeTime = 500;
 	private GameObject player;
 
 	public Lanka(GameObject player) {
