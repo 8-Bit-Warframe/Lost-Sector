@@ -1,0 +1,241 @@
+{
+	"extends": "enemies",
+	"defaults": {
+		"width": 200,
+		"height": 200,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "run",
+			"sprites": [
+				{
+					"name": "run0"
+				},
+				{
+					"name": "run1"
+				},
+				{
+					"name": "run2"
+				},
+				{
+					"name": "run3"
+				},
+				{
+					"name": "run4"
+				},
+				{
+					"name": "run5"
+				}
+			],
+			"type": "LOOP"
+		},
+		{
+			"name": "land",
+			"sprites": [
+				{
+					"name": "land0"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "die_shoot_front",
+			"sprites": [
+				{
+					"name": "die0"
+				},
+				{
+					"name": "die1"
+				},
+				{
+					"name": "die2"
+				},
+				{
+					"name": "die3"
+				},
+				{
+					"name": "die4"
+				},
+				{
+					"name": "die5"
+				},
+				{
+					"name": "die6"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "die_shoot_back",
+			"sprites": [
+				{
+					"name": "die0"
+				},
+				{
+					"name": "die1"
+				},
+				{
+					"name": "die2"
+				},
+				{
+					"name": "die3"
+				},
+				{
+					"name": "die4"
+				},
+				{
+					"name": "die5"
+				},
+				{
+					"name": "die6"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "die_slash_front",
+			"sprites": [
+				{
+					"name": "die0"
+				},
+				{
+					"name": "die1"
+				},
+				{
+					"name": "die2"
+				},
+				{
+					"name": "die3"
+				},
+				{
+					"name": "die4"
+				},
+				{
+					"name": "die5"
+				},
+				{
+					"name": "die6"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "die_slash_back",
+			"sprites": [
+				{
+					"name": "die0"
+				},
+				{
+					"name": "die1"
+				},
+				{
+					"name": "die2"
+				},
+				{
+					"name": "die3"
+				},
+				{
+					"name": "die4"
+				},
+				{
+					"name": "die5"
+				},
+				{
+					"name": "die6"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "frozen_shatter",
+			"sprites": [
+				{
+					"name": "frozen_shatter0",
+					"width": 300,
+					"offset": {
+						"x": -100,
+						"y": 0
+					}
+				},
+				{
+					"name": "frozen_shatter1",
+					"width": 300,
+					"offset": {
+						"x": -100,
+						"y": 0
+					}
+				},
+				{
+					"name": "frozen_shatter2",
+					"width": 300,
+					"offset": {
+						"x": -100,
+						"y": 0
+					}
+				},
+				{
+					"name": "frozen_shatter3",
+					"width": 300,
+					"offset": {
+						"x": -100,
+						"y": 0
+					}
+				},
+				{
+					"name": "frozen_shatter4",
+					"width": 300,
+					"offset": {
+						"x": -100,
+						"y": 0
+					}
+				},
+				{
+					"name": "frozen_shatter5",
+					"width": 300,
+					"offset": {
+						"x": -100,
+						"y": 0
+					}
+				},
+				{
+					"name": "frozen_shatter6",
+					"width": 300,
+					"offset": {
+						"x": -100,
+						"y": 0
+					}
+				},
+				{
+					"name": "frozen_shatter7",
+					"width": 300,
+					"offset": {
+						"x": -100,
+						"y": 0
+					}
+				},
+				{
+					"name": "frozen_shatter8",
+					"width": 300,
+					"offset": {
+						"x": -100,
+						"y": 0
+					}
+				},
+				{
+					"name": "frozen_shatter9",
+					"width": 300,
+					"offset": {
+						"x": -100,
+						"y": 0
+					}
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}

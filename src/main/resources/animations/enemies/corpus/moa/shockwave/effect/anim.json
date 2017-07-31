@@ -1,0 +1,34 @@
+{
+	"defaults": {
+		"width": 730,
+		"height": 100,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "shockwave",
+			"sprites": [
+				{
+					"name": "shockwave0"
+				},
+				{
+					"name": "shockwave1"
+				},
+				{
+					"name": "shockwave2"
+				},
+				{
+					"name": "shockwave3"
+				},
+				{
+					"name": "shockwave4"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}

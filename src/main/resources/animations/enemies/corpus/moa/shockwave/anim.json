@@ -1,0 +1,50 @@
+{
+	"extends": "enemies/corpus/moa",
+	"defaults": {
+		"width": 200,
+		"height": 200,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "attack",
+			"sprites": [
+				{
+					"name": "stomp0"
+				},
+				{
+					"name": "stomp1"
+				},
+				{
+					"name": "stomp2"
+				},
+				{
+					"name": "stomp3"
+				},
+				{
+					"name": "stomp4"
+				},
+				{
+					"name": "stomp5"
+				},
+				{
+					"name": "stomp6"
+				},
+				{
+					"name": "stomp7"
+				},
+				{
+					"name": "stomp8"
+				},
+				{
+					"name": "stomp9"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}
