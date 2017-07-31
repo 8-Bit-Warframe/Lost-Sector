@@ -80,7 +80,8 @@
 						"enum": [
 							"LOOP",
 							"ONE_SHOT",
-							"OSCILLATE"
+							"OSCILLATE",
+							"CUSTOM"
 						]
 					}
 				},
