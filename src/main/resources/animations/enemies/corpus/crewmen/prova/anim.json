@@ -32,7 +32,7 @@
 					"name": "attack5"
 				}
 			],
-			"type": "ONE_SHOT"
+			"type": "LOOP"
 		},
 		{
 			"name": "jump",
