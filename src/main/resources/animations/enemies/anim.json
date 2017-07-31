@@ -81,6 +81,15 @@
 		},
 		{
 			"name": "die_shoot_front",
+			"defaults": {
+				"width": 400,
+				"height": 200,
+				"offset": {
+					"x": 0,
+					"y": 0
+				},
+				"duration": 100
+			},
 			"sprites": [
 				{
 					"name": "die_shoot_front0"
@@ -108,6 +117,15 @@
 		},
 		{
 			"name": "die_shoot_back",
+			"defaults": {
+				"width": 400,
+				"height": 200,
+				"offset": {
+					"x": 0,
+					"y": 0
+				},
+				"duration": 100
+			},
 			"sprites": [
 				{
 					"name": "die_shoot_back0"
@@ -135,6 +153,15 @@
 		},
 		{
 			"name": "die_slash_front",
+			"defaults": {
+				"width": 400,
+				"height": 200,
+				"offset": {
+					"x": 0,
+					"y": 0
+				},
+				"duration": 100
+			},
 			"sprites": [
 				{
 					"name": "die_slash_front0"
@@ -162,6 +189,15 @@
 		},
 		{
 			"name": "die_slash_back",
+			"defaults": {
+				"width": 400,
+				"height": 200,
+				"offset": {
+					"x": 0,
+					"y": 0
+				},
+				"duration": 100
+			},
 			"sprites": [
 				{
 					"name": "die_slash_back0"
@@ -213,6 +249,15 @@
 		},
 		{
 			"name": "frozen_shatter",
+			"defaults": {
+				"width": 300,
+				"height": 200,
+				"offset": {
+					"x": -100,
+					"y": 0
+				},
+				"duration": 100
+			},
 			"sprites": [
 				{
 					"name": "frozen_shatter0"
