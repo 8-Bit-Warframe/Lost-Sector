@@ -30,7 +30,7 @@ public abstract class Enemy extends Entity {
 		gameObject.renderer.setTextureAtlas(ta, 200, 200);
 		gameObject.animator.setAnimations(Animations.load(getAnimationPath(), ta,
 				new Validator("idle", "run", "jump", "fall", "land", "die_shoot_front", "die_shoot_back",
-						"die_slash_front", "die_slash_back", "frozen", "frozen_melt", "frozen_shatter")));
+						"die_slash_front", "die_slash_back", "frozen_shatter")));
 		gameObject.animator.play("idle");
 		gameObject.renderer.setzIndex(3);
 
@@ -69,10 +69,8 @@ public abstract class Enemy extends Entity {
 					gameObject.animator.play("land");
 					break;
 				case FROZEN:
-					gameObject.animator.play("frozen");
 					break;
 				case THAWING:
-					gameObject.animator.play("frozen_melt");
 					break;
 				case ATTACKING:
 					gameObject.animator.play("attack");
