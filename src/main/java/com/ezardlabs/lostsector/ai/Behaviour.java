@@ -25,6 +25,7 @@ public abstract class Behaviour {
 	private float[] freezeTint = {0, 0.3f, 0.6f};
 	private long thawTime = 1000;
 	private long thawStart;
+	private int directionToLook = 0;
 
 	public enum State {
 		IDLE,
@@ -73,6 +74,11 @@ public abstract class Behaviour {
 				state = State.IDLE;
 			}
 			return;
+		}
+
+		if (directionToLook != 0) {
+			transform.scale.x = directionToLook;
+			directionToLook = 0;
 		}
 
 		Transform sightedEnemy = visionCheck(transform);
@@ -173,7 +179,7 @@ public abstract class Behaviour {
 		}
 	}
 
-	public void onDamageReceived(DamageType damageType) {
+	public void onDamageReceived(DamageType damageType, Transform self, Vector2 attackOrigin) {
 		switch (damageType) {
 			case NORMAL:
 				break;
@@ -185,6 +191,11 @@ public abstract class Behaviour {
 				break;
 			case KUBROW:
 				break;
+		}
+		if (attackOrigin.x > self.position.x) {
+			directionToLook = 1;
+		} else if (attackOrigin.x < self.position.x) {
+			directionToLook = -1;
 		}
 	}
 
