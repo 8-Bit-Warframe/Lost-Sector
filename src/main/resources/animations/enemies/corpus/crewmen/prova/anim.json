@@ -33,6 +33,15 @@
 				}
 			],
 			"type": "ONE_SHOT"
+		},
+		{
+			"name": "jump",
+			"sprites": [
+				{
+					"name": "jump0"
+				}
+			],
+			"type": "ONE_SHOT"
 		}
 	]
 }
