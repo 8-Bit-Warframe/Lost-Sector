@@ -1,0 +1,91 @@
+{
+	"defaults": {
+		"width": 768,
+		"height": 1344,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "liset_frost_open",
+			"sprites": [
+				{
+					"name": "closed_0"
+				},
+				{
+					"name": "turn_1_1"
+				},
+				{
+					"name": "turn_1_2"
+				},
+				{
+					"name": "turn_1_3"
+				},
+				{
+					"name": "turn_1_4"
+				},
+				{
+					"name": "turn_1_5"
+				},
+				{
+					"name": "turn_1_6"
+				},
+				{
+					"name": "turn_1_7"
+				},
+				{
+					"name": "turn_1_8"
+				},
+				{
+					"name": "turn_1_9"
+				},
+				{
+					"name": "open"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "liset_frost_close",
+			"sprites": [
+				{
+					"name": "open"
+				},
+				{
+					"name": "turn_1_9"
+				},
+				{
+					"name": "turn_1_8"
+				},
+				{
+					"name": "turn_1_7"
+				},
+				{
+					"name": "turn_1_6"
+				},
+				{
+					"name": "turn_1_5"
+				},
+				{
+					"name": "turn_1_4"
+				},
+				{
+					"name": "turn_1_3"
+				},
+				{
+					"name": "turn_1_2"
+				},
+				{
+					"name": "turn_1_1"
+				},
+				{
+					"name": "closed_0"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}
