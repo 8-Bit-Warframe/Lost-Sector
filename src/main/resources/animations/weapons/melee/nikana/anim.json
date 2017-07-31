@@ -124,7 +124,7 @@
 			"name": "stow",
 			"sprites": [
 				{
-					"name": "nikana_show0",
+					"name": "nikana_stow0",
 					"width": 200,
 					"height": 200,
 					"offset": {
