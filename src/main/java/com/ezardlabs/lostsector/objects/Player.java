@@ -162,7 +162,7 @@ public class Player extends Script {
 				transform.translate(x * speed, 0);
 				break;
 			case DOUBLE_JUMPING:
-				gameObject.animator.play("doublejump");
+				gameObject.animator.play("double-jump");
 				transform.translate(x * speed, 0);
 				break;
 			case FALLING:
