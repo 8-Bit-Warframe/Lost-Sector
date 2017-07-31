@@ -37,7 +37,7 @@ public abstract class Enemy extends Entity {
 		setDamageListener(new DamageListener() {
 			@Override
 			public void onDamageReceived(float damage, DamageType damageType, Vector2 attackOrigin) {
-				behaviour.onDamageReceived(damageType);
+				behaviour.onDamageReceived(damageType, transform, attackOrigin);
 			}
 		});
 
