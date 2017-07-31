@@ -1,22 +1,38 @@
 package com.ezardlabs.lostsector.objects.enemies.corpus.crewmen;
 
-import com.ezardlabs.dethsquare.Animation;
-import com.ezardlabs.dethsquare.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.AnimationType;
-import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.AudioManager.AudioGroup;
 import com.ezardlabs.dethsquare.AudioSource;
 import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
-import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
+import com.ezardlabs.dethsquare.Transform;
+import com.ezardlabs.lostsector.ai.RangedBehaviour;
+import com.ezardlabs.lostsector.ai.RangedBehaviour.Builder.ShootAction;
 import com.ezardlabs.lostsector.objects.enemies.corpus.Crewman;
 import com.ezardlabs.lostsector.objects.projectiles.Laser;
 
 public class DeraCrewman extends Crewman {
-	private AudioSource audio = new AudioSource(AudioGroup.SFX);
-	private AudioClip shoot;
+
+	public DeraCrewman() {
+		super(new RangedBehaviour.Builder().setRange(100).setShootAction(new ShootAction() {
+			@Override
+			public void onShoot(Transform self, Transform target) {
+				self.gameObject.animator.play("shoot");
+				if (self.gameObject.animator.getCurrentAnimationFrame() % 2 == 1) {
+					GameObject laser = GameObject.instantiate(
+							new GameObject("Laser", new Renderer("images/laser.png", 100, 100),
+									new Collider(100, 100, true), new Laser(1)),
+							self.position.offset(self.gameObject.transform.scale.x < 0 ? -12.5f : 87.5f,
+									self.gameObject.animator.getCurrentAnimationFrame() == 1 ? 75 : 50));
+					laser.transform.scale.set(self.gameObject.transform.scale);
+					//noinspection ConstantConditions
+					self.gameObject.getComponent(AudioSource.class).play();
+				}
+			}
+		}).setMoveSpeed(10).setVisionRange(2000).setWillPatrol(false).create());
+	}
 
 	@Override
 	protected String getAtlasPath() {
@@ -24,19 +40,18 @@ public class DeraCrewman extends Crewman {
 	}
 
 	@Override
-	public void start() {
-		super.start();
-		shoot = new AudioClip("audio/dera_shoot.ogg");
-		gameObject.addComponent(audio);
-		audio.setAudioClip(shoot);
+	protected String getAnimationPath() {
+		return "enemies/corpus/crewmen/dera";
 	}
 
 	@Override
-	protected Animation getShootAnimation() {
-		return new Animation("shoot", new Sprite[]{ta.getSprite("shoot0"),
-				ta.getSprite("shoot1"),
-				ta.getSprite("shoot2"),
-				ta.getSprite("shoot3")}, new AnimationType() {
+	public void start() {
+		super.start();
+		AudioSource audio = new AudioSource(AudioGroup.SFX);
+		audio.setAudioClip(new AudioClip("audio/dera_shoot.ogg"));
+		gameObject.addComponent(audio);
+		//noinspection ConstantConditions
+		gameObject.animator.getAnimation("shoot").setAnimationType(new AnimationType() {
 			private long lastEnd = 0;
 
 			@Override
@@ -54,33 +69,6 @@ public class DeraCrewman extends Crewman {
 					default:
 						return 0;
 				}
-			}
-		}, 100, new AnimationListener() {
-			@Override
-			public void onAnimatedStarted(Animator animator) {
-
-			}
-
-			@Override
-			public void onFrame(Animator animator, int frameNum) {
-				if (frameNum % 2 == 1) {
-					GameObject laser = GameObject.instantiate(
-							new GameObject("Laser",
-									new Renderer("images/laser.png", 100, 100),
-									new Collider(100, 100, true), new Laser(1)),
-							transform.position
-									.offset(gameObject.transform.scale.x <
-													0 ? -12.5f : 87.5f,
-											frameNum == 1 ? 75 : 50));
-					laser.transform.scale.set(gameObject.transform.scale);
-					audio.play();
-
-				}
-			}
-
-			@Override
-			public void onAnimationFinished(Animator animator) {
-
 			}
 		});
 	}
