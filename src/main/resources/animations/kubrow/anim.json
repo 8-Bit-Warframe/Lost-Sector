@@ -1,0 +1,106 @@
+{
+	"defaults": {
+		"width": 200,
+		"height": 200,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "idle",
+			"sprites": [
+				{
+					"name": "idle0"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "run",
+			"sprites": [
+				{
+					"name": "run0"
+				},
+				{
+					"name": "run1"
+				},
+				{
+					"name": "run2"
+				},
+				{
+					"name": "run3"
+				},
+				{
+					"name": "run4"
+				},
+				{
+					"name": "run5"
+				},
+				{
+					"name": "run6"
+				}
+			],
+			"type": "LOOP"
+		},
+		{
+			"name": "jump",
+			"sprites": [
+				{
+					"name": "jump0"
+				},
+				{
+					"name": "jump1"
+				},
+				{
+					"name": "jump2"
+				}
+			],
+			"type": "ONE_SHOT"
+		},
+		{
+			"name": "attack",
+			"sprites": [
+				{
+					"name": "attack0"
+				},
+				{
+					"name": "attack1"
+				},
+				{
+					"name": "attack2"
+				},
+				{
+					"name": "attack3"
+				},
+				{
+					"name": "attack4"
+				},
+				{
+					"name": "attack5"
+				},
+				{
+					"name": "attack6"
+				},
+				{
+					"name": "attack7"
+				},
+				{
+					"name": "attack8"
+				},
+				{
+					"name": "attack9"
+				},
+				{
+					"name": "attack10"
+				},
+				{
+					"name": "attack11"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}

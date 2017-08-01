@@ -1,16 +1,26 @@
-//package com.ezardlabs.lostsector.objects;
-//
-//import com.ezardlabs.dethsquare.Animation;
-//import com.ezardlabs.dethsquare.AnimationType;
-//import com.ezardlabs.dethsquare.Animator;
-//import com.ezardlabs.dethsquare.TextureAtlas;
-//import com.ezardlabs.dethsquare.Vector2;
-//import com.ezardlabs.lostsector.Game;
-//import com.ezardlabs.lostsector.Game.DamageType;
-//import com.ezardlabs.lostsector.NavMesh;
-//
-//public class Kubrow extends Entity {
-//	private float speed = 10;
+package com.ezardlabs.lostsector.objects;
+
+import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.animation.Animations;
+import com.ezardlabs.dethsquare.animation.Animations.Validator;
+import com.ezardlabs.lostsector.Game.DamageType;
+
+public class Kubrow extends Entity {
+
+	public Kubrow() {
+		super(5);
+	}
+
+	@Override
+	public void start() {
+		TextureAtlas ta = new TextureAtlas("images/kubrows/white/atlas.png", "images/kubrows/white/atlas.txt");
+		gameObject.renderer.setTextureAtlas(ta, 200, 200);
+		gameObject.animator.setAnimations(Animations.load("animations/kubrow", ta, new Validator("idle", "run",
+				"jump", "attack")));
+	}
+
+	//	private float speed = 10;
 //	public boolean attacking = false;
 //	TargetType targetType = TargetType.PLAYER;
 //	Vector2 target;
@@ -71,141 +81,141 @@
 //		gameObject.animator.play("idle");
 //
 //	}
+
+//	@Override
+//	public void update() {
+//		int x = 0;
+//		if (gameObject.rigidbody.gravity == 0) {
+//			if (target == null || transform.position.x == target.x) {
+//				NavMesh.NavPoint[] path = NavMesh.getPath(transform, Game.players[0].transform);
+//				if (path != null && path.length > 0) {
+//					int pathIndex = 0;
+//					if (path.length > 1 && path[0] != null && transform.position.x == path[0].position.x)
+//						pathIndex = 1;
+//					target = path[pathIndex].position;
+//				}
+//			}
+//			if (target != null) {
+//				if (target.x < transform.position.x) {
+//					x = -10;
+//					gameObject.renderer.hFlipped = true;
+//				} else if (target.x > transform.position.x) {
+//					x = 10;
+//					gameObject.renderer.hFlipped = false;
+//				}
+//			}
+//			transform.translate(x, 0);
+//			if (x == 0) {
+//				gameObject.animator.play("idle");
+//			} else {
+//				gameObject.animator.play("run");
+//			}
+//		}
+
+
+//		if (attacking) return;
 //
-////	@Override
-////	public void update() {
-////		int x = 0;
-////		if (gameObject.rigidbody.gravity == 0) {
-////			if (target == null || transform.position.x == target.x) {
-////				NavMesh.NavPoint[] path = NavMesh.getPath(transform, Game.players[0].transform);
-////				if (path != null && path.length > 0) {
-////					int pathIndex = 0;
-////					if (path.length > 1 && path[0] != null && transform.position.x == path[0].position.x)
-////						pathIndex = 1;
-////					target = path[pathIndex].position;
-////				}
-////			}
-////			if (target != null) {
-////				if (target.x < transform.position.x) {
-////					x = -10;
-////					gameObject.renderer.hFlipped = true;
-////				} else if (target.x > transform.position.x) {
-////					x = 10;
-////					gameObject.renderer.hFlipped = false;
-////				}
-////			}
-////			transform.translate(x, 0);
-////			if (x == 0) {
-////				gameObject.animator.play("idle");
-////			} else {
-////				gameObject.animator.play("run");
-////			}
-////		}
+//		float x = 0;
 //
+//		double minDistance = 1000;
+//		GameObject best = null;
+//		double temp;
+//		for (GameObject go : GameObject.findAllWithTag("enemy")) {
+//			if ((temp = Vector2.distance(transform.position, go.transform.position)) < minDistance) {
+//				minDistance = temp;
+//				best = go;
+//			}
+//		}
+//		if (best == null) {
+//			targetType = TargetType.PLAYER;
+//		} else {
+//			targetType = TargetType.ENEMY;
+//		}
+//		if (gameObject.rigidbody.gravity == 0) {
+//			NavMesh.NavPoint[] path = null;
+//			switch (targetType) {
+//				case PLAYER:
+//					path = NavMesh.getPath(transform, Game.players[0].transform);
+//					break;
+//				case ENEMY:
+//					path = NavMesh.getPath(transform, best.transform);
+//					break;
+//			}
+//			if (path != null && path.length > 0) {
+//				int pathIndex = 0;
+//				if (path.length > 1 && path[0] != null && transform.position.x == path[0].position.x)
+//					pathIndex = 1;
+//				target = path[pathIndex].position;
+//			}
+//			if (target != null) {
+//				if (target.x < transform.position.x) {
+//					x = -10;
+//					gameObject.renderer.hFlipped = true;
+//				} else if (target.x > transform.position.x) {
+//					x = 10;
+//					gameObject.renderer.hFlipped = false;
+//				}
+//			}
+//			transform.translate(x, 0);
+//			if (x == 0) {
+//				gameObject.animator.play("idle");
+//			} else {
+//				gameObject.animator.play("run");
+//			}
+//		}
+
+
+//		if (best == null) {
+//			if (gameObject.rigidbody.gravity == 0) {
+//				NavMesh.NavPoint[] path = NavMesh.getPath(transform, Game.players[0].transform);
+//				if (path != null && path.length > 1) {
+//					int pathIndex = 0;
+//					if (path.length > 1 && path[0] != null && transform.position.x == path[0].position.x)
+//						pathIndex = 1;
+//					if (path[pathIndex].position.x < transform.position.x) {
+//						x = -speed;
+//						gameObject.renderer.hFlipped = true;
+//					} else if (path[pathIndex].position.x > transform.position.x) {
+//						x = speed;
+//						gameObject.renderer.hFlipped = false;
+//					}
+//				}
+//			}
+//		} else {
+//			if (gameObject.rigidbody.gravity == 0) {
+//				if (best.transform.position.x - transform.position.x <= 106.25f) { // 125
+//					transform.position.x = best.transform.position.x - 106.25f;
+//					gameObject.animator.play("attack");
+//					attacking = true;
+//					//noinspection ConstantConditions
+//					((Enemy) best.getComponentOfType(Enemy.class)).kubrowAttack(transform.position);
+//					return;
+//				} else {
+//					NavMesh.NavPoint[] path = NavMesh.getPath(transform, best.transform);
+//					if (path != null && path.length > 0) {
+//						int pathIndex = 0;
+//						if (path.length > 1 && path[0] != null && transform.position.x == path[0].position.x)
+//							pathIndex = 1;
+//						if (path[pathIndex].position.x < transform.position.x) {
+//							x = -speed;
+//							gameObject.renderer.hFlipped = true;
+//						} else if (path[pathIndex].position.x > transform.position.x) {
+//							x = speed;
+//							gameObject.renderer.hFlipped = false;
+//						}
+//					}
+//				}
+//			}
+//		}
 //
-////		if (attacking) return;
-////
-////		float x = 0;
-////
-////		double minDistance = 1000;
-////		GameObject best = null;
-////		double temp;
-////		for (GameObject go : GameObject.findAllWithTag("enemy")) {
-////			if ((temp = Vector2.distance(transform.position, go.transform.position)) < minDistance) {
-////				minDistance = temp;
-////				best = go;
-////			}
-////		}
-////		if (best == null) {
-////			targetType = TargetType.PLAYER;
-////		} else {
-////			targetType = TargetType.ENEMY;
-////		}
-////		if (gameObject.rigidbody.gravity == 0) {
-////			NavMesh.NavPoint[] path = null;
-////			switch (targetType) {
-////				case PLAYER:
-////					path = NavMesh.getPath(transform, Game.players[0].transform);
-////					break;
-////				case ENEMY:
-////					path = NavMesh.getPath(transform, best.transform);
-////					break;
-////			}
-////			if (path != null && path.length > 0) {
-////				int pathIndex = 0;
-////				if (path.length > 1 && path[0] != null && transform.position.x == path[0].position.x)
-////					pathIndex = 1;
-////				target = path[pathIndex].position;
-////			}
-////			if (target != null) {
-////				if (target.x < transform.position.x) {
-////					x = -10;
-////					gameObject.renderer.hFlipped = true;
-////				} else if (target.x > transform.position.x) {
-////					x = 10;
-////					gameObject.renderer.hFlipped = false;
-////				}
-////			}
-////			transform.translate(x, 0);
-////			if (x == 0) {
-////				gameObject.animator.play("idle");
-////			} else {
-////				gameObject.animator.play("run");
-////			}
-////		}
-//
-//
-////		if (best == null) {
-////			if (gameObject.rigidbody.gravity == 0) {
-////				NavMesh.NavPoint[] path = NavMesh.getPath(transform, Game.players[0].transform);
-////				if (path != null && path.length > 1) {
-////					int pathIndex = 0;
-////					if (path.length > 1 && path[0] != null && transform.position.x == path[0].position.x)
-////						pathIndex = 1;
-////					if (path[pathIndex].position.x < transform.position.x) {
-////						x = -speed;
-////						gameObject.renderer.hFlipped = true;
-////					} else if (path[pathIndex].position.x > transform.position.x) {
-////						x = speed;
-////						gameObject.renderer.hFlipped = false;
-////					}
-////				}
-////			}
-////		} else {
-////			if (gameObject.rigidbody.gravity == 0) {
-////				if (best.transform.position.x - transform.position.x <= 106.25f) { // 125
-////					transform.position.x = best.transform.position.x - 106.25f;
-////					gameObject.animator.play("attack");
-////					attacking = true;
-////					//noinspection ConstantConditions
-////					((Enemy) best.getComponentOfType(Enemy.class)).kubrowAttack(transform.position);
-////					return;
-////				} else {
-////					NavMesh.NavPoint[] path = NavMesh.getPath(transform, best.transform);
-////					if (path != null && path.length > 0) {
-////						int pathIndex = 0;
-////						if (path.length > 1 && path[0] != null && transform.position.x == path[0].position.x)
-////							pathIndex = 1;
-////						if (path[pathIndex].position.x < transform.position.x) {
-////							x = -speed;
-////							gameObject.renderer.hFlipped = true;
-////						} else if (path[pathIndex].position.x > transform.position.x) {
-////							x = speed;
-////							gameObject.renderer.hFlipped = false;
-////						}
-////					}
-////				}
-////			}
-////		}
-////
-////		transform.translate(x, 0);
-////		if (x == 0) {
-////			gameObject.animator.play("idle");
-////		} else {
-////			gameObject.animator.play("run");
-////		}
-////	}
-//
+//		transform.translate(x, 0);
+//		if (x == 0) {
+//			gameObject.animator.play("idle");
+//		} else {
+//			gameObject.animator.play("run");
+//		}
+//	}
+
 //	@Override
 //	public void update() {
 //		int x = 0;
@@ -260,8 +270,8 @@
 //			gameObject.animator.play("run");
 //		}
 //	}
-//
-//	@Override
-//	protected void die(DamageType damageType, Vector2 attackOrigin) {
-//	}
-//}
+
+	@Override
+	protected void die(DamageType damageType, Vector2 attackOrigin) {
+	}
+}
