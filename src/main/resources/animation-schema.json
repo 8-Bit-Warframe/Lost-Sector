@@ -2,11 +2,7 @@
 	"$schema": "http://json-schema.org/draft-04/schema#",
 	"title": "Dethsquare Engine Aniamtion",
 	"description": "Data about an entity in a Dethsquare Engine game",
-	"type": "object",
-	"properties": {
-		"extends": {
-			"type": "string"
-		},
+	"definitions": {
 		"defaults": {
 			"type": "object",
 			"properties": {
@@ -41,6 +37,15 @@
 				"offset",
 				"duration"
 			]
+		}
+	},
+	"type": "object",
+	"properties": {
+		"extends": {
+			"type": "string"
+		},
+		"defaults": {
+			"$ref": "#/definitions/defaults"
 		},
 		"animations": {
 			"type": "array",
@@ -52,39 +57,7 @@
 						"type": "string"
 					},
 					"defaults": {
-						"type": "object",
-						"properties": {
-							"width": {
-								"type": "number"
-							},
-							"height": {
-								"type": "number"
-							},
-							"offset": {
-								"type": "object",
-								"properties": {
-									"x": {
-										"type": "number"
-									},
-									"y": {
-										"type": "number"
-									}
-								},
-								"required": [
-									"x",
-									"y"
-								]
-							},
-							"duration": {
-								"type": "number"
-							}
-						},
-						"required": [
-							"width",
-							"height",
-							"offset",
-							"duration"
-						]
+						"$ref": "#/definitions/defaults"
 					},
 					"sprites": {
 						"type": "array",
