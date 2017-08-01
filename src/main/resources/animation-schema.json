@@ -3,6 +3,21 @@
 	"title": "Dethsquare Engine Animation",
 	"description": "Data about an entity in a Dethsquare Engine game",
 	"definitions": {
+		"offset": {
+			"type": "object",
+			"properties": {
+				"x": {
+					"type": "number"
+				},
+				"y": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"x",
+				"y"
+			]
+		},
 		"defaults": {
 			"type": "object",
 			"properties": {
@@ -13,19 +28,7 @@
 					"type": "number"
 				},
 				"offset": {
-					"type": "object",
-					"properties": {
-						"x": {
-							"type": "number"
-						},
-						"y": {
-							"type": "number"
-						}
-					},
-					"required": [
-						"x",
-						"y"
-					]
+					"$ref": "#/definitions/offset"
 				},
 				"duration": {
 					"type": "number"
@@ -75,19 +78,7 @@
 									"type": "number"
 								},
 								"offset": {
-									"type": "object",
-									"properties": {
-										"x": {
-											"type": "number"
-										},
-										"y": {
-											"type": "number"
-										}
-									},
-									"required": [
-										"x",
-										"y"
-									]
+									"$ref": "#/definitions/offset"
 								},
 								"duration": {
 									"type": "number"
