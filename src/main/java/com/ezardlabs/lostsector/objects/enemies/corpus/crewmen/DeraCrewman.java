@@ -17,18 +17,25 @@ public class DeraCrewman extends Crewman {
 
 	public DeraCrewman() {
 		super(new RangedBehaviour.Builder().setRange(100).setShootAction(new ShootAction() {
+			private boolean fired = false;
+
 			@Override
 			public void onShoot(Transform self, Transform target) {
 				self.gameObject.animator.play("shoot");
 				if (self.gameObject.animator.getCurrentAnimationFrame() % 2 == 1) {
-					GameObject laser = GameObject.instantiate(
-							new GameObject("Laser", new Renderer("images/laser.png", 100, 100),
-									new Collider(100, 100, true), new Laser(1)),
-							self.position.offset(self.gameObject.transform.scale.x < 0 ? -12.5f : 87.5f,
-									self.gameObject.animator.getCurrentAnimationFrame() == 1 ? 75 : 50));
-					laser.transform.scale.set(self.gameObject.transform.scale);
-					//noinspection ConstantConditions
-					self.gameObject.getComponent(AudioSource.class).play();
+					if (!fired) {
+						GameObject laser = GameObject.instantiate(
+								new GameObject("Laser", new Renderer("images/laser.png", 100, 100),
+										new Collider(100, 100, true), new Laser(1)),
+								self.position.offset(self.gameObject.transform.scale.x < 0 ? -12.5f : 87.5f,
+										self.gameObject.animator.getCurrentAnimationFrame() == 1 ? 75 : 50));
+						laser.transform.scale.set(self.gameObject.transform.scale);
+						//noinspection ConstantConditions
+						self.gameObject.getComponent(AudioSource.class).play();
+						fired = true;
+					}
+				} else {
+					fired = false;
 				}
 			}
 		}).setMoveSpeed(10).setVisionRange(2000).setWillPatrol(false).create());
