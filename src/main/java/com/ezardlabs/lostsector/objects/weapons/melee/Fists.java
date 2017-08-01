@@ -28,6 +28,11 @@ public class Fists extends MeleeWeapon {
 
 			@Override
 			public void onFrame(Animator animator, int frameNum) {
+				if (frameNum == 2 || frameNum == 4) {
+					damageEnemies(0.5f, animator.transform.position.x, animator.transform.position.y,
+							animator.transform.position.x + animator.gameObject.renderer.width,
+							animator.transform.position.y + animator.gameObject.renderer.height);
+				}
 			}
 
 			@Override
