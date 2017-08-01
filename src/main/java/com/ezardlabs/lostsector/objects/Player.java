@@ -173,7 +173,7 @@ public class Player extends Script {
 				gameObject.animator.play("land");
 				break;
 			case MELEE:
-				gameObject.animator.play(warframe.meleeWeapon.getNextAnimation(x));
+				gameObject.animator.play(warframe.meleeWeapon.getNextAnimation(x), true);
 				break;
 			case MELEE_WAITING:
 				meleeCheck();
