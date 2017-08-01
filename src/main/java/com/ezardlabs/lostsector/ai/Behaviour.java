@@ -71,6 +71,7 @@ public abstract class Behaviour {
 						freezeTint[1] - ratio * freezeTint[1], freezeTint[2] - ratio * freezeTint[2]);
 			} else {
 				transform.gameObject.renderer.setTint(0, 0, 0);
+				transform.gameObject.animator.shouldUpdate = true;
 				state = State.IDLE;
 			}
 			return;
@@ -188,6 +189,7 @@ public abstract class Behaviour {
 			case COLD:
 				state = State.FROZEN;
 				freezeStart = System.currentTimeMillis();
+				self.gameObject.animator.shouldUpdate = false;
 				break;
 			case KUBROW:
 				break;

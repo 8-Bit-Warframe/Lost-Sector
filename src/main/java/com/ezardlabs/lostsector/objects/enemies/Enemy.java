@@ -109,6 +109,7 @@ public abstract class Enemy extends Entity {
 		gameObject.setTag(null);
 		if (behaviour.getState() == State.FROZEN) {
 			gameObject.animator.play("frozen_shatter");
+			gameObject.animator.shouldUpdate = true;
 		} else {
 			String direction;
 			if (attackOrigin.x < transform.position.x) {
