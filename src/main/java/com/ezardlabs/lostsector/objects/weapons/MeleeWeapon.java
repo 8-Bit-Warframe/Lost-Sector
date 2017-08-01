@@ -26,7 +26,7 @@ public abstract class MeleeWeapon extends Weapon {
 		currentAnimation = null;
 	}
 
-	protected void damageEnemies(int damage, float left, float top, float right, float bottom) {
+	protected void damageEnemies(float damage, float left, float top, float right, float bottom) {
 		Collider c;
 		for (GameObject go : GameObject.findAllWithTag("enemy")) {
 			if ((c = go.getComponent(Collider.class)) != null && c.bounds.intersects(left, top, right, bottom)) {
