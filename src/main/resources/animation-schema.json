@@ -1,6 +1,6 @@
 {
 	"$schema": "http://json-schema.org/draft-04/schema#",
-	"title": "Dethsquare Engine Aniamtion",
+	"title": "Dethsquare Engine Animation",
 	"description": "Data about an entity in a Dethsquare Engine game",
 	"definitions": {
 		"defaults": {
