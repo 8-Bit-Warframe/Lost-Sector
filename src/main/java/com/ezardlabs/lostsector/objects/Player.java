@@ -127,8 +127,6 @@ public class Player extends Script {
 				if (fallCheck() || jumpCheck()) {
 					warframe.meleeWeapon.reset();
 					gameObject.rigidbody.velocity.x = 0;
-					gameObject.renderer.setSize(200, 200);
-					gameObject.renderer.setOffsets(0, 0);
 					break;
 				}
 				break;
@@ -136,8 +134,6 @@ public class Player extends Script {
 				if (fallCheck() || jumpCheck()) {
 					warframe.meleeWeapon.reset();
 					gameObject.rigidbody.velocity.x = 0;
-					gameObject.renderer.setSize(200, 200);
-					gameObject.renderer.setOffsets(0, 0);
 					break;
 				}
 				break;
