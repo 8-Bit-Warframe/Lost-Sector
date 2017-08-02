@@ -253,8 +253,14 @@
 				"width": 300,
 				"height": 200,
 				"offset": {
-					"x": -100,
-					"y": 0
+					"normal": {
+						"x": -100,
+						"y": 0
+					},
+					"flipped": {
+						"x": 0,
+						"y": 0
+					}
 				},
 				"duration": 100
 			},
