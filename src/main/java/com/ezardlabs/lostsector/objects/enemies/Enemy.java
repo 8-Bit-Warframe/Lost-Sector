@@ -15,7 +15,6 @@ import com.ezardlabs.lostsector.objects.Entity;
 
 public abstract class Enemy extends Entity {
 	private Behaviour behaviour;
-	private Vector2 deathOffsets;
 	protected final TextureAtlas ta;
 
 	public Enemy(int health, Behaviour behaviour) {
@@ -78,14 +77,6 @@ public abstract class Enemy extends Entity {
 					break;
 			}
 		}
-
-		if (deathOffsets != null) {
-			gameObject.renderer.setOffsets(deathOffsets.x, deathOffsets.y);
-
-			if (gameObject.animator.isFinished()) {
-				gameObject.removeComponent(getClass());
-			}
-		}
 	}
 
 	//	public void kubrowAttack(Vector2 kubrowPosition) {
@@ -144,9 +135,7 @@ public abstract class Enemy extends Entity {
 					break;
 			}
 			gameObject.animator.play("die_" + type + "_" + direction);
-			if (attackOrigin.x > transform.position.x) {
-				deathOffsets = new Vector2(-200, 0);
-			}
+			gameObject.removeComponent(getClass());
 		}
 		behaviour = null;
 		Level level = LevelManager.getCurrentLevel();
