@@ -135,8 +135,8 @@ public abstract class Enemy extends Entity {
 					break;
 			}
 			gameObject.animator.play("die_" + type + "_" + direction);
-			gameObject.removeComponent(getClass());
 		}
+		gameObject.removeComponent(getClass());
 		behaviour = null;
 		Level level = LevelManager.getCurrentLevel();
 		if (level instanceof MissionLevel) {
