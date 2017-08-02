@@ -16,7 +16,7 @@ import com.ezardlabs.lostsector.objects.projectiles.Laser;
 public class DeraCrewman extends Crewman {
 
 	public DeraCrewman() {
-		super(new RangedBehaviour.Builder().setRange(100).setShootAction(new ShootAction() {
+		super(new RangedBehaviour.Builder().setRange(1000).setShootAction(new ShootAction() {
 			private boolean fired = false;
 
 			@Override
