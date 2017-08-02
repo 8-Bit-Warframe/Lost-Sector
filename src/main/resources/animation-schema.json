@@ -5,18 +5,57 @@
 	"definitions": {
 		"offset": {
 			"type": "object",
-			"properties": {
-				"x": {
-					"type": "number"
+			"oneOf": [
+				{
+					"properties": {
+						"x" : {
+							"type": "number"
+						},
+						"y": {
+							"type": "number"
+						}
+					}
 				},
-				"y": {
-					"type": "number"
+				{
+					"properties": {
+						"normal": {
+							"type": "object",
+							"properties": {
+								"x" : {
+									"type": "number"
+								},
+								"y": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"x",
+								"y"
+							]
+						},
+						"flipped": {
+							"type": "object",
+							"properties": {
+								"x" : {
+									"type": "number"
+								},
+								"y": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"x",
+								"y"
+							]
+						}
+					},
+					"required": [
+						"normal",
+						"flipped"
+					]
 				}
-			},
-			"required": [
-				"x",
-				"y"
-			]
+			],
+			"additionalProperties": false
 		},
 		"defaults": {
 			"type": "object",
