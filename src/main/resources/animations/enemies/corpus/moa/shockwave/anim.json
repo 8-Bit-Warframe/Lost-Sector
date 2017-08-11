@@ -12,6 +12,15 @@
 	"animations": [
 		{
 			"name": "attack",
+			"defaults": {
+				"width": 200,
+				"height": 300,
+				"offset": {
+					"x": 0,
+					"y": -100
+				},
+				"duration": 100
+			},
 			"sprites": [
 				{
 					"name": "stomp0"
