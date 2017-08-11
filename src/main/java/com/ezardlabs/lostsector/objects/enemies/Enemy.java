@@ -27,6 +27,7 @@ public abstract class Enemy extends Entity {
 	@Override
 	public void start() {
 		gameObject.setTag("enemy");
+		if (((int) (Math.random() * 2)) == 0) transform.scale.x = -1;
 		gameObject.renderer.setTextureAtlas(ta, 200, 200);
 		gameObject.animator.setAnimations(Animations.load(getAnimationPath(), ta,
 				new Validator("idle", "run", "jump", "fall", "land", "die_shoot_front", "die_shoot_back",
