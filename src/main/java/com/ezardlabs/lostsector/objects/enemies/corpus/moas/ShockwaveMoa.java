@@ -60,7 +60,6 @@ public class ShockwaveMoa extends Moa {
 			public void onAnimationFinished(Animator animator) {
 			}
 		});
-		System.out.println(gameObject.renderer.textureName);
 	}
 
 	private static class Shockwave extends Script {
@@ -84,8 +83,10 @@ public class ShockwaveMoa extends Moa {
 
 		@Override
 		public void update() {
-			left.transform.translate(-10, 0);
-			right.transform.translate(10, 0);
+			if (left.transform.gameObject != null && right.transform.gameObject != null) {
+				left.transform.translate(-10, 0);
+				right.transform.translate(10, 0);
+			}
 		}
 
 		private static class ShockwaveCollision extends Component {
