@@ -5,7 +5,9 @@ import com.ezardlabs.lostsector.objects.enemies.Enemy;
 public abstract class Mission {
 	protected int enemiesKilled = 0;
 	private long missionStart = 0;
+	private boolean completed = false;
 	private EnemyStatusListener enemyStatusListener;
+	private MissionStatusListener missionStatusListener;
 
 	public void startMission() {
 		missionStart = System.currentTimeMillis();
@@ -16,6 +18,13 @@ public abstract class Mission {
 	}
 
 	public abstract void load();
+
+	protected final void completedMission() {
+		completed = true;
+		if (missionStatusListener != null) {
+			missionStatusListener.onMissionCompleted();
+		}
+	}
 
 	public final void notifyEnemySpawn(Enemy enemy) {
 		if (enemyStatusListener != null) {
@@ -34,9 +43,17 @@ public abstract class Mission {
 		this.enemyStatusListener = enemyStatusListener;
 	}
 
+	void setMissionStatusListener(MissionStatusListener listener) {
+		this.missionStatusListener = listener;
+	}
+
 	protected interface EnemyStatusListener {
 		void onEnemySpawned(Enemy enemy);
 
 		void onEnemyKilled(Enemy enemy);
+	}
+
+	protected interface MissionStatusListener {
+		void onMissionCompleted();
 	}
 }
