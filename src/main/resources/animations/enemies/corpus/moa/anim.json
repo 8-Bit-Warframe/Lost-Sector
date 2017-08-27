@@ -12,6 +12,21 @@
 	"animations": [
 		{
 			"name": "run",
+			"defaults": {
+				"width": 300,
+				"height": 200,
+				"offset": {
+					"normal": {
+						"x": -100,
+						"y": 0
+					},
+					"flipped": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				"duration": 100
+			},
 			"sprites": [
 				{
 					"name": "run0"
@@ -33,6 +48,30 @@
 				}
 			],
 			"type": "LOOP"
+		},
+		{
+			"name": "fall",
+			"defaults": {
+				"width": 300,
+				"height": 200,
+				"offset": {
+					"normal": {
+						"x": 0,
+						"y": 0
+					},
+					"flipped": {
+						"x": -100,
+						"y": 0
+					}
+				},
+				"duration": 100
+			},
+			"sprites": [
+				{
+					"name": "fall0"
+				}
+			],
+			"type": "ONE_SHOT"
 		},
 		{
 			"name": "land",
