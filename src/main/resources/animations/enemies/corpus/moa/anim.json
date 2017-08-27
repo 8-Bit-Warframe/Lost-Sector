@@ -192,86 +192,45 @@
 		},
 		{
 			"name": "frozen_shatter",
+			"defaults": {
+				"width": 300,
+				"height": 200,
+				"offset": {
+					"x": -100,
+					"y": 0
+				},
+				"duration": 100
+			},
 			"sprites": [
 				{
-					"name": "frozen_shatter0",
-					"width": 300,
-					"offset": {
-						"x": -100,
-						"y": 0
-					}
+					"name": "frozen_shatter0"
 				},
 				{
-					"name": "frozen_shatter1",
-					"width": 300,
-					"offset": {
-						"x": -100,
-						"y": 0
-					}
+					"name": "frozen_shatter1"
 				},
 				{
-					"name": "frozen_shatter2",
-					"width": 300,
-					"offset": {
-						"x": -100,
-						"y": 0
-					}
+					"name": "frozen_shatter2"
 				},
 				{
-					"name": "frozen_shatter3",
-					"width": 300,
-					"offset": {
-						"x": -100,
-						"y": 0
-					}
+					"name": "frozen_shatter3"
 				},
 				{
-					"name": "frozen_shatter4",
-					"width": 300,
-					"offset": {
-						"x": -100,
-						"y": 0
-					}
+					"name": "frozen_shatter4"
 				},
 				{
-					"name": "frozen_shatter5",
-					"width": 300,
-					"offset": {
-						"x": -100,
-						"y": 0
-					}
+					"name": "frozen_shatter5"
 				},
 				{
-					"name": "frozen_shatter6",
-					"width": 300,
-					"offset": {
-						"x": -100,
-						"y": 0
-					}
+					"name": "frozen_shatter6"
 				},
 				{
-					"name": "frozen_shatter7",
-					"width": 300,
-					"offset": {
-						"x": -100,
-						"y": 0
-					}
+					"name": "frozen_shatter7"
 				},
 				{
-					"name": "frozen_shatter8",
-					"width": 300,
-					"offset": {
-						"x": -100,
-						"y": 0
-					}
+					"name": "frozen_shatter8"
 				},
 				{
-					"name": "frozen_shatter9",
-					"width": 300,
-					"offset": {
-						"x": -100,
-						"y": 0
-					}
+					"name": "frozen_shatter9"
 				}
 			],
 			"type": "ONE_SHOT"
