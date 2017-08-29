@@ -1,4 +1,4 @@
-task indexResources << {
+task indexResources {
     ext.index = { dir ->
         File[] fileList = dir.listFiles()
         ArrayList<String> files = new ArrayList<>();
