@@ -120,51 +120,36 @@
 		},
 		{
 			"name": "die",
+			"defaults": {
+				"width": 400,
+				"height": 300,
+				"offset": {
+					"normal": {
+						"x": -200,
+						"y": -100
+					},
+					"flipped": {
+						"x": 0,
+						"y": -100
+					}
+				},
+				"duration": 100
+			},
 			"sprites": [
 				{
-					"name": "die0",
-					"width": 400,
-					"height": 300,
-					"offset": {
-						"x": -200,
-						"y": -100
-					}
+					"name": "die0"
 				},
 				{
-					"name": "die1",
-					"width": 400,
-					"height": 300,
-					"offset": {
-						"x": -200,
-						"y": -100
-					}
+					"name": "die1"
 				},
 				{
-					"name": "die2",
-					"width": 400,
-					"height": 300,
-					"offset": {
-						"x": -200,
-						"y": -100
-					}
+					"name": "die2"
 				},
 				{
-					"name": "die3",
-					"width": 400,
-					"height": 300,
-					"offset": {
-						"x": -200,
-						"y": -100
-					}
+					"name": "die3"
 				},
 				{
-					"name": "die4",
-					"width": 400,
-					"height": 300,
-					"offset": {
-						"x": -200,
-						"y": -100
-					}
+					"name": "die4"
 				}
 			],
 			"type": "ONE_SHOT"
