@@ -60,9 +60,13 @@ public abstract class Warframe extends ShieldedEntity {
 		gameObject.animator.addAnimations(meleeWeapon.getAnimations(ta));
 	}
 
-	public void addEnergy(int energy) {
+	public boolean addEnergy(int energy) {
+		if (energy == maxEnergy) return false;
 		this.energy += energy;
-		if (this.energy > maxEnergy) this.energy = maxEnergy;
+		if (this.energy > maxEnergy) {
+			this.energy = maxEnergy;
+		}
+		return true;
 	}
 
 	public void removeEnergy(int energy) {

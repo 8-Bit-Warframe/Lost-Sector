@@ -22,11 +22,13 @@ public abstract class Entity extends Script {
 		return maxHealth;
 	}
 
-	public void addHealth(float health) {
+	public boolean addHealth(float health) {
+		if (health == maxHealth) return false;
 		this.health += health;
 		if (this.health > maxHealth) {
 			this.health = maxHealth;
 		}
+		return true;
 	}
 
 	public void applyDamage(float damage, DamageType damageType, Vector2 attackOrigin) {
