@@ -1,0 +1,31 @@
+{
+	"defaults": {
+		"width": 100,
+		"height": 100,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "animate",
+			"sprites": [
+				{
+					"name": "health_pickup_8"
+				},
+				{
+					"name": "health_pickup_9"
+				},
+				{
+					"name": "health_pickup_10"
+				},
+				{
+					"name": "health_pickup_11"
+				}
+			],
+			"type": "LOOP"
+		}
+	]
+}

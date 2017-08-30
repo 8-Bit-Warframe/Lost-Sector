@@ -26,6 +26,8 @@ import com.ezardlabs.lostsector.objects.environment.Door;
 import com.ezardlabs.lostsector.objects.environment.LaserDoor;
 import com.ezardlabs.lostsector.objects.environment.Locker;
 import com.ezardlabs.lostsector.objects.hud.HUD;
+import com.ezardlabs.lostsector.objects.pickups.EnergyPickup;
+import com.ezardlabs.lostsector.objects.pickups.HealthPickup;
 import com.ezardlabs.lostsector.objects.projectiles.LankaBeam;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
@@ -58,6 +60,7 @@ public class Game extends BaseGame {
 		registerDoorPrefabs();
 		registerLockerPrefabs();
 		registerEnemyPrefabs();
+		registerPickupPrefabs();
 
 		LevelManager.loadLevel("main_menu");
 	}
@@ -144,5 +147,12 @@ public class Game extends BaseGame {
 				() -> new GameObject("Supra Crewman", new Renderer(), new Animator(),
 						new Collider(200, 200), new NetworkTransform(), new NetworkRenderer(),
 						new NetworkAnimator()));
+	}
+
+	private void registerPickupPrefabs() {
+		PrefabManager.addPrefab("pickup_health", () -> new GameObject("Health Pickup", new Renderer(), new Animator
+				(), new Collider(100, 100), new Rigidbody(), new HealthPickup()));
+		PrefabManager.addPrefab("pickup_energy", () -> new GameObject("Energy Pickup", new Renderer(), new Animator
+				(), new Collider(100, 100), new Rigidbody(), new EnergyPickup()));
 	}
 }

@@ -1,0 +1,12 @@
+health_pickup_0 = 0 0 16 16
+health_pickup_1 = 17 0 16 16
+health_pickup_10 = 34 0 16 16
+health_pickup_11 = 0 17 16 16
+health_pickup_2 = 17 17 16 16
+health_pickup_3 = 0 34 16 16
+health_pickup_4 = 17 34 16 16
+health_pickup_5 = 34 17 16 16
+health_pickup_6 = 34 34 16 16
+health_pickup_7 = 51 0 16 16
+health_pickup_8 = 51 17 16 16
+health_pickup_9 = 68 0 16 16

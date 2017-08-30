@@ -8,14 +8,19 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.ai.Behaviour;
 import com.ezardlabs.lostsector.ai.Behaviour.State;
 import com.ezardlabs.lostsector.levels.MissionLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
+import com.ezardlabs.lostsector.objects.DropTable;
 import com.ezardlabs.lostsector.objects.Entity;
 
+import static java.util.Arrays.asList;
+
 public abstract class Enemy extends Entity {
+	private final DropTable dropTable = new DropTable(asList("pickup_health", "pickup_energy"), asList(0.2f, 0.2f));
 	private Behaviour behaviour;
 	protected final TextureAtlas ta;
 
@@ -149,6 +154,14 @@ public abstract class Enemy extends Entity {
 		}
 		if (level instanceof SurvivalLevel) {
 			((SurvivalLevel) level).survivalManager.score++;
+		}
+		spawnDrop();
+	}
+
+	private void spawnDrop() {
+		String drop = dropTable.getDrop();
+		if (drop != null) {
+			Network.instantiate(drop, transform.position.offset(50, 0));
 		}
 	}
 
