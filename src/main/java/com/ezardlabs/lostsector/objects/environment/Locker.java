@@ -1,15 +1,18 @@
 package com.ezardlabs.lostsector.objects.environment;
 
-import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Component;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.dethsquare.multiplayer.Network;
-import com.ezardlabs.lostsector.objects.warframes.Warframe;
+import com.ezardlabs.lostsector.objects.DropTable;
+
+import static java.util.Arrays.asList;
 
 public class Locker extends Component {
+	private static final DropTable dropTable = new DropTable(asList("pickup_health", "pickup_energy"), asList(0.5f,
+			0.5f));
 	private final boolean locked;
 	private final TextureAtlas ta;
 	private boolean unlocking = false;
@@ -37,12 +40,11 @@ public class Locker extends Component {
 		if (!locked && !unlocking && Network.isHost() && other.gameObject.getTag() != null &&
 				other.gameObject.getTag().equals("player")) {
 			unlocking = true;
-			//noinspection ConstantConditions
-			gameObject.getComponent(Animator.class).play("unlock");
-			Warframe w = other.gameObject.getComponentOfType(Warframe.class);
-			//noinspection ConstantConditions
-			w.addHealth(20);
-			w.addEnergy(25);
+			gameObject.animator.play("unlock");
+			String drop = dropTable.getDrop();
+			if (drop != null) {
+				Network.instantiate(drop, transform.position);
+			}
 		}
 	}
 }
