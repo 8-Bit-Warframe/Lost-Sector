@@ -23,7 +23,7 @@ public abstract class Entity extends Script {
 	}
 
 	public boolean addHealth(float health) {
-		if (health == maxHealth) return false;
+		if (this.health == maxHealth) return false;
 		this.health += health;
 		if (this.health > maxHealth) {
 			this.health = maxHealth;

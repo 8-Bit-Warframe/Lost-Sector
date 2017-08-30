@@ -61,7 +61,7 @@ public abstract class Warframe extends ShieldedEntity {
 	}
 
 	public boolean addEnergy(int energy) {
-		if (energy == maxEnergy) return false;
+		if (this.energy == maxEnergy) return false;
 		this.energy += energy;
 		if (this.energy > maxEnergy) {
 			this.energy = maxEnergy;
