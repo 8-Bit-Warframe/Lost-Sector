@@ -5,7 +5,7 @@ import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
 public class EnergyPickup extends Pickup {
-	private static final int ENERGY = 2;
+	private static final int ENERGY = 20;
 
 	@Override
 	protected String getAtlasPath() {
