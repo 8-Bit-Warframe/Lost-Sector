@@ -1,7 +1,9 @@
 package com.ezardlabs.lostsector.objects.enemies;
 
+import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Level;
 import com.ezardlabs.dethsquare.LevelManager;
+import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animation.Animations;
@@ -138,6 +140,8 @@ public abstract class Enemy extends Entity {
 			gameObject.animator.play("die_" + type + "_" + direction);
 		}
 		gameObject.removeComponent(getClass());
+		gameObject.removeComponent(Collider.class);
+		gameObject.removeComponent(Rigidbody.class);
 		behaviour = null;
 		Level level = LevelManager.getCurrentLevel();
 		if (level instanceof MissionLevel) {
