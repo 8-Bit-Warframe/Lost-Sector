@@ -15,6 +15,8 @@ import com.ezardlabs.lostsector.ai.MeleeBehaviour;
 import com.ezardlabs.lostsector.objects.Entity;
 import com.ezardlabs.lostsector.objects.enemies.corpus.Moa;
 
+import java.util.ArrayList;
+
 public class ShockwaveMoa extends Moa {
 
 	public ShockwaveMoa() {
@@ -51,8 +53,8 @@ public class ShockwaveMoa extends Moa {
 				if (frameNum == 7) {
 					GameObject.instantiate(new GameObject("Shockwave", new Renderer(), new Animator(
 									Animations.load("animations/enemies/corpus/moa/shockwave/effect", ta,
-											new Validator("shockwave"))), new Shockwave(transform.position.offset(100, 100))),
-							transform.position.offset(-300, 175));
+											new Validator("shockwave"))), new Shockwave(transform.position.offset(100, 175))),
+							transform.position.offset(-300, 100));
 				}
 			}
 
@@ -73,12 +75,11 @@ public class ShockwaveMoa extends Moa {
 
 		@Override
 		public void start() {
-			left = GameObject.instantiate(
-					new GameObject("Shockwave Left", new Collider(50, 25, true), new ShockwaveCollision(origin)),
-					origin.offset(-25, 0));
-			right = GameObject.instantiate(
-					new GameObject("Shockwave Right", new Collider(50, 25, true), new ShockwaveCollision(origin)),
-					new Vector2(origin));
+			left = GameObject.instantiate(new GameObject("Shockwave Left", new Renderer("images/pink.png", 50, 25),
+					new Collider(50, 25, true), new ShockwaveCollision(origin)), origin.offset(-25, 0));
+			right = GameObject.instantiate(new GameObject("Shockwave Right", new Renderer("images/pink.png", 50, 25),
+					new Collider(50, 25, true), new ShockwaveCollision(origin)), new Vector2(origin));
+			gameObject.animator.play("shockwave");
 		}
 
 		@Override
@@ -90,6 +91,7 @@ public class ShockwaveMoa extends Moa {
 		}
 
 		private static class ShockwaveCollision extends Component {
+			private final ArrayList<Entity> damagedEntities = new ArrayList<>(4);
 			private final Vector2 origin;
 
 			private ShockwaveCollision(Vector2 origin) {
@@ -99,8 +101,11 @@ public class ShockwaveMoa extends Moa {
 			@Override
 			public void onTriggerEnter(Collider other) {
 				if ("player".equals(other.gameObject.getTag())) {
-					//noinspection ConstantConditions
-					other.gameObject.getComponentOfType(Entity.class).applyDamage(3, DamageType.NORMAL, origin);
+					Entity e = other.gameObject.getComponentOfType(Entity.class);
+					if (e != null && !damagedEntities.contains(e)) {
+						e.applyDamage(3, DamageType.NORMAL, origin);
+						damagedEntities.add(e);
+					}
 				}
 			}
 		}
