@@ -55,7 +55,7 @@ public class DeraCrewman extends Crewman {
 	public void start() {
 		super.start();
 		AudioSource audio = new AudioSource(AudioGroup.SFX);
-		audio.setAudioClip(new AudioClip("audio/dera_shoot.ogg"));
+		audio.setAudioClip(new AudioClip("audio/sfx/weapons/ranged/dera/shoot.ogg"));
 		gameObject.addComponent(audio);
 		//noinspection ConstantConditions
 		gameObject.animator.getAnimation("shoot").setAnimationType(new AnimationType() {
