@@ -1,5 +1,8 @@
 package com.ezardlabs.lostsector.objects.enemies.corpus.crewmen;
 
+import com.ezardlabs.dethsquare.AudioManager.AudioGroup;
+import com.ezardlabs.dethsquare.AudioSource;
+import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
@@ -26,12 +29,22 @@ public class SupraCrewman extends Crewman {
 								self.position.offset(self.gameObject.transform.scale.x < 0 ? -12.5f : 87.5f, 60));
 						laser.transform.scale.set(self.gameObject.transform.scale);
 						fired = true;
+						//noinspection ConstantConditions
+						self.gameObject.getComponent(AudioSource.class).play();
 					}
 				} else {
 					fired = false;
 				}
 			}
 		}).setMoveSpeed(10).setVisionRange(2000).setWillPatrol(false).create());
+	}
+
+	@Override
+	public void start() {
+		super.start();
+		AudioSource audio = new AudioSource(AudioGroup.SFX);
+		audio.setAudioClip(new AudioClip("audio/sfx/weapons/ranged/supra/shoot.ogg"));
+		gameObject.addComponent(audio);
 	}
 
 	@Override
