@@ -14,11 +14,10 @@ public class Freeze extends Script {
 
 	@Override
 	public void start() {
-		TextureAtlas ta = new TextureAtlas("images/warframes/abilities/frost/freeze/atlas.png",
-				"images/warframes/abilities/frost/freeze/atlas.txt");
+		TextureAtlas ta = new TextureAtlas("data/warframes/frost/abilities/freeze");
 		gameObject.renderer.setTextureAtlas(ta, 100, 100);
 		gameObject.animator.setAnimations(
-				Animations.load("animations/warframes/frost/abilities/freeze", ta, new Validator("move", "shatter")));
+				Animations.load("data/warframes/frost/abilities/freeze", ta, new Validator("move", "shatter")));
 		gameObject.animator.play("move");
 	}
 

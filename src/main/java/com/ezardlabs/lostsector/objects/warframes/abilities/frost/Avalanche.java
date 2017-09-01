@@ -19,15 +19,14 @@ public class Avalanche extends Script {
 
 	@Override
 	public void start() {
-		TextureAtlas ta = new TextureAtlas("images/warframes/abilities/frost/avalanche/atlas.png",
-				"images/warframes/abilities/frost/avalanche/atlas.txt");
+		TextureAtlas ta = new TextureAtlas("data/warframes/frost/abilities/avalanche");
 		GameObject.instantiate(new GameObject("Avalanche Background",
 				new Renderer(ta, ta.getSprite("avalanche_background0"), 800, 300), new Animator(
-				Animations.load("animations/warframes/frost/abilities/avalanche", ta, new Validator("background"))),
+				Animations.load("data/warframes/frost/abilities/avalanche", ta, new Validator("background"))),
 				new Background()), transform.position);
 		GameObject.instantiate(new GameObject("Avalanche Foreground",
 				new Renderer(ta, ta.getSprite("avalanche_foreground0"), 800, 300), new Animator(
-				Animations.load("animations/warframes/frost/abilities/avalanche", ta, new Validator("foreground"))),
+				Animations.load("data/warframes/frost/abilities/avalanche", ta, new Validator("foreground"))),
 				new Foreground()), transform.position);
 		GameObject.destroy(gameObject);
 		damageEnemies(0);

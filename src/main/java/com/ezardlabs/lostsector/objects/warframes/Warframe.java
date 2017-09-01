@@ -27,7 +27,7 @@ public abstract class Warframe extends ShieldedEntity {
 		super(maxHealth, maxShield, 2000);
 		this.maxEnergy = maxEnergy;
 		energy = maxEnergy;
-		ta = new TextureAtlas("images/warframes/" + name + "/atlas.png", "images/warframes/" + name + "/atlas.txt");
+		ta = new TextureAtlas(getAtlasPath());
 	}
 
 	@Override
@@ -47,6 +47,8 @@ public abstract class Warframe extends ShieldedEntity {
 	public abstract void ability3();
 
 	public abstract void ability4();
+
+	protected abstract String getAtlasPath();
 
 	protected abstract String getAnimationPath();
 

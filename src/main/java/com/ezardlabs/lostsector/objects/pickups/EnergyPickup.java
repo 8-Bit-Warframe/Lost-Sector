@@ -9,12 +9,12 @@ public class EnergyPickup extends Pickup {
 
 	@Override
 	protected String getAtlasPath() {
-		return "images/pickups/energy";
+		return "data/pickups/energy";
 	}
 
 	@Override
 	protected String getAnimationPath() {
-		return "animations/pickups/energy";
+		return "data/pickups/energy";
 	}
 
 	@Override

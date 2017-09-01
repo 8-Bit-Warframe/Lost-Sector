@@ -9,12 +9,12 @@ public class HealthPickup extends Pickup {
 
 	@Override
 	protected String getAtlasPath() {
-		return "images/pickups/health";
+		return "data/pickups/health";
 	}
 
 	@Override
 	protected String getAnimationPath() {
-		return "animations/pickups/health";
+		return "data/pickups/health";
 	}
 
 	@Override

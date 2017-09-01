@@ -31,12 +31,12 @@ public class ShockwaveMoa extends Moa {
 
 	@Override
 	protected String getAtlasPath() {
-		return "corpus/moa/shockwave";
+		return "data/enemies/corpus/moa/shockwave";
 	}
 
 	@Override
 	protected String getAnimationPath() {
-		return "animations/enemies/corpus/moa/shockwave";
+		return "data/enemies/corpus/moa/shockwave";
 	}
 
 	@Override

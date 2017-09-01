@@ -36,11 +36,11 @@ public class SupraCrewman extends Crewman {
 
 	@Override
 	protected String getAtlasPath() {
-		return "corpus/crewmen/supra";
+		return "data/enemies/corpus/crewmen/supra";
 	}
 
 	@Override
 	protected String getAnimationPath() {
-		return "animations/enemies/corpus/crewmen/supra";
+		return "data/enemies/corpus/crewmen/supra";
 	}
 }

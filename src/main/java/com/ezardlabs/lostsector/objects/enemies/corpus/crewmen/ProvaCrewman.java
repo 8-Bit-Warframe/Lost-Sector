@@ -17,11 +17,11 @@ public class ProvaCrewman extends Crewman {
 
 	@Override
 	protected String getAtlasPath() {
-		return "corpus/crewmen/prova";
+		return "data/enemies/corpus/crewmen/prova";
 	}
 
 	@Override
 	protected String getAnimationPath() {
-		return "animations/enemies/corpus/crewmen/prova";
+		return "data/enemies/corpus/crewmen/prova";
 	}
 }

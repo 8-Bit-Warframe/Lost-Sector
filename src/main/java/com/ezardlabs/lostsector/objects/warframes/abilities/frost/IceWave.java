@@ -20,11 +20,10 @@ public class IceWave extends Component {
 
 	@Override
 	public void start() {
-		TextureAtlas ta = new TextureAtlas("images/warframes/abilities/frost/icewave/atlas.png",
-				"images/warframes/abilities/frost/icewave/atlas.txt");
+		TextureAtlas ta = new TextureAtlas("data/warframes/frost/abilities/ice-wave");
 		gameObject.renderer.setTextureAtlas(ta, 800, 400);
 		gameObject.animator.setAnimations(
-				Animations.load("animations/warframes/frost/abilities/ice-wave", ta, new Validator("move")));
+				Animations.load("data/warframes/frost/abilities/ice-wave", ta, new Validator("move")));
 		gameObject.animator.play("move");
 		Network.destroy(gameObject, 1600);
 		if (Network.isHost()) {

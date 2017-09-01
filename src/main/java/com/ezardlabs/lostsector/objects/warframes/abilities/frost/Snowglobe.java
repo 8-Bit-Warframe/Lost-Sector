@@ -10,11 +10,10 @@ public class Snowglobe extends Component {
 
 	@Override
 	public void start() {
-		TextureAtlas ta = new TextureAtlas("images/warframes/abilities/frost/snowglobe/atlas.png",
-				"images/warframes/abilities/frost/snowglobe/atlas.txt");
+		TextureAtlas ta = new TextureAtlas("data/warframes/frost/abilities/snowglobe");
 		gameObject.renderer.setTextureAtlas(ta, 800, 600);
 		gameObject.animator.setAnimations(
-				Animations.load("animations/warframes/frost/abilities/snowglobe", ta, new Validator("snowglobe")));
+				Animations.load("data/warframes/frost/abilities/snowglobe", ta, new Validator("snowglobe")));
 		gameObject.animator.play("snowglobe");
 		gameObject.renderer.setzIndex(4);
 		gameObject.setTag("solid");

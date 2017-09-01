@@ -43,12 +43,12 @@ public class DeraCrewman extends Crewman {
 
 	@Override
 	protected String getAtlasPath() {
-		return "corpus/crewmen/dera";
+		return "data/enemies/corpus/crewmen/dera";
 	}
 
 	@Override
 	protected String getAnimationPath() {
-		return "animations/enemies/corpus/crewmen/dera";
+		return "data/enemies/corpus/crewmen/dera";
 	}
 
 	@Override
