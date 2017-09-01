@@ -1,5 +1,5 @@
 {
-	"extends": "animations/enemies",
+	"extends": "data/enemies",
 	"defaults": {
 		"width": 200,
 		"height": 200,

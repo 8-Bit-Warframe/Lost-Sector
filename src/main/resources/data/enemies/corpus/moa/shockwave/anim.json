@@ -1,5 +1,5 @@
 {
-	"extends": "animations/enemies/corpus/moa",
+	"extends": "data/enemies/corpus/moa",
 	"defaults": {
 		"width": 200,
 		"height": 200,
