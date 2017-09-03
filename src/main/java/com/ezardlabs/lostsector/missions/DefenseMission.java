@@ -9,7 +9,7 @@ import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.missions.objectives.Cryopod;
 
 public class DefenseMission extends Mission {
-	Cryopod cryopod = new Cryopod();
+	private Cryopod[] cryopods;
 
 	@Override
 	public void load() {
@@ -17,6 +17,11 @@ public class DefenseMission extends Mission {
 		GameObject player = GameObject.instantiate(PrefabManager.loadPrefab("player"), MapManager.playerSpawn);
 		GameObject.instantiate(new GameObject("Camera", new Camera(true),
 				new SmartCamera(player.transform, 1000, new Vector2(100, 100))), new Vector2());
+		GameObject[] cryopodObjects = GameObject.findAllWithTag("cryopod");
+		cryopods = new Cryopod[cryopodObjects.length];
+		for (int i = 0; i < cryopodObjects.length; i++) {
+			cryopods[i] = cryopodObjects[i].getComponent(Cryopod.class);
+		}
 	}
 
 	public void onCryopodDestroyed() {
