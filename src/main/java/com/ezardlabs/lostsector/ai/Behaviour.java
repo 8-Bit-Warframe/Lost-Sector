@@ -172,7 +172,7 @@ public abstract class Behaviour {
 
 	private Transform visionCheck(Transform transform) {
 		RaycastHit hit = Physics.raycast(transform.position.offset(transform.scale.x > 0 ? 200 : 0, 100),
-				new Vector2(transform.scale.x, 0), visionRange, "player");
+				new Vector2(transform.scale.x, 0), visionRange, "player", "cryopod");
 		if (hit == null) {
 			return null;
 		} else {
