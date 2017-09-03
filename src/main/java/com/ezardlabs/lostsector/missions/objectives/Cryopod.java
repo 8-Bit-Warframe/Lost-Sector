@@ -15,6 +15,12 @@ public class Cryopod extends ShieldedEntity {
 	}
 
 	@Override
+	public void start() {
+		gameObject.renderer.setImage("data/objectives/cryopod/cryopod.png", 300, 100);
+		gameObject.renderer.setOffsets(50, 100);
+	}
+
+	@Override
 	protected void die(DamageType damageType, Vector2 attackOrigin) {
 		Level level = LevelManager.getCurrentLevel();
 		if (level instanceof MissionLevel) {
