@@ -8,6 +8,7 @@ import com.ezardlabs.lostsector.levels.DefenseLevel;
 import com.ezardlabs.lostsector.objects.ShieldedEntity;
 
 public class Cryopod extends ShieldedEntity {
+	private int id;
 
 	public Cryopod() {
 		super(10, 40, 1500);
@@ -19,11 +20,15 @@ public class Cryopod extends ShieldedEntity {
 		gameObject.renderer.setOffsets(50, 100);
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Override
 	protected void die(DamageType damageType, Vector2 attackOrigin) {
 		Level level = LevelManager.getCurrentLevel();
 		if (level instanceof DefenseLevel) {
-			((DefenseLevel) level).getMission().onCryopodDestroyed();
+			((DefenseLevel) level).getMission().onCryopodDestroyed(id);
 		}
 	}
 }

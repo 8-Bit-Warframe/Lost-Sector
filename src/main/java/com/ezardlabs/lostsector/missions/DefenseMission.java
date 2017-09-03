@@ -21,9 +21,12 @@ public class DefenseMission extends Mission {
 		cryopods = new Cryopod[cryopodObjects.length];
 		for (int i = 0; i < cryopodObjects.length; i++) {
 			cryopods[i] = cryopodObjects[i].getComponent(Cryopod.class);
+			cryopods[i].setId(i);
 		}
 	}
 
-	public void onCryopodDestroyed() {
+	public void onCryopodDestroyed(int id) {
+		cryopods[id] = null;
+		System.out.println("Cryopod " + id + " destroyed!");
 	}
 }
