@@ -19,6 +19,7 @@ import com.ezardlabs.lostsector.NavMesh;
 import com.ezardlabs.lostsector.map.procedural.MapConfig;
 import com.ezardlabs.lostsector.map.procedural.MapSegment;
 import com.ezardlabs.lostsector.map.procedural.MapSegmentConnector;
+import com.ezardlabs.lostsector.missions.objectives.Cryopod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -478,6 +479,9 @@ public class MapManager {
 					break;
 				case "ldoor":
 					GameObject.instantiate(PrefabManager.loadPrefab("laser_door"), pos);
+					break;
+				case "cryopod":
+					GameObject.instantiate(new GameObject("Cryopod", "cryopod", new Renderer(), new Cryopod()), pos);
 					break;
 				default:
 					break;
