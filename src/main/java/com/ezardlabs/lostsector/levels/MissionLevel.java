@@ -1,5 +1,6 @@
 package com.ezardlabs.lostsector.levels;
 
+import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Level;
 import com.ezardlabs.lostsector.missions.Mission;
 
@@ -17,5 +18,9 @@ public abstract class MissionLevel<T extends Mission> extends Level {
 	@Override
 	public void onLoad() {
 		mission.load();
+	}
+
+	public GameObject[] getObjectiveTargets() {
+		return null;
 	}
 }

@@ -23,6 +23,10 @@ public class DefenseMission extends Mission {
 		}
 	}
 
+	public GameObject[] getCryopods() {
+		return cryopods;
+	}
+
 	public void onCryopodDestroyed(int id) {
 		cryopods[id] = null;
 		System.out.println("Cryopod " + id + " destroyed!");
