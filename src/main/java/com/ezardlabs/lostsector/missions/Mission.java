@@ -1,5 +1,10 @@
 package com.ezardlabs.lostsector.missions;
 
+import com.ezardlabs.dethsquare.AudioListener;
+import com.ezardlabs.dethsquare.Camera;
+import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.lostsector.camera.SmartCamera;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
 import java.util.ArrayList;
@@ -21,6 +26,11 @@ public abstract class Mission {
 	}
 
 	public abstract void load();
+
+	protected final void instantiateCamera(GameObject player) {
+		GameObject.instantiate(new GameObject("Camera", new Camera(true), new SmartCamera(player.transform, 1000,
+				new Vector2(100, 100)), new AudioListener()), new Vector2());
+	}
 
 	protected final void completedMission() {
 		completed = true;
