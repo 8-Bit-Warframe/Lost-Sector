@@ -2,11 +2,13 @@ package com.ezardlabs.lostsector.missions;
 
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
+import java.util.ArrayList;
+
 public abstract class Mission {
 	protected int enemiesKilled = 0;
 	private long missionStart = 0;
 	private boolean completed = false;
-	private EnemyStatusListener enemyStatusListener;
+	private ArrayList<EnemyStatusListener> enemyStatusListeners = new ArrayList<>();
 	private MissionStatusListener missionStatusListener;
 
 	public void startMission() {
@@ -27,20 +29,24 @@ public abstract class Mission {
 	}
 
 	public final void notifyEnemySpawn(Enemy enemy) {
-		if (enemyStatusListener != null) {
-			enemyStatusListener.onEnemySpawned(enemy);
+		for (EnemyStatusListener listener : enemyStatusListeners) {
+			listener.onEnemySpawned(enemy);
 		}
 	}
 
 	public final void notifyEnemyDeath(Enemy enemy) {
 		enemiesKilled++;
-		if (enemyStatusListener != null) {
-			enemyStatusListener.onEnemyKilled(enemy);
+		for (EnemyStatusListener listener : enemyStatusListeners) {
+			listener.onEnemyKilled(enemy);
 		}
 	}
 
-	void setEnemyStatusListener(EnemyStatusListener enemyStatusListener) {
-		this.enemyStatusListener = enemyStatusListener;
+	void addEnemyStatusListener(EnemyStatusListener enemyStatusListener) {
+		enemyStatusListeners.add(enemyStatusListener);
+	}
+
+	void removeEnemyStatusListener(EnemyStatusListener enemyStatusListener) {
+		enemyStatusListeners.remove(enemyStatusListener);
 	}
 
 	void setMissionStatusListener(MissionStatusListener listener) {

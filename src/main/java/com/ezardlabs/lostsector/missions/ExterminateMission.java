@@ -46,7 +46,7 @@ public class ExterminateMission extends Mission implements EnemyStatusListener {
 		GameObject.instantiate(
 				new GameObject("Mission Progress Text", missionText),
 				new Vector2(20, 20));
-		setEnemyStatusListener(this);
+		addEnemyStatusListener(this);
 	}
 
 	@Override
