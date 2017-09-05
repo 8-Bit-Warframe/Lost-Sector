@@ -18,6 +18,7 @@ import com.ezardlabs.lostsector.levels.MultiplayerLevel;
 import com.ezardlabs.lostsector.levels.MultiplayerLobbyLevel;
 import com.ezardlabs.lostsector.levels.ProceduralLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
+import com.ezardlabs.lostsector.missions.SpawnPoint;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
@@ -62,6 +63,7 @@ public class Game extends BaseGame {
 		registerLockerPrefabs();
 		registerEnemyPrefabs();
 		registerPickupPrefabs();
+		registerSpawnPointPrefabs();
 
 		LevelManager.loadLevel("main_menu");
 	}
@@ -162,5 +164,9 @@ public class Game extends BaseGame {
 				(), new Collider(100, 100), new Rigidbody(), new HealthPickup()));
 		PrefabManager.addPrefab("pickup_energy", () -> new GameObject("Energy Pickup", new Renderer(), new Animator
 				(), new Collider(100, 100), new Rigidbody(), new EnergyPickup()));
+	}
+
+	private void registerSpawnPointPrefabs() {
+		PrefabManager.addPrefab("spawn_point", () -> new GameObject("Spawn Point", new SpawnPoint()));
 	}
 }
