@@ -22,6 +22,7 @@ import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.DeraCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.ProvaCrewman;
 import com.ezardlabs.lostsector.objects.enemies.corpus.crewmen.SupraCrewman;
+import com.ezardlabs.lostsector.objects.enemies.corpus.moas.ShockwaveMoa;
 import com.ezardlabs.lostsector.objects.environment.Door;
 import com.ezardlabs.lostsector.objects.environment.LaserDoor;
 import com.ezardlabs.lostsector.objects.environment.Locker;
@@ -146,6 +147,13 @@ public class Game extends BaseGame {
 						new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()),
 				() -> new GameObject("Supra Crewman", new Renderer(), new Animator(),
 						new Collider(200, 200), new NetworkTransform(), new NetworkRenderer(),
+						new NetworkAnimator()));
+		PrefabManager.addPrefab("shockwave_moa",
+				() -> new GameObject("Shockwave Moa", new Renderer(), new Animator(), new Collider(200, 200),
+						new Rigidbody(), new ShockwaveMoa(), new NetworkTransform(), new NetworkRenderer(),
+						new NetworkAnimator()),
+				() -> new GameObject("Shockwave Moa", new Renderer(), new Animator(), new Collider(200, 200),
+						new Rigidbody(), new NetworkTransform(), new NetworkRenderer(),
 						new NetworkAnimator()));
 	}
 
