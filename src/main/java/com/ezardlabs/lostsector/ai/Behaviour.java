@@ -54,26 +54,12 @@ public abstract class Behaviour {
 
 	public final void update(Transform transform) {
 		if (state == State.FROZEN) {
-			transform.gameObject.renderer.setTint(freezeTint[0], freezeTint[1], freezeTint[2]);
-
-			if (System.currentTimeMillis() - freezeStart > freezeTime) {
-				state = State.THAWING;
-				thawStart = System.currentTimeMillis();
-			}
+			state = freeze(transform);
 			return;
 		}
 
 		if (state == State.THAWING) {
-			long diff = System.currentTimeMillis() - thawStart;
-			if (diff < thawTime) {
-				float ratio = (float) diff / (float) thawTime;
-				transform.gameObject.renderer.setTint(freezeTint[0] - ratio * freezeTint[0],
-						freezeTint[1] - ratio * freezeTint[1], freezeTint[2] - ratio * freezeTint[2]);
-			} else {
-				transform.gameObject.renderer.setTint(0, 0, 0);
-				transform.gameObject.animator.shouldUpdate = true;
-				state = State.IDLE;
-			}
+			state = thaw(transform);
 			return;
 		}
 
@@ -160,6 +146,31 @@ public abstract class Behaviour {
 
 	private void jump(Transform transform, float distance) {
 		transform.gameObject.rigidbody.velocity.y = (float) -Math.sqrt(2.5 * distance) - 2;
+	}
+
+	private State freeze(Transform transform) {
+		transform.gameObject.renderer.setTint(freezeTint[0], freezeTint[1], freezeTint[2]);
+
+		if (System.currentTimeMillis() - freezeStart > freezeTime) {
+			thawStart = System.currentTimeMillis();
+			return State.THAWING;
+		} else {
+			return State.FROZEN;
+		}
+	}
+
+	private State thaw(Transform transform) {
+		long diff = System.currentTimeMillis() - thawStart;
+		if (diff < thawTime) {
+			float ratio = (float) diff / (float) thawTime;
+			transform.gameObject.renderer.setTint(freezeTint[0] - ratio * freezeTint[0],
+					freezeTint[1] - ratio * freezeTint[1], freezeTint[2] - ratio * freezeTint[2]);
+			return State.THAWING;
+		} else {
+			transform.gameObject.renderer.setTint(0, 0, 0);
+			transform.gameObject.animator.shouldUpdate = true;
+			return State.IDLE;
+		}
 	}
 
 	public State getState() {
