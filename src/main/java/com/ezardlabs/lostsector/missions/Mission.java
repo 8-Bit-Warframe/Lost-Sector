@@ -5,6 +5,7 @@ import com.ezardlabs.lostsector.objects.enemies.Enemy;
 import java.util.ArrayList;
 
 public abstract class Mission {
+	protected int numEnemies = 0;
 	protected int enemiesKilled = 0;
 	private long missionStart = 0;
 	private boolean completed = false;
@@ -29,12 +30,14 @@ public abstract class Mission {
 	}
 
 	public final void notifyEnemySpawn(Enemy enemy) {
+		numEnemies++;
 		for (EnemyStatusListener listener : enemyStatusListeners) {
 			listener.onEnemySpawned(enemy);
 		}
 	}
 
 	public final void notifyEnemyDeath(Enemy enemy) {
+		numEnemies--;
 		enemiesKilled++;
 		for (EnemyStatusListener listener : enemyStatusListeners) {
 			listener.onEnemyKilled(enemy);
