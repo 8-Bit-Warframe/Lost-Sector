@@ -503,6 +503,7 @@ public class MapManager {
 			switch(object.getType()) {
 				case "spawn":
 					enemySpawns.add(pos);
+					GameObject.instantiate(PrefabManager.loadPrefab("spawn_point"), pos);
 					break;
 				case "prova_crewman":
 					if (Network.isHost()) Network.instantiate("prova_crewman", pos);
