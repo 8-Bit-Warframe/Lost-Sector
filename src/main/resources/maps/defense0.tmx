@@ -18064,7 +18064,7 @@
   <object id="52" type="locker" x="880" y="512" width="16" height="32"/>
   <object id="53" type="locker" x="896" y="512" width="16" height="32"/>
   <object id="67" name="A" type="cryopod" x="688" y="688" width="64" height="32"/>
-  <object id="69" name="B" type="cryopod" x="688" y="560" width="64" height="32"/>
+  <!--<object id="69" name="B" type="cryopod" x="688" y="560" width="64" height="32"/>-->
  </objectgroup>
  <objectgroup name="enemies">
   <object id="17" type="spawn" x="64" y="160" width="32" height="32"/>
