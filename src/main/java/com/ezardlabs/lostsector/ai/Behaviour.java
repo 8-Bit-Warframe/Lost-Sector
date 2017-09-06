@@ -31,7 +31,7 @@ public abstract class Behaviour {
 
 	private StateMachine<State> stateMachine = new StateMachine<>();
 	private Transform transform;
-	private Transform sightedEnemy;
+	private Transform target;
 	private AnimationState animationState = AnimationState.IDLE;
 
 	public enum State {
@@ -58,14 +58,14 @@ public abstract class Behaviour {
 		this.visionRange = visionRange;
 
 		stateMachine.addState(State.IDLE,
-				new Transition<>(State.TRACKING, () -> canSeeEnemy() && !inRange(transform, sightedEnemy)),
-				new Transition<>(State.ATTACKING, () -> canSeeEnemy() && inRange(transform, sightedEnemy)));
+				new Transition<>(State.TRACKING, () -> canSeeEnemy() && !inRange(transform, target)),
+				new Transition<>(State.ATTACKING, () -> canSeeEnemy() && inRange(transform, target)));
 
 		stateMachine.addState(State.TRACKING,
-				new Transition<>(State.ATTACKING, () -> inRange(transform, sightedEnemy)));
+				new Transition<>(State.ATTACKING, () -> inRange(transform, target)));
 
 		stateMachine.addState(State.ATTACKING,
-				new Transition<>(State.TRACKING, () -> !inRange(transform, sightedEnemy)));
+				new Transition<>(State.TRACKING, () -> !inRange(transform, target)));
 
 		stateMachine.addState(State.FROZEN,
 				new Transition<>(State.THAWING, () -> System.currentTimeMillis() - freezeStart > freezeTime, () -> {
@@ -105,7 +105,7 @@ public abstract class Behaviour {
 				animationState = move();
 				break;
 			case ATTACKING:
-				attack(transform, sightedEnemy);
+				attack(transform, target);
 				animationState = AnimationState.ATTACKING;
 				break;
 			case FROZEN:
@@ -131,7 +131,7 @@ public abstract class Behaviour {
 
 	private NavPoint[] getPath() {
 		NavPoint self = NavMesh.getNavPoint(transform.position.x, transform.position.y);
-		NavPoint targetNavPoint = NavMesh.getNavPoint(sightedEnemy.position);
+		NavPoint targetNavPoint = NavMesh.getNavPoint(target.position);
 		if ((!self.equals(currentNavPoint) || !targetNavPoint.equals(currentTargetNavPoint)) && !self.links.isEmpty()) {
 			currentNavPoint = self;
 			currentTargetNavPoint = targetNavPoint;
@@ -179,7 +179,7 @@ public abstract class Behaviour {
 	}
 
 	private boolean canSeeEnemy() {
-		return sightedEnemy != null;
+		return target != null;
 	}
 
 	abstract boolean inRange(Transform self, Transform enemy);
@@ -190,9 +190,9 @@ public abstract class Behaviour {
 		RaycastHit hit = Physics.raycast(transform.position.offset(transform.scale.x > 0 ? 200 : 0, 100),
 				new Vector2(transform.scale.x, 0), visionRange, "player", "cryopod");
 		if (hit == null) {
-			sightedEnemy = null;
+			target = null;
 		} else {
-			sightedEnemy = hit.transform;
+			target = hit.transform;
 		}
 	}
 
