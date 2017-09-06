@@ -24,15 +24,14 @@ public class Laser extends Script {
 		transform.translate(gameObject.transform.scale.x * 15, 0);
 		if (transform.position.x <= 0) GameObject.destroy(gameObject);
 	}
-	
+
 	@Override
 	public void onTriggerEnter(Collider other) {
 		if (other.gameObject.getTag() != null) {
-			if (other.gameObject.getTag().equals("player")) {
+			if ("player".equals(other.gameObject.getTag()) || "cryopod".equals(other.gameObject.getTag())) {
 				//noinspection ConstantConditions
 				other.gameObject.getComponentOfType(Entity.class)
-								.applyDamage(damage, DamageType.NORMAL,
-										transform.position);
+								.applyDamage(damage, DamageType.NORMAL, transform.position);
 				gameObject.removeComponent(Collider.class);
 				GameObject.destroy(gameObject);
 			} else if (other.gameObject.getTag().equals("solid")) {
