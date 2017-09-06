@@ -30,7 +30,7 @@ public class LankaBeam extends Script {
 		width = (int) Math.abs(transform.position.x - hit.point.x);
 		if (direction < 0) transform.position.x -= width;
 		gameObject.renderer.setSize(width, 0);
-		gameObject.renderer.setzIndex(3);
+		gameObject.renderer.setzIndex(-3);
 	}
 
 	@Override
