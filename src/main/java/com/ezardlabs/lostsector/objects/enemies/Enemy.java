@@ -80,6 +80,8 @@ public abstract class Enemy extends Entity {
 				case ATTACKING:
 					gameObject.animator.play("attack");
 					break;
+				default:
+					break;
 			}
 		}
 	}
