@@ -481,7 +481,9 @@ public class MapManager {
 					GameObject.instantiate(PrefabManager.loadPrefab("laser_door"), pos);
 					break;
 				case "cryopod":
-					GameObject.instantiate(new GameObject("Cryopod", "cryopod", new Renderer(), new Cryopod()), pos);
+					GameObject.instantiate(
+							new GameObject("Cryopod", "cryopod", new Renderer(), new Collider(300, 100), new Cryopod()),
+							pos);
 					break;
 				default:
 					break;
