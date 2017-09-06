@@ -105,6 +105,7 @@ public abstract class Behaviour {
 				animationState = move();
 				break;
 			case ATTACKING:
+				attack(transform, sightedEnemy);
 				animationState = AnimationState.ATTACKING;
 				break;
 			case FROZEN:
