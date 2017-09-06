@@ -41,6 +41,8 @@ public abstract class Enemy extends Entity {
 		gameObject.animator.play("idle");
 		gameObject.renderer.setzIndex(3);
 
+		behaviour.init(transform);
+
 		setDamageListener(new DamageListener() {
 			@Override
 			public void onDamageReceived(float damage, DamageType damageType, Vector2 attackOrigin) {
@@ -57,9 +59,9 @@ public abstract class Enemy extends Entity {
 	@Override
 	public void update() {
 		if (behaviour != null) {
-			behaviour.update(transform);
+			behaviour.update();
 
-			switch (behaviour.getState()) {
+			switch (behaviour.getAnimationState()) {
 				case IDLE:
 					gameObject.animator.play("idle");
 					break;
@@ -72,13 +74,9 @@ public abstract class Enemy extends Entity {
 				case FALLING:
 					gameObject.animator.play("fall");
 					break;
-				case LANDING:
-					gameObject.animator.play("land");
-					break;
-				case FROZEN:
-					break;
-				case THAWING:
-					break;
+//				case LANDING:
+//					gameObject.animator.play("land");
+//					break;
 				case ATTACKING:
 					gameObject.animator.play("attack");
 					break;

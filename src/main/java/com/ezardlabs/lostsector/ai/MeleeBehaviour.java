@@ -20,16 +20,13 @@ public class MeleeBehaviour extends Behaviour {
 	}
 
 	@Override
-	protected CombatState onEnemySighted(Transform self, Transform enemy) {
-		if (Math.abs(self.position.x - enemy.position.x) <= meleeRange) {
-			return CombatState.ATTACKING;
-		} else {
-			return CombatState.TRACKING;
-		}
+	boolean inRange(Transform self, Transform enemy) {
+		return Math.abs(self.position.x - enemy.position.x) <= meleeRange &&
+				Math.abs(self.position.y - enemy.position.y) < 200;
 	}
 
 	@Override
-	protected CombatState attack(Transform self, Transform target) {
+	protected void attack(Transform self, Transform target) {
 		if (Math.abs(target.position.y - self.position.y) <= 100 &&
 				Math.abs(target.position.x - self.position.x) <= 150) {
 			if (self.gameObject.animator.getCurrentAnimationFrame() == damageFrame) {
@@ -43,9 +40,6 @@ public class MeleeBehaviour extends Behaviour {
 			} else {
 				damageApplied = false;
 			}
-			return CombatState.ATTACKING;
-		} else {
-			return CombatState.TRACKING;
 		}
 	}
 

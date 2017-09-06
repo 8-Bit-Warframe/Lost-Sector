@@ -14,18 +14,14 @@ public class RangedBehaviour extends Behaviour {
 	}
 
 	@Override
-	protected CombatState onEnemySighted(Transform self, Transform enemy) {
-		if (Math.abs(self.position.x - enemy.position.x) <= range) {
-			return CombatState.ATTACKING;
-		} else {
-			return CombatState.TRACKING;
-		}
+	boolean inRange(Transform self, Transform enemy) {
+		return Math.abs(self.position.x - enemy.position.x) <= range &&
+				Math.abs(self.position.y - enemy.position.y) < 200;
 	}
 
 	@Override
-	protected CombatState attack(Transform self, Transform target) {
+	protected void attack(Transform self, Transform target) {
 		shootAction.onShoot(self, target);
-		return CombatState.ATTACKING;
 	}
 
 	public static class Builder extends Behaviour.Builder<Builder> {

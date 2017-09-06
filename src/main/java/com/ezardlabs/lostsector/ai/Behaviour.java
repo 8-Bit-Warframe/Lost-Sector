@@ -8,41 +8,47 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.NavMesh;
 import com.ezardlabs.lostsector.NavMesh.NavPoint;
+import com.ezardlabs.lostsector.ai.StateMachine.Transition;
 
 public abstract class Behaviour {
 	private float moveSpeed;
 	private final boolean willPatrol;
 	private final float visionRange;
-	private State state = State.IDLE;
-	private CombatState combatState = CombatState.IDLE;
-	private Transform target = null;
 	private NavPoint[] path = null;
 	private int pathIndex = 0;
 	private NavPoint currentNavPoint = null;
 	private NavPoint currentTargetNavPoint = null;
-	private long freezeTime = 5000;
+	private long freezeTime = 2000;
 	private long freezeStart;
-	private float[] freezeTint = {0, 0.3f, 0.6f};
+	private float[] freezeTint = {
+			0,
+			0.3f,
+			0.6f
+	};
 	private long thawTime = 1000;
-	private long thawStart;
+	private long thawStart = 0;
 	private int directionToLook = 0;
 
+	private StateMachine<State> stateMachine = new StateMachine<>();
+	private Transform transform;
+	private Transform sightedEnemy;
+	private AnimationState animationState = AnimationState.IDLE;
+
 	public enum State {
+		IDLE,
+		TRACKING,
+		ATTACKING,
+		FROZEN,
+		THAWING,
+		SHATTER,
+		DEAD
+	}
+
+	public enum AnimationState {
 		IDLE,
 		MOVING,
 		JUMPING,
 		FALLING,
-		LANDING,
-		FROZEN,
-		THAWING,
-		ATTACKING
-	}
-
-	protected enum CombatState {
-		IDLE,
-		PATROLLING,
-		TRACKING,
-		SEARCHING,
 		ATTACKING
 	}
 
@@ -50,83 +56,92 @@ public abstract class Behaviour {
 		this.moveSpeed = moveSpeed;
 		this.willPatrol = willPatrol;
 		this.visionRange = visionRange;
+
+		stateMachine.addState(State.IDLE,
+				new Transition<>(State.TRACKING, () -> canSeeEnemy() && !inRange(transform, sightedEnemy)),
+				new Transition<>(State.ATTACKING, () -> canSeeEnemy() && inRange(transform, sightedEnemy)));
+
+		stateMachine.addState(State.TRACKING,
+				new Transition<>(State.ATTACKING, () -> inRange(transform, sightedEnemy)));
+
+		stateMachine.addState(State.ATTACKING,
+				new Transition<>(State.TRACKING, () -> !inRange(transform, sightedEnemy)));
+
+		stateMachine.addState(State.FROZEN,
+				new Transition<>(State.THAWING, () -> System.currentTimeMillis() - freezeStart > freezeTime, () -> {
+					freezeStart = 0;
+					thawStart = System.currentTimeMillis();
+				}));
+
+		stateMachine.addState(State.THAWING,
+				new Transition<>(State.IDLE, () -> System.currentTimeMillis() - thawStart > thawTime,
+						() -> {
+							transform.gameObject.renderer.setTint(0, 0, 0);
+							transform.gameObject.animator.shouldUpdate = true;
+						}));
+
+		stateMachine.addTransitionFromAnyState(new Transition<>(State.FROZEN, () -> freezeStart > 0, () -> {
+			transform.gameObject.renderer.setTint(freezeTint[0], freezeTint[1], freezeTint[2]);
+			transform.gameObject.animator.shouldUpdate = false;
+		}));
+
+		stateMachine.init(State.IDLE);
 	}
 
-	public final void update(Transform transform) {
-		if (state == State.FROZEN) {
-			state = freeze(transform);
-			return;
-		}
+	public void init(Transform transform) {
+		this.transform = transform;
+	}
 
-		if (state == State.THAWING) {
-			state = thaw(transform);
-			return;
+	public final void update() {
+		stateMachine.update();
+		if (stateMachine.getState() == State.IDLE) {
+			visionCheck();
 		}
-
-		if (directionToLook != 0) {
+		switch (stateMachine.getState()) {
+			case IDLE:
+				animationState = AnimationState.IDLE;
+				break;
+			case TRACKING:
+				animationState = move();
+				break;
+			case ATTACKING:
+				animationState = AnimationState.ATTACKING;
+				break;
+			case FROZEN:
+				break;
+			case THAWING:
+				float ratio = (float) (System.currentTimeMillis() - thawStart) / (float) thawTime;
+				transform.gameObject.renderer.setTint(freezeTint[0] - ratio * freezeTint[0],
+						freezeTint[1] - ratio * freezeTint[1], freezeTint[2] - ratio * freezeTint[2]);
+				break;
+			case SHATTER:
+				break;
+			case DEAD:
+				break;
+			default:
+				break;
+		}
+		if (stateMachine.getState() != State.FROZEN && stateMachine.getState() != State.THAWING &&
+				directionToLook != 0) {
 			transform.scale.x = directionToLook;
 			directionToLook = 0;
 		}
-
-		Transform sightedEnemy = visionCheck(transform);
-		if (sightedEnemy != null) {
-			combatState = onEnemySighted(transform, sightedEnemy);
-			switch (combatState) {
-				case IDLE:
-				case PATROLLING:
-					target = null;
-					break;
-				case TRACKING:
-				case SEARCHING:
-				case ATTACKING:
-					target = sightedEnemy;
-					break;
-				default:
-					break;
-			}
-		}
-		switch (combatState) {
-			case IDLE:
-				break;
-			case PATROLLING:
-				// TODO implement patrolling
-				break;
-			case TRACKING:
-				NavPoint self = NavMesh.getNavPoint(transform.position.x, transform.position.y);
-				NavPoint targetNavPoint = NavMesh.getNavPoint(target.position);
-				if ((!self.equals(currentNavPoint) || !targetNavPoint.equals(currentTargetNavPoint)) && !self.links.isEmpty()) {
-					currentNavPoint = self;
-					currentTargetNavPoint = targetNavPoint;
-					path = NavMesh.getPath(currentNavPoint, currentTargetNavPoint);
-				}
-				pathIndex = 0;
-				break;
-			case SEARCHING:
-				break;
-			case ATTACKING:
-				combatState = attack(transform, target);
-				break;
-			default:
-				break;
-		}
-		switch (combatState) {
-			case IDLE:
-				state = State.IDLE;
-				break;
-			case PATROLLING:
-			case TRACKING:
-			case SEARCHING:
-				state = move(transform);
-				break;
-			case ATTACKING:
-				state = State.ATTACKING;
-				break;
-			default:
-				break;
-		}
 	}
 
-	private State move(Transform transform) {
+	private NavPoint[] getPath() {
+		NavPoint self = NavMesh.getNavPoint(transform.position.x, transform.position.y);
+		NavPoint targetNavPoint = NavMesh.getNavPoint(sightedEnemy.position);
+		if ((!self.equals(currentNavPoint) || !targetNavPoint.equals(currentTargetNavPoint)) && !self.links.isEmpty()) {
+			currentNavPoint = self;
+			currentTargetNavPoint = targetNavPoint;
+			path = NavMesh.getPath(currentNavPoint, currentTargetNavPoint);
+			pathIndex = 0;
+		}
+		return path;
+	}
+
+	private AnimationState move() {
+		path = getPath();
 		if (path != null && path.length > 0) {
 			if (pathIndex < path.length - 1) {
 				float direction = Mathf.clamp(path[pathIndex + 1].position.x - path[pathIndex].position.x, -1, 1);
@@ -134,66 +149,49 @@ public abstract class Behaviour {
 				transform.scale.x = direction;
 
 				if (transform.gameObject.rigidbody.velocity.y > transform.gameObject.rigidbody.gravity) {
-					return State.FALLING;
+					return AnimationState.FALLING;
 				} else if (path[pathIndex + 1].position.y < path[pathIndex].position.y) {
-					if (state != State.JUMPING) {
-						jump(transform, Math.abs(path[pathIndex + 1].position.y - path[pathIndex].position.y));
+					if (animationState != AnimationState.JUMPING) {
+						jump(Math.abs(path[pathIndex + 1].position.y - path[pathIndex].position.y));
 					}
-					return State.JUMPING;
+					return AnimationState.JUMPING;
 				} else if (direction == 0) {
-					return State.IDLE;
+					return AnimationState.IDLE;
 				} else {
-					return State.MOVING;
+					return AnimationState.MOVING;
 				}
 			}
 		}
-		return State.IDLE;
+		return AnimationState.IDLE;
 	}
 
-	private void jump(Transform transform, float distance) {
+	private void jump(float distance) {
 		transform.gameObject.rigidbody.velocity.y = (float) -Math.sqrt(2.5 * distance) - 2;
 	}
 
-	private State freeze(Transform transform) {
-		transform.gameObject.renderer.setTint(freezeTint[0], freezeTint[1], freezeTint[2]);
-
-		if (System.currentTimeMillis() - freezeStart > freezeTime) {
-			thawStart = System.currentTimeMillis();
-			return State.THAWING;
-		} else {
-			return State.FROZEN;
-		}
-	}
-
-	private State thaw(Transform transform) {
-		long diff = System.currentTimeMillis() - thawStart;
-		if (diff < thawTime) {
-			float ratio = (float) diff / (float) thawTime;
-			transform.gameObject.renderer.setTint(freezeTint[0] - ratio * freezeTint[0],
-					freezeTint[1] - ratio * freezeTint[1], freezeTint[2] - ratio * freezeTint[2]);
-			return State.THAWING;
-		} else {
-			transform.gameObject.renderer.setTint(0, 0, 0);
-			transform.gameObject.animator.shouldUpdate = true;
-			return State.IDLE;
-		}
-	}
-
 	public State getState() {
-		return state;
+		return stateMachine.getState();
 	}
 
-	protected abstract CombatState onEnemySighted(Transform self, Transform enemy);
+	public AnimationState getAnimationState() {
+		return animationState;
+	}
 
-	protected abstract CombatState attack(Transform self, Transform target);
+	private boolean canSeeEnemy() {
+		return sightedEnemy != null;
+	}
 
-	private Transform visionCheck(Transform transform) {
+	abstract boolean inRange(Transform self, Transform enemy);
+
+	protected abstract void attack(Transform self, Transform target);
+
+	private void visionCheck() {
 		RaycastHit hit = Physics.raycast(transform.position.offset(transform.scale.x > 0 ? 200 : 0, 100),
 				new Vector2(transform.scale.x, 0), visionRange, "player", "cryopod");
 		if (hit == null) {
-			return null;
+			sightedEnemy = null;
 		} else {
-			return hit.transform;
+			sightedEnemy = hit.transform;
 		}
 	}
 
@@ -204,9 +202,7 @@ public abstract class Behaviour {
 			case SLASH:
 				break;
 			case COLD:
-				state = State.FROZEN;
 				freezeStart = System.currentTimeMillis();
-				self.gameObject.animator.shouldUpdate = false;
 				break;
 			case KUBROW:
 				break;
