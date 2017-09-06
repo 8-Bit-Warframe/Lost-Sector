@@ -81,6 +81,8 @@ public abstract class Behaviour {
 				case ATTACKING:
 					target = sightedEnemy;
 					break;
+				default:
+					break;
 			}
 		}
 		switch (combatState) {
@@ -104,6 +106,8 @@ public abstract class Behaviour {
 			case ATTACKING:
 				combatState = attack(transform, target);
 				break;
+			default:
+				break;
 		}
 		switch (combatState) {
 			case IDLE:
@@ -116,6 +120,8 @@ public abstract class Behaviour {
 				break;
 			case ATTACKING:
 				state = State.ATTACKING;
+				break;
+			default:
 				break;
 		}
 	}
@@ -203,6 +209,8 @@ public abstract class Behaviour {
 				self.gameObject.animator.shouldUpdate = false;
 				break;
 			case KUBROW:
+				break;
+			default:
 				break;
 		}
 		if (attackOrigin.x > self.position.x) {
