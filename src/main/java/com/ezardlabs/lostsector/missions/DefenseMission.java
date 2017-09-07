@@ -27,6 +27,5 @@ public class DefenseMission extends Mission {
 
 	public void onCryopodDestroyed(int id) {
 		cryopods[id] = null;
-		System.out.println("Cryopod " + id + " destroyed!");
 	}
 }
