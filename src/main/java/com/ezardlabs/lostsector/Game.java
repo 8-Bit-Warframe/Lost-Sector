@@ -103,10 +103,10 @@ public class Game extends BaseGame {
 
 	private void registerDoorPrefabs() {
 		PrefabManager.addPrefab("door", () -> new GameObject("Door", true, new Door(
-				new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt")),
+				TextureAtlas.load("images/environment/atlas.png", "images/environment/atlas.txt")),
 				new Renderer(), new Animator(), new Collider(100, 500, true)));
 		PrefabManager.addPrefab("laser_door", () -> new GameObject("Laser Door", true,
-				new LaserDoor(new TextureAtlas("images/environment/atlas.png",
+				new LaserDoor(TextureAtlas.load("images/environment/atlas.png",
 						"images/environment/atlas.txt")), new Renderer(), new Animator(),
 				new Collider(100, 500, true)));
 	}
@@ -114,15 +114,15 @@ public class Game extends BaseGame {
 	private void registerLockerPrefabs() {
 		PrefabManager.addPrefab("locker_locked",
 				() -> new GameObject("Locker", true, new Renderer(), new Locker(true,
-						new TextureAtlas("images/environment/atlas.png",
+						TextureAtlas.load("images/environment/atlas.png",
 								"images/environment/atlas.txt"))));
 		PrefabManager.addPrefab("locker_unlocked",
 				() -> new GameObject("Locker", true, new Renderer(), new Locker(false,
-						new TextureAtlas("images/environment/atlas.png",
+						TextureAtlas.load("images/environment/atlas.png",
 								"images/environment/atlas.txt")), new Collider(100, 200, true),
 						new Animator(), new NetworkAnimator()),
 				() -> new GameObject("Locker", true, new Renderer(), new Locker(false,
-						new TextureAtlas("images/environment/atlas.png",
+						TextureAtlas.load("images/environment/atlas.png",
 								"images/environment/atlas.txt")), new Animator(),
 						new NetworkAnimator()));
 	}

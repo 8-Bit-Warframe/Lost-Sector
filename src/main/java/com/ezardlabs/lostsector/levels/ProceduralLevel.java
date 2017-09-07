@@ -36,7 +36,7 @@ public class ProceduralLevel extends Level {
 
 		cm.smoothFollow(Game.players[0].transform);
 
-		TextureAtlas fontTA = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
+		TextureAtlas fontTA = TextureAtlas.load("fonts/atlas.png", "fonts/atlas.txt");
 		GameObject.instantiate(new GameObject("MainMenuWIP",
 						new GuiText("DEV BUILD : WORK IN PROGRESS!", fontTA, 30)),
 				new Vector2(10, Screen.height - 30 - 10));

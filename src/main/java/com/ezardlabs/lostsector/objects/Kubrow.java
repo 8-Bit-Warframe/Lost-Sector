@@ -14,7 +14,7 @@ public class Kubrow extends Entity {
 
 	@Override
 	public void start() {
-		TextureAtlas ta = new TextureAtlas("images/kubrows/white/atlas.png", "images/kubrows/white/atlas.txt");
+		TextureAtlas ta = TextureAtlas.load("images/kubrows/white/atlas.png", "images/kubrows/white/atlas.txt");
 		gameObject.renderer.setTextureAtlas(ta, 200, 200);
 		gameObject.animator.setAnimations(Animations.load("animations/kubrow", ta, new Validator("idle", "run",
 				"jump", "attack")));
@@ -36,10 +36,10 @@ public class Kubrow extends Entity {
 //
 //	@Override
 //	public void start() {
-//		TextureAtlas ta = new TextureAtlas("images/kubrows/white/atlas.png", "images/kubrows/white/atlas.txt");
+//		TextureAtlas ta = TextureAtlas.load("images/kubrows/white/atlas.png", "images/kubrows/white/atlas.txt");
 //		gameObject.renderer.setTextureAtlas(ta, 200, 200);
-//		gameObject.animator.setAnimations(new Animation("idle", new TextureAtlas.Sprite[]{ta.getSprite("idle0")}, AnimationType.ONE_SHOT, Long.MAX_VALUE), new Animation("run",
-//				new TextureAtlas.Sprite[]{ta.getSprite("run0"),
+//		gameObject.animator.setAnimations(new Animation("idle", TextureAtlas.load.Sprite[]{ta.getSprite("idle0")}, AnimationType.ONE_SHOT, Long.MAX_VALUE), new Animation("run",
+//				TextureAtlas.load.Sprite[]{ta.getSprite("run0"),
 //						ta.getSprite("run1"),
 //						ta.getSprite("run2"),
 //						ta.getSprite("run3"),
@@ -47,7 +47,7 @@ public class Kubrow extends Entity {
 //						ta.getSprite("run5"),
 //						ta.getSprite("run6")},
 //				AnimationType.LOOP, 100), new Animation("attack",
-//				new TextureAtlas.Sprite[]{ta.getSprite("attack0"),
+//				TextureAtlas.load.Sprite[]{ta.getSprite("attack0"),
 //						ta.getSprite("attack1"),
 //						ta.getSprite("attack2"),
 //						ta.getSprite("attack3"),
@@ -75,9 +75,9 @@ public class Kubrow extends Entity {
 //				//noinspection ConstantConditions
 //				attacking = false;
 //			}
-//		}), new Animation("jump", new TextureAtlas.Sprite[]{ta.getSprite("jump0"),
+//		}), new Animation("jump", TextureAtlas.load.Sprite[]{ta.getSprite("jump0"),
 //				ta.getSprite("jump1"),
-//				ta.getSprite("jump2")}, AnimationType.ONE_SHOT, 100), new Animation("fall", new TextureAtlas.Sprite[]{ta.getSprite("fall0")}, AnimationType.ONE_SHOT, 100));
+//				ta.getSprite("jump2")}, AnimationType.ONE_SHOT, 100), new Animation("fall", TextureAtlas.load.Sprite[]{ta.getSprite("fall0")}, AnimationType.ONE_SHOT, 100));
 //		gameObject.animator.play("idle");
 //
 //	}

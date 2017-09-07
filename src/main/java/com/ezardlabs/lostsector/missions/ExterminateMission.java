@@ -21,7 +21,7 @@ public class ExterminateMission extends Mission implements EnemyStatusListener {
 
 	public ExterminateMission(int numEnemiesToKill) {
 		this.numEnemiesToKill = numEnemiesToKill;
-		TextureAtlas ta = new TextureAtlas("fonts/atlas.png",
+		TextureAtlas ta = TextureAtlas.load("fonts/atlas.png",
 				"fonts/atlas.txt");
 		missionText = new GuiText("Enemies remaining: " + numEnemiesToKill, ta,
 				40);

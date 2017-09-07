@@ -42,7 +42,7 @@ public class SurvivalLevel extends Level {
 		survivalManager = new SurvivalManager(MapManager.enemySpawns);
 		GameObject.instantiate(new GameObject("SurvivalManager", survivalManager), new Vector2());
 
-		TextureAtlas fontTA = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
+		TextureAtlas fontTA = TextureAtlas.load("fonts/atlas.png", "fonts/atlas.txt");
 		GameObject.instantiate(
 				new GameObject(
 						"MainMenuWIP",

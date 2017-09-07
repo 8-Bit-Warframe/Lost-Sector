@@ -19,7 +19,7 @@ public class Avalanche extends Script {
 
 	@Override
 	public void start() {
-		TextureAtlas ta = new TextureAtlas("data/warframes/frost/abilities/avalanche");
+		TextureAtlas ta = TextureAtlas.load("data/warframes/frost/abilities/avalanche");
 		GameObject.instantiate(new GameObject("Avalanche Background",
 				new Renderer(ta, ta.getSprite("avalanche_background0"), 800, 300), new Animator(
 				Animations.load("data/warframes/frost/abilities/avalanche", ta, new Validator("background"))),

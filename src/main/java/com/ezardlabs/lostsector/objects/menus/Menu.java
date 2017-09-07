@@ -46,7 +46,7 @@ public class Menu extends Script {
 			throw new IllegalArgumentException(
 					"You must supply between 1 and 4 options to the menu");
 		}
-		font = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
+		font = TextureAtlas.load("fonts/atlas.png", "fonts/atlas.txt");
 	}
 
 	@Override

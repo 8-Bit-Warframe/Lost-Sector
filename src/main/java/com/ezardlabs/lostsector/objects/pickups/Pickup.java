@@ -11,7 +11,7 @@ abstract class Pickup extends Component {
 
 	@Override
 	public void start() {
-		TextureAtlas ta = new TextureAtlas(getAtlasPath());
+		TextureAtlas ta = TextureAtlas.load(getAtlasPath());
 		gameObject.renderer.setTextureAtlas(ta, 100, 100);
 		gameObject.animator.setAnimations(Animations.load(getAnimationPath(), ta, new Validator("animate")));
 		gameObject.animator.play("animate");

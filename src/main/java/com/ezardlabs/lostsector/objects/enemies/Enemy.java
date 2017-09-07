@@ -26,7 +26,7 @@ public abstract class Enemy extends Entity {
 
 	public Enemy(int health, Behaviour behaviour) {
 		super(health);
-		ta = new TextureAtlas(getAtlasPath());
+		ta = TextureAtlas.load(getAtlasPath());
 		this.behaviour = behaviour;
 	}
 

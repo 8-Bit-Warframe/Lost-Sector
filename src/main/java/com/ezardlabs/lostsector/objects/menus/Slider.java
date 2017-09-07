@@ -47,7 +47,7 @@ public class Slider extends Script {
 		GameObject.instantiate(new GameObject("Slider Icon", new GuiRenderer(iconPath, 65, 65)),
 				transform.position.offset(12.5f, 12.5f)).transform.setParent(transform);
 
-		TextureAtlas font = new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt");
+		TextureAtlas font = TextureAtlas.load("fonts/atlas.png", "fonts/atlas.txt");
 		GameObject.instantiate(new GameObject("Slider Text", new GuiText(text, font, 31.25f)),
 				new Vector2(transform.position.offset(93.75f, -56.25f))).transform
 				.setParent(transform);

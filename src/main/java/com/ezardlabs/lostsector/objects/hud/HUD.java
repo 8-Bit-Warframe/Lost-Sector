@@ -13,7 +13,7 @@ public class HUD extends Script {
 	private Warframe warframe;
 
 	public void start() {
-		TextureAtlas ta = new TextureAtlas("images/hud/atlas.png", "images/hud/atlas.txt");
+		TextureAtlas ta = TextureAtlas.load("images/hud/atlas.png", "images/hud/atlas.txt");
 		statusIndicator.init(ta);
 //		weaponControl.init(ta);
 		warframe = gameObject.getComponentOfType(Warframe.class);

@@ -358,7 +358,7 @@ public class Player extends Script {
 //				gameObject.animator.play("land");
 				//noinspection ConstantConditions
 				Camera.main.gameObject.getComponent(SmartCamera.class).startQuake(100, 0.3f);
-				TextureAtlas ta = new TextureAtlas("images/effects/dust.png", "images/effects/dust.txt");
+				TextureAtlas ta = TextureAtlas.load("images/effects/dust.png", "images/effects/dust.txt");
 				GameObject.destroy(GameObject.instantiate(
 						new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50), new Animator(
 								new Animation("dust",

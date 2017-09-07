@@ -29,7 +29,7 @@ public class StatusIndicator {
 
 		GameObject.instantiate(new GameObject("Warframe Name",
 						warframeNameGuiText = new GuiText(null,
-								new TextureAtlas("fonts/atlas" + ".png", "fonts/atlas.txt"), 20)),
+								TextureAtlas.load("fonts/atlas" + ".png", "fonts/atlas.txt"), 20)),
 				new Vector2(left + 302.25f, top + 16.25f));
 
 		for (int i = 0; i < health.length; i++) {

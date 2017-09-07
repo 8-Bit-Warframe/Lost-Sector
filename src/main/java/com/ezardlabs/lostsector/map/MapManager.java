@@ -365,7 +365,7 @@ public class MapManager {
 			if(lastSlash >= 0) {
 				folder = filePath.substring(0, lastSlash);
 			}
-			textureAtlases.add(new TextureAtlas(folder + "/"+ tileSet.getImageSource(), tileSet.getTileWidth(), tileSet.getTileHeight()));
+			textureAtlases.add(TextureAtlas.load(folder + "/"+ tileSet.getImageSource(), tileSet.getTileWidth(), tileSet.getTileHeight()));
 		}
 		float w = map.getTileWidth() * MAP_SCALE;
 		float h = map.getTileHeight() * MAP_SCALE;
@@ -385,7 +385,7 @@ public class MapManager {
 			}
 		}
 
-		TextureAtlas ta = new TextureAtlas("images/environment/atlas.png", "images/environment/atlas.txt");
+		TextureAtlas ta = TextureAtlas.load("images/environment/atlas.png", "images/environment/atlas.txt");
 		ObjectGroup enemyObjectGroup = null;
 		for(ObjectGroup objectGroup : map.getObjectGroups()) {
 			if(objectGroup.getName().equals("enemies")) {

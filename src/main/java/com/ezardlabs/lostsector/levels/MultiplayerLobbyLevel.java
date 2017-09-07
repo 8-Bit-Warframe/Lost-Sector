@@ -20,7 +20,7 @@ public class MultiplayerLobbyLevel extends Level {
 	@Override
 	public void onLoad() {
 		GuiText guiText = new GuiText("Searching for game...",
-				new TextureAtlas("fonts/atlas.png", "fonts/atlas.txt"), 50);
+				TextureAtlas.load("fonts/atlas.png", "fonts/atlas.txt"), 50);
 		GameObject.instantiate(new GameObject("Searching", guiText),
 				new Vector2(Screen.width / 2 - guiText.getWidth() / 2, Screen.height / 2 - 25));
 		GameObject.instantiate(new GameObject("Camera", new Camera(true)), new Vector2());
