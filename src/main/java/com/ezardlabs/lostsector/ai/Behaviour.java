@@ -1,5 +1,8 @@
 package com.ezardlabs.lostsector.ai;
 
+import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.Level;
+import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Mathf;
 import com.ezardlabs.dethsquare.Physics;
 import com.ezardlabs.dethsquare.Physics.RaycastHit;
@@ -9,6 +12,7 @@ import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.NavMesh;
 import com.ezardlabs.lostsector.NavMesh.NavPoint;
 import com.ezardlabs.lostsector.ai.StateMachine.Transition;
+import com.ezardlabs.lostsector.levels.MissionLevel;
 
 public abstract class Behaviour {
 	private float moveSpeed;
@@ -32,6 +36,7 @@ public abstract class Behaviour {
 	private StateMachine<State> stateMachine = new StateMachine<>();
 	private Transform transform;
 	private Transform target;
+	private GameObject[] objectives;
 	private AnimationState animationState = AnimationState.IDLE;
 
 	public enum State {
@@ -90,12 +95,19 @@ public abstract class Behaviour {
 
 	public void init(Transform transform) {
 		this.transform = transform;
+		Level level = LevelManager.getCurrentLevel();
+		if (level instanceof MissionLevel) {
+			objectives = ((MissionLevel) level).getObjectiveTargets();
+		}
 	}
 
 	public final void update() {
 		stateMachine.update();
 		if (stateMachine.getState() == State.IDLE) {
 			visionCheck();
+			if (target == null && objectives != null) {
+				target = getObjectiveTarget();
+			}
 		}
 		switch (stateMachine.getState()) {
 			case IDLE:
@@ -194,6 +206,27 @@ public abstract class Behaviour {
 		} else {
 			target = hit.transform;
 		}
+	}
+
+	private Transform getObjectiveTarget() {
+		int nonNullObjectives = 0;
+		for (GameObject objective : objectives) {
+			if (objective != null) {
+				nonNullObjectives++;
+			}
+		}
+		if (nonNullObjectives > 0) {
+			int rand = (int) (Math.random() * nonNullObjectives);
+			for (GameObject objective : objectives) {
+				if (objective != null) {
+					if (rand == 0) {
+						return objective.transform;
+					}
+					rand--;
+				}
+			}
+		}
+		return null;
 	}
 
 	public void onDamageReceived(DamageType damageType, Transform self, Vector2 attackOrigin) {
