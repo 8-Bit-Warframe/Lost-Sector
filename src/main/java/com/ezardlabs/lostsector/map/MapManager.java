@@ -2,6 +2,7 @@ package com.ezardlabs.lostsector.map;
 
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.Layers;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
@@ -428,22 +429,19 @@ public class MapManager {
 			Sprite sprite = ta.getSprite(String.valueOf(gid - ts.getFirstGid()));
 			Renderer renderer = new Renderer(ta, sprite, tileWidth, tileHeight).setzIndex(zindex);
 			if(collision) {
-				GameObject.instantiate(
-						new GameObject("Tile", true, renderer, new Collider(tileWidth, tileHeight)),
-						new Vector2(x, y), new Vector2(t.isFlippedHorizontal
-								() ? -1 : 1, t.isFlippedVertical() ? -1 : 1)
-				);
+				GameObject tile = GameObject.instantiate(
+						new GameObject("Tile", true, renderer, new Collider(tileWidth, tileHeight)), new Vector2(x, y),
+						new Vector2(t.isFlippedHorizontal() ? -1 : 1, t.isFlippedVertical() ? -1 : 1));
+				tile.setLayer(Layers.getLayer("Solid"));
 				try {
 					solidityMap[(int)(col + offset.x)][(int)(row + offset.y)] = 1;
 				} catch(ArrayIndexOutOfBoundsException ex) {
 					System.out.println("Error setting solidityMap at index [" + col + "][" + row + "]");
 				}
 			} else {
-				GameObject.instantiate(
-						new GameObject("Tile", true, renderer),
-						new Vector2(x, y), new Vector2(t.isFlippedHorizontal
-								() ? -1 : 1, t.isFlippedVertical() ? -1 : 1)
-				);
+				GameObject tile = GameObject.instantiate(new GameObject("Tile", true, renderer), new Vector2(x, y),
+						new Vector2(t.isFlippedHorizontal() ? -1 : 1, t.isFlippedVertical() ? -1 : 1));
+				tile.setLayer(Layers.getLayer("Solid"));
 			}
 		}
 	}

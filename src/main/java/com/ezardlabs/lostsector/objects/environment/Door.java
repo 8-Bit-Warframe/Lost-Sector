@@ -2,6 +2,7 @@ package com.ezardlabs.lostsector.objects.environment;
 
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.Layers;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
@@ -25,10 +26,12 @@ public class Door extends Script {
 		gameObject.renderer.setSprite(getInitialSprite(ta));
 		gameObject.animator.addAnimations(Animations.load(getAnimationPath(), ta, new
 				Validator("open", "close")));
-		GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(200, 100)),
+		GameObject doorCollider = GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(200, 100)),
 				new Vector2(transform.position));
-		GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(200, 100)),
+		doorCollider.setLayer(Layers.getLayer("Solid"));
+		doorCollider = GameObject.instantiate(new GameObject("DoorCollider", true, new Collider(200, 100)),
 				transform.position.offset(0, 400));
+		doorCollider.setLayer(Layers.getLayer("Solid"));
 		GameObject.instantiate(new GameObject("DoorDetection", new Collider(1200, 500, true),
 				new DoorDetection(this)), transform.position.offset(-500, 0));
 	}
