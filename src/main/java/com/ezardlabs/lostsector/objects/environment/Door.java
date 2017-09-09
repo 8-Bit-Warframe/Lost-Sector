@@ -38,14 +38,14 @@ public class Door extends Script {
 
 	private void open() {
 		gameObject.animator.play("open");
-		gameObject.setTag(null);
+		gameObject.setLayer(Layers.getLayer("Default"));
 		gameObject.collider.getBounds().setWidth(0);
 		gameObject.collider.getBounds().setHeight(0);
 	}
 
 	private void close() {
 		gameObject.animator.play("close");
-		gameObject.setTag("solid");
+		gameObject.setLayer(Layers.getLayer("Solid"));
 		gameObject.collider.getBounds().setWidth(100);
 		gameObject.collider.getBounds().setHeight(500);
 	}
