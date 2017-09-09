@@ -2,6 +2,7 @@ package com.ezardlabs.lostsector.objects.projectiles;
 
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.Layers;
 import com.ezardlabs.dethsquare.Physics;
 import com.ezardlabs.dethsquare.Physics.RaycastHit;
 import com.ezardlabs.dethsquare.RectF;
@@ -24,9 +25,8 @@ public class LankaBeam extends Script {
 	@Override
 	public void start() {
 		startTime = System.currentTimeMillis();
-		RaycastHit hit = Physics
-				.raycast(transform.position, new Vector2(1 * direction, 0), Float.MAX_VALUE,
-						"solid");
+		RaycastHit hit = Physics.raycast(transform.position, new Vector2(1 * direction, 0), Float.MAX_VALUE,
+				Layers.getLayerMask("Enemy"));
 		width = (int) Math.abs(transform.position.x - hit.point.x);
 		if (direction < 0) transform.position.x -= width;
 		gameObject.renderer.setSize(width, 0);

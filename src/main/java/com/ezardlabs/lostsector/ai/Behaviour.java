@@ -1,6 +1,7 @@
 package com.ezardlabs.lostsector.ai;
 
 import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.Layers;
 import com.ezardlabs.dethsquare.Level;
 import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Mathf;
@@ -32,6 +33,7 @@ public abstract class Behaviour {
 	private long thawTime = 1000;
 	private long thawStart = 0;
 	private int directionToLook = 0;
+	private final int visionLayerMask = Layers.getLayerMask("Player", "Objective");
 
 	private StateMachine<State> stateMachine = new StateMachine<>();
 	private Transform transform;
@@ -200,7 +202,7 @@ public abstract class Behaviour {
 
 	private void visionCheck() {
 		RaycastHit hit = Physics.raycast(transform.position.offset(transform.scale.x > 0 ? 200 : 0, 100),
-				new Vector2(transform.scale.x, 0), visionRange, "player", "cryopod");
+				new Vector2(transform.scale.x, 0), visionRange, visionLayerMask);
 		if (hit == null) {
 			target = null;
 		} else {
