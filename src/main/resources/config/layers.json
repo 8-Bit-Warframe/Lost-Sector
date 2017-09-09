@@ -1,0 +1,18 @@
+[
+	{
+		"layer": 8,
+		"name": "Player"
+	},
+	{
+		"layer": 9,
+		"name": "Objective"
+	},
+	{
+		"layer": 10,
+		"name": "Enemy"
+	},
+	{
+		"layer": 11,
+		"name": "Solid"
+	}
+]
