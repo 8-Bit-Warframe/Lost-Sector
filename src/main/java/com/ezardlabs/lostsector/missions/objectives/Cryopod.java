@@ -11,7 +11,7 @@ public class Cryopod extends ShieldedEntity {
 	private int id;
 
 	public Cryopod() {
-		super(10, 40, 1500);
+		super(100, 200, 1000);
 	}
 
 	@Override
