@@ -36,15 +36,15 @@ public class Door extends Script {
 	private void open() {
 		gameObject.animator.play("open");
 		gameObject.setTag(null);
-		gameObject.collider.bounds.setWidth(0);
-		gameObject.collider.bounds.setHeight(0);
+		gameObject.collider.getBounds().setWidth(0);
+		gameObject.collider.getBounds().setHeight(0);
 	}
 
 	private void close() {
 		gameObject.animator.play("close");
 		gameObject.setTag("solid");
-		gameObject.collider.bounds.setWidth(100);
-		gameObject.collider.bounds.setHeight(500);
+		gameObject.collider.getBounds().setWidth(100);
+		gameObject.collider.getBounds().setHeight(500);
 	}
 
 	protected Sprite getInitialSprite(TextureAtlas ta) {
@@ -66,8 +66,8 @@ public class Door extends Script {
 		@Override
 		public void update() {
 			colliders.stream()
-					 .filter(collider -> !gameObject.collider.bounds.contains(collider.bounds) &&
-							 !gameObject.collider.bounds.intersects(collider.bounds))
+					 .filter(collider -> !gameObject.collider.getBounds().contains(collider.getBounds()) &&
+							 !gameObject.collider.getBounds().intersects(collider.getBounds()))
 					 .forEach(collider -> colliders.remove(collider));
 			if (colliders.size() > 0) {
 				door.open();

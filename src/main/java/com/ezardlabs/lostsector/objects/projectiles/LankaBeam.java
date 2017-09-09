@@ -46,7 +46,7 @@ public class LankaBeam extends Script {
 			RectF beam = new RectF(transform.position.x, transform.position.y - halfHeight, transform.position.x + width, transform.position.y + halfHeight);
 			Collider c;
 			for (GameObject go : GameObject.findAllWithTag("enemy")) {
-				if ((c = go.getComponent(Collider.class)) != null && c.bounds.intersect(beam)) {
+				if ((c = go.getComponent(Collider.class)) != null && c.getBounds().intersect(beam)) {
 					//noinspection ConstantConditions
 					go.getComponentOfType(Enemy.class).applyDamage(10, DamageType.SLASH, direction > 0 ? transform.position : transform.position.offset(width, 0));
 				}

@@ -29,7 +29,7 @@ public abstract class MeleeWeapon extends Weapon {
 	protected void damageEnemies(float damage, float left, float top, float right, float bottom) {
 		Collider c;
 		for (GameObject go : GameObject.findAllWithTag("enemy")) {
-			if ((c = go.getComponent(Collider.class)) != null && c.bounds.intersects(left, top, right, bottom)) {
+			if ((c = go.getComponent(Collider.class)) != null && c.getBounds().intersects(left, top, right, bottom)) {
 				//noinspection ConstantConditions
 				go.getComponentOfType(Enemy.class).applyDamage(damage, damageType, wielder.transform.position);
 			}
