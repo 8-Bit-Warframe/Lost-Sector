@@ -45,7 +45,12 @@ public class MapManager {
 			name = overrideMapName;
 		}
 		enemySpawns = new ArrayList<>();
-		TMXLoader tmxLoader = new TMXLoader("maps/" + name + ".tmx");
+		TMXLoader tmxLoader;
+		if (overrideMapName == null) {
+			tmxLoader = new TMXLoader("maps/" + name + ".tmx", false);
+		}else {
+			tmxLoader = new TMXLoader(name, true);
+		}
 		loadTMX(tmxLoader.getMap());
 		NavMesh.init(solidityMap);
 	}
