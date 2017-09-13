@@ -40,8 +40,6 @@ import com.ezardlabs.lostsector.objects.warframes.abilities.frost.IceWave;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Snowglobe;
 
 public class Game extends BaseGame {
-	public static GameObject[] players;
-
 	public enum DamageType {
 		NORMAL,
 		SLASH,

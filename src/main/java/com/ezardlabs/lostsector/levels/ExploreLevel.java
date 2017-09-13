@@ -1,8 +1,5 @@
 package com.ezardlabs.lostsector.levels;
 
-import com.ezardlabs.dethsquare.AudioManager.AudioGroup;
-import com.ezardlabs.dethsquare.AudioSource;
-import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.GuiText;
@@ -11,7 +8,6 @@ import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.multiplayer.Network;
-import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.camera.SmartCamera;
 import com.ezardlabs.lostsector.map.MapManager;
 
@@ -22,13 +18,9 @@ public class ExploreLevel extends Level {
 		MapManager.playerSpawn = new Vector2(20.0f, 20.0f);
 		MapManager.loadMap("Explore");
 
-		Game.players = new GameObject[]{Network.instantiate("player",
-				new Vector2(MapManager.playerSpawn))};
-
-		GameObject.instantiate(new GameObject("Camera", new Camera(true),
-						new SmartCamera(Game.players[0].transform, 1000, new Vector2(100, 100)),
-						new AudioSource(new AudioClip("audio/theme.ogg"), true, AudioGroup.MUSIC)),
-				new Vector2(MapManager.playerSpawn));
+		GameObject player = Network.instantiate("player", new Vector2(MapManager.playerSpawn));
+		GameObject.instantiate(new GameObject("Camera", new Camera(true), new SmartCamera(player.transform, 1000,
+				new Vector2(100, 100))), MapManager.playerSpawn);
 
 		TextureAtlas fontTA = TextureAtlas.load("fonts/atlas.png", "fonts/atlas.txt");
 		GameObject.instantiate(new GameObject("MainMenuWIP",
