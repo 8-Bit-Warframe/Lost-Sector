@@ -1,6 +1,7 @@
 package com.ezardlabs.lostsector;
 
 import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.AudioListener;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.LevelManager;
@@ -12,6 +13,7 @@ import com.ezardlabs.dethsquare.multiplayer.NetworkRenderer;
 import com.ezardlabs.dethsquare.multiplayer.NetworkTransform;
 import com.ezardlabs.dethsquare.prefabs.PrefabManager;
 import com.ezardlabs.dethsquare.util.BaseGame;
+import com.ezardlabs.lostsector.levels.DefenseLevel;
 import com.ezardlabs.lostsector.levels.ExploreLevel;
 import com.ezardlabs.lostsector.levels.MainMenuLevel;
 import com.ezardlabs.lostsector.levels.MultiplayerLevel;
@@ -52,6 +54,7 @@ public class Game extends BaseGame {
 		LevelManager.registerLevel("explore", new ExploreLevel());
 		LevelManager.registerLevel("survival", new SurvivalLevel());
 		LevelManager.registerLevel("procedural", new ProceduralLevel());
+		LevelManager.registerLevel("defense", new DefenseLevel());
 		LevelManager.registerLevel("multiplayer_lobby", new MultiplayerLobbyLevel());
 		LevelManager.registerLevel("multiplayer", new MultiplayerLevel());
 		LevelManager.registerLevel("main_menu", new MainMenuLevel());
@@ -65,7 +68,7 @@ public class Game extends BaseGame {
 		registerPickupPrefabs();
 		registerSpawnPointPrefabs();
 
-		LevelManager.loadLevel("main_menu");
+		LevelManager.loadLevel("defense");
 	}
 
 	private void registerPlayerPrefabs() {
