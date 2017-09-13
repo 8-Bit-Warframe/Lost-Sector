@@ -12,11 +12,10 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game;
+import com.ezardlabs.lostsector.camera.SmartCamera;
 import com.ezardlabs.lostsector.map.MapManager;
-import com.ezardlabs.lostsector.objects.CameraMovement;
 
 public class ExploreLevel extends Level {
-	private static CameraMovement cm = new CameraMovement();
 
 	@Override
 	public void onLoad() {
@@ -26,11 +25,10 @@ public class ExploreLevel extends Level {
 		Game.players = new GameObject[]{Network.instantiate("player",
 				new Vector2(MapManager.playerSpawn))};
 
-		GameObject.instantiate(new GameObject("Camera", new Camera(true), cm,
+		GameObject.instantiate(new GameObject("Camera", new Camera(true),
+						new SmartCamera(Game.players[0].transform, 1000, new Vector2(100, 100)),
 						new AudioSource(new AudioClip("audio/theme.ogg"), true, AudioGroup.MUSIC)),
 				new Vector2(MapManager.playerSpawn));
-
-		cm.smoothFollow(Game.players[0].transform);
 
 		TextureAtlas fontTA = TextureAtlas.load("fonts/atlas.png", "fonts/atlas.txt");
 		GameObject.instantiate(new GameObject("MainMenuWIP",
