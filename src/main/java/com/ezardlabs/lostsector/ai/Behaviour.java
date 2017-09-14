@@ -33,7 +33,8 @@ public abstract class Behaviour {
 	private long thawTime = 1000;
 	private long thawStart = 0;
 	private int directionToLook = 0;
-	private final int visionLayerMask = Layers.getLayerMask("Player", "Objective");
+	private final int visionLayerMask = Layers.getLayerMask("Player", "Objective", "Solid");
+	private final int visionLayerMaskTarget = Layers.getLayerMask("Player", "Objective");
 
 	private StateMachine<State> stateMachine = new StateMachine<>();
 	private Transform transform;
@@ -205,7 +206,8 @@ public abstract class Behaviour {
 				new Vector2(transform.scale.x, 0), visionRange, visionLayerMask);
 		if (hit == null) {
 			target = null;
-		} else {
+		} else if ((hit.transform.gameObject.getLayerMask() & visionLayerMaskTarget) ==
+				hit.transform.gameObject.getLayerMask()) {
 			target = hit.transform;
 		}
 	}
