@@ -444,9 +444,8 @@ public class MapManager {
 					System.out.println("Error setting solidityMap at index [" + col + "][" + row + "]");
 				}
 			} else {
-				GameObject tile = GameObject.instantiate(new GameObject("Tile", true, renderer), new Vector2(x, y),
+				GameObject.instantiate(new GameObject("Tile", true, renderer), new Vector2(x, y),
 						new Vector2(t.isFlippedHorizontal() ? -1 : 1, t.isFlippedVertical() ? -1 : 1));
-				tile.setLayer(Layers.getLayer("Solid"));
 			}
 		}
 	}
