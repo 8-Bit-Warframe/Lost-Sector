@@ -36,7 +36,6 @@ public abstract class Behaviour {
 	private int directionToLook = 0;
 	private final int visionLayerMask = Layers.getLayerMask("Player", "Objective", "Solid");
 	private final int visionLayerMaskTarget = Layers.getLayerMask("Player", "Objective");
-	private final int visionLayerMaskSolid = Layers.getLayerMask("Solid");
 
 	private StateMachine<State> stateMachine = new StateMachine<>();
 	private Transform transform;
