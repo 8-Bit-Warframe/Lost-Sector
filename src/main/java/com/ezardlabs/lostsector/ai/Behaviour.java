@@ -35,6 +35,7 @@ public abstract class Behaviour {
 	private int directionToLook = 0;
 	private final int visionLayerMask = Layers.getLayerMask("Player", "Objective", "Solid");
 	private final int visionLayerMaskTarget = Layers.getLayerMask("Player", "Objective");
+	private final int visionLayerMaskSolid = Layers.getLayerMask("Solid");
 
 	private StateMachine<State> stateMachine = new StateMachine<>();
 	private Transform transform;
@@ -66,14 +67,14 @@ public abstract class Behaviour {
 		this.visionRange = visionRange;
 
 		stateMachine.addState(State.IDLE,
-				new Transition<>(State.TRACKING, () -> canSeeEnemy() && !inRange(transform, target)),
+				new Transition<>(State.TRACKING, () -> target != null && !inRange(transform, target)),
 				new Transition<>(State.ATTACKING, () -> canSeeEnemy() && inRange(transform, target)));
 
 		stateMachine.addState(State.TRACKING,
-				new Transition<>(State.ATTACKING, () -> inRange(transform, target)));
+				new Transition<>(State.ATTACKING, () -> canSeeEnemy() && inRange(transform, target)));
 
 		stateMachine.addState(State.ATTACKING,
-				new Transition<>(State.TRACKING, () -> !inRange(transform, target)));
+				new Transition<>(State.TRACKING, () -> !canSeeEnemy() || !inRange(transform, target)));
 
 		stateMachine.addState(State.FROZEN,
 				new Transition<>(State.THAWING, () -> System.currentTimeMillis() - freezeStart > freezeTime, () -> {
@@ -194,7 +195,15 @@ public abstract class Behaviour {
 	}
 
 	private boolean canSeeEnemy() {
-		return target != null;
+		if (target == null) {
+			return false;
+		} else {
+			Vector2 origin = transform.position.offset(transform.scale.x > 0 ? -100 : 100, 100);
+			Vector2 direction = new Vector2(target.position.x - origin.x, target.position.y - origin.y);
+			RaycastHit hit = Physics.raycast(origin, direction, (float) Vector2.distance(origin, target.position),
+					visionLayerMask);
+			return hit != null && hit.transform == target;
+		}
 	}
 
 	abstract boolean inRange(Transform self, Transform enemy);
@@ -203,7 +212,7 @@ public abstract class Behaviour {
 
 	private void visionCheck() {
 		RaycastHit hit = Physics.raycast(transform.position.offset(transform.scale.x > 0 ? 200 : 0, 100),
-				new Vector2(transform.scale.x, 0), visionRange, visionLayerMask);
+				new Vector2(transform.scale.x, 0), visionRange, visionLayerMaskTarget);
 		if (hit == null) {
 			target = null;
 		} else if ((hit.transform.gameObject.getLayerMask() & visionLayerMaskTarget) ==
