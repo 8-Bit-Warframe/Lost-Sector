@@ -101,12 +101,10 @@ public class NavMesh {
 	}
 
 	public static NavPoint[] getPath(Vector2 a, Vector2 b) {
-		NavPoint start = getNavPoint(a);
-		NavPoint end = getNavPoint(b);
-		if (end != null && end.type == NavPointType.NONE) {
-			end = navPoints[Math.round((b.x / 100f) + 1)][Math.round(b.y / 100f) + 1];
-		}
+		return getPath(getNavPoint(a), getNavPoint(b));
+	}
 
+	public static NavPoint[] getPath(NavPoint start, NavPoint end) {
 		if (start == null || end == null) return new NavPoint[0];
 
 		for (int i = 0; i < pointsWithAlteredIndices.size(); i++) {
@@ -256,7 +254,7 @@ public class NavMesh {
 		}
 
 		// Jump links
-		for (int x = 0; x < navPoints.length; x++) {
+		/*for (int x = 0; x < navPoints.length; x++) {
 			for (int y = 0; y < navPoints[x].length; y++) {
 				if (navPoints[x][y].type == NavPointType.RIGHT_EDGE || navPoints[x][y].type == NavPointType.SOLO) {
 					if (isCollision(solidityMap, x + 1, y)) {
@@ -279,7 +277,7 @@ public class NavMesh {
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 	private static void addLink(int x1, int y1, int x2, int y2, LinkType type) {
