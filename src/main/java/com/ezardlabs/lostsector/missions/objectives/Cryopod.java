@@ -1,5 +1,6 @@
 package com.ezardlabs.lostsector.missions.objectives;
 
+import com.ezardlabs.dethsquare.Layers;
 import com.ezardlabs.dethsquare.Level;
 import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Vector2;
@@ -18,6 +19,7 @@ public class Cryopod extends ShieldedEntity {
 	public void start() {
 		gameObject.renderer.setImage("data/objectives/cryopod/cryopod.png", 300, 100);
 		gameObject.renderer.setOffsets(50, 100);
+		gameObject.setLayer(Layers.getLayer("Objective"));
 	}
 
 	public void setId(int id) {
