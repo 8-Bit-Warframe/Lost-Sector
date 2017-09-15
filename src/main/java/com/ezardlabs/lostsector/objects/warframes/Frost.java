@@ -50,7 +50,7 @@ public class Frost extends Warframe {
 //				}
 //			}
 //		}));
-		setPrimaryWeapon(new Lanka(gameObject));
+		setPrimaryWeapon(new Lanka());
 		setMeleeWeapon(new Nikana(gameObject));
 	}
 

@@ -87,6 +87,8 @@ public class Player extends Script {
 			} else if (x > 0) {
 				gameObject.transform.scale.x  = 1;
 			}
+
+			warframe.stopShooting();
 		}
 
 		switchWeaponCheck();
@@ -175,7 +177,7 @@ public class Player extends Script {
 				meleeCheck();
 				break;
 			case SHOOTING:
-				gameObject.animator.play("shoot");
+				warframe.shoot();
 				break;
 			case CASTING:
 				gameObject.animator.play("cast");

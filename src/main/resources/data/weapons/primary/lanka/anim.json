@@ -1,0 +1,46 @@
+{
+	"defaults": {
+		"width": 400,
+		"height": 300,
+		"offset": {
+			"normal": {
+				"x": 0,
+				"y": -100
+			},
+			"flipped": {
+				"x": -200,
+				"y": -100
+			}
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "shoot",
+			"sprites": [
+				{
+					"name": "lanka0"
+				},
+				{
+					"name": "lanka1"
+				},
+				{
+					"name": "lanka2"
+				},
+				{
+					"name": "lanka3"
+				},
+				{
+					"name": "lanka4"
+				},
+				{
+					"name": "lanka5"
+				},
+				{
+					"name": "lanka6"
+				}
+			],
+			"type": "CUSTOM"
+		}
+	]
+}

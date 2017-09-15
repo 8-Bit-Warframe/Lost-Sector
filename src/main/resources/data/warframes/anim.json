@@ -153,6 +153,90 @@
 				}
 			],
 			"type": "ONE_SHOT"
+		},
+		{
+			"name": "grip_primary_body",
+			"defaults": {
+				"width": 400,
+				"height": 200,
+				"offset": {
+					"normal": {
+						"x": 0,
+						"y": 0
+					},
+					"flipped": {
+						"x": -200,
+						"y": 0
+					}
+				},
+				"duration": 100
+			},
+			"sprites": [
+				{
+					"name": "grip_primary_body0"
+				},
+				{
+					"name": "grip_primary_body1"
+				},
+				{
+					"name": "grip_primary_body2"
+				},
+				{
+					"name": "grip_primary_body3"
+				},
+				{
+					"name": "grip_primary_body4"
+				},
+				{
+					"name": "grip_primary_body5"
+				},
+				{
+					"name": "grip_primary_body6"
+				}
+			],
+			"type": "CUSTOM"
+		},
+		{
+			"name": "grip_primary_arm",
+			"defaults": {
+				"width": 400,
+				"height": 200,
+				"offset": {
+					"normal": {
+						"x": 0,
+						"y": 0
+					},
+					"flipped": {
+						"x": -200,
+						"y": 0
+					}
+				},
+				"duration": 100
+			},
+			"sprites": [
+				{
+					"name": "grip_primary_arm0"
+				},
+				{
+					"name": "grip_primary_arm1"
+				},
+				{
+					"name": "grip_primary_arm2"
+				},
+				{
+					"name": "grip_primary_arm3"
+				},
+				{
+					"name": "grip_primary_arm4"
+				},
+				{
+					"name": "grip_primary_arm5"
+				},
+				{
+					"name": "grip_primary_arm6"
+				}
+			],
+			"type": "CUSTOM"
 		}
 	]
 }

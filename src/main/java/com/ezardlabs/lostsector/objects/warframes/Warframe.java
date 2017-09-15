@@ -1,5 +1,6 @@
 package com.ezardlabs.lostsector.objects.warframes;
 
+import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas;
@@ -9,8 +10,9 @@ import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.objects.ShieldedEntity;
+import com.ezardlabs.lostsector.objects.weapons.Arm;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
-import com.ezardlabs.lostsector.objects.weapons.RangedWeapon;
+import com.ezardlabs.lostsector.objects.weapons.PrimaryWeapon;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,9 +21,12 @@ public abstract class Warframe extends ShieldedEntity {
 	protected final TextureAtlas ta;
 	protected final int maxEnergy;
 	protected int energy;
-	public RangedWeapon rangedWeapon;
 	public MeleeWeapon meleeWeapon;
 	private long nextShieldRegen = 0;
+	private Class<? extends PrimaryWeapon> primaryClass;
+
+	private Arm arm = new Arm(this);
+	private GameObject primary;
 
 	public Warframe(String name, int maxHealth, int maxShield, int maxEnergy) {
 		super(maxHealth, maxShield, 2000);
@@ -34,8 +39,12 @@ public abstract class Warframe extends ShieldedEntity {
 	public void start() {
 		gameObject.renderer.setTextureAtlas(ta, 200, 200);
 		gameObject.animator.setAnimations(Animations.load(getAnimationPath(), ta,
-				new Validator("idle", "run", "jump", "double-jump", "fall", "land", "die")));
+				new Validator("idle", "run", "jump", "double-jump", "fall", "land", "die", "grip_primary_body",
+						"grip_primary_arm")));
 		gameObject.animator.play("idle");
+
+		GameObject.instantiate(new GameObject("Arm", new Renderer(ta),
+				new Animator(gameObject.animator.getAnimation("grip_primary_arm")), arm), transform.position);
 	}
 
 	public abstract String getName();
@@ -52,9 +61,28 @@ public abstract class Warframe extends ShieldedEntity {
 
 	protected abstract String getAnimationPath();
 
-	public final void setPrimaryWeapon(RangedWeapon rangedWeapon) {
-		this.rangedWeapon = rangedWeapon;
-		gameObject.animator.addAnimations(rangedWeapon.getAnimation(ta));
+	public final void shoot() {
+		gameObject.animator.play("grip_primary_body");
+		arm.gameObject.animator.play("grip_primary_arm");
+		primary.animator.play("shoot");
+	}
+
+	public final void stopShooting() {
+	}
+
+	public final void setPrimaryWeapon(PrimaryWeapon primaryWeapon) {
+		if (primary == null) {
+			primary = GameObject.instantiate(new GameObject("Primary Weapon", new Renderer(), new Animator()),
+					transform.position);
+			primary.transform.setParent(transform);
+		} else {
+			primary.removeComponent(primaryClass);
+		}
+		primary.addComponent(primaryWeapon);
+		this.primaryClass = primaryWeapon.getClass();
+
+		gameObject.animator.getAnimation("grip_primary_body").setAnimationType(primaryWeapon.getAnimationType().clone());
+		arm.setAnimationType("grip_primary_arm", primaryWeapon.getAnimationType().clone());
 	}
 
 	public final void setMeleeWeapon(MeleeWeapon meleeWeapon) {
