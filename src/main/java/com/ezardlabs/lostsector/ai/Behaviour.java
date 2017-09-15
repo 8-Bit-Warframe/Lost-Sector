@@ -7,12 +7,13 @@ import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Mathf;
 import com.ezardlabs.dethsquare.Physics;
 import com.ezardlabs.dethsquare.Physics.RaycastHit;
+import com.ezardlabs.dethsquare.StateMachine;
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.NavMesh;
 import com.ezardlabs.lostsector.NavMesh.NavPoint;
-import com.ezardlabs.lostsector.ai.StateMachine.Transition;
+import com.ezardlabs.dethsquare.StateMachine.Transition;
 import com.ezardlabs.lostsector.levels.MissionLevel;
 
 public abstract class Behaviour {
