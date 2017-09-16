@@ -4,7 +4,6 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
 import com.ezardlabs.lostsector.objects.weapons.melee.Nikana;
 import com.ezardlabs.lostsector.objects.weapons.primary.Lanka;
 
@@ -60,7 +59,7 @@ public class Frost extends Warframe {
 
 	@Override
 	public void ability4() {
-		gameObject.animator.play("cast_avalanche");
-		GameObject.instantiate(new GameObject("Avalanche", new Avalanche()), transform.position.offset(-300, -100));
+		/*gameObject.animator.play("cast_avalanche");
+		GameObject.instantiate(new GameObject("Avalanche", new Avalanche()), transform.position.offset(-300, -100));*/
 	}
 }
