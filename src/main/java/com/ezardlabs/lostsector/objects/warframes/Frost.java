@@ -28,12 +28,7 @@ public class Frost extends Warframe {
 	}
 
 	@Override
-	protected String getAtlasPath() {
-		return "data/warframes/frost";
-	}
-
-	@Override
-	protected String getAnimationPath() {
+	protected String getDataPath() {
 		return "data/warframes/frost";
 	}
 

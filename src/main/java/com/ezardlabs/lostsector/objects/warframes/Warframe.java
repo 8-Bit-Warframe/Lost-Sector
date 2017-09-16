@@ -32,13 +32,13 @@ public abstract class Warframe extends ShieldedEntity {
 		super(maxHealth, maxShield, 2000);
 		this.maxEnergy = maxEnergy;
 		energy = maxEnergy;
-		ta = TextureAtlas.load(getAtlasPath());
+		ta = TextureAtlas.load(getDataPath());
 	}
 
 	@Override
 	public void start() {
 		gameObject.renderer.setTextureAtlas(ta, 200, 200);
-		gameObject.animator.setAnimations(Animations.load(getAnimationPath(), ta,
+		gameObject.animator.setAnimations(Animations.load(getDataPath(), ta,
 				new Validator("idle", "run", "jump", "double-jump", "fall", "land", "die", "grip_primary_body",
 						"grip_primary_arm")));
 		gameObject.animator.play("idle");
@@ -57,9 +57,7 @@ public abstract class Warframe extends ShieldedEntity {
 
 	public abstract void ability4();
 
-	protected abstract String getAtlasPath();
-
-	protected abstract String getAnimationPath();
+	protected abstract String getDataPath();
 
 	public final void shoot() {
 		gameObject.animator.play("grip_primary_body");
