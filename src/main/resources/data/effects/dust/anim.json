@@ -1,0 +1,28 @@
+{
+	"defaults": {
+		"width": 700,
+		"height": 50,
+		"offset": {
+			"x": 0,
+			"y": 0
+		},
+		"duration": 100
+	},
+	"animations": [
+		{
+			"name": "dust",
+			"sprites": [
+				{
+					"name": "dust0"
+				},
+				{
+					"name": "dust1"
+				},
+				{
+					"name": "dust2"
+				}
+			],
+			"type": "ONE_SHOT"
+		}
+	]
+}

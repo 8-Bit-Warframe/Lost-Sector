@@ -1,9 +1,5 @@
 package com.ezardlabs.lostsector.objects;
 
-import com.ezardlabs.dethsquare.Animation;
-import com.ezardlabs.dethsquare.Animation.FrameData;
-import com.ezardlabs.dethsquare.AnimationType;
-import com.ezardlabs.dethsquare.Animator;
 import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.Collider.Collision;
 import com.ezardlabs.dethsquare.Collider.CollisionLocation;
@@ -15,10 +11,11 @@ import com.ezardlabs.dethsquare.Renderer;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
-import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Touch;
 import com.ezardlabs.dethsquare.Touch.TouchPhase;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.animation.Animations;
+import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.util.Dethsquare;
 import com.ezardlabs.lostsector.camera.SmartCamera;
 import com.ezardlabs.lostsector.objects.hud.HUD;
@@ -355,20 +352,11 @@ public class Player extends Script {
 			jumpCount = 0;
 			if (collision.speed > 37) {
 				state = State.LANDING;
-//				gameObject.renderer.setSize(200, 200);
-//				gameObject.renderer.setOffsets(0, 0);
-//				gameObject.animator.play("land");
 				//noinspection ConstantConditions
 				Camera.main.gameObject.getComponent(SmartCamera.class).startQuake(100, 0.3f);
-				TextureAtlas ta = TextureAtlas.load("images/effects/dust.png", "images/effects/dust.txt");
-				GameObject.destroy(GameObject.instantiate(
-						new GameObject("Dust", new Renderer(ta, ta.getSprite("dust0"), 700, 50), new Animator(
-								new Animation("dust",
-										new Sprite[]{ta.getSprite("dust0"), ta.getSprite("dust1"), ta.getSprite(
-												"dust2")},
-										new FrameData[]{new FrameData(700, 50, new Vector2(), 100), new FrameData(700,
-												50, new Vector2(), 100), new FrameData(700, 50, new Vector2(), 100)},
-										AnimationType.ONE_SHOT))),
+				TextureAtlas ta = TextureAtlas.load("data/effects/dust");
+				GameObject.destroy(GameObject.instantiate(new GameObject("Dust", new Renderer(ta),
+								new Animator(Animations.load("data/effects/dust", ta))),
 						new Vector2(transform.position.x - 262, transform.position.y + 150)), 300);
 				new Timer().schedule(new TimerTask() {
 					@Override
