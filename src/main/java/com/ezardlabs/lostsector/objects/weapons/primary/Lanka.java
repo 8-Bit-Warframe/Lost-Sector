@@ -1,6 +1,6 @@
 package com.ezardlabs.lostsector.objects.weapons.primary;
 
-import com.ezardlabs.dethsquare.AnimationType;
+import com.ezardlabs.dethsquare.animation.AnimationType;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.objects.projectiles.LankaBeam;

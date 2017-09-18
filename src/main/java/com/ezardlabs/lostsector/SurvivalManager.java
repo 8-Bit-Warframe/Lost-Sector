@@ -1,6 +1,6 @@
 package com.ezardlabs.lostsector;
 
-import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Renderer;

@@ -1,7 +1,7 @@
 package com.ezardlabs.lostsector.objects.weapons;
 
-import com.ezardlabs.dethsquare.Animation;
-import com.ezardlabs.dethsquare.AnimationType;
+import com.ezardlabs.dethsquare.animation.Animation;
+import com.ezardlabs.dethsquare.animation.AnimationType;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;

@@ -1,8 +1,8 @@
 package com.ezardlabs.lostsector.objects.weapons.melee;
 
-import com.ezardlabs.dethsquare.Animation;
-import com.ezardlabs.dethsquare.Animation.AnimationListener;
-import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.animation.Animation;
+import com.ezardlabs.dethsquare.animation.Animation.AnimationListener;
+import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.animation.Animations;

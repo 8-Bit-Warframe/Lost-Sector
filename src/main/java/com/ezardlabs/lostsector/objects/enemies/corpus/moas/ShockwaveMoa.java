@@ -1,7 +1,7 @@
 package com.ezardlabs.lostsector.objects.enemies.corpus.moas;
 
-import com.ezardlabs.dethsquare.Animation.AnimationListener;
-import com.ezardlabs.dethsquare.Animator;
+import com.ezardlabs.dethsquare.animation.Animation.AnimationListener;
+import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Component;
 import com.ezardlabs.dethsquare.GameObject;

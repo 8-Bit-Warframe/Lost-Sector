@@ -1,6 +1,6 @@
 package com.ezardlabs.lostsector.objects.weapons;
 
-import com.ezardlabs.dethsquare.AnimationType;
+import com.ezardlabs.dethsquare.animation.AnimationType;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 

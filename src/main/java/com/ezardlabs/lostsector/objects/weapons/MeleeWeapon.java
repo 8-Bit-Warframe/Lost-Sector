@@ -1,6 +1,6 @@
 package com.ezardlabs.lostsector.objects.weapons;
 
-import com.ezardlabs.dethsquare.Animation;
+import com.ezardlabs.dethsquare.animation.Animation;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.TextureAtlas;
