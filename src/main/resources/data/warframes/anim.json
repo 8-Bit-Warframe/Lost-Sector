@@ -192,6 +192,15 @@
 				},
 				{
 					"name": "grip_primary_body6"
+				},
+				{
+					"name": "grip_primary_body2"
+				},
+				{
+					"name": "grip_primary_body1"
+				},
+				{
+					"name": "grip_primary_body0"
 				}
 			],
 			"type": "CUSTOM"
@@ -234,6 +243,15 @@
 				},
 				{
 					"name": "grip_primary_arm6"
+				},
+				{
+					"name": "grip_primary_arm2"
+				},
+				{
+					"name": "grip_primary_arm1"
+				},
+				{
+					"name": "grip_primary_arm0"
 				}
 			],
 			"type": "CUSTOM"
