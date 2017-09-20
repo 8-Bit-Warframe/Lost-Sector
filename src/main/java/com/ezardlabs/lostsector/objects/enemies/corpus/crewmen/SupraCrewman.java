@@ -5,7 +5,7 @@ import com.ezardlabs.dethsquare.AudioSource;
 import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.Renderer;
+import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.lostsector.ai.RangedBehaviour;
 import com.ezardlabs.lostsector.ai.RangedBehaviour.Builder.ShootAction;

@@ -18,6 +18,7 @@ public abstract class PrimaryWeapon extends Weapon2 {
 		Animation animation = Animations.load(getDataPath(), ta, new Validator("shoot"))[0];
 		animation.setAnimationType(getAnimationType().clone());
 		gameObject.renderer.setTextureAtlas(ta);
+		gameObject.renderer.setDepth(5);
 		gameObject.animator.setAnimations(animation);
 	}
 

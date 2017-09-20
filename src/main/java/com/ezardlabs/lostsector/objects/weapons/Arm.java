@@ -17,12 +17,12 @@ public class Arm extends Script {
 	@Override
 	public void start() {
 		transform.setParent(warframe.transform);
+		gameObject.renderer.setDepth(6);
 	}
 
 	@Override
 	public void update() {
 		if (setAnimationType) {
-			System.out.println(animationName + ": " + gameObject.animator.getAnimation(animationName));
 			//noinspection ConstantConditions
 			gameObject.animator.getAnimation(animationName).setAnimationType(animationType);
 			setAnimationType = false;

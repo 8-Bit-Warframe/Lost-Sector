@@ -4,7 +4,7 @@ import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.RectF;
-import com.ezardlabs.dethsquare.Renderer;
+import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.animation.Animations;
@@ -55,7 +55,7 @@ public class Avalanche extends Script {
 
 		@Override
 		public void start() {
-			gameObject.renderer.setzIndex(2);
+			gameObject.renderer.setDepth(2);
 			gameObject.animator.play("avalanche_bg");
 		}
 	}
@@ -64,7 +64,7 @@ public class Avalanche extends Script {
 
 		@Override
 		public void start() {
-			gameObject.renderer.setzIndex(5);
+			gameObject.renderer.setDepth(5);
 			gameObject.animator.play("avalanche_fg");
 		}
 	}

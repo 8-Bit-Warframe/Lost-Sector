@@ -2,7 +2,7 @@ package com.ezardlabs.lostsector.objects.warframes;
 
 import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.Renderer;
+import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animation.Animations;

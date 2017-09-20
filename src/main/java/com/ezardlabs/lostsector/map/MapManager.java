@@ -3,7 +3,7 @@ package com.ezardlabs.lostsector.map;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Layers;
-import com.ezardlabs.dethsquare.Renderer;
+import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
@@ -432,7 +432,8 @@ public class MapManager {
 			}
 			TextureAtlas ta = textureAtlases.get(tileSetIdx);
 			Sprite sprite = ta.getSprite(String.valueOf(gid - ts.getFirstGid()));
-			Renderer renderer = new Renderer(ta, sprite, tileWidth, tileHeight).setzIndex(zindex);
+			Renderer renderer = new Renderer(ta, sprite, tileWidth, tileHeight);
+			renderer.setDepth(zindex);
 			if(collision) {
 				GameObject tile = GameObject.instantiate(
 						new GameObject("Tile", true, renderer, new Collider(tileWidth, tileHeight)), new Vector2(x, y),

@@ -95,7 +95,7 @@ public class MapConfig {
             if(strFileNames[i] == null || !strFileNames[i].endsWith(".tmx")) {
                 continue;
             }
-            tmxLoader = new TMXLoader(dirPath + "/" + strFileNames[i]);
+            tmxLoader = new TMXLoader(dirPath + "/" + strFileNames[i], false);
             Map newMap = tmxLoader.getMap();
             if(newMap.getWidth() % MapManager.MAP_SEGMENT_SIZE != 0 || newMap.getHeight() % MapManager.MAP_SEGMENT_SIZE != 0) {
                 System.err.println("The dimensions of '" + newMap.getFilePath() + "' are not a multiple of " + MapManager.MAP_SEGMENT_SIZE + ".");
