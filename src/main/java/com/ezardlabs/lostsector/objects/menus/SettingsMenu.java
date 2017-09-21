@@ -18,7 +18,7 @@ public class SettingsMenu extends Script {
 	private static final String AUDIO_SFX_VOLUME = "audio_sfx_volume";
 	private static final TextureAtlas FONT = TextureAtlas.load("fonts/atlas.png", "fonts/atlas.txt");
 	private final SettingsTab audio = new SettingsTab();
-	private final Runnable backButtonAction;
+	private final BackButtonAction backButtonAction;
 	private final SettingsTab graphics = new SettingsTab();
 	private final SettingsTab controls = new SettingsTab();
 	private final GuiText audioText = new GuiText("AUDIO", FONT, 31.25f);
@@ -27,7 +27,7 @@ public class SettingsMenu extends Script {
 	private final GuiText menuText = new GuiText("MENU", FONT, 31.25f);
 	private final GameObject[] circles = new GameObject[3];
 
-	public SettingsMenu(Runnable backButtonAction) {
+	public SettingsMenu(BackButtonAction backButtonAction) {
 		this.backButtonAction = backButtonAction;
 	}
 
@@ -83,7 +83,7 @@ public class SettingsMenu extends Script {
 			circles[2].transform.position.set(transform.position.offset(1106.25f, 125));
 		}
 		if (Input.getKeyDown(KeyCode.MOUSE_LEFT) && menuText.hitTest(Input.mousePosition)) {
-			backButtonAction.run();
+			backButtonAction.onBackButtonClicked(this);
 		}
 	}
 
@@ -136,5 +136,9 @@ public class SettingsMenu extends Script {
 				go.transform.position.set(10000, 10000);
 			}
 		}
+	}
+
+	interface BackButtonAction {
+		void onBackButtonClicked(SettingsMenu settingsMenu);
 	}
 }
