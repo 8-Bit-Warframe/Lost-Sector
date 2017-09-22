@@ -6,8 +6,6 @@ import com.ezardlabs.dethsquare.Collider.CollisionLocation;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
-import com.ezardlabs.dethsquare.LevelManager;
-import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
@@ -16,12 +14,11 @@ import com.ezardlabs.dethsquare.Touch.TouchPhase;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animator;
+import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.dethsquare.util.Dethsquare;
 import com.ezardlabs.lostsector.camera.SmartCamera;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.hud.WeaponControl.WeaponType;
-import com.ezardlabs.lostsector.objects.menus.Menu;
-import com.ezardlabs.lostsector.objects.menus.Menu.MenuAction;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
 import java.util.Timer;
@@ -36,10 +33,6 @@ public class Player extends Script {
 	private HUD hud;
 
 	public State state = State.IDLE;
-
-	private Menu escMenu = new Menu(new String[]{"Main Menu",
-			"Close"}, new MenuAction[]{(menu, index, text) -> LevelManager.loadLevel("main_menu"),
-			(menu, index, text) -> menu.close()});
 
 	public enum State {
 		IDLE,
@@ -60,18 +53,11 @@ public class Player extends Script {
 		warframe = gameObject.getComponentOfType(Warframe.class);
 		hud = gameObject.getComponentOfType(HUD.class);
 		gameObject.setTag("player");
-		gameObject.addComponent(escMenu);
+//		gameObject.addComponent(escMenu);
 	}
 
 	@Override
 	public void update() {
-		if (escMenu.isOpen()) {
-			if (Input.getKeyDown(KeyCode.ESCAPE)) escMenu.close();
-			return;
-		} else if (Input.getKeyDown(KeyCode.ESCAPE)) {
-			escMenu.open();
-		}
-
 		if (warframe.getHealth() <= 0) {
 			return;
 		}
