@@ -20,6 +20,7 @@ public class Menu extends Script {
 	private GameObject[] pieces;
 	private GameObject[] texts;
 	private GuiText[] guiTexts;
+	private GameObject[] highlights;
 
 	private boolean startOpen = false;
 	private boolean startOpenProcessed = false;
@@ -69,9 +70,21 @@ public class Menu extends Script {
 			texts[i] = GameObject.instantiate(new GameObject("Menu Option", guiTexts[i]), new Vector2());
 		}
 
+		highlights = new GameObject[options.length];
+		for (int i = 0; i < highlights.length - 1; i++) {
+			highlights[i] = GameObject.instantiate(
+					new GameObject("Menu Highlight", new GuiRenderer("images/menus/main/highlight.png", 156, 66)),
+					new Vector2());
+		}
+		highlights[highlights.length - 1] = GameObject.instantiate(
+				new GameObject("Menu Highlight", new GuiRenderer("images/menus/main/highlight_bottom.png", 414, 66)),
+				new Vector2());
+
 		float height = (options.length - 1) * 156 + 144;
 		for (int i = 0; i < options.length; i++) {
 			pieces[i].transform.position.set(Screen.width / 2 - 408, Screen.height / 2 - height / 2 + 156 * i);
+			highlights[i].transform.position.set(pieces[i].transform.position.offset(i == texts.length - 1 ? 66 : 636,
+					i == texts.length - 1 ? 54 : 25));
 			texts[i].transform.position.set(
 					pieces[i].transform.position.offset(150, 40 + (i == texts.length - 1 ? 28 : 0)));
 		}
@@ -87,11 +100,15 @@ public class Menu extends Script {
 			}
 			startOpenProcessed = true;
 		}
-		if (open && guiTexts != null && Input.getKeyDown(KeyCode.MOUSE_LEFT)) {
+		if (open && guiTexts != null) {
 			for (int i = 0; i < guiTexts.length; i++) {
 				if (guiTexts[i].hitTest(Input.mousePosition)) {
-					actions[i].onMenuItemSelected(this, i, options[i]);
-					return;
+					highlights[i].setActive(true);
+					if (Input.getKeyDown(KeyCode.MOUSE_LEFT)) {
+						actions[i].onMenuItemSelected(this, i, options[i]);
+					}
+				} else {
+					highlights[i].setActive(false);
 				}
 			}
 		}
@@ -102,6 +119,9 @@ public class Menu extends Script {
 		for (GameObject piece : pieces) {
 			piece.setActive(true);
 		}
+		for (GameObject highlight : highlights) {
+			highlight.setActive(false);
+		}
 		for (GameObject text : texts) {
 			text.setActive(true);
 		}
@@ -111,6 +131,9 @@ public class Menu extends Script {
 		open = false;
 		for (GameObject piece : pieces) {
 			piece.setActive(false);
+		}
+		for (GameObject highlight : highlights) {
+			highlight.setActive(false);
 		}
 		for (GameObject text : texts) {
 			text.setActive(false);
