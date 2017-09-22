@@ -14,6 +14,7 @@ public class DefenseMission extends Mission {
 		GameObject player = GameObject.instantiate(PrefabManager.loadPrefab("player"), MapManager.playerSpawn);
 
 		instantiateCamera(player);
+		instantiateMenus();
 
 		cryopods = GameObject.findAllWithTag("cryopod");
 		for (int i = 0; i < cryopods.length; i++) {

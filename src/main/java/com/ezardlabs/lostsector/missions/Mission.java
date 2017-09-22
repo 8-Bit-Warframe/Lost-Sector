@@ -6,6 +6,7 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.camera.SmartCamera;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
+import com.ezardlabs.lostsector.objects.menus.EscMenu;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,10 @@ public abstract class Mission {
 	protected final void instantiateCamera(GameObject player) {
 		GameObject.instantiate(new GameObject("Camera", new Camera(true), new SmartCamera(player.transform, 1000,
 				new Vector2(100, 100)), new AudioListener()), new Vector2());
+	}
+
+	final void instantiateMenus() {
+		GameObject.instantiate(new GameObject("Menu", new EscMenu()), new Vector2());
 	}
 
 	protected final void completedMission() {
