@@ -53,7 +53,6 @@ public class Player extends Script {
 		warframe = gameObject.getComponentOfType(Warframe.class);
 		hud = gameObject.getComponentOfType(HUD.class);
 		gameObject.setTag("player");
-//		gameObject.addComponent(escMenu);
 	}
 
 	@Override
