@@ -11,11 +11,11 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 
 public class Menu extends Script {
+	private static final TextureAtlas FONT = TextureAtlas.load("fonts");
+
 	private final String[] options;
 	private final MenuAction[] actions;
 	private final Vector2 offset;
-
-	private TextureAtlas font;
 
 	private GameObject[] pieces;
 	private GameObject[] texts;
@@ -23,7 +23,6 @@ public class Menu extends Script {
 	private GameObject[] highlights;
 
 	private boolean startOpen = false;
-	private boolean startOpenProcessed = false;
 	private boolean open = false;
 
 	protected Menu() {
@@ -54,7 +53,6 @@ public class Menu extends Script {
 		if (options.length < 2 || options.length > 5) {
 			throw new IllegalArgumentException("You must supply between 2 and 5 options to the menu");
 		}
-		font = TextureAtlas.load("fonts/atlas.png", "fonts/atlas.txt");
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public class Menu extends Script {
 		texts = new GameObject[options.length];
 		guiTexts = new GuiText[options.length];
 		for (int i = 0; i < texts.length; i++) {
-			guiTexts[i] = new GuiText(options[i], font, 50, 1);
+			guiTexts[i] = new GuiText(options[i], FONT, 50, 1);
 			texts[i] = GameObject.instantiate(new GameObject("Menu Option", guiTexts[i]), new Vector2());
 		}
 
@@ -95,18 +93,15 @@ public class Menu extends Script {
 			texts[i].transform.position.set(
 					pieces[i].transform.position.offset(150, 40 + (i == texts.length - 1 ? 28 : 0)));
 		}
+		if (startOpen) {
+			open();
+		} else {
+			close();
+		}
 	}
 
 	@Override
 	public void update() {
-		if (!startOpenProcessed) {
-			if (startOpen) {
-				open();
-			} else {
-				close();
-			}
-			startOpenProcessed = true;
-		}
 		if (open && guiTexts != null) {
 			for (int i = 0; i < guiTexts.length; i++) {
 				if (guiTexts[i].hitTest(Input.mousePosition)) {
