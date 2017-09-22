@@ -13,7 +13,10 @@ public class EscMenu extends Menu {
 	public void start() {
 		super.start();
 		settingsMenu = GameObject.instantiate(
-				new GameObject("Settings Menu", new SettingsMenu(menu -> menu.gameObject.setActive(false))),
+				new GameObject("Settings Menu", new SettingsMenu(menu -> {
+					menu.gameObject.setActive(false);
+					open();
+				})),
 				new Vector2());
 		settingsMenu.setActive(false);
 	}
@@ -23,6 +26,7 @@ public class EscMenu extends Menu {
 		if (Input.getKeyDown(KeyCode.ESCAPE)) {
 			if (settingsMenu.isActiveSelf()) {
 				settingsMenu.setActive(false);
+				open();
 			} else {
 				toggle();
 			}
@@ -46,6 +50,7 @@ public class EscMenu extends Menu {
 				new MenuAction() {
 					@Override
 					public void onMenuItemSelected(Menu menu, int index, String text) {
+						close();
 						settingsMenu.setActive(true);
 					}
 				},
