@@ -380,7 +380,7 @@ public class MapManager {
 			Tile[] tiles = layer.getTiles();
 			if(layer.getName().equals("main")) {
 				// Main layer with collision
-				instantiateTiles(tiles, true, w, h, 5, map, tileSets, textureAtlases, offset);
+				instantiateTiles(tiles, true, w, h, -5, map, tileSets, textureAtlases, offset);
 				isBackgroundLayer = false;
 			} else if(isBackgroundLayer) {
 				// Background layer with no collision
