@@ -17,11 +17,12 @@ public class Menu extends Script {
 
 	private TextureAtlas font;
 
-	private GameObject background;
+	private GameObject[] pieces;
 	private GameObject[] texts;
 	private GuiText[] guiTexts;
 
 	private boolean startOpen = false;
+	private boolean startOpenProcessed = false;
 	private boolean open = false;
 
 	public Menu(String[] options, MenuAction[] actions) {
@@ -36,39 +37,55 @@ public class Menu extends Script {
 		this(options, actions, offset, false);
 	}
 
-	public Menu(String[] options, MenuAction[] actions, Vector2 offset, boolean open) {
+	public Menu(String[] options, MenuAction[] actions, Vector2 offset, boolean startOpen) {
 		this.options = options;
 		this.actions = actions;
 		this.offset = offset;
-		this.startOpen = open;
+		this.startOpen = startOpen;
 
-		if (options.length < 1 || options.length > 4) {
-			throw new IllegalArgumentException(
-					"You must supply between 1 and 4 options to the menu");
+		if (options.length < 2 || options.length > 5) {
+			throw new IllegalArgumentException("You must supply between 2 and 5 options to the menu");
 		}
 		font = TextureAtlas.load("fonts/atlas.png", "fonts/atlas.txt");
 	}
 
 	@Override
 	public void start() {
-		float height = (2 * options.length + 1) * 50;
-		background = new GameObject("Menu",
-				new GuiRenderer("images/menus/main/menu" + options.length + ".png", 400, height));
-		background = GameObject.instantiate(background, new Vector2(-10000, -10000));
+		pieces = new GameObject[options.length];
+		pieces[0] = GameObject.instantiate(
+				new GameObject("Menu Piece 0", new GuiRenderer("images/menus/main/top.png", 816, 156)), new Vector2());
+		for (int i = 1; i < pieces.length - 1; i++) {
+			pieces[i] = GameObject.instantiate(
+					new GameObject("Menu Piece " + i, new GuiRenderer("images/menus/main/middle.png", 816, 156)),
+					new Vector2());
+		}
+		pieces[pieces.length - 1] = GameObject.instantiate(new GameObject("Menu Piece " + (pieces.length - 1),
+				new GuiRenderer("images/menus/main/bottom.png", 816, 144)), new Vector2());
+
 		texts = new GameObject[options.length];
 		guiTexts = new GuiText[options.length];
 		for (int i = 0; i < texts.length; i++) {
 			guiTexts[i] = new GuiText(options[i], font, 50, 1);
-			texts[i] = GameObject.instantiate(new GameObject("Menu Option", guiTexts[i]),
-					new Vector2(-10000, -10000));
+			texts[i] = GameObject.instantiate(new GameObject("Menu Option", guiTexts[i]), new Vector2());
+		}
+
+		float height = (options.length - 1) * 156 + 144;
+		for (int i = 0; i < options.length; i++) {
+			pieces[i].transform.position.set(Screen.width / 2 - 408, Screen.height / 2 - height / 2 + 156 * i);
+			texts[i].transform.position.set(
+					pieces[i].transform.position.offset(150, 40 + (i == texts.length - 1 ? 28 : 0)));
 		}
 	}
 
 	@Override
 	public void update() {
-		if (startOpen) {
-			open();
-			startOpen = false;
+		if (!startOpenProcessed) {
+			if (startOpen) {
+				open();
+			} else {
+				close();
+			}
+			startOpenProcessed = true;
 		}
 		if (open && guiTexts != null && Input.getKeyDown(KeyCode.MOUSE_LEFT)) {
 			for (int i = 0; i < guiTexts.length; i++) {
@@ -82,21 +99,29 @@ public class Menu extends Script {
 
 	public void open() {
 		open = true;
-		float height = (2 * options.length + 1) * 50;
-		background.transform.position.set(Screen.width / 2 - 200 + offset.x,
-				Screen.height / 2 - ((2 * options.length + 1) * 50) / 2 + offset.y);
-		for (int i = 0; i < texts.length; i++) {
-			texts[i].transform.position.set(Screen.width / 2f - guiTexts[i].getWidth() / 2f + offset.x,
-					Screen.height / 2 - height / 2 + (1 + i * 2) * 50 + offset.y);
+		for (GameObject piece : pieces) {
+			piece.setActive(true);
+		}
+		for (GameObject text : texts) {
+			text.setActive(true);
 		}
 	}
 
 	public void close() {
 		open = false;
-		// TODO implement GameObject/Component enabling/disabling in Dethsquare so this is neater
-		background.transform.position.set(-10000, -10000);
+		for (GameObject piece : pieces) {
+			piece.setActive(false);
+		}
 		for (GameObject text : texts) {
-			text.transform.position.set(-10000, -10000);
+			text.setActive(false);
+		}
+	}
+
+	public void toggle() {
+		if (isOpen()) {
+			close();
+		} else {
+			open();
 		}
 	}
 
