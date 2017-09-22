@@ -26,6 +26,13 @@ public class Menu extends Script {
 	private boolean startOpenProcessed = false;
 	private boolean open = false;
 
+	protected Menu() {
+		options = getOptions();
+		actions = getActions();
+		offset = getOffset();
+		startOpen = shouldStartOpen();
+	}
+
 	public Menu(String[] options, MenuAction[] actions) {
 		this(options, actions, new Vector2(), false);
 	}
@@ -150,6 +157,22 @@ public class Menu extends Script {
 
 	public boolean isOpen() {
 		return open;
+	}
+
+	protected String[] getOptions() {
+		return new String[0];
+	}
+
+	protected MenuAction[] getActions() {
+		return new MenuAction[0];
+	}
+
+	protected Vector2 getOffset() {
+		return new Vector2();
+	}
+
+	protected boolean shouldStartOpen() {
+		return false;
 	}
 
 	public interface MenuAction {
