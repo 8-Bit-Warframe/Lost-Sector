@@ -33,16 +33,16 @@ public class SettingsMenu extends Script {
 
 	@Override
 	public void start() {
-		GameObject.instantiate(new GameObject("Settings Background",
-				new GuiRenderer("images/menus/settings/base.png", 1200, 1000)), transform.position);
+		GameObject.instantiate(
+				new GameObject("Settings Background", new GuiRenderer("images/menus/settings/base.png", 1200, 1000)),
+				transform.position);
 
-		GameObject.instantiate(new GameObject("Menu Button",
-						new GuiRenderer("images/menus/settings/menu.png", 575, 118.75f)),
+		GameObject.instantiate(
+				new GameObject("Menu Button", new GuiRenderer("images/menus/settings/menu.png", 575, 118.75f)),
 				new Vector2(transform.position.offset(550, 881.25f)));
 
 		GameObject.instantiate(new GameObject("Menu Button Text", menuText), new Vector2(
-				transform.position.offset(837.5f - menuText.getWidth() / 2,
-						943.75f - menuText.getFontSize() / 2)));
+				transform.position.offset(837.5f - menuText.getWidth() / 2, 943.75f - menuText.getFontSize() / 2)));
 
 		for (int i = 0; i < circles.length; i++) {
 			circles[i] = GameObject.instantiate(new GameObject("Circle " + i,
@@ -92,17 +92,17 @@ public class SettingsMenu extends Script {
 				new Vector2(transform.position.x + 212.5f - audioText.getWidth() / 2f,
 						transform.position.y + 77.5f - audioText.getFontSize() / 2));
 
-		audio.addObject(new GameObject("Master Audio Slider", new Slider(0, 15, 5, "MASTER",
-						"images/menus/settings/slider_icon_audio_master" + ".png", AUDIO_MASTER_VOLUME,
-						newValue -> AudioManager.setMasterVolume(newValue / 15f))),
+		audio.addObject(new GameObject("Master Audio Slider",
+						new Slider(0, 15, 5, "MASTER", "images/menus/settings/slider_icon_audio_master" + ".png",
+								AUDIO_MASTER_VOLUME, newValue -> AudioManager.setMasterVolume(newValue / 15f))),
 				new Vector2(transform.position.x + 206.25f, transform.position.y + 256.25f));
-		audio.addObject(new GameObject("Music Audio Slider", new Slider(0, 15, 5, "MUSIC",
-						"images/menus/settings/slider_icon_audio_music" + ".png", AUDIO_MUSIC_VOLUME,
-						newValue -> AudioManager.setMusicVolume(newValue / 15f))),
+		audio.addObject(new GameObject("Music Audio Slider",
+						new Slider(0, 15, 5, "MUSIC", "images/menus/settings/slider_icon_audio_music" + ".png",
+								AUDIO_MUSIC_VOLUME, newValue -> AudioManager.setMusicVolume(newValue / 15f))),
 				new Vector2(transform.position.x + 206.25f, transform.position.y + 456.25f));
-		audio.addObject(new GameObject("SFX Audio Slider", new Slider(0, 15, 5, "SOUND EFFECTS",
-						"images/menus/settings/slider_icon_audio_sfx.png", AUDIO_SFX_VOLUME,
-						newValue -> AudioManager.setSfxVolume(newValue / 15f))),
+		audio.addObject(new GameObject("SFX Audio Slider",
+						new Slider(0, 15, 5, "SOUND EFFECTS", "images/menus/settings/slider_icon_audio_sfx.png",
+								AUDIO_SFX_VOLUME, newValue -> AudioManager.setSfxVolume(newValue / 15f))),
 				new Vector2(transform.position.x + 206.25f, transform.position.y + 656.25f));
 	}
 
