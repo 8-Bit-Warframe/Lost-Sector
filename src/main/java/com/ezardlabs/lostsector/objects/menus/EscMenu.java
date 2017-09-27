@@ -4,6 +4,7 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
 import com.ezardlabs.dethsquare.LevelManager;
+import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Vector2;
 
 public class EscMenu extends Menu {
@@ -17,7 +18,7 @@ public class EscMenu extends Menu {
 					menu.gameObject.setActive(false);
 					open();
 				})),
-				new Vector2());
+				new Vector2(Screen.width / 2 - 600, Screen.height / 2 - 500));
 		settingsMenu.setActive(false);
 	}
 
