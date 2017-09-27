@@ -22,6 +22,9 @@ public class Arm extends Script {
 
 	@Override
 	public void update() {
+		if (transform.getParent() != null) {
+			transform.scale.x = transform.getParent().scale.x;
+		}
 		if (setAnimationType) {
 			//noinspection ConstantConditions
 			gameObject.animator.getAnimation(animationName).setAnimationType(animationType);

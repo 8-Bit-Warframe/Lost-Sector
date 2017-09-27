@@ -22,6 +22,13 @@ public abstract class PrimaryWeapon extends Weapon2 {
 		gameObject.animator.setAnimations(animation);
 	}
 
+	@Override
+	public void update() {
+		if (transform.getParent() != null) {
+			transform.scale.x = transform.getParent().scale.x;
+		}
+	}
+
 	protected abstract String getDataPath();
 
 	public abstract AnimationType getAnimationType();
