@@ -40,7 +40,7 @@ public class SettingsMenu extends Script {
 
 		GameObject.instantiate(new GameObject("Settings Tab Manager",
 						new SettingsTabManager(new AudioSettingsTab(), new GraphicsSettingsTab(), new ControlsSettingsTab())),
-				new Vector2()).transform.setParent(transform);
+				new Vector2(transform.position)).transform.setParent(transform);
 		gameObject.setActive(false);
 	}
 
