@@ -40,6 +40,7 @@ public class Slider extends Script {
 
 	@Override
 	public void start() {
+		runWhenPaused = true;
 		GameObject.instantiate(new GameObject("Slider Background",
 						new GuiRenderer("images/menus/settings/slider_base.png", 662.5f, 87.5f)),
 				new Vector2(transform.position)).transform.setParent(transform);
