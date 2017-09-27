@@ -8,6 +8,7 @@ import com.ezardlabs.dethsquare.Input.KeyCode;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.Time;
 import com.ezardlabs.dethsquare.Vector2;
 
 public class Menu extends Script {
@@ -57,6 +58,7 @@ public class Menu extends Script {
 
 	@Override
 	public void start() {
+		runWhenPaused = true;
 		pieces = new GameObject[options.length];
 		pieces[0] = GameObject.instantiate(
 				new GameObject("Menu Piece 0", new GuiRenderer("images/menus/main/top.png", 816, 156)), new Vector2());
@@ -127,6 +129,7 @@ public class Menu extends Script {
 		for (GameObject text : texts) {
 			text.setActive(true);
 		}
+		Time.pause();
 	}
 
 	public void close() {
@@ -140,6 +143,7 @@ public class Menu extends Script {
 		for (GameObject text : texts) {
 			text.setActive(false);
 		}
+		Time.resume();
 	}
 
 	public void toggle() {
