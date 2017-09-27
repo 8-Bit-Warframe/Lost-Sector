@@ -80,7 +80,7 @@ public class SettingsMenu extends Script {
 				}
 				GameObject.instantiate(new GameObject("Circle " + i,
 								new GuiRenderer("images/menus/settings/circle" + i + ".png", 81.25f, 81.25f)),
-						new Vector2(1106.25f, 125)).transform.setParent(roots[i].transform);
+						transform.position.offset(1106.25f, 125)).transform.setParent(roots[i].transform);
 			}
 		}
 
