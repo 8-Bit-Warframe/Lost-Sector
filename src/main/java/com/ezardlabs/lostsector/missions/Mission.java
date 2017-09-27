@@ -1,6 +1,9 @@
 package com.ezardlabs.lostsector.missions;
 
 import com.ezardlabs.dethsquare.AudioListener;
+import com.ezardlabs.dethsquare.AudioManager.AudioGroup;
+import com.ezardlabs.dethsquare.AudioSource;
+import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Vector2;
@@ -29,8 +32,10 @@ public abstract class Mission {
 	public abstract void load();
 
 	protected final void instantiateCamera(GameObject player) {
-		GameObject.instantiate(new GameObject("Camera", new Camera(true), new SmartCamera(player.transform, 1000,
-				new Vector2(100, 100)), new AudioListener()), new Vector2());
+		GameObject.instantiate(new GameObject("Camera", new Camera(true),
+						new SmartCamera(player.transform, 1000, new Vector2(100, 100)), new AudioListener(),
+						new AudioSource(new AudioClip("audio/this_is_what_you_are.ogg"), true, 1, AudioGroup.MUSIC)),
+				new Vector2());
 	}
 
 	final void instantiateMenus() {
