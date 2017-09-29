@@ -15,10 +15,8 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.graphics.Renderer;
-import com.ezardlabs.dethsquare.util.Dethsquare;
 import com.ezardlabs.lostsector.camera.SmartCamera;
 import com.ezardlabs.lostsector.objects.hud.HUD;
-import com.ezardlabs.lostsector.objects.hud.WeaponControl.WeaponType;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
 import java.util.Timer;
@@ -72,8 +70,6 @@ public class Player extends Script {
 
 			warframe.stopShooting();
 		}
-
-		switchWeaponCheck();
 
 		switch (state) {
 			case IDLE:
@@ -172,28 +168,7 @@ public class Player extends Script {
 	}
 
 	private int getMovement() {
-		switch (Dethsquare.PLATFORM) {
-			case ANDROID:
-				int movement = 0;
-				if (Input.touches.length == 0) return movement;
-				for (Touch t : Input.touches) {
-					if (t.position.x < Screen.width / 6f) {
-						movement--;
-						break;
-					}
-				}
-				for (Touch t : Input.touches) {
-					if (t.position.x > Screen.width / 6f && t.position.x < Screen.width / 2f) {
-						movement++;
-						break;
-					}
-				}
-				return movement;
-			case DESKTOP:
-				return (Input.getKey(KeyCode.A) ? -1 : 0) + (Input.getKey(KeyCode.D) ? 1 : 0);
-			default:
-				return 0;
-		}
+		return (Input.getKey(KeyCode.A) ? -1 : 0) + (Input.getKey(KeyCode.D) ? 1 : 0);
 	}
 
 	private boolean jumpCheck() {
@@ -222,16 +197,7 @@ public class Player extends Script {
 	}
 
 	private boolean meleeCheck() {
-		boolean touchMelee = false;
-		if (Dethsquare.PLATFORM == Dethsquare.Platform.ANDROID && hud.getCurrentWeaponType() == WeaponType.MELEE) {
-			for (Touch t : Input.touches) {
-				if (t.phase == Touch.TouchPhase.BEGAN && hud.isAttackButtonPressed(t.position)) {
-					touchMelee = true;
-					break;
-				}
-			}
-		}
-		if (Input.getKey(KeyCode.MOUSE_LEFT) || Input.getKey(KeyCode.K) || touchMelee) {
+		if (Input.getKey(KeyCode.MOUSE_LEFT) || Input.getKey(KeyCode.K)) {
 			state = State.MELEE;
 			return true;
 		}
@@ -239,83 +205,36 @@ public class Player extends Script {
 	}
 
 	private boolean shootCheck() {
-		boolean touchRanged = false;
-		if (Dethsquare.PLATFORM == Dethsquare.Platform.ANDROID && hud.getCurrentWeaponType() == WeaponType.RANGED) {
-			for (Touch t : Input.touches) {
-				if (t.phase == Touch.TouchPhase.BEGAN && hud.isAttackButtonPressed(t.position)) {
-					touchRanged = true;
-					break;
-				}
-			}
-		}
-		if (Input.getKeyDown(KeyCode.MOUSE_RIGHT) || Input.getKeyDown(KeyCode.L) || touchRanged) {
+		if (Input.getKeyDown(KeyCode.MOUSE_RIGHT) || Input.getKeyDown(KeyCode.L)) {
 			state = State.SHOOTING;
 			return true;
 		}
 		return false;
 	}
 
-	private void switchWeaponCheck() {
-		boolean touchSwitch = false;
-		if (Dethsquare.PLATFORM == Dethsquare.Platform.ANDROID) {
-			touchSwitch = hud.isSwitchButtonPressed();
-		}
-		if (Input.getKeyDown(KeyCode.L) || touchSwitch) {
-			hud.switchWeapons();
-		}
-	}
-
 	private void ability1Check() {
-		boolean ability1 = false;
-		for (Touch t : Input.touches) {
-			if (t.phase == TouchPhase.ENDED && t.position.x - t.startPosition.x > 150 * Screen.scale) {
-				ability1 = true;
-			}
-		}
-		if ((ability1 || Input.getKeyDown(KeyCode.ALPHA_1)) &&
-				warframe.hasEnergy(5)) {
+		if (Input.getKeyDown(KeyCode.ALPHA_1) && warframe.hasEnergy(5)) {
 			warframe.removeEnergy(5);
 			warframe.ability1();
 		}
 	}
 
 	private void ability2Check() {
-		boolean ability2 = false;
-		for (Touch t : Input.touches) {
-			if (t.phase == TouchPhase.ENDED && t.position.y - t.startPosition.y > 150 * Screen.scale) {
-				ability2 = true;
-			}
-		}
-		if ((ability2 || Input.getKeyDown(KeyCode.ALPHA_2)) &&
-				warframe.hasEnergy(10)) {
+		if (Input.getKeyDown(KeyCode.ALPHA_2) && warframe.hasEnergy(10)) {
 			warframe.removeEnergy(10);
 			warframe.ability2();
 		}
 	}
 
 	private void ability3Check() {
-		boolean ability3 = false;
-		for (Touch t : Input.touches) {
-			if (t.phase == TouchPhase.ENDED && t.position.x - t.startPosition.x < -150 * Screen.scale) {
-				ability3 = true;
-			}
-		}
-		if ((ability3 || Input.getKeyDown(KeyCode.ALPHA_3)) &&
-				warframe.hasEnergy(25)) {
+		if (Input.getKeyDown(KeyCode.ALPHA_3) && warframe.hasEnergy(25)) {
 			warframe.removeEnergy(25);
 			warframe.ability3();
 		}
 	}
 
 	private void ability4Check() {
-		boolean ability4 = false;
-		for (Touch t : Input.touches) {
-			if (t.phase == TouchPhase.ENDED && t.position.y - t.startPosition.y < -150 * Screen.scale) { // up
-				ability4 = true;
-			}
-		}
-		if ((state == State.IDLE || state == State.RUNNING) &&
-				(ability4 || Input.getKeyDown(KeyCode.ALPHA_4)) &&
+		if ((state == State.IDLE || state == State.RUNNING) && Input.getKeyDown(KeyCode.ALPHA_4) &&
 				warframe.hasEnergy(50)) {
 			warframe.removeEnergy(50);
 			warframe.ability4();
