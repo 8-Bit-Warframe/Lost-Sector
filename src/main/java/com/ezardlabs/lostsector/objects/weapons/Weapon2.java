@@ -8,4 +8,8 @@ public abstract class Weapon2 extends Script {
 	protected Weapon2(String name) {
 		this.name = name;
 	}
+
+	public String getName() {
+		return name;
+	}
 }
