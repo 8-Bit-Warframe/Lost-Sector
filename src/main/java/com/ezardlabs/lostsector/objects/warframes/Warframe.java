@@ -25,7 +25,6 @@ public abstract class Warframe extends ShieldedEntity {
 	protected final int maxEnergy;
 	protected int energy;
 	public MeleeWeapon meleeWeapon;
-	private long nextShieldRegen = 0;
 	private Class<? extends PrimaryWeapon> primaryClass;
 
 	private Arm arm = new Arm(this);
