@@ -23,7 +23,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Player extends Script {
-	public static GameObject player;
 	public int jumpCount = 0;
 	private int x = 0;
 	private float speed = 12.5f;
@@ -47,7 +46,6 @@ public class Player extends Script {
 
 	@Override
 	public void start() {
-		player = gameObject;
 		warframe = gameObject.getComponentOfType(Warframe.class);
 		hud = gameObject.getComponentOfType(HUD.class);
 		gameObject.setTag("player");
