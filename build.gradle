@@ -13,7 +13,7 @@ task indexResources {
             }
         }
         BufferedWriter writer = new BufferedWriter(new FileWriter(new File(dir.toString()
-                + File.separator + "files.lsd")))
+                + "/files.lsd")))
         for (int i = 0; i < files.size(); i++) {
             writer.write(files.get(i))
             if (i < files.size() - 1) {
@@ -23,8 +23,7 @@ task indexResources {
         writer.close()
     }
 
-    File root = new File(projectDir.toString() + File.separator + "src" + File.separator + "main"
-            + File.separator + "resources" + File.separator)
+    File root = new File(projectDir.toString() + "/src/main/resources/")
     ext.index(root)
 }
 
