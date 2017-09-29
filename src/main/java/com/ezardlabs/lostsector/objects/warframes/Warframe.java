@@ -25,6 +25,7 @@ public abstract class Warframe extends ShieldedEntity {
 	protected final int maxEnergy;
 	protected int energy;
 	public MeleeWeapon meleeWeapon;
+	private PrimaryWeapon primaryWeapon;
 	private Class<? extends PrimaryWeapon> primaryClass;
 
 	private Arm arm = new Arm(this);
@@ -95,15 +96,24 @@ public abstract class Warframe extends ShieldedEntity {
 			primary.removeComponent(primaryClass);
 		}
 		primary.addComponent(primaryWeapon);
+		this.primaryWeapon = primaryWeapon;
 		this.primaryClass = primaryWeapon.getClass();
 
 		gameObject.animator.getAnimation("grip_primary_body").setAnimationType(primaryWeapon.getAnimationType().clone());
 		arm.setAnimationType("grip_primary_arm", primaryWeapon.getAnimationType().clone());
 	}
 
+	public PrimaryWeapon getPrimaryWeapon() {
+		return primaryWeapon;
+	}
+
 	public final void setMeleeWeapon(MeleeWeapon meleeWeapon) {
 		this.meleeWeapon = meleeWeapon;
 		gameObject.animator.addAnimations(meleeWeapon.getAnimations(ta));
+	}
+
+	public MeleeWeapon getMeleeWeapon() {
+		return meleeWeapon;
 	}
 
 	public boolean addEnergy(int energy) {
