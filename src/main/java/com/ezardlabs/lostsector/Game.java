@@ -1,5 +1,7 @@
 package com.ezardlabs.lostsector;
 
+import com.ezardlabs.dethsquare.AudioManager;
+import com.ezardlabs.dethsquare.PlayerPrefs;
 import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.AudioListener;
 import com.ezardlabs.dethsquare.Collider;
@@ -57,6 +59,8 @@ public class Game extends BaseGame {
 		LevelManager.registerLevel("multiplayer", new MultiplayerLevel());
 		LevelManager.registerLevel("main_menu", new MainMenuLevel());
 
+		loadSettings();
+
 		registerPlayerPrefabs();
 		registerWarframeAbilityPrefabs();
 		registerProjectilePrefabs();
@@ -67,6 +71,12 @@ public class Game extends BaseGame {
 		registerSpawnPointPrefabs();
 
 		LevelManager.loadLevel("defense");
+	}
+
+	private void loadSettings() {
+		AudioManager.setMasterVolume(PlayerPrefs.getInt("audio_master_volume", 5) / 15f);
+		AudioManager.setMusicVolume(PlayerPrefs.getInt("audio_music_volume", 5) / 15f);
+		AudioManager.setSfxVolume(PlayerPrefs.getInt("audio_sfx_volume", 5) / 15f);
 	}
 
 	private void registerPlayerPrefabs() {
