@@ -39,6 +39,7 @@ public class Freeze extends Script {
 				!other.gameObject.name.equals("Snowglobe")) {
 			gameObject.animator.play("shatter");
 			gameObject.removeComponent(Freeze.class);
+			transform.position.x = other.transform.position.x - gameObject.collider.getBounds().width();
 			GameObject.destroy(gameObject, 400);
 		}
 	}
