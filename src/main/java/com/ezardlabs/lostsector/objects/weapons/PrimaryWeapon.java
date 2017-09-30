@@ -22,7 +22,7 @@ public abstract class PrimaryWeapon extends Weapon2 implements AnimationListener
 		animation.setAnimationType(getAnimationType().clone());
 		animation.setAnimationListener(this);
 		gameObject.renderer.setTextureAtlas(ta);
-		gameObject.renderer.setDepth(5);
+		gameObject.renderer.setDepth(1);
 		gameObject.animator.setAnimations(animation);
 	}
 

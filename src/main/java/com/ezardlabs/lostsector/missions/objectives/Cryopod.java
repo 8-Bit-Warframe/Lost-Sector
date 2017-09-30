@@ -19,7 +19,7 @@ public class Cryopod extends ShieldedEntity {
 	public void start() {
 		gameObject.renderer.setImage("data/objectives/cryopod/cryopod.png", 300, 100);
 		gameObject.renderer.setOffsets(50, 100);
-		gameObject.renderer.setDepth(-2);
+		gameObject.renderer.setDepth(-10);
 		gameObject.setLayer(Layers.getLayer("Objective"));
 	}
 

@@ -17,7 +17,7 @@ public class Arm extends Script {
 	@Override
 	public void start() {
 		transform.setParent(warframe.transform);
-		gameObject.renderer.setDepth(6);
+		gameObject.renderer.setDepth(2);
 	}
 
 	@Override

@@ -15,7 +15,7 @@ public class Snowglobe extends Component {
 		gameObject.animator.setAnimations(
 				Animations.load("data/warframes/frost/abilities/snowglobe", ta, new Validator("snowglobe")));
 		gameObject.animator.play("snowglobe");
-		gameObject.renderer.setDepth(4);
+		gameObject.renderer.setDepth(15);
 		gameObject.setTag("solid");
 		Network.destroy(gameObject, 5000);
 	}

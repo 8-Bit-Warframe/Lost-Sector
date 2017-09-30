@@ -39,7 +39,7 @@ public abstract class Enemy extends Entity {
 				new Validator("idle", "run", "jump", "fall", "land", "die_shoot_front", "die_shoot_back",
 						"die_slash_front", "die_slash_back", "frozen_shatter")));
 		gameObject.animator.play("idle");
-		gameObject.renderer.setDepth(3);
+		gameObject.renderer.setDepth(-1);
 
 		behaviour.init(transform);
 

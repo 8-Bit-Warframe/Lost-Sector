@@ -16,7 +16,7 @@ public class Frost extends Warframe {
 	@Override
 	public void start() {
 		super.start();
-		gameObject.renderer.setDepth(-5);
+		gameObject.renderer.setDepth(0);
 		setPrimaryWeapon(new Lanka());
 		setMeleeWeapon(new Nikana(gameObject));
 	}

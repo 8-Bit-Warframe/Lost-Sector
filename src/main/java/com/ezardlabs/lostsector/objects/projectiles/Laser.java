@@ -17,6 +17,7 @@ public class Laser extends Script {
 	@Override
 	public void start() {
 		gameObject.setTag("projectile");
+		gameObject.renderer.setDepth(5);
 	}
 
 	@Override

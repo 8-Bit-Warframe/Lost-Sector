@@ -22,6 +22,7 @@ public class IceWave extends Component {
 	public void start() {
 		TextureAtlas ta = TextureAtlas.load("data/warframes/frost/abilities/ice-wave");
 		gameObject.renderer.setTextureAtlas(ta, 800, 400);
+		gameObject.renderer.setDepth(5);
 		gameObject.animator.setAnimations(
 				Animations.load("data/warframes/frost/abilities/ice-wave", ta, new Validator("move")));
 		gameObject.animator.play("move");

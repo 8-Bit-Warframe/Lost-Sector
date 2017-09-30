@@ -380,14 +380,14 @@ public class MapManager {
 			Tile[] tiles = layer.getTiles();
 			if(layer.getName().equals("main")) {
 				// Main layer with collision
-				instantiateTiles(tiles, true, w, h, -5, map, tileSets, textureAtlases, offset);
+				instantiateTiles(tiles, true, w, h, -90, map, tileSets, textureAtlases, offset);
 				isBackgroundLayer = false;
 			} else if(isBackgroundLayer) {
 				// Background layer with no collision
-				instantiateTiles(tiles, false, w, h, -10, map, tileSets, textureAtlases, offset);
+				instantiateTiles(tiles, false, w, h, -100, map, tileSets, textureAtlases, offset);
 			} else if(!isBackgroundLayer) {
 				// Foreground layer with no collision
-				instantiateTiles(tiles, false, w, h, 10, map, tileSets, textureAtlases, offset);
+				instantiateTiles(tiles, false, w, h, 100, map, tileSets, textureAtlases, offset);
 			}
 		}
 
