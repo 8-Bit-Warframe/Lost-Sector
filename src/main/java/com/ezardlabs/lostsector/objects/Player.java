@@ -21,7 +21,6 @@ import java.util.Arrays;
 
 public class Player extends Script {
 	public int jumpCount = 0;
-	private int x = 0;
 	private float speed = 12.5f;
 	private Warframe warframe;
 
@@ -90,7 +89,7 @@ public class Player extends Script {
 			return;
 		}
 
-		x = getMovement();
+		int x = getMovement();
 
 		stateMachine.update();
 
