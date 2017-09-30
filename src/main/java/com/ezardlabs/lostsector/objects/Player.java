@@ -17,8 +17,6 @@ import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.lostsector.camera.SmartCamera;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
-import java.util.Arrays;
-
 public class Player extends Script {
 	public int jumpCount = 0;
 	private float speed = 12.5f;
@@ -205,7 +203,6 @@ public class Player extends Script {
 
 	private void ability3Check() {
 		if (Input.getKeyDown(KeyCode.ALPHA_3) && warframe.hasEnergy(25)) {
-			System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));
 			warframe.removeEnergy(25);
 			warframe.ability3();
 		}
