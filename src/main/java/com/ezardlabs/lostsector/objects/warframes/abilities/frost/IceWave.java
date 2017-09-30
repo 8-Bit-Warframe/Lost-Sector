@@ -15,7 +15,6 @@ import com.ezardlabs.lostsector.objects.enemies.Enemy;
 import java.util.ArrayList;
 
 public class IceWave extends Component {
-//	private int direction = 0;
 	private ArrayList<GameObject> damagedEnemies = new ArrayList<>();
 
 	@Override
