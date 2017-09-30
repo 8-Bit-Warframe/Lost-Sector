@@ -191,7 +191,6 @@ public class Player extends Script {
 
 	private void ability1Check() {
 		if (Input.getKeyDown(KeyCode.ALPHA_1) && warframe.hasEnergy(5)) {
-			System.out.println("ability 1");
 			warframe.removeEnergy(5);
 			warframe.ability1();
 		}
@@ -199,7 +198,6 @@ public class Player extends Script {
 
 	private void ability2Check() {
 		if (Input.getKeyDown(KeyCode.ALPHA_2) && warframe.hasEnergy(10)) {
-			System.out.println("ability 2");
 			warframe.removeEnergy(10);
 			warframe.ability2();
 		}
