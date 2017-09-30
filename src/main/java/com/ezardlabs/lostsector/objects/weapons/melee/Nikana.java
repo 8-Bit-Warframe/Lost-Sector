@@ -1,15 +1,13 @@
 package com.ezardlabs.lostsector.objects.weapons.melee;
 
-import com.ezardlabs.dethsquare.animation.Animation;
-import com.ezardlabs.dethsquare.animation.Animation.AnimationListener;
-import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.animation.Animation;
+import com.ezardlabs.dethsquare.animation.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
+import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.lostsector.Game;
-import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.Player.State;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 
 import java.util.Timer;
@@ -17,7 +15,9 @@ import java.util.TimerTask;
 
 public class Nikana extends MeleeWeapon implements AnimationListener {
 	private Timer t;
-	private boolean readyForNextAnimation = false;
+	private boolean waiting = false;
+	private boolean shouldStow = false;
+	private boolean stowed = false;
 
 	public Nikana(GameObject wielder) {
 		super("Nikana", Game.DamageType.SLASH, wielder);
@@ -43,8 +43,7 @@ public class Nikana extends MeleeWeapon implements AnimationListener {
 
 					@Override
 					public void onAnimationFinished(Animator animator) {
-						//noinspection ConstantConditions
-						animator.gameObject.getComponent(Player.class).state = State.IDLE;
+						stowed = true;
 					}
 				});
 			}
@@ -54,9 +53,9 @@ public class Nikana extends MeleeWeapon implements AnimationListener {
 
 	@Override
 	public String getNextAnimation(int direction) {
-		if (!readyForNextAnimation && currentAnimation != null) return currentAnimation;
+		if (!waiting && currentAnimation != null) return currentAnimation;
 		if (currentAnimation == null) {
-			readyForNextAnimation = false;
+			waiting = false;
 			return currentAnimation = "slice1";
 		}
 		switch (currentAnimation) {
@@ -81,7 +80,24 @@ public class Nikana extends MeleeWeapon implements AnimationListener {
 	}
 
 	@Override
+	public boolean isWaiting() {
+		return waiting;
+	}
+
+	@Override
+	public boolean shouldStow() {
+		return shouldStow;
+	}
+
+	@Override
+	public boolean isStowed() {
+		return stowed;
+	}
+
+	@Override
 	public void onAnimatedStarted(Animator animator) {
+		stowed = false;
+		shouldStow = false;
 		if (t != null) {
 			t.cancel();
 		}
@@ -113,7 +129,7 @@ public class Nikana extends MeleeWeapon implements AnimationListener {
 				animator.transform.position.x + animator.gameObject.renderer.width + offSet,
 				animator.transform.position.y + animator.gameObject.renderer.height);
 
-		readyForNextAnimation = false;
+		waiting = false;
 		if (currentAnimation.contains("slice1")) {
 			animator.gameObject.rigidbody.velocity.x = 15 * animator.transform.scale.x;
 		} else if (currentAnimation.contains("slice")) {
@@ -135,13 +151,13 @@ public class Nikana extends MeleeWeapon implements AnimationListener {
 
 	@Override
 	public void onAnimationFinished(final Animator animator) {
-		readyForNextAnimation = true;
+		waiting = true;
 		//noinspection ConstantConditions
-		animator.gameObject.getComponent(Player.class).state = State.MELEE_WAITING;
+		/*animator.gameObject.getComponent(Player.class).state = State.MELEE_WAITING;*/
 		(t = new Timer()).schedule(new TimerTask() {
 			@Override
 			public void run() {
-				animator.play("stow");
+				shouldStow = true;
 				currentAnimation = null;
 			}
 		}, 200);

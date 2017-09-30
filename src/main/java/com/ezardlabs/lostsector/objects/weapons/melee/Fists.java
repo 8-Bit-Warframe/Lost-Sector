@@ -1,18 +1,17 @@
 package com.ezardlabs.lostsector.objects.weapons.melee;
 
-import com.ezardlabs.dethsquare.animation.Animation;
-import com.ezardlabs.dethsquare.animation.Animation.AnimationListener;
-import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.animation.Animation;
+import com.ezardlabs.dethsquare.animation.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
+import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.lostsector.Game.DamageType;
-import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.Player.State;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 
 public class Fists extends MeleeWeapon {
+	private boolean finished = false;
 
 	public Fists(GameObject wielder) {
 		super("Fists", DamageType.NORMAL, wielder);
@@ -24,6 +23,7 @@ public class Fists extends MeleeWeapon {
 		animations[0].setAnimationListener(new AnimationListener() {
 			@Override
 			public void onAnimatedStarted(Animator animator) {
+				finished = false;
 			}
 
 			@Override
@@ -37,8 +37,7 @@ public class Fists extends MeleeWeapon {
 
 			@Override
 			public void onAnimationFinished(Animator animator) {
-				//noinspection ConstantConditions
-				animator.gameObject.getComponent(Player.class).state = State.IDLE;
+				finished = true;
 			}
 		});
 		return animations;
@@ -47,5 +46,20 @@ public class Fists extends MeleeWeapon {
 	@Override
 	public String getNextAnimation(int direction) {
 		return "punch";
+	}
+
+	@Override
+	public boolean isWaiting() {
+		return true;
+	}
+
+	@Override
+	public boolean shouldStow() {
+		return finished;
+	}
+
+	@Override
+	public boolean isStowed() {
+		return finished;
 	}
 }

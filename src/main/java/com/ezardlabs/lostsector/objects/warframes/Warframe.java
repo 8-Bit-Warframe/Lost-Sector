@@ -3,15 +3,12 @@ package com.ezardlabs.lostsector.objects.warframes;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.animation.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.map.MapManager;
-import com.ezardlabs.lostsector.objects.Player;
-import com.ezardlabs.lostsector.objects.Player.State;
 import com.ezardlabs.lostsector.objects.ShieldedEntity;
 import com.ezardlabs.lostsector.objects.weapons.Arm;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
@@ -48,22 +45,6 @@ public abstract class Warframe extends ShieldedEntity {
 
 		GameObject.instantiate(new GameObject("Arm", new Renderer(ta),
 				new Animator(gameObject.animator.getAnimation("grip_primary_arm")), arm), transform.position);
-		//noinspection ConstantConditions
-		gameObject.animator.getAnimation("grip_primary_body").setAnimationListener(new AnimationListener() {
-			@Override
-			public void onAnimatedStarted(Animator animator) {
-			}
-
-			@Override
-			public void onFrame(Animator animator, int frameNum) {
-			}
-
-			@Override
-			public void onAnimationFinished(Animator animator) {
-				//noinspection ConstantConditions
-				gameObject.getComponent(Player.class).state = State.IDLE;
-			}
-		});
 	}
 
 	public abstract String getName();

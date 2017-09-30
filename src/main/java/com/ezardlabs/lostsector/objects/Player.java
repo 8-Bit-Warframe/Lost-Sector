@@ -6,11 +6,10 @@ import com.ezardlabs.dethsquare.Collider.CollisionLocation;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
-import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
+import com.ezardlabs.dethsquare.StateMachine;
+import com.ezardlabs.dethsquare.StateMachine.Transition;
 import com.ezardlabs.dethsquare.TextureAtlas;
-import com.ezardlabs.dethsquare.Touch;
-import com.ezardlabs.dethsquare.Touch.TouchPhase;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animator;
@@ -19,8 +18,7 @@ import com.ezardlabs.lostsector.camera.SmartCamera;
 import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Arrays;
 
 public class Player extends Script {
 	public int jumpCount = 0;
@@ -29,7 +27,7 @@ public class Player extends Script {
 	private Warframe warframe;
 	private HUD hud;
 
-	public State state = State.IDLE;
+	private StateMachine<State> stateMachine = new StateMachine<>();
 
 	public enum State {
 		IDLE,
@@ -40,8 +38,46 @@ public class Player extends Script {
 		LANDING,
 		MELEE,
 		MELEE_WAITING,
+		MELEE_STOW,
 		SHOOTING,
 		CASTING
+	}
+
+	public Player() {
+		Transition<State> idle = new Transition<>(State.IDLE, this::idleCheck);
+		Transition<State> running = new Transition<>(State.RUNNING, this::runCheck);
+		Transition<State> jumping = new Transition<>(State.JUMPING, this::jumpCheck, this::jump);
+		Transition<State> doubleJumping = new Transition<>(State.DOUBLE_JUMPING, this::doubleJumpCheck, this::jump);
+		Transition<State> falling = new Transition<>(State.FALLING, this::fallCheck);
+		Transition<State> melee = new Transition<>(State.MELEE, this::meleeCheck);
+		Transition<State> meleeWaiting = new Transition<>(State.MELEE_WAITING,
+				() -> warframe.getMeleeWeapon().isWaiting());
+		Transition<State> meleeStow = new Transition<>(State.MELEE_STOW, () -> warframe.getMeleeWeapon().shouldStow());
+		Transition<State> shooting = new Transition<>(State.SHOOTING, this::shootCheck);
+
+		Transition<State> meleeJumping = new Transition<>(State.JUMPING, this::jumpCheck, () -> {
+			jump();
+			warframe.meleeWeapon.reset();
+			gameObject.rigidbody.velocity.x = 0;
+		});
+		Transition<State> meleeFalling = new Transition<>(State.FALLING, this::fallCheck, () -> {
+			warframe.meleeWeapon.reset();
+			gameObject.rigidbody.velocity.x = 0;
+		});
+
+		stateMachine.addState(State.IDLE, jumping, falling, melee, shooting, running);
+		stateMachine.addState(State.RUNNING, jumping, falling, melee, shooting, idle);
+		stateMachine.addState(State.JUMPING, doubleJumping, falling);
+		stateMachine.addState(State.DOUBLE_JUMPING, falling);
+		stateMachine.addState(State.FALLING, jumping, doubleJumping);
+		stateMachine.addState(State.LANDING, new Transition<>(State.IDLE, () -> gameObject.animator.isFinished()));
+		stateMachine.addState(State.MELEE, meleeFalling, meleeJumping, meleeWaiting);
+		stateMachine.addState(State.MELEE_WAITING, meleeFalling, meleeJumping, melee, meleeStow);
+		stateMachine.addState(State.MELEE_STOW,
+				new Transition<>(State.IDLE, () -> warframe.getMeleeWeapon().isStowed()), jumping, melee, shooting);
+		stateMachine.addState(State.SHOOTING,
+				new Transition<>(State.IDLE, () -> !warframe.getPrimaryWeapon().isShooting()));
+		stateMachine.init(State.IDLE);
 	}
 
 	@Override
@@ -59,89 +95,42 @@ public class Player extends Script {
 
 		x = getMovement();
 
-		if (state != State.SHOOTING) {
+		stateMachine.update();
+
+		if (stateMachine.getState() != State.SHOOTING) {
 			if (x < 0) {
 				gameObject.transform.scale.x = -1;
 			} else if (x > 0) {
-				gameObject.transform.scale.x  = 1;
+				gameObject.transform.scale.x = 1;
 			}
 
 			warframe.stopShooting();
 		}
 
-		switch (state) {
-			case IDLE:
-				if (jumpCheck()) break;
-				if (fallCheck()) break;
-				if (meleeCheck()) break;
-				if (shootCheck()) break;
-				if (castCheck()) break;
-				if (x != 0) state = State.RUNNING;
-				break;
-			case RUNNING:
-				if (jumpCheck()) break;
-				if (fallCheck()) break;
-				if (meleeCheck()) break;
-				if (shootCheck()) break;
-				if (castCheck()) break;
-				if (x == 0) state = State.IDLE;
-				break;
-			case JUMPING:
-				if (jumpCheck()) break;
-				if (fallCheck()) break;
-				ability1Check();
-				break;
-			case DOUBLE_JUMPING:
-				if (fallCheck()) break;
-				ability1Check();
-				break;
-			case FALLING:
-				if (jumpCheck()) break;
-				ability1Check();
-				break;
-			case LANDING:
-				break;
-			case MELEE:
-				if (fallCheck() || jumpCheck()) {
-					warframe.meleeWeapon.reset();
-					gameObject.rigidbody.velocity.x = 0;
-					break;
-				}
-				break;
-			case MELEE_WAITING:
-				if (fallCheck() || jumpCheck()) {
-					warframe.meleeWeapon.reset();
-					gameObject.rigidbody.velocity.x = 0;
-					break;
-				}
-				break;
-			case SHOOTING:
-				break;
-			case CASTING:
-				break;
-			default:
-				break;
-		}
-
-		switch (state) {
+		switch (stateMachine.getState()) {
 			case IDLE:
 				gameObject.animator.play("idle");
+				castCheck();
 				break;
 			case RUNNING:
 				gameObject.animator.play("run");
 				transform.translate(x * speed, 0);
+				castCheck();
 				break;
 			case JUMPING:
 				gameObject.animator.play("jump");
 				transform.translate(x * speed, 0);
+				ability1Check();
 				break;
 			case DOUBLE_JUMPING:
 				gameObject.animator.play("double-jump");
 				transform.translate(x * speed, 0);
+				ability1Check();
 				break;
 			case FALLING:
 				gameObject.animator.play("fall");
 				transform.translate(x * speed, 0);
+				ability1Check();
 				break;
 			case LANDING:
 				gameObject.animator.play("land");
@@ -150,7 +139,9 @@ public class Player extends Script {
 				gameObject.animator.play(warframe.meleeWeapon.getNextAnimation(x), true);
 				break;
 			case MELEE_WAITING:
-				meleeCheck();
+				break;
+			case MELEE_STOW:
+				gameObject.animator.play("stow");
 				break;
 			case SHOOTING:
 				warframe.shoot();
@@ -169,49 +160,42 @@ public class Player extends Script {
 		return (Input.getKey(KeyCode.A) ? -1 : 0) + (Input.getKey(KeyCode.D) ? 1 : 0);
 	}
 
+	private void jump() {
+		jumpCount++;
+		gameObject.rigidbody.velocity.y = -25f;
+	}
+
+	private boolean idleCheck() {
+		return !runCheck();
+	}
+
+	private boolean runCheck() {
+		return Input.getKey(KeyCode.A) || Input.getKey(KeyCode.D);
+	}
+
 	private boolean jumpCheck() {
-		boolean touchJump = false;
-		for (Touch t : Input.touches) {
-			if (!hud.switchButtonHitTest(t) && !hud.attackButtonHitTest(t) && t.phase == TouchPhase
-					.ENDED && t.position.x > Screen.width / 2f && t.startPosition.x > Screen.width / 2f &&
-					Vector2.distance(t.position, t.startPosition) < 150 * Screen.scale) {
-				touchJump = true;
-			}
-		}
-		if ((Input.getKeyDown(KeyCode.SPACE) || Input.getKeyDown(KeyCode.J) || touchJump) && jumpCount++ < 2) {
-			state = jumpCount == 1 ? State.JUMPING : State.DOUBLE_JUMPING;
-			gameObject.rigidbody.velocity.y = -25f;
-			return true;
-		}
-		return false;
+		return jumpCount == 0 && Input.getKeyDown(KeyCode.SPACE);
+	}
+
+	private boolean doubleJumpCheck() {
+		return jumpCount == 1 && Input.getKeyDown(KeyCode.SPACE);
 	}
 
 	private boolean fallCheck() {
-		if (gameObject.rigidbody.velocity.y > 0) {
-			state = State.FALLING;
-			return true;
-		}
-		return false;
+		return gameObject.rigidbody.velocity.y > 0;
 	}
 
 	private boolean meleeCheck() {
-		if (Input.getKey(KeyCode.MOUSE_LEFT) || Input.getKey(KeyCode.K)) {
-			state = State.MELEE;
-			return true;
-		}
-		return false;
+		return Input.getKey(KeyCode.MOUSE_LEFT);
 	}
 
 	private boolean shootCheck() {
-		if (Input.getKeyDown(KeyCode.MOUSE_RIGHT) || Input.getKeyDown(KeyCode.L)) {
-			state = State.SHOOTING;
-			return true;
-		}
-		return false;
+		return Input.getKeyDown(KeyCode.MOUSE_RIGHT);
 	}
 
 	private void ability1Check() {
 		if (Input.getKeyDown(KeyCode.ALPHA_1) && warframe.hasEnergy(5)) {
+			System.out.println("ability 1");
 			warframe.removeEnergy(5);
 			warframe.ability1();
 		}
@@ -219,6 +203,7 @@ public class Player extends Script {
 
 	private void ability2Check() {
 		if (Input.getKeyDown(KeyCode.ALPHA_2) && warframe.hasEnergy(10)) {
+			System.out.println("ability 2");
 			warframe.removeEnergy(10);
 			warframe.ability2();
 		}
@@ -226,18 +211,19 @@ public class Player extends Script {
 
 	private void ability3Check() {
 		if (Input.getKeyDown(KeyCode.ALPHA_3) && warframe.hasEnergy(25)) {
+			System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));
 			warframe.removeEnergy(25);
 			warframe.ability3();
 		}
 	}
 
 	private void ability4Check() {
-		if ((state == State.IDLE || state == State.RUNNING) && Input.getKeyDown(KeyCode.ALPHA_4) &&
+		/*if ((state == State.IDLE || state == State.RUNNING) && Input.getKeyDown(KeyCode.ALPHA_4) &&
 				warframe.hasEnergy(50)) {
 			warframe.removeEnergy(50);
 			warframe.ability4();
 			state = State.CASTING;
-		}
+		}*/
 	}
 
 	private boolean castCheck() {
@@ -250,24 +236,20 @@ public class Player extends Script {
 
 	@Override
 	public void onCollision(Collision collision) {
-		if (collision.location == CollisionLocation.BOTTOM && (state == State.FALLING || state == State.JUMPING || state == State.DOUBLE_JUMPING)) {
+		if (collision.location == CollisionLocation.BOTTOM &&
+				(stateMachine.getState() == State.FALLING || stateMachine.getState() == State.JUMPING ||
+						stateMachine.getState() == State.DOUBLE_JUMPING)) {
 			jumpCount = 0;
 			if (collision.speed > 37) {
-				state = State.LANDING;
+				stateMachine.setState(State.LANDING);
 				//noinspection ConstantConditions
 				Camera.main.gameObject.getComponent(SmartCamera.class).startQuake(100, 0.3f);
 				TextureAtlas ta = TextureAtlas.load("data/effects/dust");
 				GameObject.destroy(GameObject.instantiate(new GameObject("Dust", new Renderer(ta),
 								new Animator(Animations.load("data/effects/dust", ta))),
 						new Vector2(transform.position.x - 262, transform.position.y + 150)), 300);
-				new Timer().schedule(new TimerTask() {
-					@Override
-					public void run() {
-						state = State.IDLE;
-					}
-				}, 300);
 			} else {
-				state = State.IDLE;
+				stateMachine.setState(State.IDLE);
 			}
 		}
 	}

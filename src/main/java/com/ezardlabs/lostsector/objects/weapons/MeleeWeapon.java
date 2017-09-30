@@ -22,6 +22,12 @@ public abstract class MeleeWeapon extends Weapon {
 
 	public abstract String getNextAnimation(int direction);
 
+	public abstract boolean isWaiting();
+
+	public abstract boolean shouldStow();
+
+	public abstract boolean isStowed();
+
 	public final void reset() {
 		currentAnimation = null;
 	}
