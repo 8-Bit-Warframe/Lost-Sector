@@ -15,7 +15,6 @@ import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.lostsector.camera.SmartCamera;
-import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
 import java.util.Arrays;
@@ -25,7 +24,6 @@ public class Player extends Script {
 	private int x = 0;
 	private float speed = 12.5f;
 	private Warframe warframe;
-	private HUD hud;
 
 	private StateMachine<State> stateMachine = new StateMachine<>();
 
@@ -83,7 +81,6 @@ public class Player extends Script {
 	@Override
 	public void start() {
 		warframe = gameObject.getComponentOfType(Warframe.class);
-		hud = gameObject.getComponentOfType(HUD.class);
 		gameObject.setTag("player");
 	}
 
