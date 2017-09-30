@@ -10,6 +10,7 @@ import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.StateMachine;
 import com.ezardlabs.dethsquare.StateMachine.Transition;
 import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.Time;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animator;
@@ -108,22 +109,22 @@ public class Player extends Script {
 				break;
 			case RUNNING:
 				gameObject.animator.play("run");
-				transform.translate(x * speed, 0);
+				transform.translate(x * speed * Time.fpsScaling60, 0);
 				castCheck();
 				break;
 			case JUMPING:
 				gameObject.animator.play("jump");
-				transform.translate(x * speed, 0);
+				transform.translate(x * speed * Time.fpsScaling60, 0);
 				ability1Check();
 				break;
 			case DOUBLE_JUMPING:
 				gameObject.animator.play("double-jump");
-				transform.translate(x * speed, 0);
+				transform.translate(x * speed * Time.fpsScaling60, 0);
 				ability1Check();
 				break;
 			case FALLING:
 				gameObject.animator.play("fall");
-				transform.translate(x * speed, 0);
+				transform.translate(x * speed * Time.fpsScaling60, 0);
 				ability1Check();
 				break;
 			case LANDING:
@@ -231,6 +232,7 @@ public class Player extends Script {
 				(stateMachine.getState() == State.FALLING || stateMachine.getState() == State.JUMPING ||
 						stateMachine.getState() == State.DOUBLE_JUMPING)) {
 			jumpCount = 0;
+			System.out.println("Speed: " + collision.speed);
 			if (collision.speed > 37) {
 				stateMachine.setState(State.LANDING);
 				//noinspection ConstantConditions

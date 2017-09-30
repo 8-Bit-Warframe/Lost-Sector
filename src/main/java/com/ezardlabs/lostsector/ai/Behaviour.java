@@ -8,6 +8,7 @@ import com.ezardlabs.dethsquare.Mathf;
 import com.ezardlabs.dethsquare.Physics;
 import com.ezardlabs.dethsquare.Physics.RaycastHit;
 import com.ezardlabs.dethsquare.StateMachine;
+import com.ezardlabs.dethsquare.Time;
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game.DamageType;
@@ -162,7 +163,7 @@ public abstract class Behaviour {
 		if (path != null && path.length > 0) {
 			if (pathIndex < path.length - 1) {
 				float direction = Mathf.clamp(path[pathIndex + 1].position.x - path[pathIndex].position.x, -1, 1);
-				transform.translate(moveSpeed * direction, 0);
+				transform.translate(moveSpeed * direction * Time.fpsScaling60, 0);
 				transform.scale.x = direction;
 
 				if (transform.gameObject.rigidbody.velocity.y > transform.gameObject.rigidbody.gravity) {

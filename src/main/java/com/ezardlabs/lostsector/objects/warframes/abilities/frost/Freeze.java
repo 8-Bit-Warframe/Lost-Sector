@@ -5,6 +5,7 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Layers;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.Time;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.dethsquare.multiplayer.Network;
@@ -25,7 +26,7 @@ public class Freeze extends Script {
 
 	@Override
 	public void update() {
-		transform.translate(15f * transform.scale.x, 0);
+		transform.translate(15f * transform.scale.x * Time.fpsScaling60, 0);
 	}
 
 	@Override

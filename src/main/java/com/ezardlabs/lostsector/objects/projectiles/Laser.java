@@ -3,6 +3,7 @@ package com.ezardlabs.lostsector.objects.projectiles;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Script;
+import com.ezardlabs.dethsquare.Time;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.Entity;
 
@@ -22,7 +23,7 @@ public class Laser extends Script {
 
 	@Override
 	public void update() {
-		transform.translate(gameObject.transform.scale.x * 15, 0);
+		transform.translate(gameObject.transform.scale.x * 15 * Time.fpsScaling60, 0);
 		if (transform.position.x <= 0) GameObject.destroy(gameObject);
 	}
 

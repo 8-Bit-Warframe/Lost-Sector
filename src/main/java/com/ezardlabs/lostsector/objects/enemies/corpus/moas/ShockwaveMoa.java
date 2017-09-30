@@ -1,15 +1,16 @@
 package com.ezardlabs.lostsector.objects.enemies.corpus.moas;
 
-import com.ezardlabs.dethsquare.animation.Animation.AnimationListener;
-import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Component;
 import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.dethsquare.Script;
+import com.ezardlabs.dethsquare.Time;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.animation.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
+import com.ezardlabs.dethsquare.animation.Animator;
+import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.ai.MeleeBehaviour;
 import com.ezardlabs.lostsector.objects.Entity;
@@ -85,8 +86,8 @@ public class ShockwaveMoa extends Moa {
 		@Override
 		public void update() {
 			if (left.transform.gameObject != null && right.transform.gameObject != null) {
-				left.transform.translate(-10, 0);
-				right.transform.translate(10, 0);
+				left.transform.translate(-10 * Time.fpsScaling60, 0);
+				right.transform.translate(10 * Time.fpsScaling60, 0);
 			}
 		}
 

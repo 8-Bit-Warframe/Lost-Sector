@@ -5,6 +5,7 @@ import com.ezardlabs.dethsquare.Component;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.Time;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
@@ -44,7 +45,7 @@ public class IceWave extends Component {
 
 		@Override
 		public void update() {
-			transform.translate(10 * transform.scale.x, 0);
+			transform.translate(10 * transform.scale.x * Time.fpsScaling60, 0);
 		}
 
 		@Override
