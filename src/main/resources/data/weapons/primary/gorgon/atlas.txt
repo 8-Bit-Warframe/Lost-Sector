@@ -1,0 +1,7 @@
+gorgon0 = 0 0 64 48
+gorgon1 = 0 49 64 48
+gorgon2 = 65 0 64 48
+gorgon3 = 65 49 64 48
+gorgon4 = 130 0 64 48
+gorgon5 = 130 49 64 48
+gorgon6 = 0 98 64 48

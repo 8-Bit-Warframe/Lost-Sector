@@ -1,0 +1,48 @@
+{
+	"defaults": {
+		"width": 400,
+		"height": 300,
+		"offset": {
+			"normal": {
+				"x": 0,
+				"y": -50
+			},
+			"flipped": {
+				"x": -200,
+				"y": -50
+			}
+		},
+		"duration": 64
+	},
+	"animations": [
+		{
+			"name": "shoot",
+			"sprites": [
+				{
+					"name": "gorgon0",
+					"duration": 100
+				},
+				{
+					"name": "gorgon1",
+					"duration": 100
+				},
+				{
+					"name": "gorgon2"
+				},
+				{
+					"name": "gorgon3"
+				},
+				{
+					"name": "gorgon4"
+				},
+				{
+					"name": "gorgon5"
+				},
+				{
+					"name": "gorgon6"
+				}
+			],
+			"type": "CUSTOM"
+		}
+	]
+}
