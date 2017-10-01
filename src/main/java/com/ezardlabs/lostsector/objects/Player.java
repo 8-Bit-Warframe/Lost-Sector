@@ -232,7 +232,6 @@ public class Player extends Script {
 				(stateMachine.getState() == State.FALLING || stateMachine.getState() == State.JUMPING ||
 						stateMachine.getState() == State.DOUBLE_JUMPING)) {
 			jumpCount = 0;
-			System.out.println("Speed: " + collision.speed);
 			if (collision.speed > 37) {
 				stateMachine.setState(State.LANDING);
 				//noinspection ConstantConditions
