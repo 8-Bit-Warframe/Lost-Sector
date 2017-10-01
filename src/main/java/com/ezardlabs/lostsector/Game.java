@@ -70,7 +70,7 @@ public class Game extends BaseGame {
 		registerPickupPrefabs();
 		registerSpawnPointPrefabs();
 
-		LevelManager.loadLevel("defense");
+		LevelManager.loadLevel("main_menu");
 	}
 
 	private void loadSettings() {
