@@ -19,6 +19,7 @@ import com.ezardlabs.lostsector.camera.SmartCamera;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 import com.ezardlabs.lostsector.objects.weapons.primary.Gorgon;
 import com.ezardlabs.lostsector.objects.weapons.primary.Lanka;
+import com.ezardlabs.lostsector.objects.weapons.primary.Supra;
 
 public class Player extends Script {
 	public int jumpCount = 0;
@@ -152,10 +153,12 @@ public class Player extends Script {
 		if (transform.position.x < 0) transform.translate(-transform.position.x, 0);
 		if (transform.position.y < 0) transform.translate(0, -transform.position.y);
 
-		if (stateMachine.getState() != State.SHOOTING && Input.getKeyDown(KeyCode.C)) {
-			if (warframe.getPrimaryWeapon() instanceof Gorgon) {
+		if (stateMachine.getState() != State.SHOOTING) {
+			if (Input.getKeyDown(KeyCode.F1)) {
 				warframe.setPrimaryWeapon(new Lanka());
-			} else {
+			} else if (Input.getKeyDown(KeyCode.F2)) {
+				warframe.setPrimaryWeapon(new Supra());
+			} else if (Input.getKeyDown(KeyCode.F3)) {
 				warframe.setPrimaryWeapon(new Gorgon());
 			}
 		}
