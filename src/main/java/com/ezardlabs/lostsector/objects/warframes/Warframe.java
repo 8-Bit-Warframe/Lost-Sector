@@ -3,6 +3,8 @@ package com.ezardlabs.lostsector.objects.warframes;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.animation.Animation;
+import com.ezardlabs.dethsquare.animation.AnimationType;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.dethsquare.animation.Animator;
@@ -43,8 +45,26 @@ public abstract class Warframe extends ShieldedEntity {
 						"grip_primary_arm")));
 		gameObject.animator.play("idle");
 
+		gameObject.animator.getAnimation("grip_primary_body").setAnimationType(new AnimationType() {
+			@Override
+			public int update(int currentFrame, int numFrames) {
+				return currentFrame;
+			}
+		});
+
 		GameObject.instantiate(new GameObject("Arm", new Renderer(ta),
 				new Animator(gameObject.animator.getAnimation("grip_primary_arm")), arm), transform.position);
+	}
+
+	@Override
+	public void update() {
+		super.update();
+		Animation animation = gameObject.animator.getCurrentAnimation();
+		if (animation != null && "grip_primary_body".equals(animation.name)) {
+			int frame = primaryWeapon.getAnimationFrame();
+			gameObject.animator.setCurrentAnimationFrame(frame);
+			arm.gameObject.animator.setCurrentAnimationFrame(frame);
+		}
 	}
 
 	public abstract String getName();
@@ -79,9 +99,6 @@ public abstract class Warframe extends ShieldedEntity {
 		primary.addComponent(primaryWeapon);
 		this.primaryWeapon = primaryWeapon;
 		this.primaryClass = primaryWeapon.getClass();
-
-		gameObject.animator.getAnimation("grip_primary_body").setAnimationType(primaryWeapon.getAnimationType().clone());
-		arm.setAnimationType("grip_primary_arm", primaryWeapon.getAnimationType().clone());
 	}
 
 	public PrimaryWeapon getPrimaryWeapon() {

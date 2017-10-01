@@ -1,9 +1,9 @@
 package com.ezardlabs.lostsector.objects.weapons;
 
+import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.animation.Animation;
 import com.ezardlabs.dethsquare.animation.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.animation.AnimationType;
-import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.dethsquare.animation.Animator;
@@ -40,6 +40,10 @@ public abstract class PrimaryWeapon extends Weapon2 implements AnimationListener
 	protected abstract String getDataPath();
 
 	public abstract AnimationType getAnimationType();
+
+	public int getAnimationFrame() {
+		return gameObject.animator.getCurrentAnimationFrame();
+	}
 
 	@Override
 	public void onAnimatedStarted(Animator animator) {
