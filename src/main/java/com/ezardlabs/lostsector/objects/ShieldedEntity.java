@@ -28,7 +28,7 @@ public abstract class ShieldedEntity extends Entity {
 	}
 
 	@Override
-	public final void update() {
+	public void update() {
 		if (shield < maxShield && System.currentTimeMillis() > nextShieldRegen) {
 			shield++;
 			nextShieldRegen = System.currentTimeMillis() + shieldRegenTime;
