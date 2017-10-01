@@ -1,0 +1,48 @@
+{
+	"defaults": {
+		"width": 400,
+		"height": 300,
+		"offset": {
+			"normal": {
+				"x": 0,
+				"y": -50
+			},
+			"flipped": {
+				"x": -200,
+				"y": -50
+			}
+		},
+		"duration": 64
+	},
+	"animations": [
+		{
+			"name": "shoot",
+			"sprites": [
+				{
+					"name": "supra0",
+					"duration": 100
+				},
+				{
+					"name": "supra1",
+					"duration": 100
+				},
+				{
+					"name": "supra2"
+				},
+				{
+					"name": "supra3"
+				},
+				{
+					"name": "supra4"
+				},
+				{
+					"name": "supra5"
+				},
+				{
+					"name": "supra6"
+				}
+			],
+			"type": "CUSTOM"
+		}
+	]
+}
