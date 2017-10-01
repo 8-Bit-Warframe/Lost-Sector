@@ -1,13 +1,13 @@
 package com.ezardlabs.lostsector.objects.enemies.corpus.crewmen;
 
-import com.ezardlabs.dethsquare.animation.AnimationType;
 import com.ezardlabs.dethsquare.AudioManager.AudioGroup;
 import com.ezardlabs.dethsquare.AudioSource;
 import com.ezardlabs.dethsquare.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
-import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.dethsquare.Transform;
+import com.ezardlabs.dethsquare.animation.AnimationType;
+import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.lostsector.ai.RangedBehaviour;
 import com.ezardlabs.lostsector.ai.RangedBehaviour.Builder.ShootAction;
 import com.ezardlabs.lostsector.objects.enemies.corpus.Crewman;
@@ -26,7 +26,7 @@ public class DeraCrewman extends Crewman {
 					if (!fired) {
 						GameObject laser = GameObject.instantiate(
 								new GameObject("Laser", new Renderer("images/laser.png", 100, 100),
-										new Collider(100, 100, true), new Laser(1)),
+										new Collider(100, 100, true), new Laser(1, "player", "cryopod")),
 								self.position.offset(self.gameObject.transform.scale.x < 0 ? -12.5f : 87.5f,
 										self.gameObject.animator.getCurrentAnimationFrame() == 1 ? 75 : 50));
 						laser.transform.scale.set(self.gameObject.transform.scale);

@@ -2,17 +2,20 @@ package com.ezardlabs.lostsector.objects.projectiles;
 
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.Layers;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.Time;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.Entity;
 
 public class Laser extends Script {
-
 	private final int damage;
+	private final int solidLayer = Layers.getLayer("Solid");
+	private final String[] targetTags;
 
-	public Laser(int damage) {
+	public Laser(int damage, String... targetTags) {
 		this.damage = damage;
+		this.targetTags = targetTags;
 	}
 
 	@Override
@@ -29,16 +32,19 @@ public class Laser extends Script {
 
 	@Override
 	public void onTriggerEnter(Collider other) {
-		if (other.gameObject.getTag() != null) {
-			if ("player".equals(other.gameObject.getTag()) || "cryopod".equals(other.gameObject.getTag())) {
-				//noinspection ConstantConditions
-				other.gameObject.getComponentOfType(Entity.class)
-								.applyDamage(damage, DamageType.NORMAL, transform.position);
-				gameObject.removeComponent(Collider.class);
-				GameObject.destroy(gameObject);
-			} else if (other.gameObject.getTag().equals("solid")) {
-				gameObject.removeComponent(Collider.class);
-				GameObject.destroy(gameObject);
+		if (other.gameObject.getLayer() == solidLayer) {
+			gameObject.removeComponent(Collider.class);
+			GameObject.destroy(gameObject);
+		} else if (other.gameObject.getTag() != null) {
+			for (String tag : targetTags) {
+				if (other.gameObject.getTag().equals(tag)) {
+					//noinspection ConstantConditions
+					other.gameObject.getComponentOfType(Entity.class)
+									.applyDamage(damage, DamageType.NORMAL, transform.position);
+					gameObject.removeComponent(Collider.class);
+					GameObject.destroy(gameObject);
+					break;
+				}
 			}
 		}
 	}
