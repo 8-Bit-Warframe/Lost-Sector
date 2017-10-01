@@ -146,7 +146,7 @@ public abstract class Enemy extends Entity {
 		gameObject.removeComponent(getClass());
 		gameObject.removeComponent(Collider.class);
 		gameObject.removeComponent(Rigidbody.class);
-		behaviour = null;
+		behaviour.die();
 		Level level = LevelManager.getCurrentLevel();
 		if (level instanceof MissionLevel) {
 			((MissionLevel) level).getMission().notifyEnemyDeath(this);

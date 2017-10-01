@@ -35,6 +35,7 @@ public abstract class Behaviour {
 	private long thawTime = 1000;
 	private long thawStart = 0;
 	private int directionToLook = 0;
+	private boolean dead = false;
 	private final int visionLayerMask = Layers.getLayerMask("Player", "Objective", "Solid");
 	private final int visionLayerMaskTarget = Layers.getLayerMask("Player", "Objective");
 
@@ -107,6 +108,8 @@ public abstract class Behaviour {
 	}
 
 	public final void update() {
+		if (dead) return;
+
 		stateMachine.update();
 		if (stateMachine.getState() == State.IDLE) {
 			visionCheck();
@@ -265,7 +268,7 @@ public abstract class Behaviour {
 	}
 
 	public void die() {
-		System.out.println("died");
+		dead = true;
 	}
 
 	@SuppressWarnings("unchecked")
