@@ -8,13 +8,13 @@ import com.ezardlabs.dethsquare.Mathf;
 import com.ezardlabs.dethsquare.Physics;
 import com.ezardlabs.dethsquare.Physics.RaycastHit;
 import com.ezardlabs.dethsquare.StateMachine;
+import com.ezardlabs.dethsquare.StateMachine.Transition;
 import com.ezardlabs.dethsquare.Time;
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.NavMesh;
 import com.ezardlabs.lostsector.NavMesh.NavPoint;
-import com.ezardlabs.dethsquare.StateMachine.Transition;
 import com.ezardlabs.lostsector.levels.MissionLevel;
 
 public abstract class Behaviour {
@@ -85,11 +85,10 @@ public abstract class Behaviour {
 				}));
 
 		stateMachine.addState(State.THAWING,
-				new Transition<>(State.IDLE, () -> System.currentTimeMillis() - thawStart > thawTime,
-						() -> {
-							transform.gameObject.renderer.setTint(0, 0, 0);
-							transform.gameObject.animator.shouldUpdate = true;
-						}));
+				new Transition<>(State.IDLE, () -> System.currentTimeMillis() - thawStart > thawTime, () -> {
+					transform.gameObject.renderer.setTint(1, 1, 1);
+					transform.gameObject.animator.shouldUpdate = true;
+				}));
 
 		stateMachine.addTransitionFromAnyState(new Transition<>(State.FROZEN, () -> freezeStart > 0, () -> {
 			transform.gameObject.renderer.setTint(freezeTint[0], freezeTint[1], freezeTint[2]);
@@ -132,8 +131,8 @@ public abstract class Behaviour {
 				break;
 			case THAWING:
 				float ratio = (float) (System.currentTimeMillis() - thawStart) / (float) thawTime;
-				transform.gameObject.renderer.setTint(freezeTint[0] - ratio * freezeTint[0],
-						freezeTint[1] - ratio * freezeTint[1], freezeTint[2] - ratio * freezeTint[2]);
+				transform.gameObject.renderer.setTint(freezeTint[0] + ratio * (1 - freezeTint[0]),
+						freezeTint[1] + ratio * (1 - freezeTint[1]), freezeTint[2] + ratio * (1 - freezeTint[2]));
 				break;
 			case SHATTER:
 				break;
