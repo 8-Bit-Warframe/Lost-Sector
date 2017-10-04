@@ -4,6 +4,7 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Level;
 import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Script;
+import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.prefabs.PrefabManager;
 import com.ezardlabs.lostsector.levels.MissionLevel;
 
@@ -12,38 +13,62 @@ import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SpawnPoint extends Script {
-	private static final LinkedHashMap<String, Float> ENEMY_CHANCES = new LinkedHashMap<>();
-	private static final long MIN_INTERVAL = 2000;
-	private static final long MAX_INTERVAL = 20000;
-	private static final int MAX_ENEMIES = 20;
+	private static SpawnMode mode = SpawnMode.SINGLE;
+	private static int maxEnemies = 0;
+	private static int numEnemies = 0;
+	private static long minInterval = 0;
+	private static long maxInterval = 0;
+	private static LinkedHashMap<String, Float> spawnProbabilities;
 
 	private long nextSpawn = 0;
-	private Mission currentMission;
+	private Mission mission;
 
-	static {
-		ENEMY_CHANCES.put("dera_crewman", 0.3f);
-		ENEMY_CHANCES.put("prova_crewman", 0.5f);
-		ENEMY_CHANCES.put("supra_crewman", 0.2f);
+	private enum SpawnMode {
+		SINGLE,
+		CONTINUOUS,
+		WAVE
 	}
 
 	@Override
 	public void start() {
 		Level level = LevelManager.getCurrentLevel();
 		if (level instanceof MissionLevel) {
-			currentMission = ((MissionLevel) level).getMission();
+			mission = ((MissionLevel) level).getMission();
 		}
 	}
 
 	@Override
 	public void update() {
 		if (System.currentTimeMillis() > nextSpawn) {
-			if (currentMission == null || currentMission.numEnemies < MAX_ENEMIES) {
-				String enemyPrefab = getSpawn();
-				if (enemyPrefab != null) {
-					GameObject.instantiate(PrefabManager.loadPrefab(getSpawn()), transform.position);
-				}
+			switch (mode) {
+				case SINGLE:
+					if (numEnemies < maxEnemies) {
+						spawnEnemy(transform.position);
+						numEnemies++;
+					}
+					break;
+				case CONTINUOUS:
+					if (mission == null || mission.numEnemies < maxEnemies) {
+						spawnEnemy(transform.position);
+					}
+					break;
+				case WAVE:
+					if (numEnemies < maxEnemies) {
+						spawnEnemy(transform.position);
+						numEnemies++;
+					}
+					break;
+				default:
+					break;
 			}
-			nextSpawn = System.currentTimeMillis() + ThreadLocalRandom.current().nextLong(MIN_INTERVAL, MAX_INTERVAL + 1);
+			nextSpawn = System.currentTimeMillis() + ThreadLocalRandom.current().nextLong(minInterval, maxInterval + 1);
+		}
+	}
+
+	private static void spawnEnemy(Vector2 position) {
+		String enemyPrefab = getSpawn();
+		if (enemyPrefab != null) {
+			GameObject.instantiate(PrefabManager.loadPrefab(getSpawn()), position);
 		}
 	}
 
@@ -51,7 +76,7 @@ public class SpawnPoint extends Script {
 		double rand = Math.random();
 		float total = 0;
 
-		for (Entry<String, Float> entry : ENEMY_CHANCES.entrySet()) {
+		for (Entry<String, Float> entry : spawnProbabilities.entrySet()) {
 			if (rand < entry.getValue() + total) {
 				return entry.getKey();
 			} else {
@@ -59,5 +84,37 @@ public class SpawnPoint extends Script {
 			}
 		}
 		return null;
+	}
+
+	public static void setSingleSpawnMode(int numEnemies, long minInterval, long maxInterval,
+			LinkedHashMap<String, Float> spawnProbabilities) {
+		SpawnPoint.mode = SpawnMode.SINGLE;
+		SpawnPoint.maxEnemies = numEnemies;
+		SpawnPoint.numEnemies = 0;
+		SpawnPoint.minInterval = minInterval;
+		SpawnPoint.maxInterval = maxInterval;
+		SpawnPoint.spawnProbabilities = spawnProbabilities;
+	}
+
+	public static void setContinuousSpawnMode(int maxEnemies, long minInterval, long maxInterval,
+			LinkedHashMap<String, Float> spawnProbabilities) {
+		SpawnPoint.mode = SpawnMode.CONTINUOUS;
+		SpawnPoint.maxEnemies = maxEnemies;
+		SpawnPoint.numEnemies = 0;
+		SpawnPoint.minInterval = minInterval;
+		SpawnPoint.maxInterval = maxInterval;
+		SpawnPoint.spawnProbabilities = spawnProbabilities;
+	}
+
+	public static void setWaveSpawnMode(long minInterval, long maxInterval) {
+		SpawnPoint.mode = SpawnMode.WAVE;
+		SpawnPoint.minInterval = minInterval;
+		SpawnPoint.maxInterval = maxInterval;
+	}
+
+	public static void spawnWave(int numEnemies, LinkedHashMap<String, Float> spawnProbabilities) {
+		SpawnPoint.maxEnemies = numEnemies;
+		SpawnPoint.numEnemies = 0;
+		SpawnPoint.spawnProbabilities = spawnProbabilities;
 	}
 }
