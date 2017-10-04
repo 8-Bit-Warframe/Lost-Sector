@@ -36,6 +36,10 @@ public class Laser extends Script {
 			gameObject.removeComponent(Collider.class);
 			GameObject.destroy(gameObject);
 		} else if (other.gameObject.getTag() != null) {
+			if ("projectile-barrier".equals(other.gameObject.getTag())) {
+				gameObject.removeComponent(Collider.class);
+				GameObject.destroy(gameObject);
+			}
 			for (String tag : targetTags) {
 				if (other.gameObject.getTag().equals(tag)) {
 					//noinspection ConstantConditions
