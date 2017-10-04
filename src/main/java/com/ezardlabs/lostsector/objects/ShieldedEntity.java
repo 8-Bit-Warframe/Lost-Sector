@@ -20,6 +20,10 @@ public abstract class ShieldedEntity extends Entity {
 		return shield;
 	}
 
+	public int getMaxShield() {
+		return maxShield;
+	}
+
 	public void addShield(int shield) {
 		this.shield += shield;
 		if (this.shield > maxShield) {
