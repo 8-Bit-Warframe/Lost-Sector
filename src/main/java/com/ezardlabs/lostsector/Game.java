@@ -1,15 +1,15 @@
 package com.ezardlabs.lostsector;
 
-import com.ezardlabs.dethsquare.AudioManager;
-import com.ezardlabs.dethsquare.PlayerPrefs;
-import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.AudioListener;
+import com.ezardlabs.dethsquare.AudioManager;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.LevelManager;
-import com.ezardlabs.dethsquare.graphics.Renderer;
+import com.ezardlabs.dethsquare.PlayerPrefs;
 import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.animation.Animator;
+import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.dethsquare.multiplayer.NetworkAnimator;
 import com.ezardlabs.dethsquare.multiplayer.NetworkRenderer;
 import com.ezardlabs.dethsquare.multiplayer.NetworkTransform;
@@ -85,95 +85,84 @@ public class Game extends BaseGame {
 						new Frost(), new Collider(112.5f, 156.25f, 43.75f, 43.75f), new Rigidbody(),
 						new AudioListener(), new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()),
 				() -> new GameObject("Other Player", "player", new Renderer(), new Animator(), new Frost(),
-						new Collider(112.5f, 156.25f, 43.75f, 43.75f), new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()));
+						new Collider(112.5f, 156.25f, 43.75f, 43.75f), new NetworkTransform(), new NetworkRenderer(),
+						new NetworkAnimator()));
 	}
 
 	private void registerWarframeAbilityPrefabs() {
 		PrefabManager.addPrefab("freeze",
-				() -> new GameObject("Freeze", new Renderer(), new Animator(),
-						new Collider(100, 100, true), new Freeze(),
-						new NetworkTransform(), new NetworkAnimator()));
+				() -> new GameObject("Freeze", new Renderer(), new Animator(), new Collider(100, 100, true),
+						new Freeze(), new NetworkTransform(), new NetworkAnimator()));
 		PrefabManager.addPrefab("ice_wave",
-				() -> new GameObject("Ice Wave", new Renderer(), new Animator(),
-						new IceWave(), new NetworkAnimator()));
+				() -> new GameObject("Ice Wave", new Renderer(), new Animator(), new IceWave(), new NetworkAnimator()));
 		PrefabManager.addPrefab("snowglobe",
-				() -> new GameObject("Snowglobe", new Renderer(),
-						new Animator(), new Collider(800, 600), new Snowglobe(),
-						new NetworkAnimator()));
-		PrefabManager.addPrefab("avalanche",
-				() -> new GameObject("Avalanche", new Avalanche()));
+				() -> new GameObject("Snowglobe", new Renderer(), new Animator(), new Collider(800, 600),
+						new Snowglobe(), new NetworkAnimator()));
+		PrefabManager.addPrefab("avalanche", () -> new GameObject("Avalanche", new Avalanche()));
 	}
 
 	private void registerProjectilePrefabs() {
 		PrefabManager.addPrefab("lanka_beam",
-				() -> new GameObject("Lanka Beam", new Renderer("images/blue.png", 0, 0),
-						new LankaBeam(500), new NetworkTransform(), new NetworkRenderer()),
-				() -> new GameObject("Lanka Beam", new Renderer("images/blue.png", 0, 0),
-						new NetworkTransform(), new NetworkRenderer()));
+				() -> new GameObject("Lanka Beam", new Renderer("images/blue.png", 0, 0), new LankaBeam(500),
+						new NetworkTransform(), new NetworkRenderer()),
+				() -> new GameObject("Lanka Beam", new Renderer("images/blue.png", 0, 0), new NetworkTransform(),
+						new NetworkRenderer()));
 	}
 
 	private void registerDoorPrefabs() {
-		PrefabManager.addPrefab("door", () -> new GameObject("Door", true, new Door(
-				TextureAtlas.load("images/environment/atlas.png", "images/environment/atlas.txt")),
+		PrefabManager.addPrefab("door", () -> new GameObject("Door", true,
+				new Door(TextureAtlas.load("images/environment/atlas.png", "images/environment/atlas.txt")),
 				new Renderer(), new Animator(), new Collider(100, 500, true)));
 		PrefabManager.addPrefab("laser_door", () -> new GameObject("Laser Door", true,
-				new LaserDoor(TextureAtlas.load("images/environment/atlas.png",
-						"images/environment/atlas.txt")), new Renderer(), new Animator(),
-				new Collider(100, 500, true)));
+				new LaserDoor(TextureAtlas.load("images/environment/atlas.png", "images/environment/atlas.txt")),
+				new Renderer(), new Animator(), new Collider(100, 500, true)));
 	}
 
 	private void registerLockerPrefabs() {
-		PrefabManager.addPrefab("locker_locked",
-				() -> new GameObject("Locker", true, new Renderer(), new Locker(true,
-						TextureAtlas.load("images/environment/atlas.png",
-								"images/environment/atlas.txt"))));
-		PrefabManager.addPrefab("locker_unlocked",
+		PrefabManager.addPrefab("locker_locked", () -> new GameObject("Locker", true, new Renderer(),
+				new Locker(true, TextureAtlas.load("images/environment/atlas.png", "images/environment/atlas.txt"))));
+		PrefabManager.addPrefab("locker_unlocked", () -> new GameObject("Locker", true, new Renderer(),
+						new Locker(false, TextureAtlas.load("images/environment/atlas.png", "images/environment/atlas.txt")),
+						new Collider(100, 200, true), new Animator(), new NetworkAnimator()),
 				() -> new GameObject("Locker", true, new Renderer(), new Locker(false,
-						TextureAtlas.load("images/environment/atlas.png",
-								"images/environment/atlas.txt")), new Collider(100, 200, true),
-						new Animator(), new NetworkAnimator()),
-				() -> new GameObject("Locker", true, new Renderer(), new Locker(false,
-						TextureAtlas.load("images/environment/atlas.png",
-								"images/environment/atlas.txt")), new Animator(),
-						new NetworkAnimator()));
+						TextureAtlas.load("images/environment/atlas.png", "images/environment/atlas.txt")),
+						new Animator(), new NetworkAnimator()));
 	}
 
 	private void registerEnemyPrefabs() {
 		PrefabManager.addPrefab("dera_crewman",
-				() -> new GameObject("Dera Crewman", new Renderer(), new Animator(),
-						new Collider(200, 200), new Rigidbody(), new DeraCrewman(),
-						new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()),
-				() -> new GameObject("Dera Crewman", new Renderer(), new Animator(),
-						new Collider(200, 200), new NetworkTransform(), new NetworkRenderer(),
-						new NetworkAnimator()));
+				() -> new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(200, 200),
+						new Rigidbody(), new DeraCrewman(), new NetworkTransform(), new NetworkRenderer(),
+						new NetworkAnimator()),
+				() -> new GameObject("Dera Crewman", new Renderer(), new Animator(), new Collider(200, 200),
+						new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()));
 		PrefabManager.addPrefab("prova_crewman",
-				() -> new GameObject("Prova Crewman", new Renderer(), new Animator(),
-						new Collider(200, 200), new Rigidbody(), new ProvaCrewman(),
-						new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()),
-				() -> new GameObject("Prova Crewman", new Renderer(), new Animator(),
-						new Collider(200, 200), new NetworkTransform(), new NetworkRenderer(),
-						new NetworkAnimator()));
+				() -> new GameObject("Prova Crewman", new Renderer(), new Animator(), new Collider(200, 200),
+						new Rigidbody(), new ProvaCrewman(), new NetworkTransform(), new NetworkRenderer(),
+						new NetworkAnimator()),
+				() -> new GameObject("Prova Crewman", new Renderer(), new Animator(), new Collider(200, 200),
+						new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()));
 		PrefabManager.addPrefab("supra_crewman",
-				() -> new GameObject("Supra Crewman", new Renderer(), new Animator(),
-						new Collider(200, 200), new Rigidbody(), new SupraCrewman(),
-						new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()),
-				() -> new GameObject("Supra Crewman", new Renderer(), new Animator(),
-						new Collider(200, 200), new NetworkTransform(), new NetworkRenderer(),
-						new NetworkAnimator()));
+				() -> new GameObject("Supra Crewman", new Renderer(), new Animator(), new Collider(200, 200),
+						new Rigidbody(), new SupraCrewman(), new NetworkTransform(), new NetworkRenderer(),
+						new NetworkAnimator()),
+				() -> new GameObject("Supra Crewman", new Renderer(), new Animator(), new Collider(200, 200),
+						new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()));
 		PrefabManager.addPrefab("shockwave_moa",
 				() -> new GameObject("Shockwave Moa", new Renderer(), new Animator(), new Collider(200, 200),
 						new Rigidbody(), new ShockwaveMoa(), new NetworkTransform(), new NetworkRenderer(),
 						new NetworkAnimator()),
 				() -> new GameObject("Shockwave Moa", new Renderer(), new Animator(), new Collider(200, 200),
-						new Rigidbody(), new NetworkTransform(), new NetworkRenderer(),
-						new NetworkAnimator()));
+						new Rigidbody(), new NetworkTransform(), new NetworkRenderer(), new NetworkAnimator()));
 	}
 
 	private void registerPickupPrefabs() {
-		PrefabManager.addPrefab("pickup_health", () -> new GameObject("Health Pickup", new Renderer(), new Animator
-				(), new Collider(100, 100), new Rigidbody(), new HealthPickup()));
-		PrefabManager.addPrefab("pickup_energy", () -> new GameObject("Energy Pickup", new Renderer(), new Animator
-				(), new Collider(100, 100), new Rigidbody(), new EnergyPickup()));
+		PrefabManager.addPrefab("pickup_health",
+				() -> new GameObject("Health Pickup", new Renderer(), new Animator(), new Collider(100, 100),
+						new Rigidbody(), new HealthPickup()));
+		PrefabManager.addPrefab("pickup_energy",
+				() -> new GameObject("Energy Pickup", new Renderer(), new Animator(), new Collider(100, 100),
+						new Rigidbody(), new EnergyPickup()));
 	}
 
 	private void registerSpawnPointPrefabs() {
