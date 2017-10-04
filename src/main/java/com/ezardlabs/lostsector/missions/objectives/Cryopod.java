@@ -15,6 +15,7 @@ import com.ezardlabs.lostsector.objects.hud.CryopodStatus;
 public class Cryopod extends ShieldedEntity {
 	private int id;
 	private CryopodStatus status = new CryopodStatus();
+	private boolean dead = false;
 
 	public Cryopod() {
 		super(100, 200, 1000);
@@ -44,9 +45,12 @@ public class Cryopod extends ShieldedEntity {
 
 	@Override
 	protected void die(DamageType damageType, Vector2 attackOrigin) {
-		Level level = LevelManager.getCurrentLevel();
-		if (level instanceof DefenseLevel) {
-			((DefenseLevel) level).getMission().onCryopodDestroyed(id);
+		if (!dead) {
+			Level level = LevelManager.getCurrentLevel();
+			if (level instanceof DefenseLevel) {
+				((DefenseLevel) level).getMission().onCryopodDestroyed(id);
+			}
+			dead = true;
 		}
 	}
 }
