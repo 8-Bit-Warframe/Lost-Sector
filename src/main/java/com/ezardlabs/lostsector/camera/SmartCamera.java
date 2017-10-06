@@ -26,12 +26,12 @@ public class SmartCamera extends Script {
 	private float quakeStrength = 0;
 
 	public SmartCamera(Transform followTarget, float maxLookahead) {
-		this.followTarget = followTarget;
-		this.maxLookahead = maxLookahead;
+		this(followTarget, maxLookahead, new Vector2());
 	}
 
 	public SmartCamera(Transform followTarget, float maxLookahead, Vector2 offset) {
-		this(followTarget, maxLookahead);
+		this.followTarget = followTarget;
+		this.maxLookahead = maxLookahead;
 		this.offset = offset;
 	}
 
