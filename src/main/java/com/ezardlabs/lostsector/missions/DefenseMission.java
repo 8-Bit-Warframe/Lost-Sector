@@ -84,10 +84,9 @@ public class DefenseMission extends Mission {
 		GameObject.instantiate(new GameObject(null, overlay), new Vector2());
 
 		GameObject.instantiate(new GameObject(null, gameOver),
-				new Vector2(Screen.width / 2 - gameOver.getWidth() / 2, Screen.height / 2 - height / 2));
+				new Vector2(960 - gameOver.getWidth() / 2, 540 - height / 2));
 		GameObject.instantiate(new GameObject(null, wavesCleared),
-				new Vector2(Screen.width / 2 - wavesCleared.getWidth() / 2,
-						Screen.height / 2 - height / 2 + gameOver.getFontSize() / 2 + gap));
+				new Vector2(960 - wavesCleared.getWidth() / 2, 540 - height / 2 + gameOver.getFontSize() / 2 + gap));
 		GameObject.instantiate(new GameObject(null, exiting, new Script() {
 			private GuiText text;
 			private long exitTime;
@@ -107,9 +106,8 @@ public class DefenseMission extends Mission {
 					text.setText("Returning to main menu in " + timeLeft + "...");
 				}
 			}
-		}), new Vector2(Screen.width / 2 - exiting.getWidth() / 2,
-				Screen.height / 2 - height / 2 + gameOver.getFontSize() / 2 + gap + wavesCleared.getFontSize() / 2 +
-						gap));
+		}), new Vector2(960 - exiting.getWidth() / 2,
+				540 - height / 2 + gameOver.getFontSize() / 2 + gap + wavesCleared.getFontSize() / 2 + gap));
 	}
 
 	private static class Director extends Script {
@@ -157,7 +155,7 @@ public class DefenseMission extends Mission {
 		public void start() {
 			waveNumText = new GuiText("Wave " + waveNum, TextureAtlas.load("fonts"), 200);
 			GameObject waveNumberText = GameObject.instantiate(new GameObject("Wave Number", waveNumText),
-					new Vector2(Screen.width / 2 - waveNumText.getWidth() / 2, Screen.height / 2 - 100));
+					new Vector2(960 - waveNumText.getWidth() / 2, 540 - 100));
 			waveNumberText.setActive(false);
 			waveNumberText.transform.setParent(transform);
 			time = System.currentTimeMillis();

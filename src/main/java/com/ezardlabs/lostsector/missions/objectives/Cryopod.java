@@ -5,7 +5,6 @@ import com.ezardlabs.dethsquare.GuiRenderer;
 import com.ezardlabs.dethsquare.Layers;
 import com.ezardlabs.dethsquare.Level;
 import com.ezardlabs.dethsquare.LevelManager;
-import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.levels.DefenseLevel;
@@ -30,7 +29,7 @@ public class Cryopod extends ShieldedEntity {
 
 		GameObject.instantiate(
 				new GameObject("Cryopod Status", new GuiRenderer("images/hud/cryopod_status.png", 208, 104), status),
-				new Vector2(Screen.width / 2 - 104, 12));
+				new Vector2(960 - 104, 12));
 	}
 
 	@Override

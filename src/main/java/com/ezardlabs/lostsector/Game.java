@@ -4,6 +4,8 @@ import com.ezardlabs.dethsquare.AudioListener;
 import com.ezardlabs.dethsquare.AudioManager;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
+import com.ezardlabs.dethsquare.GuiRenderer;
+import com.ezardlabs.dethsquare.GuiRenderer.ScaleMode;
 import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.PlayerPrefs;
 import com.ezardlabs.dethsquare.Rigidbody;
@@ -60,6 +62,7 @@ public class Game extends BaseGame {
 		LevelManager.registerLevel("main_menu", new MainMenuLevel());
 
 		loadSettings();
+		GuiRenderer.setReferenceScreenSize(1920, 1080, ScaleMode.WIDTH);
 
 		registerPlayerPrefabs();
 		registerWarframeAbilityPrefabs();

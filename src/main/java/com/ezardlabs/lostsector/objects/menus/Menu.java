@@ -5,7 +5,6 @@ import com.ezardlabs.dethsquare.GuiRenderer;
 import com.ezardlabs.dethsquare.GuiText;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
-import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Time;
@@ -89,7 +88,7 @@ public class Menu extends Script {
 
 		float height = (options.length - 1) * 156 + 144;
 		for (int i = 0; i < options.length; i++) {
-			pieces[i].transform.position.set(Screen.width / 2 - 408, Screen.height / 2 - height / 2 + 156 * i);
+			pieces[i].transform.position.set(960 - 408, 540 - height / 2 + 156 * i);
 			highlights[i].transform.position.set(pieces[i].transform.position.offset(i == texts.length - 1 ? 66 : 636,
 					i == texts.length - 1 ? 54 : 25));
 			texts[i].transform.position.set(
