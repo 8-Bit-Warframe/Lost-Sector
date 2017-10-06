@@ -33,6 +33,7 @@ public class Locker extends Component {
 					Animations.load("animations/environment/corpus/locker", ta, new Validator("lock", "unlock")));
 			gameObject.animator.play("lock");
 		}
+		gameObject.renderer.setDepth(-70);
 	}
 
 	@Override
