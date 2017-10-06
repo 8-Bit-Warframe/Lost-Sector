@@ -11,8 +11,6 @@ import com.ezardlabs.dethsquare.Time;
 import com.ezardlabs.dethsquare.Vector2;
 
 public class Menu extends Script {
-	private static final TextureAtlas FONT = TextureAtlas.load("fonts");
-
 	private final String[] options;
 	private final MenuAction[] actions;
 	private final Vector2 offset;
@@ -72,7 +70,7 @@ public class Menu extends Script {
 		texts = new GameObject[options.length];
 		guiTexts = new GuiText[options.length];
 		for (int i = 0; i < texts.length; i++) {
-			guiTexts[i] = new GuiText(options[i], FONT, 50, 1);
+			guiTexts[i] = new GuiText(options[i], TextureAtlas.load("fonts"), 50, 1);
 			texts[i] = GameObject.instantiate(new GameObject("Menu Option", guiTexts[i]), new Vector2());
 		}
 
