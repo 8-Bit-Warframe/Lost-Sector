@@ -60,7 +60,8 @@ public class SmartCamera extends Script {
 
 		inputTarget.multiplyBy(maxLookahead);
 
-		base.set(followTarget.position.x + offset.x, followTarget.position.y + offset.y);
+		base.set((followTarget.position.x + offset.x) * Screen.scale,
+				(followTarget.position.y + offset.y) * Screen.scale);
 
 		lerp(inputCurrent, inputTarget);
 
@@ -70,8 +71,8 @@ public class SmartCamera extends Script {
 			Debug.drawCircle(target, 30, 1, 0, 0);
 		}
 
-		target.x -= (Screen.width / 2) / Screen.scale;
-		target.y -= (Screen.height / 2) / Screen.scale;
+		target.x -= (Screen.width / 2);
+		target.y -= (Screen.height / 2);
 
 
 		lerp(transform.position, target);
