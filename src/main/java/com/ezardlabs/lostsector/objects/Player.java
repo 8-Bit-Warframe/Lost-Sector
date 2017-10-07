@@ -6,16 +6,16 @@ import com.ezardlabs.dethsquare.Collider.CollisionLocation;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
+import com.ezardlabs.dethsquare.Layers;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.StateMachine;
 import com.ezardlabs.dethsquare.StateMachine.Transition;
-import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Time;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.lostsector.camera.SmartCamera;
+import com.ezardlabs.lostsector.effects.Dust;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 import com.ezardlabs.lostsector.objects.weapons.primary.Gorgon;
 import com.ezardlabs.lostsector.objects.weapons.primary.Lanka;
@@ -249,10 +249,9 @@ public class Player extends Script {
 				stateMachine.setState(State.LANDING);
 				//noinspection ConstantConditions
 				Camera.main.gameObject.getComponent(SmartCamera.class).startQuake(100, 0.3f);
-				TextureAtlas ta = TextureAtlas.load("data/effects/dust");
-				GameObject.destroy(GameObject.instantiate(new GameObject("Dust", new Renderer(ta),
-								new Animator(Animations.load("data/effects/dust", ta))),
-						new Vector2(transform.position.x - 262, transform.position.y + 150)), 300);
+				GameObject.destroy(
+						GameObject.instantiate(new GameObject("Dust", new Renderer(), new Animator(), new Dust()),
+								new Vector2(transform.position.x - 262, transform.position.y + 150)), 300);
 			} else {
 				stateMachine.setState(State.IDLE);
 			}
