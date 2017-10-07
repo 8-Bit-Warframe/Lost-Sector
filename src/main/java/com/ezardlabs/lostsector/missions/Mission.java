@@ -49,6 +49,10 @@ public abstract class Mission {
 		}
 	}
 
+	public boolean isCompleted() {
+		return completed;
+	}
+
 	public final void notifyEnemySpawn(Enemy enemy) {
 		numEnemies++;
 		for (EnemyStatusListener listener : enemyStatusListeners) {
