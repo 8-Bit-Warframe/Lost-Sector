@@ -42,7 +42,7 @@ public abstract class Mission {
 		GameObject.instantiate(new GameObject("Menu", new EscMenu()), new Vector2());
 	}
 
-	protected final void completedMission() {
+	protected final void completeMission() {
 		completed = true;
 		if (missionStatusListener != null) {
 			missionStatusListener.onMissionCompleted();

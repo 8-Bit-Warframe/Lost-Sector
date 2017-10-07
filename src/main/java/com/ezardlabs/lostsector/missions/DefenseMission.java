@@ -62,7 +62,7 @@ public class DefenseMission extends Mission {
 			}
 		}
 		if (count == cryopods.length) {
-			completedMission();
+			completeMission();
 			showEndGameText(director.waveNum - 1);
 			GameObject.destroy(director.gameObject);
 			director = null;
