@@ -37,12 +37,13 @@ public abstract class Behaviour {
 	private int directionToLook = 0;
 	private boolean dead = false;
 	private final int visionLayerMask = Layers.getLayerMask("Player", "Objective", "Solid");
-	private final int visionLayerMaskTarget = Layers.getLayerMask("Player", "Objective");
+	private final int visionLayerMaskTarget = Layers.getLayerMask("Player");
 
 	private StateMachine<State> stateMachine = new StateMachine<>();
 	private Transform transform;
 	private Transform target;
 	private GameObject[] objectives;
+	private boolean targetIsObjective = false;
 	private AnimationState animationState = AnimationState.IDLE;
 
 	public enum State {
@@ -110,10 +111,13 @@ public abstract class Behaviour {
 		if (dead) return;
 
 		stateMachine.update();
-		if (stateMachine.getState() == State.IDLE) {
-			visionCheck();
+		if (Time.frameCount % 60 == 0) {
+			if (targetIsObjective || path == null || path.length == 0) {
+				visionCheck();
+			}
 			if (target == null && objectives != null) {
 				target = getObjectiveTarget();
+				targetIsObjective = true;
 			}
 		}
 		switch (stateMachine.getState()) {
@@ -218,9 +222,11 @@ public abstract class Behaviour {
 				new Vector2(transform.scale.x, 0), visionRange, visionLayerMaskTarget);
 		if (hit == null) {
 			target = null;
+			targetIsObjective = false;
 		} else if ((hit.transform.gameObject.getLayerMask() & visionLayerMaskTarget) ==
 				hit.transform.gameObject.getLayerMask()) {
 			target = hit.transform;
+			targetIsObjective = false;
 		}
 	}
 
