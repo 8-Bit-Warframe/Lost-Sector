@@ -83,6 +83,7 @@ public class Player extends Script {
 	public void start() {
 		warframe = gameObject.getComponentOfType(Warframe.class);
 		gameObject.setTag("player");
+		gameObject.setLayer(Layers.getLayer("Player"));
 	}
 
 	@Override
