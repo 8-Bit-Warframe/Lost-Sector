@@ -35,7 +35,6 @@ public abstract class Behaviour {
 	private long thawTime = 1000;
 	private long thawStart = 0;
 	private int directionToLook = 0;
-	private boolean dead = false;
 	private final int visionLayerMask = Layers.getLayerMask("Player", "Objective", "Solid");
 	private final int visionLayerMaskTarget = Layers.getLayerMask("Player");
 
@@ -45,6 +44,7 @@ public abstract class Behaviour {
 	private GameObject[] objectives;
 	private boolean targetIsObjective = false;
 	private AnimationState animationState = AnimationState.IDLE;
+	private AnimationState deathAnimationState;
 
 	public enum State {
 		IDLE,
@@ -61,7 +61,12 @@ public abstract class Behaviour {
 		MOVING,
 		JUMPING,
 		FALLING,
-		ATTACKING
+		ATTACKING,
+		FROZEN_SHATTER,
+		DIE_SHOOT_FRONT,
+		DIE_SHOOT_BACK,
+		DIE_SLASH_FRONT,
+		DIE_SLASH_BACK,
 	}
 
 	Behaviour(float moveSpeed, boolean willPatrol, float visionRange) {
@@ -88,13 +93,16 @@ public abstract class Behaviour {
 		stateMachine.addState(State.THAWING,
 				new Transition<>(State.IDLE, () -> System.currentTimeMillis() - thawStart > thawTime, () -> {
 					transform.gameObject.renderer.setTint(1, 1, 1);
-					transform.gameObject.animator.shouldUpdate = true;
+					transform.gameObject.animator.enabled = true;
 				}));
 
-		stateMachine.addTransitionFromAnyState(new Transition<>(State.FROZEN, () -> freezeStart > 0, () -> {
-			transform.gameObject.renderer.setTint(freezeTint[0], freezeTint[1], freezeTint[2]);
-			transform.gameObject.animator.shouldUpdate = false;
-		}));
+		stateMachine.addState(State.DEAD);
+
+		stateMachine.addTransitionFromAnyState(
+				new Transition<>(State.FROZEN, () -> stateMachine.getState() != State.DEAD && freezeStart > 0, () -> {
+					transform.gameObject.renderer.setTint(freezeTint[0], freezeTint[1], freezeTint[2]);
+					transform.gameObject.animator.enabled = false;
+				}));
 
 		stateMachine.init(State.IDLE);
 	}
@@ -108,8 +116,6 @@ public abstract class Behaviour {
 	}
 
 	public final void update() {
-		if (dead) return;
-
 		stateMachine.update();
 		if (Time.frameCount % 60 == 0) {
 			if (targetIsObjective || path == null || path.length == 0) {
@@ -141,6 +147,7 @@ public abstract class Behaviour {
 			case SHATTER:
 				break;
 			case DEAD:
+				animationState = deathAnimationState;
 				break;
 			default:
 				break;
@@ -272,8 +279,46 @@ public abstract class Behaviour {
 		}
 	}
 
-	public void die() {
-		dead = true;
+	public void die(DamageType damageType, Vector2 attackOrigin) {
+		if (stateMachine.getState() == State.FROZEN || damageType == DamageType.COLD) {
+			deathAnimationState = AnimationState.FROZEN_SHATTER;
+			transform.gameObject.animator.enabled = true;
+		} else {
+			deathAnimationState = AnimationState.valueOf(
+					"DIE_" + getType(damageType) + "_" + getDirection(attackOrigin));
+		}
+		stateMachine.setState(State.DEAD);
+	}
+
+	private String getType(DamageType damageType) {
+		switch (damageType) {
+			case NORMAL:
+				return "SHOOT";
+			case SLASH:
+				return "SLASH";
+			case COLD:
+				return "";
+			case KUBROW:
+				return "KUBROW";
+			default:
+				return null;
+		}
+	}
+
+	private String getDirection(Vector2 attackOrigin) {
+		if (attackOrigin.x < transform.position.x) {
+			if (transform.scale.x < 0) {
+				return "FRONT";
+			} else {
+				return "BACK";
+			}
+		} else {
+			if (transform.scale.x < 0) {
+				return "BACK";
+			} else {
+				return "FRONT";
+			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")

@@ -1,9 +1,7 @@
 package com.ezardlabs.lostsector.objects.enemies;
 
-import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.Level;
 import com.ezardlabs.dethsquare.LevelManager;
-import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animation.Animations;
@@ -11,7 +9,6 @@ import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.ai.Behaviour;
-import com.ezardlabs.lostsector.ai.Behaviour.State;
 import com.ezardlabs.lostsector.levels.MissionLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
 import com.ezardlabs.lostsector.objects.DropTable;
@@ -80,6 +77,21 @@ public abstract class Enemy extends Entity {
 				case ATTACKING:
 					gameObject.animator.play("attack");
 					break;
+				case FROZEN_SHATTER:
+					gameObject.animator.play("frozen_shatter");
+					break;
+				case DIE_SHOOT_FRONT:
+					gameObject.animator.play("die_shoot_front");
+					break;
+				case DIE_SHOOT_BACK:
+					gameObject.animator.play("die_shoot_back");
+					break;
+				case DIE_SLASH_FRONT:
+					gameObject.animator.play("die_slash_front");
+					break;
+				case DIE_SLASH_BACK:
+					gameObject.animator.play("die_slash_back");
+					break;
 				default:
 					break;
 			}
@@ -105,48 +117,7 @@ public abstract class Enemy extends Entity {
 
 	public void die(DamageType damageType, Vector2 attackOrigin) {
 		gameObject.setTag(null);
-		if (behaviour.getState() == State.FROZEN) {
-			gameObject.animator.play("frozen_shatter");
-			gameObject.animator.shouldUpdate = true;
-		} else {
-			String direction;
-			if (attackOrigin.x < transform.position.x) {
-				if (gameObject.transform.scale.x < 0) {
-					direction = "front";
-				} else {
-					direction = "back";
-				}
-			} else {
-				if (gameObject.transform.scale.x < 0) {
-					direction = "back";
-				} else {
-					direction = "front";
-				}
-			}
-			String type;
-			switch (damageType) {
-				case NORMAL:
-					type = "shoot";
-					break;
-				case SLASH:
-					type = "slash";
-					break;
-				case COLD:
-					type = "";
-					break;
-				case KUBROW:
-					type = "kubrow";
-					break;
-				default:
-					type = "";
-					break;
-			}
-			gameObject.animator.play("die_" + type + "_" + direction);
-		}
-		gameObject.removeComponent(getClass());
-		gameObject.removeComponent(Collider.class);
-		gameObject.removeComponent(Rigidbody.class);
-		behaviour.die();
+		behaviour.die(damageType, attackOrigin);
 		Level level = LevelManager.getCurrentLevel();
 		if (level instanceof MissionLevel) {
 			((MissionLevel) level).getMission().notifyEnemyDeath(this);
