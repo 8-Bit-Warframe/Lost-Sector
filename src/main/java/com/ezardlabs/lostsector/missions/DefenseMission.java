@@ -13,6 +13,7 @@ import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.prefabs.PrefabManager;
 import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.missions.objectives.Cryopod;
+import com.ezardlabs.lostsector.objects.enemies.CorpseFader;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
 import java.util.LinkedHashMap;
@@ -134,6 +135,13 @@ public class DefenseMission extends Mission {
 						waveNumText.setText("Wave " + waveNum);
 						waveNumText.gameObject.setActive(true);
 						time = System.currentTimeMillis();
+						for (GameObject enemy : GameObject.findAllWithTag("enemy_dead")) {
+							if (enemy.hasComponent(CorpseFader.class)) {
+								GameObject.destroy(enemy);
+							} else {
+								enemy.addComponent(new CorpseFader());
+							}
+						}
 					}));
 			stateMachine.addState(State.TEXT,
 					new Transition<>(State.WAVE, () -> System.currentTimeMillis() - time >= textTime, () -> {

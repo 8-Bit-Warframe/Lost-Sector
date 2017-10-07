@@ -116,7 +116,7 @@ public abstract class Enemy extends Entity {
 //	}
 
 	public void die(DamageType damageType, Vector2 attackOrigin) {
-		gameObject.setTag(null);
+		gameObject.setTag("enemy_dead");
 		behaviour.die(damageType, attackOrigin);
 		Level level = LevelManager.getCurrentLevel();
 		if (level instanceof MissionLevel) {
