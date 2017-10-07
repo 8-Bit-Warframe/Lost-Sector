@@ -11,6 +11,7 @@ import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.ai.Behaviour;
 import com.ezardlabs.lostsector.levels.MissionLevel;
 import com.ezardlabs.lostsector.levels.SurvivalLevel;
+import com.ezardlabs.lostsector.missions.Mission;
 import com.ezardlabs.lostsector.objects.DropTable;
 import com.ezardlabs.lostsector.objects.Entity;
 
@@ -19,6 +20,7 @@ import static java.util.Arrays.asList;
 public abstract class Enemy extends Entity {
 	private final DropTable dropTable = new DropTable(asList("pickup_health", "pickup_energy"), asList(0.2f, 0.2f));
 	private Behaviour behaviour;
+	private Mission mission;
 	protected final TextureAtlas ta;
 
 	public Enemy(int health, Behaviour behaviour) {
@@ -49,13 +51,14 @@ public abstract class Enemy extends Entity {
 
 		Level level = LevelManager.getCurrentLevel();
 		if (level instanceof MissionLevel) {
-			((MissionLevel) level).getMission().notifyEnemySpawn(this);
+			mission = ((MissionLevel) level).getMission();
+			mission.notifyEnemySpawn(this);
 		}
 	}
 
 	@Override
 	public void update() {
-		if (behaviour != null) {
+		if (behaviour != null && (mission == null || !mission.isCompleted())) {
 			behaviour.update();
 
 			switch (behaviour.getAnimationState()) {
