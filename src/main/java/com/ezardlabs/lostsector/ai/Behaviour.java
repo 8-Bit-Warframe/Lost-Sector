@@ -280,27 +280,27 @@ public abstract class Behaviour {
 	}
 
 	public void die(DamageType damageType, Vector2 attackOrigin) {
-		if (stateMachine.getState() == State.FROZEN || damageType == DamageType.COLD) {
+		if (stateMachine.getState() == State.FROZEN) {
 			deathAnimationState = AnimationState.FROZEN_SHATTER;
-			transform.gameObject.animator.enabled = true;
 		} else {
-			deathAnimationState = AnimationState.valueOf(
-					"DIE_" + getType(damageType) + "_" + getDirection(attackOrigin));
+			deathAnimationState = AnimationState.valueOf(getDeathAnimation(damageType, attackOrigin));
 		}
+		transform.gameObject.animator.enabled = true;
 		stateMachine.setState(State.DEAD);
 	}
 
-	private String getType(DamageType damageType) {
+	private String getDeathAnimation(DamageType damageType, Vector2 attackOrigin) {
 		switch (damageType) {
 			case NORMAL:
-				return "SHOOT";
+				return "DIE_SHOOT_" + getDirection(attackOrigin);
 			case SLASH:
-				return "SLASH";
+				return "DIE_SLASH_" + getDirection(attackOrigin);
 			case COLD:
-				return "";
+				return "FROZEN_SHATTER";
 			case KUBROW:
-				return "KUBROW";
+				return "DIE_KUBROW_" + getDirection(attackOrigin);
 			default:
+				System.err.println("Unknown damage type: " + damageType);
 				return null;
 		}
 	}
