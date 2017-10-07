@@ -16,7 +16,7 @@ public class MainMenuLevel extends Level {
 	@Override
 	public void onLoad() {
 		GameObject.instantiate(new GameObject("Camera", new Camera(true), new AudioListener(),
-				new AudioSource(new AudioClip("audio/this_is_what_you_are.ogg"), true, AudioGroup.MUSIC)), new Vector2());
+				new AudioSource(new AudioClip("audio/menu.ogg"), true, AudioGroup.MUSIC)), new Vector2());
 
 		GameObject.instantiate(new GameObject("Logo", new GuiRenderer("images/menus/main/logo.png", 900, 225)),
 				new Vector2(510, 15));
