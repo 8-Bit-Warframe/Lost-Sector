@@ -32,7 +32,7 @@ public abstract class Entity extends Script {
 	}
 
 	public void applyDamage(float damage, DamageType damageType, Vector2 attackOrigin) {
-		if (damage == 0) return;
+		if (damage == 0 || isDead()) return;
 		health -= damage;
 		if (damageListener != null) {
 			damageListener.onDamageReceived(damage, damageType, attackOrigin);
@@ -40,6 +40,10 @@ public abstract class Entity extends Script {
 		if (health <= 0) {
 			die(damageType, attackOrigin);
 		}
+	}
+
+	public boolean isDead() {
+		return health <= 0;
 	}
 
 	protected abstract void die(DamageType damageType, Vector2 attackOrigin);
