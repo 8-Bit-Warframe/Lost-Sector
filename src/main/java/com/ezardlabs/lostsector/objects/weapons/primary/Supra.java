@@ -38,7 +38,7 @@ public class Supra extends PrimaryWeapon {
 						}
 					case 2:
 						GameObject.instantiate(
-								new GameObject("Gorgon Bullet", new Renderer("images/laser.png", 100, 100),
+								new GameObject("Supra Bullet", new Renderer("images/laser.png", 100, 100),
 										new Collider(100, 100, true), new Laser(1, "enemy")),
 								transform.position.offset(transform.scale.x > 0 ? 187.5f : -75,
 										62.5f)).transform.scale.x = transform.scale.x;
