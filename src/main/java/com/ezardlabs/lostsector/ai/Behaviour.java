@@ -212,9 +212,10 @@ public abstract class Behaviour {
 		if (target == null) {
 			return false;
 		} else {
-			Vector2 origin = transform.position.offset(transform.scale.x > 0 ? -100 : 100, 100);
-			Vector2 direction = new Vector2(target.position.x - origin.x, target.position.y - origin.y);
-			RaycastHit hit = Physics.raycast(origin, direction, (float) Vector2.distance(origin, target.position),
+			Vector2 origin = transform.position.offset(100, 100);
+			Vector2 temp = target.position.offset(100, 100);
+			Vector2 direction = new Vector2(temp.x - origin.x, temp.y - origin.y);
+			RaycastHit hit = Physics.raycast(origin, direction, (float) Vector2.distance(origin, temp),
 					visionLayerMask);
 			return hit != null && hit.transform == target;
 		}
