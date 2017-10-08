@@ -14,10 +14,39 @@
 			"name": "shoot",
 			"sprites": [
 				{
+					"name": "shoot0",
+					"duration": 1000
+				},
+				{
+					"name": "shoot1"
+				},
+				{
 					"name": "shoot0"
 				},
 				{
 					"name": "shoot1"
+				},
+				{
+					"name": "shoot0"
+				},
+				{
+					"name": "shoot1"
+				},
+				{
+					"name": "shoot0"
+				},
+				{
+					"name": "shoot1"
+				},
+				{
+					"name": "shoot0"
+				},
+				{
+					"name": "shoot1"
+				},
+				{
+					"name": "shoot0",
+					"duration": 1000
 				}
 			],
 			"type": "LOOP"
