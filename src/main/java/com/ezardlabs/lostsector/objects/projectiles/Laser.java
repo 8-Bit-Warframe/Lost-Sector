@@ -9,11 +9,11 @@ import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.Entity;
 
 public class Laser extends Script {
-	private final int damage;
+	private final float damage;
 	private final int solidLayer = Layers.getLayer("Solid");
 	private final String[] targetTags;
 
-	public Laser(int damage, String... targetTags) {
+	public Laser(float damage, String... targetTags) {
 		this.damage = damage;
 		this.targetTags = targetTags;
 	}
