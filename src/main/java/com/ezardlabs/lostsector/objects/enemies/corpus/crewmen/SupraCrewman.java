@@ -25,7 +25,7 @@ public class SupraCrewman extends Crewman {
 					if (!fired) {
 						GameObject laser = GameObject.instantiate(
 								new GameObject("Laser", new Renderer("images/laser.png", 100, 100),
-										new Collider(100, 100, true), new Laser(1, "player", "cryopod")),
+										new Collider(100, 100, true), new Laser(0.5f, "player", "cryopod")),
 								self.position.offset(self.gameObject.transform.scale.x < 0 ? -12.5f : 87.5f, 60));
 						laser.transform.scale.set(self.gameObject.transform.scale);
 						fired = true;
