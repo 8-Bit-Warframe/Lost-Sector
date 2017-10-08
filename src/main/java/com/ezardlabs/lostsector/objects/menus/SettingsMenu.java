@@ -15,7 +15,7 @@ public class SettingsMenu extends Script {
 	private static final String AUDIO_MASTER_VOLUME = "audio_master_volume";
 	private static final String AUDIO_MUSIC_VOLUME = "audio_music_volume";
 	private static final String AUDIO_SFX_VOLUME = "audio_sfx_volume";
-	private static final TextureAtlas FONT = TextureAtlas.load("fonts/atlas.png", "fonts/atlas.txt");
+	private final TextureAtlas FONT = TextureAtlas.load("fonts");
 	private final BackButtonAction backButtonAction;
 	private final GuiText menuText = new GuiText("MENU", FONT, 31.25f);
 
