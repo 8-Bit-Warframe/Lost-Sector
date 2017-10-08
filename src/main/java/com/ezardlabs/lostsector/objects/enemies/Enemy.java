@@ -1,5 +1,6 @@
 package com.ezardlabs.lostsector.objects.enemies;
 
+import com.ezardlabs.dethsquare.Layers;
 import com.ezardlabs.dethsquare.Level;
 import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.TextureAtlas;
@@ -32,6 +33,7 @@ public abstract class Enemy extends Entity {
 	@Override
 	public void start() {
 		gameObject.setTag("enemy");
+		gameObject.setLayer(Layers.getLayer("Enemy"));
 		if (((int) (Math.random() * 2)) == 0) transform.scale.x = -1;
 		gameObject.renderer.setTextureAtlas(ta, 200, 200);
 		gameObject.animator.setAnimations(Animations.load(getAnimationPath(), ta,
