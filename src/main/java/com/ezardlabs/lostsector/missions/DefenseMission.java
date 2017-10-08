@@ -49,7 +49,8 @@ public class DefenseMission extends Mission {
 		GameObject.instantiate(new GameObject("Defense Director", director), new Vector2());
 	}
 
-	public GameObject[] getCryopods() {
+	@Override
+	public GameObject[] getObjectiveTargets() {
 		return cryopods;
 	}
 

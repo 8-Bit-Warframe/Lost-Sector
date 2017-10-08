@@ -111,7 +111,7 @@ public abstract class Behaviour {
 		this.transform = transform;
 		Level level = LevelManager.getCurrentLevel();
 		if (level instanceof MissionLevel) {
-			objectives = ((MissionLevel) level).getObjectiveTargets();
+			objectives = ((MissionLevel) level).getMission().getObjectiveTargets();
 		}
 	}
 

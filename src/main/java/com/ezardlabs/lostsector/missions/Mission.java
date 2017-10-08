@@ -31,6 +31,10 @@ public abstract class Mission {
 
 	public abstract void load();
 
+	public GameObject[] getObjectiveTargets() {
+		return null;
+	}
+
 	protected final void instantiateCamera(GameObject player) {
 		GameObject.instantiate(new GameObject("Camera", new Camera(true),
 						new SmartCamera(player.transform, 1000, new Vector2(100, 100)), new AudioListener(),
