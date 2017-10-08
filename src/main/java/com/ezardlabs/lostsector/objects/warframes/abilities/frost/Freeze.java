@@ -32,10 +32,12 @@ public class Freeze extends Script {
 	@Override
 	public void onTriggerEnter(Collider other) {
 		if (other.gameObject.getLayer() == Layers.getLayer("Enemy")) {
-			//noinspection ConstantConditions
-			other.gameObject.getComponentOfType(Enemy.class).applyDamage(1, DamageType.COLD, transform.position);
-			gameObject.removeComponent(Collider.class);
-			Network.destroy(gameObject);
+			Enemy enemy = other.gameObject.getComponentOfType(Enemy.class);
+			if (enemy != null && !enemy.isDead()) {
+				enemy.applyDamage(1, DamageType.COLD, transform.position);
+				gameObject.removeComponent(Collider.class);
+				Network.destroy(gameObject);
+			}
 		} else if (other.gameObject.getLayer() == Layers.getLayer("Solid") && other.gameObject.name != null &&
 				!other.gameObject.name.equals("Snowglobe")) {
 			gameObject.animator.play("shatter");
