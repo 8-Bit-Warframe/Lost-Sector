@@ -141,16 +141,14 @@ public abstract class Warframe extends ShieldedEntity {
 	protected void die(DamageType damageType, Vector2 attackOrigin) {
 		gameObject.animator.play("die");
 		gameObject.rigidbody.velocity.set(0, 0);
-		gameObject.setTag(null);
 		spawnGravestone();
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
-				transform.position = MapManager.playerSpawn;
+				transform.position.set(MapManager.playerSpawn);
 				health = maxHealth;
 				shield = maxShield;
 				energy = maxEnergy;
-				gameObject.setTag("player");
 			}
 		}, 2000);
 	}
