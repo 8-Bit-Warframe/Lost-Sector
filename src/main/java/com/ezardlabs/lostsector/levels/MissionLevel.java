@@ -1,6 +1,7 @@
 package com.ezardlabs.lostsector.levels;
 
 import com.ezardlabs.dethsquare.Level;
+import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.lostsector.missions.Mission;
 
 public abstract class MissionLevel<T extends Mission> extends Level {
@@ -17,5 +18,6 @@ public abstract class MissionLevel<T extends Mission> extends Level {
 	@Override
 	public void onLoad() {
 		mission.load();
+		Screen.setCursorVisible(false);
 	}
 }
