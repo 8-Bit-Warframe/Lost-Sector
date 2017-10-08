@@ -10,7 +10,7 @@ import com.ezardlabs.dethsquare.StateMachine;
 import com.ezardlabs.dethsquare.StateMachine.Transition;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.prefabs.PrefabManager;
+import com.ezardlabs.dethsquare.multiplayer.Network;
 import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.missions.objectives.Cryopod;
 import com.ezardlabs.lostsector.objects.enemies.CorpseFader;
@@ -25,7 +25,7 @@ public class DefenseMission extends Mission {
 	@Override
 	public void load() {
 		MapManager.loadMap("defense0");
-		GameObject player = GameObject.instantiate(PrefabManager.loadPrefab("player"), MapManager.playerSpawn);
+		GameObject player = Network.instantiate("player", MapManager.playerSpawn);
 
 		instantiateCamera(player);
 		instantiateMenus();
@@ -35,18 +35,20 @@ public class DefenseMission extends Mission {
 			cryopods[i].getComponent(Cryopod.class).setId(i);
 		}
 
-		addEnemyStatusListener(new EnemyStatusListener() {
-			@Override
-			public void onEnemySpawned(Enemy enemy) {
-				// unused
-			}
+		if (Network.isHost()) {
+			addEnemyStatusListener(new EnemyStatusListener() {
+				@Override
+				public void onEnemySpawned(Enemy enemy) {
+					// unused
+				}
 
-			@Override
-			public void onEnemyKilled(Enemy enemy) {
-				director.numKills++;
-			}
-		});
-		GameObject.instantiate(new GameObject("Defense Director", director), new Vector2());
+				@Override
+				public void onEnemyKilled(Enemy enemy) {
+					director.numKills++;
+				}
+			});
+			GameObject.instantiate(new GameObject("Defense Director", director), new Vector2());
+		}
 	}
 
 	@Override
