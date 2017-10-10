@@ -4,6 +4,7 @@ import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
 import com.ezardlabs.dethsquare.LevelManager;
+import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Vector2;
 
 public class MainMenu extends Menu {
@@ -20,6 +21,7 @@ public class MainMenu extends Menu {
 				new Vector2(960 - 600, 540 - 500));
 		settingsMenu.setActive(false);
 		open();
+		Screen.setCursorVisible(true);
 	}
 
 	@Override

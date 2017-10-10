@@ -5,7 +5,6 @@ import com.ezardlabs.dethsquare.GuiRenderer;
 import com.ezardlabs.dethsquare.GuiText;
 import com.ezardlabs.dethsquare.Input;
 import com.ezardlabs.dethsquare.Input.KeyCode;
-import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Time;
@@ -128,7 +127,6 @@ public class Menu extends Script {
 			text.setActive(true);
 		}
 		Time.pause();
-		Screen.setCursorVisible(true);
 	}
 
 	public void close() {
@@ -143,7 +141,6 @@ public class Menu extends Script {
 			text.setActive(false);
 		}
 		Time.resume();
-		Screen.setCursorVisible(false);
 	}
 
 	public void toggle() {

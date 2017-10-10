@@ -29,7 +29,13 @@ public class EscMenu extends Menu {
 				settingsMenu.setActive(false);
 				open();
 			} else {
-				toggle();
+				if (isOpen()) {
+					close();
+					Screen.setCursorVisible(false);
+				} else {
+					open();
+					Screen.setCursorVisible(true);
+				}
 			}
 		}
 		super.update();
