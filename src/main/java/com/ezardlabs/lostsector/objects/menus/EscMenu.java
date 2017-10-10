@@ -48,12 +48,9 @@ public class EscMenu extends Menu {
 	protected MenuAction[] getActions() {
 		return new MenuAction[]{
 				(menu, index, text) -> menu.close(),
-				new MenuAction() {
-					@Override
-					public void onMenuItemSelected(Menu menu, int index, String text) {
-						close();
-						settingsMenu.setActive(true);
-					}
+				(menu, index, text) -> {
+					close();
+					settingsMenu.setActive(true);
 				},
 				(menu, index, text) -> LevelManager.loadLevel("main_menu")
 		};
