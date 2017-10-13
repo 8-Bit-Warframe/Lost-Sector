@@ -46,12 +46,9 @@ public class MainMenu extends Menu {
 	protected MenuAction[] getActions() {
 		return new MenuAction[]{
 				(menu, index, text) -> LevelManager.loadLevel("defense"),
-				new MenuAction() {
-					@Override
-					public void onMenuItemSelected(Menu menu, int index, String text) {
-						close();
-						settingsMenu.setActive(true);
-					}
+				(menu, index, text) -> {
+					close();
+					settingsMenu.setActive(true);
 				},
 				(menu, index, text) -> System.exit(0)
 		};
