@@ -10,7 +10,7 @@ import com.ezardlabs.dethsquare.StateMachine;
 import com.ezardlabs.dethsquare.StateMachine.Transition;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.networking.Network;
 import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.missions.objectives.Cryopod;
 import com.ezardlabs.lostsector.objects.enemies.CorpseFader;

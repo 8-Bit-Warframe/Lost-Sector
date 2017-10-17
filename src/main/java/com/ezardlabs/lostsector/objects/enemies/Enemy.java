@@ -7,7 +7,7 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
-import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.networking.Network;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.ai.Behaviour;
 import com.ezardlabs.lostsector.levels.MissionLevel;

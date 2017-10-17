@@ -8,7 +8,7 @@ import com.ezardlabs.dethsquare.Physics.RaycastHit;
 import com.ezardlabs.dethsquare.RectF;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.networking.Network;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 

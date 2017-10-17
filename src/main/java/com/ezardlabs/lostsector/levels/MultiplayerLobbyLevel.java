@@ -8,9 +8,9 @@ import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.multiplayer.Matchmaker;
-import com.ezardlabs.dethsquare.multiplayer.Matchmaker.MatchmakingListener;
-import com.ezardlabs.dethsquare.multiplayer.MatchmakingGame;
+import com.ezardlabs.dethsquare.networking.Matchmaker;
+import com.ezardlabs.dethsquare.networking.Matchmaker.MatchmakingListener;
+import com.ezardlabs.dethsquare.networking.MatchmakingGame;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

@@ -2,7 +2,7 @@ package com.ezardlabs.lostsector.objects.warframes;
 
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.networking.Network;
 import com.ezardlabs.lostsector.objects.Player;
 import com.ezardlabs.lostsector.objects.weapons.melee.Nikana;
 import com.ezardlabs.lostsector.objects.weapons.primary.Lanka;

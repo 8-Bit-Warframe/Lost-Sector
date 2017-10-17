@@ -4,7 +4,7 @@ import com.ezardlabs.dethsquare.Component;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
-import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.networking.Network;
 
 public class Snowglobe extends Component {
 

@@ -5,7 +5,7 @@ import com.ezardlabs.dethsquare.Component;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
-import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.networking.Network;
 import com.ezardlabs.lostsector.objects.DropTable;
 
 import static java.util.Arrays.asList;

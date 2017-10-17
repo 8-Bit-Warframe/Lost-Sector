@@ -7,7 +7,7 @@ import com.ezardlabs.dethsquare.Level;
 import com.ezardlabs.dethsquare.Screen;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.networking.Network;
 import com.ezardlabs.lostsector.camera.SmartCamera;
 import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.map.procedural.MapConfig;

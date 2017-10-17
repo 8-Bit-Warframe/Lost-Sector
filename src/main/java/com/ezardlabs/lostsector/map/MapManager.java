@@ -7,7 +7,7 @@ import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.TextureAtlas.Sprite;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.networking.Network;
 import com.ezardlabs.dethsquare.prefabs.PrefabManager;
 import com.ezardlabs.dethsquare.tmx.Layer;
 import com.ezardlabs.dethsquare.tmx.Map;

@@ -1,7 +1,7 @@
 package com.ezardlabs.lostsector.objects.pickups;
 
 import com.ezardlabs.dethsquare.Collider;
-import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.networking.Network;
 import com.ezardlabs.lostsector.objects.warframes.Warframe;
 
 public class EnergyPickup extends Pickup {

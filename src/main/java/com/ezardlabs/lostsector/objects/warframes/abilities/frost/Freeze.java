@@ -8,7 +8,7 @@ import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.Time;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
-import com.ezardlabs.dethsquare.multiplayer.Network;
+import com.ezardlabs.dethsquare.networking.Network;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
