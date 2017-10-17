@@ -1,11 +1,10 @@
 package com.ezardlabs.lostsector.missions;
 
-import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Level;
 import com.ezardlabs.dethsquare.LevelManager;
 import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.Vector2;
-import com.ezardlabs.dethsquare.prefabs.PrefabManager;
+import com.ezardlabs.dethsquare.networking.Network;
 import com.ezardlabs.lostsector.levels.MissionLevel;
 
 import java.util.LinkedHashMap;
@@ -68,7 +67,7 @@ public class SpawnPoint extends Script {
 	private static void spawnEnemy(Vector2 position) {
 		String enemyPrefab = getSpawn();
 		if (enemyPrefab != null) {
-			GameObject.instantiate(PrefabManager.loadPrefab(getSpawn()), position);
+			Network.instantiate(getSpawn(), position);
 		}
 	}
 
