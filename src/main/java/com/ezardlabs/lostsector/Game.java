@@ -37,6 +37,7 @@ import com.ezardlabs.lostsector.objects.hud.HUD;
 import com.ezardlabs.lostsector.objects.pickups.EnergyPickup;
 import com.ezardlabs.lostsector.objects.pickups.HealthPickup;
 import com.ezardlabs.lostsector.objects.projectiles.LankaBeam;
+import com.ezardlabs.lostsector.objects.projectiles.Laser;
 import com.ezardlabs.lostsector.objects.warframes.Frost;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Avalanche;
 import com.ezardlabs.lostsector.objects.warframes.abilities.frost.Freeze;
@@ -110,6 +111,14 @@ public class Game extends BaseGame {
 						new NetworkTransform(), new NetworkRenderer()),
 				() -> new GameObject("Lanka Beam", new Renderer("images/blue.png", 0, 0), new NetworkTransform(),
 						new NetworkRenderer()));
+		PrefabManager.addPrefab("laser-0.5",
+				() -> new GameObject("Laser", new Renderer("images/laser.png", 100, 100), new Collider(100, 100, true),
+						new Laser(0.5f, "player", "cryopod"), new NetworkTransform()),
+				() -> new GameObject("Laser", new Renderer("images/laser.png", 100, 100), new NetworkTransform()));
+		PrefabManager.addPrefab("laser-1",
+				() -> new GameObject("Laser", new Renderer("images/laser.png", 100, 100), new Collider(100, 100, true),
+						new Laser(1, "player", "cryopod"), new NetworkTransform()),
+				() -> new GameObject("Laser", new Renderer("images/laser.png", 100, 100), new NetworkTransform()));
 	}
 
 	private void registerDoorPrefabs() {
