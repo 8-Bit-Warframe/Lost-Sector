@@ -58,7 +58,7 @@ public class SmartCamera extends Script {
 		}
 		inputTarget.normalise();
 
-		inputTarget.multiplyBy(maxLookahead);
+		inputTarget.multiplyBy(maxLookahead * Screen.scale);
 
 		base.set((followTarget.position.x + offset.x) * Screen.scale,
 				(followTarget.position.y + offset.y) * Screen.scale);
