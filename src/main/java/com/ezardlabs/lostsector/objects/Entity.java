@@ -1,10 +1,10 @@
 package com.ezardlabs.lostsector.objects;
 
-import com.ezardlabs.dethsquare.Script;
 import com.ezardlabs.dethsquare.Vector2;
+import com.ezardlabs.dethsquare.networking.NetworkScript;
 import com.ezardlabs.lostsector.Game.DamageType;
 
-public abstract class Entity extends Script {
+public abstract class Entity extends NetworkScript {
 	protected final float maxHealth;
 	protected float health;
 	private DamageListener damageListener;
