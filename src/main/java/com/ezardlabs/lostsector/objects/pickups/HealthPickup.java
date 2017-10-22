@@ -20,7 +20,7 @@ public class HealthPickup extends Pickup {
 	@Override
 	public void onTriggerEnter(Collider other) {
 		Warframe w = other.gameObject.getComponentOfType(Warframe.class);
-		if (w != null && w.addHealth(HEALTH)) {
+		if (w != null && w.gameObject.playerId == Network.getPlayerId() && w.addHealth(HEALTH)) {
 			Network.destroy(gameObject);
 		}
 	}

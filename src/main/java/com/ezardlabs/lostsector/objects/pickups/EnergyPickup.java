@@ -20,7 +20,7 @@ public class EnergyPickup extends Pickup {
 	@Override
 	public void onTriggerEnter(Collider other) {
 		Warframe w = other.gameObject.getComponentOfType(Warframe.class);
-		if (w != null && w.addEnergy(ENERGY)) {
+		if (w != null && w.gameObject.playerId == Network.getPlayerId() && w.addEnergy(ENERGY)) {
 			Network.destroy(gameObject);
 		}
 	}
