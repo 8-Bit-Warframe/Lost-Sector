@@ -44,8 +44,7 @@ public class Locker extends NetworkScript {
 
 	@Override
 	public void onTriggerEnter(Collider other) {
-		if (!locked && !unlocking && isLocal() && other.gameObject.getTag() != null &&
-				other.gameObject.getTag().equals("player")) {
+		if (!locked && !unlocking && isLocal() && "player".equals(other.gameObject.getTag())) {
 			unlock();
 			sendMessage(UNLOCK_MESSAGE);
 			String drop = dropTable.getDrop();
