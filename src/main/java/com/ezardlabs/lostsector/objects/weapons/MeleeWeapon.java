@@ -1,15 +1,15 @@
 package com.ezardlabs.lostsector.objects.weapons;
 
-import com.ezardlabs.dethsquare.animation.Animation;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.TextureAtlas;
+import com.ezardlabs.dethsquare.animation.Animation;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.objects.enemies.Enemy;
 
 public abstract class MeleeWeapon extends Weapon {
 	private final Game.DamageType damageType;
-	private final GameObject wielder;
+	protected final GameObject wielder;
 	protected String currentAnimation = null;
 
 	public MeleeWeapon(String name, Game.DamageType damageType, GameObject wielder) {

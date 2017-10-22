@@ -7,6 +7,7 @@ import com.ezardlabs.dethsquare.animation.Animation.AnimationListener;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.dethsquare.animation.Animator;
+import com.ezardlabs.dethsquare.networking.Network;
 import com.ezardlabs.lostsector.Game;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 
@@ -27,25 +28,27 @@ public class Nikana extends MeleeWeapon implements AnimationListener {
 	public Animation[] getAnimations(TextureAtlas ta) {
 		Animation[] animations = Animations.load("animations/weapons/melee/nikana", ta,
 				new Validator("slice1", "slice2", "slice3", "dash1", "dash2", "dash3", "stow"));
-		for (Animation a : animations) {
-			if (a.name.contains("slice") || a.name.contains("dash")) {
-				a.setAnimationListener(this);
-			}
-			if ("stow".equals(a.name)) {
-				a.setAnimationListener(new AnimationListener() {
-					@Override
-					public void onAnimatedStarted(Animator animator) {
-					}
+		if (wielder.playerId == Network.getPlayerId()) {
+			for (Animation a : animations) {
+				if (a.name.contains("slice") || a.name.contains("dash")) {
+					a.setAnimationListener(this);
+				}
+				if ("stow".equals(a.name)) {
+					a.setAnimationListener(new AnimationListener() {
+						@Override
+						public void onAnimatedStarted(Animator animator) {
+						}
 
-					@Override
-					public void onFrame(Animator animator, int frameNum) {
-					}
+						@Override
+						public void onFrame(Animator animator, int frameNum) {
+						}
 
-					@Override
-					public void onAnimationFinished(Animator animator) {
-						stowed = true;
-					}
-				});
+						@Override
+						public void onAnimationFinished(Animator animator) {
+							stowed = true;
+						}
+					});
+				}
 			}
 		}
 		return animations;
@@ -96,6 +99,7 @@ public class Nikana extends MeleeWeapon implements AnimationListener {
 
 	@Override
 	public void onAnimatedStarted(Animator animator) {
+		System.out.println("onAnimationStarted: " + this + ", " + wielder);
 		stowed = false;
 		shouldStow = false;
 		if (t != null) {
