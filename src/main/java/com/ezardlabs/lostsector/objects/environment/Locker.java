@@ -1,16 +1,17 @@
 package com.ezardlabs.lostsector.objects.environment;
 
 import com.ezardlabs.dethsquare.Collider;
-import com.ezardlabs.dethsquare.Component;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.dethsquare.networking.Network;
+import com.ezardlabs.dethsquare.networking.NetworkScript;
 import com.ezardlabs.lostsector.objects.DropTable;
 
 import static java.util.Arrays.asList;
 
-public class Locker extends Component {
+public class Locker extends NetworkScript {
+	private static final String UNLOCK_MESSAGE = "unlock";
 	private static final DropTable dropTable = new DropTable(asList("pickup_health", "pickup_energy"), asList(0.5f,
 			0.5f));
 	private final boolean locked;
@@ -36,16 +37,28 @@ public class Locker extends Component {
 		gameObject.renderer.setDepth(-70);
 	}
 
+	private void unlock() {
+		unlocking = true;
+		gameObject.animator.play("unlock");
+	}
+
 	@Override
 	public void onTriggerEnter(Collider other) {
-		if (!locked && !unlocking && Network.isHost() && other.gameObject.getTag() != null &&
+		if (!locked && !unlocking && isLocal() && other.gameObject.getTag() != null &&
 				other.gameObject.getTag().equals("player")) {
-			unlocking = true;
-			gameObject.animator.play("unlock");
+			unlock();
+			sendMessage(UNLOCK_MESSAGE);
 			String drop = dropTable.getDrop();
 			if (drop != null) {
 				Network.instantiate(drop, transform.position);
 			}
+		}
+	}
+
+	@Override
+	protected void receiveMessage(String message) {
+		if (UNLOCK_MESSAGE.equals(message)) {
+			unlock();
 		}
 	}
 }

@@ -134,11 +134,8 @@ public class Game extends BaseGame {
 		PrefabManager.addPrefab("locker_locked", () -> new GameObject("Locker", true, new Renderer(),
 				new Locker(true, TextureAtlas.load("images/environment/atlas.png", "images/environment/atlas.txt"))));
 		PrefabManager.addPrefab("locker_unlocked", () -> new GameObject("Locker", true, new Renderer(),
-						new Locker(false, TextureAtlas.load("images/environment/atlas.png", "images/environment/atlas.txt")),
-						new Collider(100, 200, true), new Animator(), new NetworkAnimator()),
-				() -> new GameObject("Locker", true, new Renderer(), new Locker(false,
-						TextureAtlas.load("images/environment/atlas.png", "images/environment/atlas.txt")),
-						new Animator(), new NetworkAnimator()));
+				new Locker(false, TextureAtlas.load("images/environment/atlas.png", "images/environment/atlas.txt")),
+				new Collider(100, 200, true), new Animator()));
 	}
 
 	private void registerEnemyPrefabs() {
