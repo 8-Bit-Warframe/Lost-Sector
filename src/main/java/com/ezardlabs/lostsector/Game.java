@@ -91,6 +91,7 @@ public class Game extends BaseGame {
 				() -> new GameObject("Other Player", "player", new Renderer(), new Animator(), new Frost(),
 						new Collider(112.5f, 156.25f, 43.75f, 43.75f), new NetworkTransform(), new NetworkRenderer(),
 						new NetworkAnimator()));
+		PrefabManager.addPrefab("arm", () -> new GameObject("Arm", new Renderer(), new Animator()));
 	}
 
 	private void registerWarframeAbilityPrefabs() {

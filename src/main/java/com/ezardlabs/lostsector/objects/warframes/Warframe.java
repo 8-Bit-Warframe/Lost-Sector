@@ -9,17 +9,26 @@ import com.ezardlabs.dethsquare.animation.Animations;
 import com.ezardlabs.dethsquare.animation.Animations.Validator;
 import com.ezardlabs.dethsquare.animation.Animator;
 import com.ezardlabs.dethsquare.graphics.Renderer;
+import com.ezardlabs.dethsquare.networking.Network;
 import com.ezardlabs.lostsector.Game.DamageType;
 import com.ezardlabs.lostsector.map.MapManager;
 import com.ezardlabs.lostsector.objects.ShieldedEntity;
 import com.ezardlabs.lostsector.objects.weapons.Arm;
 import com.ezardlabs.lostsector.objects.weapons.MeleeWeapon;
 import com.ezardlabs.lostsector.objects.weapons.PrimaryWeapon;
+import com.ezardlabs.lostsector.objects.weapons.melee.Fists;
+import com.ezardlabs.lostsector.objects.weapons.melee.Nikana;
+import com.ezardlabs.lostsector.objects.weapons.primary.Gorgon;
+import com.ezardlabs.lostsector.objects.weapons.primary.Lanka;
+import com.ezardlabs.lostsector.objects.weapons.primary.Supra;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public abstract class Warframe extends ShieldedEntity {
+	private static final String PRIMARY_WEAPON_MESSAGE = "primary_weapon";
+	private static final String MELEE_WEAPON_MESSAGE = "melee_weapon";
+
 	protected final TextureAtlas ta;
 	protected final int maxEnergy;
 	protected int energy;
@@ -52,8 +61,8 @@ public abstract class Warframe extends ShieldedEntity {
 			}
 		});
 
-		GameObject.instantiate(new GameObject("Arm", new Renderer(ta),
-				new Animator(gameObject.animator.getAnimation("grip_primary_arm")), arm), transform.position);
+		GameObject armObject = Network.instantiate("arm", transform.position);
+		armObject.addComponent(arm);
 	}
 
 	@Override
@@ -78,6 +87,10 @@ public abstract class Warframe extends ShieldedEntity {
 	public abstract void ability4();
 
 	protected abstract String getDataPath();
+
+	public TextureAtlas getTextureAtlas() {
+		return ta;
+	}
 
 	public final void shoot() {
 		gameObject.animator.play("grip_primary_body");
@@ -158,4 +171,76 @@ public abstract class Warframe extends ShieldedEntity {
 				new GameObject("Tombstone", new Renderer(ta, ta.getSprite("gravestone"), 200, 200)),
 				transform.position.offset(0, 25));
 	}
+
+	private enum PrimaryWeaponType {
+		GORGON("gorgon", Gorgon.class, Gorgon::new),
+		LANKA("lanka", Lanka.class, Lanka::new),
+		SUPRA("supra", Supra.class, Supra::new);
+
+		private final String name;
+		private final Class<? extends PrimaryWeapon> clazz;
+		private final PrimaryWeaponCreator creator;
+
+		PrimaryWeaponType(String name, Class<? extends PrimaryWeapon> clazz, PrimaryWeaponCreator creator) {
+			this.name = name;
+			this.clazz = clazz;
+			this.creator = creator;
+		}
+
+		private interface PrimaryWeaponCreator {
+			PrimaryWeapon create();
+		}
+
+		static PrimaryWeapon create(String s) {
+			for (PrimaryWeaponType primaryWeaponType : values()) {
+				if (primaryWeaponType.name.equals(s)) {
+					return primaryWeaponType.creator.create();
+				}
+			}
+			return null;
+		}
+	}
+
+	private enum MeleeWeaponType {
+		FISTS("fists", Fists.class, Fists::new),
+		NIKANA("nikana", Nikana.class, Nikana::new);
+
+		private final String name;
+		private final Class<? extends MeleeWeapon> clazz;
+		private final MeleeWeaponCreator creator;
+
+		MeleeWeaponType(String name, Class<? extends MeleeWeapon> clazz, MeleeWeaponCreator creator) {
+			this.name = name;
+			this.clazz = clazz;
+			this.creator = creator;
+		}
+
+		private interface MeleeWeaponCreator {
+			MeleeWeapon create(GameObject wielder);
+		}
+
+		static MeleeWeapon create(String s, GameObject wielder) {
+			for (MeleeWeaponType meleeWeaponType : values()) {
+				if (meleeWeaponType.name.equals(s)) {
+					return meleeWeaponType.creator.create(wielder);
+				}
+			}
+			return null;
+		}
+	}
+
+	/*@Override
+	protected void receiveMessage(String message) {
+		String[] split = message.split("\\|");
+		switch (split[0]) {
+			case PRIMARY_WEAPON_MESSAGE:
+				setPrimaryWeapon(PrimaryWeaponType.create(split[1]));
+				break;
+			case MELEE_WEAPON_MESSAGE:
+				setMeleeWeapon(MeleeWeaponType.create(split[1], gameObject));
+				break;
+			default:
+				break;
+		}
+	}*/
 }
