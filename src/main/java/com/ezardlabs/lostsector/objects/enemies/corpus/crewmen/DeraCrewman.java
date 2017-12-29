@@ -1,8 +1,8 @@
 package com.ezardlabs.lostsector.objects.enemies.corpus.crewmen;
 
-import com.ezardlabs.dethsquare.AudioManager.AudioGroup;
-import com.ezardlabs.dethsquare.AudioSource;
-import com.ezardlabs.dethsquare.AudioSource.AudioClip;
+import com.ezardlabs.dethsquare.audio.AudioManager.AudioGroup;
+import com.ezardlabs.dethsquare.audio.AudioSource;
+import com.ezardlabs.dethsquare.audio.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.Transform;
 import com.ezardlabs.dethsquare.animation.AnimationType;

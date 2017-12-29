@@ -1,6 +1,6 @@
 package com.ezardlabs.lostsector.objects.menus;
 
-import com.ezardlabs.dethsquare.AudioManager;
+import com.ezardlabs.dethsquare.audio.AudioManager;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.GuiRenderer;
 import com.ezardlabs.dethsquare.GuiText;

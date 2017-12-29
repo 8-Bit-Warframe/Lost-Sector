@@ -1,7 +1,7 @@
 package com.ezardlabs.lostsector;
 
-import com.ezardlabs.dethsquare.AudioListener;
-import com.ezardlabs.dethsquare.AudioManager;
+import com.ezardlabs.dethsquare.audio.AudioListener;
+import com.ezardlabs.dethsquare.audio.AudioManager;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.GuiRenderer;

@@ -27,7 +27,7 @@ public class MultiplayerLobbyLevel extends Level {
 
 		InetAddress ip = null;
 		try {
-			ip = InetAddress.getByName("8bitwarframe.com");
+			ip = InetAddress.getByName("localhost");
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}

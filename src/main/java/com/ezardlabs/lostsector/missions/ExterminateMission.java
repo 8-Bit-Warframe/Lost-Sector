@@ -1,7 +1,7 @@
 package com.ezardlabs.lostsector.missions;
 
-import com.ezardlabs.dethsquare.AudioSource;
-import com.ezardlabs.dethsquare.AudioSource.AudioClip;
+import com.ezardlabs.dethsquare.audio.AudioSource;
+import com.ezardlabs.dethsquare.audio.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.GuiText;

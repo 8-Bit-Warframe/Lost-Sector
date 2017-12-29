@@ -1,9 +1,9 @@
 package com.ezardlabs.lostsector.levels;
 
-import com.ezardlabs.dethsquare.AudioListener;
-import com.ezardlabs.dethsquare.AudioManager.AudioGroup;
-import com.ezardlabs.dethsquare.AudioSource;
-import com.ezardlabs.dethsquare.AudioSource.AudioClip;
+import com.ezardlabs.dethsquare.audio.AudioListener;
+import com.ezardlabs.dethsquare.audio.AudioManager.AudioGroup;
+import com.ezardlabs.dethsquare.audio.AudioSource;
+import com.ezardlabs.dethsquare.audio.AudioSource.AudioClip;
 import com.ezardlabs.dethsquare.Camera;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.GuiRenderer;
