@@ -1,7 +1,5 @@
 package com.ezardlabs.lostsector;
 
-import com.ezardlabs.dethsquare.audio.AudioListener;
-import com.ezardlabs.dethsquare.audio.AudioManager;
 import com.ezardlabs.dethsquare.Collider;
 import com.ezardlabs.dethsquare.GameObject;
 import com.ezardlabs.dethsquare.GuiRenderer;
@@ -11,6 +9,8 @@ import com.ezardlabs.dethsquare.PlayerPrefs;
 import com.ezardlabs.dethsquare.Rigidbody;
 import com.ezardlabs.dethsquare.TextureAtlas;
 import com.ezardlabs.dethsquare.animation.Animator;
+import com.ezardlabs.dethsquare.audio.AudioListener;
+import com.ezardlabs.dethsquare.audio.AudioManager;
 import com.ezardlabs.dethsquare.graphics.Renderer;
 import com.ezardlabs.dethsquare.networking.NetworkAnimator;
 import com.ezardlabs.dethsquare.networking.NetworkRenderer;
